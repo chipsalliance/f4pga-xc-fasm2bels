@@ -35,8 +35,7 @@ from .cmt_models import process_pll
 from .bram_models import process_bram
 from .clb_models import process_clb
 from .clk_models import process_hrow, process_bufg
-from .connection_db_utils import create_maybe_get_wire, maybe_add_pip, \
-        get_tile_type
+from .connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
 from .iob_models import process_iobs
 from .ioi_models import process_ioi
 from .hclk_ioi3_models import process_hclk_ioi3
@@ -302,15 +301,13 @@ def main():
     parser.add_argument(
         '--iostandard',
         default=None,
-        help=
-        "Default IOSTANDARD to use for IO buffers if it cannot be determined from fasm and eblif."
+        help="Default IOSTANDARD to use for IO buffers."
     )
     parser.add_argument(
         '--drive',
         type=int,
         default=None,
-        help=
-        "Default DRIVE to use for IO buffers if it cannot be determined from fasm and eblif."
+        help="Default DRIVE to use for IO buffers."
     )
     parser.add_argument('--top', default="top", help="Root level module name.")
     parser.add_argument('--pcf', help="Mapping of top-level pins to pads.")

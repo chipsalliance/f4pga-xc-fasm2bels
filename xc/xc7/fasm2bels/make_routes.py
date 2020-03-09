@@ -541,7 +541,8 @@ SELECT name, site_pin_pkey FROM wire_in_tile WHERE pkey = (
                 )
             else:
                 c.execute(
-                    "SELECT name FROM phy_tile WHERE pkey = (SELECT phy_tile_pkey FROM wire WHERE pkey = ?)",
+                    """
+SELECT name FROM phy_tile WHERE pkey = (SELECT phy_tile_pkey FROM wire WHERE pkey = ?)""",
                     (site_wire_pkey, )
                 )
                 tile = c.fetchone()[0]
@@ -721,7 +722,8 @@ def make_routes(
 
             c = conn.cursor()
             c.execute(
-                "SELECT name FROM phy_tile WHERE pkey = (SELECT phy_tile_pkey FROM wire WHERE pkey = ?)",
+                """
+SELECT name FROM phy_tile WHERE pkey = (SELECT phy_tile_pkey FROM wire WHERE pkey = ?)""",
                 (wire_pkey, )
             )
             (tile_name, ) = c.fetchone()

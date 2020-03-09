@@ -487,7 +487,7 @@ class Bel(object):
         unambiguous way to refer to wires in the design.
 
         However the parent design maybe have assigned wires net names from the,
-        e.g. "\$auto$alumacc.cc:474:replace_alu$1273.CO_CHAIN [1]". This
+        e.g. '$auto$alumacc.cc:474:replace_alu$1273.CO_CHAIN [1]'. This
         function builds the association between these two schemes using the
         pin to net mapping created via Bel.add_net_name. Bel.add_net_name is
         called during site integration to associate Bel pins with net names
@@ -618,7 +618,6 @@ class Site(object):
                 if merged_site:
                     parts = f.feature.split('.')
                     assert parts[0] == aparts[0]
-                    #self.set_features.add('.'.join(parts[1:]))
                     self.set_features.add(
                         fasm.SetFasmFeature(
                             feature='.'.join(parts[1:]),
@@ -632,7 +631,6 @@ class Site(object):
                     parts = f.feature.split('.')
                     assert parts[0] == aparts[0]
                     assert parts[1] == aparts[1]
-                    #self.set_features.add('.'.join(parts[2:]))
                     self.set_features.add(
                         fasm.SetFasmFeature(
                             feature='.'.join(parts[2:]),
@@ -934,10 +932,9 @@ class Site(object):
                 if wire == 0 or wire == 1:
                     continue
 
-                assert wire in self.sinks or \
-                       wire in self.sources or \
-                       wire in self.internal_sources or \
-                       module.is_top_level(wire), wire
+                assert (wire in self.sinks) or (wire in self.sources) or (
+                    wire in self.internal_sources
+                ) or module.is_top_level(wire), wire
 
         wires = set()
         unrouted_sinks = set()

@@ -135,8 +135,9 @@ def eligible_for_merge(top, bram_sites, verbose=False):
             'WRITE_WIDTH_A',
             'WRITE_WIDTH_B',
             'WRITE_MODE_A',
-            'WRITE_MODE_B',  #'RSTREG_PRIORITY',
-            #'RDADDR_COLLISION_HWCONFIG',
+            'WRITE_MODE_B',
+            # 'RSTREG_PRIORITY',
+            # 'RDADDR_COLLISION_HWCONFIG',
     ]:
         if bram_y0.parameters[param] != bram_y1.parameters[param]:
             if verbose:
@@ -240,12 +241,14 @@ def clean_up_to_bram36(top, site):
             "RSTRAMB",
             "RSTREGB",
     ]:
-        assert top.find_source_from_sink(site, input_wire + 'L') == \
-                top.find_source_from_sink(site, input_wire + 'U')
+        assert top.find_source_from_sink(
+            site, input_wire + 'L'
+        ) == top.find_source_from_sink(site, input_wire + 'U')
         site.mask_sink(bel, input_wire + 'U')
 
-    assert top.find_source_from_sink(site, 'RSTRAMARSTRAMLRST') == \
-            top.find_source_from_sink(site, 'RSTRAMARSTRAMU')
+    assert top.find_source_from_sink(
+        site, 'RSTRAMARSTRAMLRST'
+    ) == top.find_source_from_sink(site, 'RSTRAMARSTRAMU')
 
     site.mask_sink(bel, 'RSTRAMARSTRAMU')
 
@@ -772,7 +775,7 @@ def process_bram36_site(top, features, set_features):
 
     RAM_MODE = '"TDP"'
     if 'RAMB18_Y0.SDP_READ_WIDTH_36' in set_features:
-        assert 'RAMB18_Y0.READ_WIDTH_A_1' in set_features or 'RAMB18_Y0.READ_WIDTH_A_18' in set_features
+        assert 'RAMB18_Y0.READ_WIDTH_A_18' in set_features
         assert 'RAMB18_Y0.READ_WIDTH_B_18' in set_features
         READ_WIDTH_A = 72
         READ_WIDTH_B = 0

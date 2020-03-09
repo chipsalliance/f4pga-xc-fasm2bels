@@ -80,10 +80,10 @@ def process_bufg(conn, top, tile, features):
 
         bel = Bel('BUFGCTRL')
         bel.parameters['IS_IGNORE0_INVERTED'] = int(
-            not 'IS_IGNORE0_INVERTED' in set_features
+            'IS_IGNORE0_INVERTED' not in set_features
         )
         bel.parameters['IS_IGNORE1_INVERTED'] = int(
-            not 'IS_IGNORE1_INVERTED' in set_features
+            'IS_IGNORE1_INVERTED' not in set_features
         )
         bel.parameters['IS_CE0_INVERTED'] = int('ZINV_CE0' not in set_features)
         bel.parameters['IS_CE1_INVERTED'] = int('ZINV_CE1' not in set_features)

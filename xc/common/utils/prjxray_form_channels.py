@@ -148,7 +148,10 @@ def create_get_switch(conn):
 
             write_cur.execute(
                 """
-INSERT INTO switch(name, internal_capacitance, drive_resistance, intrinsic_delay, penalty_cost, switch_type)
+INSERT INTO
+    switch(
+        name, internal_capacitance, drive_resistance, intrinsic_delay, penalty_cost, switch_type
+    )
 VALUES
     (?, ?, ?, ?, ?, ?)""", (
                     name, internal_capacitance, drive_resistance, delay,
@@ -467,7 +470,8 @@ def build_tile_type_indicies(write_cur):
         "CREATE INDEX dest_pip_index ON pip_in_tile(dest_wire_in_tile_pkey);"
     )
     write_cur.execute(
-        "CREATE INDEX undirected_pip_index ON undirected_pips(wire_in_tile_pkey, other_wire_in_tile_pkey);"
+        """CREATE INDEX undirected_pip_index ON
+undirected_pips(wire_in_tile_pkey, other_wire_in_tile_pkey);"""
     )
 
 
@@ -860,7 +864,9 @@ SELECT name, switch_pkey FROM pip_in_tile WHERE pkey = ?""", (pip_pkey, )
 
     cur.execute(
         """
-SELECT name, intrinsic_delay, internal_capacitance, drive_resistance, switch_type FROM switch WHERE pkey = ?
+SELECT
+    name, intrinsic_delay, internal_capacitance, drive_resistance, switch_type
+FROM switch WHERE pkey = ?
         """, (switch_pkey, )
     )
     (
@@ -1189,10 +1195,10 @@ def insert_tracks(conn, segments, tracks_to_insert):
 
     track_graph_nodes = {}
     track_pkeys = []
-    for node, tracks_list, track_connections, tracks_model, segment_pkey in progressbar_utils.progressbar(
+    for node, tracks_list, track_conn, tracks_model, seg_pkey in progressbar_utils.progressbar(
             tracks_to_insert):
         write_cur.execute(
-            """INSERT INTO track(segment_pkey) VALUES (?)""", (segment_pkey, )
+            """INSERT INTO track(segment_pkey) VALUES (?)""", (seg_pkey, )
         )
         track_pkey = write_cur.lastrowid
         track_pkeys.append(track_pkey)
@@ -1234,7 +1240,7 @@ VALUES
 
         track_graph_nodes[node] = track_graph_node_pkey
 
-        for connection in track_connections:
+        for connection in track_conn:
             write_cur.execute(
                 """
 INSERT INTO graph_edge(
@@ -1258,7 +1264,7 @@ VALUES
     conn.commit()
 
     wire_to_graph = {}
-    for node, tracks_list, track_connections, tracks_model, _ in progressbar_utils.progressbar(
+    for node, tracks_list, track_conn, tracks_model, _ in progressbar_utils.progressbar(
             tracks_to_insert):
         track_graph_node_pkey = track_graph_nodes[node]
 
@@ -1764,7 +1770,7 @@ def create_vpr_grid(conn):
         sites = []
         site_pkeys = set()
         for (site_pkey, ) in cur2.execute("""
-            SELECT site_pkey FROM wire_in_tile WHERE tile_type_pkey = ? AND site_pkey IS NOT NULL;""",
+SELECT site_pkey FROM wire_in_tile WHERE tile_type_pkey = ? AND site_pkey IS NOT NULL;""",
                                           (tile_type_pkey, )):
             site_pkeys.add(site_pkey)
 
@@ -1823,10 +1829,11 @@ def create_vpr_grid(conn):
                 assert False, split_styles[tile_type_name]
 
             if tile_type_name in tile_to_tile_type_pkeys:
-                assert tile_to_tile_type_pkeys[tile_type_name] == \
-                        tile_type_pkeys, (tile_type_name,)
-                assert split_map[tile_type_name] == \
-                        tile_split_map, (tile_type_name,)
+                assert tile_to_tile_type_pkeys[
+                    tile_type_name] == tile_type_pkeys, (tile_type_name, )
+                assert split_map[tile_type_name] == tile_split_map, (
+                    tile_type_name,
+                )
             else:
                 tile_to_tile_type_pkeys[tile_type_name] = tile_type_pkeys
                 split_map[tile_type_name] = tile_split_map
@@ -2084,18 +2091,9 @@ AND
     write_cur.execute(
         "CREATE INDEX tile_wire_index ON wire(wire_in_tile_pkey, tile_pkey, node_pkey);"
     )
-    #write_cur.execute(
-    #    "CREATE INDEX wire_in_tile_phy_index ON wire(wire_in_tile_pkey, phy_tile_pkey, tile_pkey);"
-    #)
     write_cur.execute(
         "CREATE INDEX node_tile_wire_index ON wire(node_pkey, tile_pkey, wire_in_tile_pkey);"
     )
-    #write_cur.execute(
-    #    "CREATE INDEX node_tile_wire_phy_index ON wire(node_pkey, tile_pkey, wire_in_tile_pkey, phy_tile_pkey);"
-    #)
-    #write_cur.execute(
-    #    "CREATE INDEX wire_in_tile_phy_node ON wire(wire_in_tile_pkey, phy_tile_pkey, node_pkey);"
-    #)
 
     # Update tile_type_pkey in wire_in_tile table.
     update_wire_in_tile_types(
@@ -2142,8 +2140,8 @@ INSERT INTO node(classification) VALUES (?)
 
     conn.commit()
 
-    return create_track(vcc_node, unique_pos), \
-           create_track(gnd_node, unique_pos)
+    return create_track(vcc_node,
+                        unique_pos), create_track(gnd_node, unique_pos)
 
 
 def import_segments(conn, db):
