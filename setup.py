@@ -19,7 +19,10 @@ setuptools.setup(
         "simplejson",
         "pycapnp",
         "intervaltree",
-        "parameterized"
+        "parameterized",
+    ],
+    dependency_links=[
+        "git+git://github.com/SymbiFlow/prjxray.git#egg=prjxray",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
