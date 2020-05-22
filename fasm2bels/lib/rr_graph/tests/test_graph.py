@@ -3,10 +3,9 @@
 import unittest
 
 from .. import graph, P, Size
-from ..graph import (
-    Pin, PinClass, PinClassDirection, Block, BlockGrid, BlockType, Segment,
-    Switch, SwitchType, RoutingGraph, RoutingGraphPrinter
-)
+from ..graph import (Pin, PinClass, PinClassDirection, Block, BlockGrid,
+                     BlockType, Segment, Switch, SwitchType, RoutingGraph,
+                     RoutingGraphPrinter)
 
 import lxml.etree as ET
 
@@ -17,32 +16,26 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(('a', 'b', [0]), graph.parse_net('a.b[0]'))
         self.assertEqual(('c', 'd', [1]), graph.parse_net('c.d[1]'))
         self.assertEqual(('c', 'd', [40]), graph.parse_net('c.d[40]'))
-        self.assertEqual(
-            ('VPR_PAD', 'outpad', [0]), graph.parse_net('VPR_PAD.outpad[0]')
-        )
+        self.assertEqual(('VPR_PAD', 'outpad', [0]),
+                         graph.parse_net('VPR_PAD.outpad[0]'))
         # Complex block names
         self.assertEqual(('a.b', 'c', [0]), graph.parse_net('a.b.c[0]'))
         self.assertEqual(('c-d', 'e', [11]), graph.parse_net('c-d.e[11]'))
         # Block names w/ square brackets
         self.assertEqual(('a.b[2]', 'c', [0]), graph.parse_net('a.b[2].c[0]'))
-        self.assertEqual(
-            ('c-d[3]', 'e', [11]), graph.parse_net('c-d[3].e[11]')
-        )
+        self.assertEqual(('c-d[3]', 'e', [11]),
+                         graph.parse_net('c-d[3].e[11]'))
         # Fully specified range of pins
-        self.assertEqual(
-            ('a', 'b', [8, 9, 10, 11]), graph.parse_net('a.b[11:8]')
-        )
-        self.assertEqual(
-            ('c', 'd', [8, 9, 10, 11]), graph.parse_net('c.d[8:11]')
-        )
+        self.assertEqual(('a', 'b', [8, 9, 10, 11]),
+                         graph.parse_net('a.b[11:8]'))
+        self.assertEqual(('c', 'd', [8, 9, 10, 11]),
+                         graph.parse_net('c.d[8:11]'))
         # Net with no block
         self.assertEqual((None, 'outpad', [10]), graph.parse_net('outpad[10]'))
-        self.assertEqual(
-            (None, 'outpad', [10, 11, 12]), graph.parse_net('outpad[10:12]')
-        )
-        self.assertEqual(
-            (None, 'outpad', [10, 11, 12]), graph.parse_net('outpad[12:10]')
-        )
+        self.assertEqual((None, 'outpad', [10, 11, 12]),
+                         graph.parse_net('outpad[10:12]'))
+        self.assertEqual((None, 'outpad', [10, 11, 12]),
+                         graph.parse_net('outpad[12:10]'))
         # No block or pin index
         self.assertEqual((None, 'outpad', None), graph.parse_net('outpad'))
         self.assertEqual((None, 'outpad0', None), graph.parse_net('outpad0'))
@@ -51,16 +44,12 @@ class TestGraph(unittest.TestCase):
 
     def test_pin_from_text(self):
         self.assertEqual('None(0)->None[None]', str(Pin.from_text(None, '0')))
-        self.assertEqual(
-            'None(10)->None[None]', str(Pin.from_text(None, '10'))
-        )
-        self.assertEqual(
-            'bt(None)->outpad[2]', str(Pin.from_text(None, 'bt.outpad[2]'))
-        )
-        self.assertEqual(
-            'bt[3](None)->outpad[2]',
-            str(Pin.from_text(None, 'bt[3].outpad[2]'))
-        )
+        self.assertEqual('None(10)->None[None]', str(Pin.from_text(None,
+                                                                   '10')))
+        self.assertEqual('bt(None)->outpad[2]',
+                         str(Pin.from_text(None, 'bt.outpad[2]')))
+        self.assertEqual('bt[3](None)->outpad[2]',
+                         str(Pin.from_text(None, 'bt[3].outpad[2]')))
 
     def test_pin_from_xml(self):
         pc = PinClass(BlockType(name="bt"), direction=PinClassDirection.INPUT)
@@ -226,152 +215,108 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(
             '0 X000Y003[00].SINK-<',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
         <node id="0" type="SINK" capacity="1">
             <loc xlow="0" ylow="3" xhigh="0" yhigh="3" ptc="0"/>
             <timing R="0" C="0"/>
         </node>
-        '''
-                )
-            )
-        )
+        ''')))
         self.assertEqual(
             '1 X001Y002[01].SRC-->',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node id="1" type="SOURCE" capacity="1">
                 <loc xlow="1" ylow="2" xhigh="1" yhigh="2" ptc="1"/>
                 <timing R="0" C="0"/>
             </node>
-            '''
-                )
-            )
-        )
+            ''')))
         self.assertEqual(
             '2 X002Y001[00].T-PIN<',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node id="2" type="IPIN" capacity="1">
                 <loc xlow="2" ylow="1" xhigh="2" yhigh="1" side="TOP" ptc="0"/>
                 <timing R="0" C="0"/>
             </node>
-            '''
-                )
-            )
-        )
+            ''')))
         self.assertEqual(
             '6 X003Y000[01].R-PIN>',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node id="6" type="OPIN" capacity="1">
                 <loc xlow="3" ylow="0" xhigh="3" yhigh="0" side="RIGHT" ptc="1"/>
                 <timing R="0" C="0"/>
             </node>
-            '''
-                )
-            )
-        )
+            ''')))
         # With a block graph, the name will include the block type
         bg = graph.simple_test_block_grid()
         self.assertEqual(
             '0 X000Y003_INBLOCK[00].C[3:0]-SINK-<',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node id="0" type="SINK" capacity="1">
                 <loc xlow="0" ylow="3" xhigh="0" yhigh="3" ptc="0"/>
                 <timing R="0" C="0"/>
             </node>
-            '''
-                ), bg
-            )
-        )
+            '''), bg))
         self.assertEqual(
             '1 X001Y002_DUALBLK[01].B[0]-SRC-->',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node id="1" type="SOURCE" capacity="1">
                 <loc xlow="1" ylow="2" xhigh="1" yhigh="2" ptc="1"/>
                 <timing R="0" C="0"/>
             </node>
-            '''
-                ), bg
-            )
-        )
+            '''), bg))
         self.assertEqual(
             '2 X002Y001_DUALBLK[00].A[0]-T-PIN<',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node id="2" type="IPIN" capacity="1">
                 <loc xlow="2" ylow="1" xhigh="2" yhigh="1" side="TOP" ptc="0"/>
                 <timing R="0" C="0"/>
             </node>
-            '''
-                ), bg
-            )
-        )
+            '''), bg))
         self.assertEqual(
             '6 X003Y000_OUTBLOK[01].D[1]-R-PIN>',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node id="6" type="OPIN" capacity="1">
                 <loc xlow="3" ylow="0" xhigh="3" yhigh="0" side="RIGHT" ptc="1"/>
                 <timing R="0" C="0"/>
             </node>
-            '''
-                ), bg
-            )
-        )
+            '''), bg))
         # Edges don't require a block graph, as they have the full information on the node.
         self.assertEqual(
             '372 X003Y000--04->X003Y000',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node capacity="1" direction="INC_DIR" id="372" type="CHANX">
                 <loc ptc="4" xhigh="3" xlow="3" yhigh="0" ylow="0"/>
                 <timing C="2.72700004e-14" R="101"/>
                 <segment segment_id="1"/>
             </node>
-            '''
-                )
-            )
-        )
+            ''')))
         self.assertEqual(
             '373 X003Y000<|05||X003Y000',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node capacity="1" direction="DEC_DIR" id="373" type="CHANY">
                 <loc ptc="5" xhigh="3" xlow="3" yhigh="0" ylow="0"/>
                 <timing C="2.72700004e-14" R="101"/>
                 <segment segment_id="1"/>
             </node>
-            '''
-                )
-            )
-        )
+            ''')))
         self.assertEqual(
             '374 X003Y000<-05->X003Y000',
             RoutingGraphPrinter.node(
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <node capacity="1" direction="BI_DIR" id="374" type="CHANX">
                 <loc ptc="5" xhigh="3" xlow="3" yhigh="0" ylow="0"/>
                 <timing C="2.72700004e-14" R="101"/>
                 <segment segment_id="1"/>
             </node>
-            '''
-                )
-            )
-        )
+            ''')))
 
     def test_routinggraphprinter_edge(self):
         bg = graph.simple_test_block_grid()
@@ -397,24 +342,16 @@ class TestGraph(unittest.TestCase):
             '0 X000Y003[00].SRC--> ->>- 1 X000Y003||05|>X003Y000',
             RoutingGraphPrinter.edge(
                 rg,
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <edge sink_node="1" src_node="0" switch_id="1"/>
-            '''
-                )
-            )
-        )
+            ''')))
         self.assertEqual(
             '0 X000Y003_INBLOCK[00].C[3:0]-SRC--> ->>- 1 X000Y003||05|>X003Y000',
             RoutingGraphPrinter.edge(
                 rg,
-                ET.fromstring(
-                    '''
+                ET.fromstring('''
             <edge sink_node="1" src_node="0" switch_id="1"/>
-            '''
-                ), bg
-            )
-        )
+            '''), bg))
 
     def test_routinggraph_set_metadata(self):
         r = graph.simple_test_routing()
@@ -444,47 +381,29 @@ class TestGraph(unittest.TestCase):
 
     def test_routinggraph_get_node_by_id(self):
         r = graph.simple_test_routing()
-        self.assertEqual(
-            '0 X000Y000[00].SRC-->',
-            RoutingGraphPrinter.node(r.get_node_by_id(0))
-        )
-        self.assertEqual(
-            '1 X000Y000[00].R-PIN>',
-            RoutingGraphPrinter.node(r.get_node_by_id(1))
-        )
-        self.assertEqual(
-            '2 X000Y000<-00->X000Y010',
-            RoutingGraphPrinter.node(r.get_node_by_id(2))
-        )
-        self.assertEqual(
-            '3 X000Y010[00].L-PIN<',
-            RoutingGraphPrinter.node(r.get_node_by_id(3))
-        )
-        self.assertEqual(
-            '4 X000Y010[00].SINK-<',
-            RoutingGraphPrinter.node(r.get_node_by_id(4))
-        )
+        self.assertEqual('0 X000Y000[00].SRC-->',
+                         RoutingGraphPrinter.node(r.get_node_by_id(0)))
+        self.assertEqual('1 X000Y000[00].R-PIN>',
+                         RoutingGraphPrinter.node(r.get_node_by_id(1)))
+        self.assertEqual('2 X000Y000<-00->X000Y010',
+                         RoutingGraphPrinter.node(r.get_node_by_id(2)))
+        self.assertEqual('3 X000Y010[00].L-PIN<',
+                         RoutingGraphPrinter.node(r.get_node_by_id(3)))
+        self.assertEqual('4 X000Y010[00].SINK-<',
+                         RoutingGraphPrinter.node(r.get_node_by_id(4)))
         with self.assertRaises(KeyError):
             RoutingGraphPrinter.node(r.get_node_by_id(5))
 
     def test_routinggraph_get_edge_by_id(self):
         r = graph.simple_test_routing()
-        self.assertEqual(
-            '0 X000Y000[00].SRC--> ->>- 1 X000Y000[00].R-PIN>',
-            RoutingGraphPrinter.edge(r, r.get_edge_by_id(0))
-        )
-        self.assertEqual(
-            '1 X000Y000[00].R-PIN> ->>- 2 X000Y000<-00->X000Y010',
-            RoutingGraphPrinter.edge(r, r.get_edge_by_id(1))
-        )
-        self.assertEqual(
-            '2 X000Y000<-00->X000Y010 ->>- 3 X000Y010[00].L-PIN<',
-            RoutingGraphPrinter.edge(r, r.get_edge_by_id(2))
-        )
-        self.assertEqual(
-            '3 X000Y010[00].L-PIN< ->>- 4 X000Y010[00].SINK-<',
-            RoutingGraphPrinter.edge(r, r.get_edge_by_id(3))
-        )
+        self.assertEqual('0 X000Y000[00].SRC--> ->>- 1 X000Y000[00].R-PIN>',
+                         RoutingGraphPrinter.edge(r, r.get_edge_by_id(0)))
+        self.assertEqual('1 X000Y000[00].R-PIN> ->>- 2 X000Y000<-00->X000Y010',
+                         RoutingGraphPrinter.edge(r, r.get_edge_by_id(1)))
+        self.assertEqual('2 X000Y000<-00->X000Y010 ->>- 3 X000Y010[00].L-PIN<',
+                         RoutingGraphPrinter.edge(r, r.get_edge_by_id(2)))
+        self.assertEqual('3 X000Y010[00].L-PIN< ->>- 4 X000Y010[00].SINK-<',
+                         RoutingGraphPrinter.edge(r, r.get_edge_by_id(3)))
         with self.assertRaises(KeyError):
             r.get_edge_by_id(4)
 
@@ -495,54 +414,42 @@ class TestGraph(unittest.TestCase):
     def test_routinggraph_nodes_for_edge(self):
         r = graph.simple_test_routing()
         e1 = r.get_edge_by_id(0)
-        self.assertEqual(
-            '0 X000Y000[00].SRC--> ->>- 1 X000Y000[00].R-PIN>',
-            RoutingGraphPrinter.edge(r, e1)
-        )
+        self.assertEqual('0 X000Y000[00].SRC--> ->>- 1 X000Y000[00].R-PIN>',
+                         RoutingGraphPrinter.edge(r, e1))
         self.assertEqual(
             ['0 X000Y000[00].SRC-->', '1 X000Y000[00].R-PIN>'],
-            [RoutingGraphPrinter.node(n) for n in r.nodes_for_edge(e1)]
-        )
+            [RoutingGraphPrinter.node(n) for n in r.nodes_for_edge(e1)])
         e2 = r.get_edge_by_id(1)
-        self.assertEqual(
-            '1 X000Y000[00].R-PIN> ->>- 2 X000Y000<-00->X000Y010',
-            RoutingGraphPrinter.edge(r, e2)
-        )
+        self.assertEqual('1 X000Y000[00].R-PIN> ->>- 2 X000Y000<-00->X000Y010',
+                         RoutingGraphPrinter.edge(r, e2))
         self.assertEqual(
             ['1 X000Y000[00].R-PIN>', '2 X000Y000<-00->X000Y010'],
-            [RoutingGraphPrinter.node(n) for n in r.nodes_for_edge(e2)]
-        )
+            [RoutingGraphPrinter.node(n) for n in r.nodes_for_edge(e2)])
 
     def test_routinggraph_edges_for_node(self):
         r = graph.simple_test_routing()
-        self.assertEqual(
-            [
-                '0 X000Y000[00].SRC--> ->>- 1 X000Y000[00].R-PIN>',
-                '1 X000Y000[00].R-PIN> ->>- 2 X000Y000<-00->X000Y010'
-            ], [
-                RoutingGraphPrinter.edge(r, e)
-                for e in r.edges_for_node(r.get_node_by_id(1))
-            ]
-        )
-        self.assertEqual(
-            [
-                '1 X000Y000[00].R-PIN> ->>- 2 X000Y000<-00->X000Y010',
-                '2 X000Y000<-00->X000Y010 ->>- 3 X000Y010[00].L-PIN<'
-            ], [
-                RoutingGraphPrinter.edge(r, e)
-                for e in r.edges_for_node(r.get_node_by_id(2))
-            ]
-        )
+        self.assertEqual([
+            '0 X000Y000[00].SRC--> ->>- 1 X000Y000[00].R-PIN>',
+            '1 X000Y000[00].R-PIN> ->>- 2 X000Y000<-00->X000Y010'
+        ], [
+            RoutingGraphPrinter.edge(r, e)
+            for e in r.edges_for_node(r.get_node_by_id(1))
+        ])
+        self.assertEqual([
+            '1 X000Y000[00].R-PIN> ->>- 2 X000Y000<-00->X000Y010',
+            '2 X000Y000<-00->X000Y010 ->>- 3 X000Y010[00].L-PIN<'
+        ], [
+            RoutingGraphPrinter.edge(r, e)
+            for e in r.edges_for_node(r.get_node_by_id(2))
+        ])
 
     def test_routinggraph_create_edge_with_ids(self):
         r = graph.simple_test_routing()
         sw = Switch(id=0, type=SwitchType.MUX, name="sw")
         r.create_edge_with_ids(0, 1, sw)
         e1 = r.get_edge_by_id(4)
-        self.assertEqual(
-            '0 X000Y000[00].SRC--> ->>- 1 X000Y000[00].R-PIN>',
-            RoutingGraphPrinter.edge(r, e1)
-        )
+        self.assertEqual('0 X000Y000[00].SRC--> ->>- 1 X000Y000[00].R-PIN>',
+                         RoutingGraphPrinter.edge(r, e1))
         # The code protects against invalid edge creation
         with self.assertRaises(TypeError):
             r.create_edge_with_ids(0, 2, sw)

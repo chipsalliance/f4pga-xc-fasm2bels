@@ -11,40 +11,40 @@ from ..tracks import Track, Direction
 
 class Graph2Tests(unittest.TestCase):
     def setUp(self):
-        switch_timing = SwitchTiming(
-            r=0, c_in=1, c_out=2, t_del=0, c_internal=0, p_cost=0
-        )
+        switch_timing = SwitchTiming(r=0,
+                                     c_in=1,
+                                     c_out=2,
+                                     t_del=0,
+                                     c_internal=0,
+                                     p_cost=0)
         switch_sizing = SwitchSizing(mux_trans_size=0, buf_size=1)
-        delayless = Switch(
-            id=0,
-            name='__vpr_delayless_switch__',
-            type=SwitchType.SHORT,
-            timing=switch_timing,
-            sizing=switch_sizing
-        )
+        delayless = Switch(id=0,
+                           name='__vpr_delayless_switch__',
+                           type=SwitchType.SHORT,
+                           timing=switch_timing,
+                           sizing=switch_sizing)
 
         self.graph = Graph([delayless], [], [], [], [])
 
     def test_init(self):
-        switch_timing = SwitchTiming(
-            r=0, c_in=1, c_out=2, t_del=0, c_internal=0, p_cost=0
-        )
+        switch_timing = SwitchTiming(r=0,
+                                     c_in=1,
+                                     c_out=2,
+                                     t_del=0,
+                                     c_internal=0,
+                                     p_cost=0)
         switch_sizing = SwitchSizing(mux_trans_size=0, buf_size=1)
         self.switches = [
-            Switch(
-                id=0,
-                name='mux',
-                type=SwitchType.MUX,
-                timing=switch_timing,
-                sizing=switch_sizing
-            ),
-            Switch(
-                id=1,
-                name='__vpr_delayless_switch__',
-                type=SwitchType.SHORT,
-                timing=switch_timing,
-                sizing=switch_sizing
-            ),
+            Switch(id=0,
+                   name='mux',
+                   type=SwitchType.MUX,
+                   timing=switch_timing,
+                   sizing=switch_sizing),
+            Switch(id=1,
+                   name='__vpr_delayless_switch__',
+                   type=SwitchType.SHORT,
+                   timing=switch_timing,
+                   sizing=switch_sizing),
         ]
 
         seg_timing = SegmentTiming(r_per_meter=1, c_per_meter=1)
@@ -55,15 +55,16 @@ class Graph2Tests(unittest.TestCase):
             PinClass(type=PinType.OUTPUT, pin=[Pin(ptc=1, name='p2')]),
         ]
         self.block_types = [
-            BlockType(
-                id=0, name='b0', width=1, height=1, pin_class=pin_classes
-            )
+            BlockType(id=0,
+                      name='b0',
+                      width=1,
+                      height=1,
+                      pin_class=pin_classes)
         ]
 
         self.grid = [
-            GridLoc(
-                x=0, y=0, block_type_id=0, width_offset=0, height_offset=0
-            ),
+            GridLoc(x=0, y=0, block_type_id=0, width_offset=0,
+                    height_offset=0),
         ]
 
         node_timing = NodeTiming(r=0, c=0)
@@ -73,14 +74,12 @@ class Graph2Tests(unittest.TestCase):
                 type=NodeType.IPIN,
                 direction=NodeDirection.NO_DIR,
                 capacity=1,
-                loc=NodeLoc(
-                    x_low=0,
-                    x_high=0,
-                    y_low=0,
-                    y_high=0,
-                    side=Direction.LEFT,
-                    ptc=0
-                ),
+                loc=NodeLoc(x_low=0,
+                            x_high=0,
+                            y_low=0,
+                            y_high=0,
+                            side=Direction.LEFT,
+                            ptc=0),
                 timing=node_timing,
                 metadata=None,
                 segment=NodeSegment(segment_id=0),
@@ -92,14 +91,12 @@ class Graph2Tests(unittest.TestCase):
                 type=NodeType.SINK,
                 direction=NodeDirection.NO_DIR,
                 capacity=1,
-                loc=NodeLoc(
-                    x_low=0,
-                    x_high=0,
-                    y_low=0,
-                    y_high=0,
-                    side=Direction.NO_SIDE,
-                    ptc=0
-                ),
+                loc=NodeLoc(x_low=0,
+                            x_high=0,
+                            y_low=0,
+                            y_high=0,
+                            side=Direction.NO_SIDE,
+                            ptc=0),
                 timing=node_timing,
                 metadata=None,
                 segment=NodeSegment(segment_id=0),
@@ -111,14 +108,12 @@ class Graph2Tests(unittest.TestCase):
                 type=NodeType.OPIN,
                 direction=NodeDirection.NO_DIR,
                 capacity=1,
-                loc=NodeLoc(
-                    x_low=0,
-                    x_high=0,
-                    y_low=0,
-                    y_high=0,
-                    side=Direction.LEFT,
-                    ptc=1
-                ),
+                loc=NodeLoc(x_low=0,
+                            x_high=0,
+                            y_low=0,
+                            y_high=0,
+                            side=Direction.LEFT,
+                            ptc=1),
                 timing=node_timing,
                 metadata=None,
                 segment=NodeSegment(segment_id=0),
@@ -130,14 +125,12 @@ class Graph2Tests(unittest.TestCase):
                 type=NodeType.SOURCE,
                 direction=NodeDirection.NO_DIR,
                 capacity=1,
-                loc=NodeLoc(
-                    x_low=0,
-                    x_high=0,
-                    y_low=0,
-                    y_high=0,
-                    side=Direction.NO_SIDE,
-                    ptc=1
-                ),
+                loc=NodeLoc(x_low=0,
+                            x_high=0,
+                            y_low=0,
+                            y_high=0,
+                            side=Direction.NO_SIDE,
+                            ptc=1),
                 timing=node_timing,
                 metadata=None,
                 segment=NodeSegment(segment_id=0),
@@ -146,10 +139,8 @@ class Graph2Tests(unittest.TestCase):
             ),
         ]
 
-        self.graph = Graph(
-            self.switches, self.segments, self.block_types, self.grid,
-            deepcopy(self.nodes)
-        )
+        self.graph = Graph(self.switches, self.segments, self.block_types,
+                           self.grid, deepcopy(self.nodes))
 
     def test_add_track(self):
         trk = Track(direction='Y', x_low=2, x_high=2, y_low=1, y_high=3)
@@ -185,14 +176,11 @@ class Graph2Tests(unittest.TestCase):
 
     def test_add_switch(self):
         idx = self.graph.add_switch(
-            Switch(
-                id=None,
-                name='mux',
-                type=SwitchType.MUX,
-                timing=None,
-                sizing=SwitchSizing(mux_trans_size=1, buf_size=0)
-            )
-        )
+            Switch(id=None,
+                   name='mux',
+                   type=SwitchType.MUX,
+                   timing=None,
+                   sizing=SwitchSizing(mux_trans_size=1, buf_size=0)))
 
         self.assertEqual(idx, len(self.graph.switches) - 1)
         self.assertTrue('mux' in self.graph.switch_name_map.keys())
@@ -228,14 +216,11 @@ class Graph2Tests(unittest.TestCase):
             self.graph.get_switch_id('mux')
 
         idx = self.graph.add_switch(
-            Switch(
-                id=None,
-                name='mux',
-                type=SwitchType.MUX,
-                timing=None,
-                sizing=SwitchSizing(mux_trans_size=1, buf_size=0)
-            )
-        )
+            Switch(id=None,
+                   name='mux',
+                   type=SwitchType.MUX,
+                   timing=None,
+                   sizing=SwitchSizing(mux_trans_size=1, buf_size=0)))
 
         lu_idx = self.graph.get_switch_id('mux')
         self.assertEqual(idx, lu_idx)
@@ -243,25 +228,24 @@ class Graph2Tests(unittest.TestCase):
 
 class Graph2MediumTests(unittest.TestCase):
     def setUp(self):
-        switch_timing = SwitchTiming(
-            r=0, c_in=1, c_out=2, t_del=0, c_internal=0, p_cost=0
-        )
+        switch_timing = SwitchTiming(r=0,
+                                     c_in=1,
+                                     c_out=2,
+                                     t_del=0,
+                                     c_internal=0,
+                                     p_cost=0)
         switch_sizing = SwitchSizing(mux_trans_size=0, buf_size=1)
         self.switches = [
-            Switch(
-                id=0,
-                name='mux',
-                type=SwitchType.MUX,
-                timing=switch_timing,
-                sizing=switch_sizing
-            ),
-            Switch(
-                id=1,
-                name='__vpr_delayless_switch__',
-                type=SwitchType.SHORT,
-                timing=switch_timing,
-                sizing=switch_sizing
-            ),
+            Switch(id=0,
+                   name='mux',
+                   type=SwitchType.MUX,
+                   timing=switch_timing,
+                   sizing=switch_sizing),
+            Switch(id=1,
+                   name='__vpr_delayless_switch__',
+                   type=SwitchType.SHORT,
+                   timing=switch_timing,
+                   sizing=switch_sizing),
         ]
 
         seg_timing = SegmentTiming(r_per_meter=1, c_per_meter=1)
@@ -275,18 +259,21 @@ class Graph2MediumTests(unittest.TestCase):
             PinClass(type=PinType.OUTPUT, pin=[Pin(ptc=1, name='p3')]),
         ]
         self.block_types = [
-            BlockType(
-                id=0, name='b0', width=1, height=1, pin_class=pin_classes0
-            ),
-            BlockType(
-                id=1, name='b1', width=1, height=1, pin_class=pin_classes1
-            ),
+            BlockType(id=0,
+                      name='b0',
+                      width=1,
+                      height=1,
+                      pin_class=pin_classes0),
+            BlockType(id=1,
+                      name='b1',
+                      width=1,
+                      height=1,
+                      pin_class=pin_classes1),
         ]
 
         self.grid = [
-            GridLoc(
-                x=0, y=0, block_type_id=0, width_offset=0, height_offset=0
-            ),
+            GridLoc(x=0, y=0, block_type_id=0, width_offset=0,
+                    height_offset=0),
         ]
 
         node_timing = NodeTiming(r=0, c=0)
@@ -296,14 +283,12 @@ class Graph2MediumTests(unittest.TestCase):
                 type=NodeType.IPIN,
                 direction=NodeDirection.NO_DIR,
                 capacity=1,
-                loc=NodeLoc(
-                    x_low=0,
-                    x_high=0,
-                    y_low=0,
-                    y_high=0,
-                    side=Direction.LEFT,
-                    ptc=0
-                ),
+                loc=NodeLoc(x_low=0,
+                            x_high=0,
+                            y_low=0,
+                            y_high=0,
+                            side=Direction.LEFT,
+                            ptc=0),
                 timing=node_timing,
                 metadata=None,
                 segment=NodeSegment(segment_id=0),
@@ -315,14 +300,12 @@ class Graph2MediumTests(unittest.TestCase):
                 type=NodeType.SINK,
                 direction=NodeDirection.NO_DIR,
                 capacity=1,
-                loc=NodeLoc(
-                    x_low=0,
-                    x_high=0,
-                    y_low=0,
-                    y_high=0,
-                    side=Direction.NO_SIDE,
-                    ptc=0
-                ),
+                loc=NodeLoc(x_low=0,
+                            x_high=0,
+                            y_low=0,
+                            y_high=0,
+                            side=Direction.NO_SIDE,
+                            ptc=0),
                 timing=node_timing,
                 metadata=None,
                 segment=NodeSegment(segment_id=0),
@@ -334,14 +317,12 @@ class Graph2MediumTests(unittest.TestCase):
                 type=NodeType.OPIN,
                 direction=NodeDirection.NO_DIR,
                 capacity=1,
-                loc=NodeLoc(
-                    x_low=0,
-                    x_high=0,
-                    y_low=0,
-                    y_high=0,
-                    side=Direction.LEFT,
-                    ptc=1
-                ),
+                loc=NodeLoc(x_low=0,
+                            x_high=0,
+                            y_low=0,
+                            y_high=0,
+                            side=Direction.LEFT,
+                            ptc=1),
                 timing=node_timing,
                 metadata=None,
                 segment=NodeSegment(segment_id=0),
@@ -353,14 +334,12 @@ class Graph2MediumTests(unittest.TestCase):
                 type=NodeType.SOURCE,
                 direction=NodeDirection.NO_DIR,
                 capacity=1,
-                loc=NodeLoc(
-                    x_low=0,
-                    x_high=0,
-                    y_low=0,
-                    y_high=0,
-                    side=Direction.NO_SIDE,
-                    ptc=1
-                ),
+                loc=NodeLoc(x_low=0,
+                            x_high=0,
+                            y_low=0,
+                            y_high=0,
+                            side=Direction.NO_SIDE,
+                            ptc=1),
                 timing=node_timing,
                 metadata=None,
                 segment=NodeSegment(segment_id=0),
@@ -369,10 +348,8 @@ class Graph2MediumTests(unittest.TestCase):
             ),
         ]
 
-        self.graph = Graph(
-            self.switches, self.segments, self.block_types, self.grid,
-            deepcopy(self.nodes)
-        )
+        self.graph = Graph(self.switches, self.segments, self.block_types,
+                           self.grid, deepcopy(self.nodes))
 
     def test_block_type_at_loc(self):
         loc = (0, 0)

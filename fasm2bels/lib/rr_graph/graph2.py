@@ -60,15 +60,16 @@ class ChannelList(namedtuple('ChannelList', 'index info')):
     """
 
 
-class Channels(namedtuple(
-        'Channels', 'chan_width_max x_min y_min x_max y_max x_list y_list')):
+class Channels(
+        namedtuple('Channels',
+                   'chan_width_max x_min y_min x_max y_max x_list y_list')):
     """Encapsulation for VPR channels tag
     See: https://vtr-verilog-to-routing.readthedocs.io/en/latest/vpr/file_formats.html#tag-channel-channel
     """  # noqa: E501
 
 
-class SwitchTiming(namedtuple('SwitchTiming',
-                              'r c_in c_out c_internal t_del p_cost')):
+class SwitchTiming(
+        namedtuple('SwitchTiming', 'r c_in c_out c_internal t_del p_cost')):
     """Encapsulation for timing attributes of a VPR switch
     see: https://vtr-verilog-to-routing.readthedocs.io/en/latest/arch/reference.html#switches
     """
@@ -116,8 +117,8 @@ class BlockType(namedtuple('BlockType', 'id name width height pin_class')):
     """  # noqa: E501
 
 
-class GridLoc(namedtuple('GridLoc',
-                         'x y block_type_id width_offset height_offset')):
+class GridLoc(
+        namedtuple('GridLoc', 'x y block_type_id width_offset height_offset')):
     """
     """
 
@@ -132,8 +133,8 @@ class NodeLoc(namedtuple('NodeLoc', 'x_low y_low x_high y_high side ptc')):
     """
 
 
-class NodeMetadata(namedtuple('NodeMetadata',
-                              'name x_offset y_offset z_offset value')):
+class NodeMetadata(
+        namedtuple('NodeMetadata', 'name x_offset y_offset z_offset value')):
     """https://vtr-verilog-to-routing.readthedocs.io/en/latest/arch/reference.html#architecture-metadata
     """
 
@@ -187,10 +188,11 @@ class ConnectionBoxes(namedtuple('ConnectionBoxes', 'x_dim y_dim boxes')):
     pass
 
 
-class Node(namedtuple(
-        'Node',
-        'id type direction capacity loc timing metadata segment canonical_loc connection_box'
-)):
+class Node(
+        namedtuple(
+            'Node',
+            'id type direction capacity loc timing metadata segment canonical_loc connection_box'
+        )):
     """https://vtr-verilog-to-routing.readthedocs.io/en/latest/vpr/file_formats.html#tag-nodes-node
     """
 
@@ -219,17 +221,14 @@ class Graph(object):
     This class does not handle serialization.  A format specific class handles
     serdes takes.
     """
-
-    def __init__(
-            self,
-            switches,
-            segments,
-            block_types,
-            grid,
-            nodes,
-            edges=None,
-            build_pin_edges=True
-    ):
+    def __init__(self,
+                 switches,
+                 segments,
+                 block_types,
+                 grid,
+                 nodes,
+                 edges=None,
+                 build_pin_edges=True):
         self.switches = switches
         self.next_switch_id = max(switch.id for switch in self.switches) + 1
 
@@ -243,8 +242,8 @@ class Graph(object):
 
         assert '__vpr_delayless_switch__' in self.switch_name_map, self.switch_name_map.keys(
         )
-        self.delayless_switch = self.switch_name_map['__vpr_delayless_switch__'
-                                                     ]
+        self.delayless_switch = self.switch_name_map[
+            '__vpr_delayless_switch__']
 
         self.segments = segments
         self.segment_name_map = {}
@@ -288,8 +287,8 @@ class Graph(object):
             for pin_class_idx, pin_class in enumerate(block_type.pin_class):
                 for pin in pin_class.pin:
                     assert pin.name not in self.pin_name_map
-                    self.pin_name_map[
-                        pin.name] = (block_type.id, pin_class_idx, pin.ptc)
+                    self.pin_name_map[pin.name] = (block_type.id,
+                                                   pin_class_idx, pin.ptc)
                     self.pin_ptc_to_name_map[(block_type.id,
                                               pin.ptc)] = pin.name
 
@@ -312,15 +311,13 @@ class Graph(object):
             ):
                 key = (node.loc.x_low, node.loc.y_low, node.loc.ptc)
                 assert key not in self.loc_pin_class_map, (
-                    node, self.loc_pin_class_map[key]
-                )
+                    node, self.loc_pin_class_map[key])
                 self.loc_pin_class_map[key] = node.id
 
         # Rebuild initial edges of IPIN -> SINK and SOURCE -> OPIN.
         for loc in grid:
             assert loc.block_type_id >= 0 and loc.block_type_id <= len(
-                self.block_types
-            ), loc.block_type_id
+                self.block_types), loc.block_type_id
             block_type = self.block_types[loc.block_type_id]
 
             key = (loc.x, loc.y)
@@ -328,8 +325,8 @@ class Graph(object):
             self.loc_map[key] = loc
 
             for pin_class_idx, pin_class in enumerate(block_type.pin_class):
-                pin_class_node = self.loc_pin_class_map[
-                    (loc.x, loc.y, pin_class_idx)]
+                pin_class_node = self.loc_pin_class_map[(loc.x, loc.y,
+                                                         pin_class_idx)]
 
                 # Skip building IPIN -> SINK and OPIN -> SOURCE graph if edges
                 # are not required.
@@ -340,11 +337,9 @@ class Graph(object):
                     for pin_node, _ in self.loc_pin_map[(loc.x, loc.y,
                                                          pin.ptc)]:
                         if pin_class.type == PinType.OUTPUT:
-                            self.add_edge(
-                                src_node=pin_class_node,
-                                sink_node=pin_node,
-                                switch_id=self.delayless_switch
-                            )
+                            self.add_edge(src_node=pin_class_node,
+                                          sink_node=pin_node,
+                                          switch_id=self.delayless_switch)
                         elif pin_class.type == PinType.INPUT:
                             self.add_edge(
                                 src_node=pin_node,
@@ -381,16 +376,16 @@ class Graph(object):
         )
 
     def _create_node(
-            self,
-            type,
-            direction,
-            loc,
-            segment,
-            timing,
-            capacity=1,
-            metadata=None,
-            canonical_loc=None,
-            connection_box=None,
+        self,
+        type,
+        direction,
+        loc,
+        segment,
+        timing,
+        capacity=1,
+        metadata=None,
+        canonical_loc=None,
+        connection_box=None,
     ):
 
         if timing is None:
@@ -411,8 +406,7 @@ class Graph(object):
                 segment=segment,
                 canonical_loc=canonical_loc,
                 connection_box=connection_box,
-            )
-        )
+            ))
 
         return self.nodes[-1].id
 
@@ -423,16 +417,16 @@ class Graph(object):
         return self.delayless_switch
 
     def add_track(
-            self,
-            track,
-            segment_id,
-            capacity=1,
-            timing=None,
-            name=None,
-            ptc=None,
-            direction=NodeDirection.BI_DIR,
-            canonical_loc=None,
-            connection_box=None,
+        self,
+        track,
+        segment_id,
+        capacity=1,
+        timing=None,
+        name=None,
+        ptc=None,
+        direction=NodeDirection.BI_DIR,
+        canonical_loc=None,
+        connection_box=None,
     ):
         """Take a Track and add node to the graph with supplimental data"""
 
@@ -474,14 +468,14 @@ class Graph(object):
                 metadata=metadata,
                 canonical_loc=canonical_loc,
                 connection_box=connection_box,
-            )
-        )
+            ))
 
         return self.tracks[-1]
 
-    def create_pin_name_from_tile_type_and_pin(
-            self, tile_type, port_name, pin_idx=0
-    ):
+    def create_pin_name_from_tile_type_and_pin(self,
+                                               tile_type,
+                                               port_name,
+                                               pin_idx=0):
         return '{}.{}[{}]'.format(tile_type, port_name, pin_idx)
 
     def get_nodes_for_pin(self, loc, pin_name):
@@ -491,28 +485,31 @@ class Graph(object):
 
         return self.loc_pin_map[(loc[0], loc[1], pin_idx)]
 
-    def _create_edge(
-            self, src_node, sink_node, switch_id, name=None, value=''
-    ):
+    def _create_edge(self,
+                     src_node,
+                     sink_node,
+                     switch_id,
+                     name=None,
+                     value=''):
         assert src_node >= 0 and src_node < len(self.nodes), src_node
         assert sink_node >= 0 and sink_node < len(self.nodes), sink_node
         assert switch_id >= 0 and switch_id < len(self.switches), switch_id
 
         if name is not None:
             metadata = [
-                NodeMetadata(
-                    name=name, x_offset=0, y_offset=0, z_offset=0, value=value
-                )
+                NodeMetadata(name=name,
+                             x_offset=0,
+                             y_offset=0,
+                             z_offset=0,
+                             value=value)
             ]
         else:
             metadata = None
 
-        return Edge(
-            src_node=src_node,
-            sink_node=sink_node,
-            switch_id=switch_id,
-            metadata=metadata
-        )
+        return Edge(src_node=src_node,
+                    sink_node=sink_node,
+                    switch_id=switch_id,
+                    metadata=metadata)
 
     def add_edge(self, src_node, sink_node, switch_id, name=None, value=''):
         """Add Edge to the graph
@@ -520,14 +517,11 @@ class Graph(object):
         Appends a new edge to the graph and retruns the index in the edges list
         """
         self.edges.append(
-            self._create_edge(
-                src_node=src_node,
-                sink_node=sink_node,
-                switch_id=switch_id,
-                name=name,
-                value=value
-            )
-        )
+            self._create_edge(src_node=src_node,
+                              sink_node=sink_node,
+                              switch_id=switch_id,
+                              name=name,
+                              value=value))
 
         return len(self.edges) - 1
 
@@ -615,14 +609,12 @@ class Graph(object):
 
         if pool is not None:
             for y in x_tracks:
-                x_channel_models[y] = pool.apply_async(
-                    process_track, (x_tracks[y], )
-                )
+                x_channel_models[y] = pool.apply_async(process_track,
+                                                       (x_tracks[y], ))
 
             for x in y_tracks:
-                y_channel_models[x] = pool.apply_async(
-                    process_track, (y_tracks[x], )
-                )
+                y_channel_models[x] = pool.apply_async(process_track,
+                                                       (y_tracks[x], ))
 
         for y in progressbar_utils.progressbar(range(max(x_tracks) + 1)):
             if y in x_tracks:
@@ -659,40 +651,36 @@ class Graph(object):
 
         num_padding = 0
         for chan, channel_model in x_channel_models.items():
-            for ptc, start, end in channel_model.fill_empty(max(x_min, 1),
-                                                            x_max):
+            for ptc, start, end in channel_model.fill_empty(
+                    max(x_min, 1), x_max):
                 num_padding += 1
-                self.add_track(
-                    track=Track(
-                        direction='X',
-                        x_low=start,
-                        y_low=chan,
-                        x_high=end,
-                        y_high=chan,
-                    ),
-                    segment_id=pad_segment,
-                    capacity=0,
-                    timing=None,
-                    ptc=ptc
-                )
+                self.add_track(track=Track(
+                    direction='X',
+                    x_low=start,
+                    y_low=chan,
+                    x_high=end,
+                    y_high=chan,
+                ),
+                               segment_id=pad_segment,
+                               capacity=0,
+                               timing=None,
+                               ptc=ptc)
 
         for chan, channel_model in y_channel_models.items():
-            for ptc, start, end in channel_model.fill_empty(max(y_min, 1),
-                                                            y_max):
+            for ptc, start, end in channel_model.fill_empty(
+                    max(y_min, 1), y_max):
                 num_padding += 1
-                self.add_track(
-                    track=Track(
-                        direction='Y',
-                        x_low=chan,
-                        y_low=start,
-                        x_high=chan,
-                        y_high=end,
-                    ),
-                    segment_id=pad_segment,
-                    capacity=0,
-                    timing=None,
-                    ptc=ptc
-                )
+                self.add_track(track=Track(
+                    direction='Y',
+                    x_low=chan,
+                    y_low=start,
+                    x_high=chan,
+                    y_high=end,
+                ),
+                               segment_id=pad_segment,
+                               capacity=0,
+                               timing=None,
+                               ptc=ptc)
 
         print('Number padding nodes {}'.format(num_padding))
 

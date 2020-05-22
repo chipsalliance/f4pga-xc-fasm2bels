@@ -8,11 +8,11 @@ from prjxray import tile
 from fasm2bels.lib import progressbar_utils
 from fasm2bels.database.connection_database_cache import DatabaseCache
 
+
 def create_tables(conn):
     """ Create connection database scheme. """
-    connection_database_sql_file = os.path.join(
-        os.path.dirname(__file__), "connection_database.sql"
-    )
+    connection_database_sql_file = os.path.join(os.path.dirname(__file__),
+                                                "connection_database.sql")
     with open(connection_database_sql_file, 'r') as f:
         c = conn.cursor()
         c.executescript(f.read())
@@ -26,9 +26,8 @@ def import_site_type(db, write_cur, site_types, site_type_name):
     if site_type_name in site_types:
         return
 
-    write_cur.execute(
-        "INSERT INTO site_type(name) VALUES (?)", (site_type_name, )
-    )
+    write_cur.execute("INSERT INTO site_type(name) VALUES (?)",
+                      (site_type_name, ))
     site_types[site_type_name] = write_cur.lastrowid
 
     for site_pin in site_type.get_site_pins():
@@ -38,33 +37,26 @@ def import_site_type(db, write_cur, site_types, site_type_name):
             """
 INSERT INTO site_pin(name, site_type_pkey, direction)
 VALUES
-  (?, ?, ?)""", (
-                pin_info.name, site_types[site_type_name],
-                pin_info.direction.value
-            )
-        )
+  (?, ?, ?)""", (pin_info.name, site_types[site_type_name],
+                 pin_info.direction.value))
 
 
-def import_tile_type(
-        db, write_cur, tile_types, site_types, tile_type_name
-):
+def import_tile_type(db, write_cur, tile_types, site_types, tile_type_name):
     assert tile_type_name not in tile_types
     tile_type = db.get_tile_type(tile_type_name)
 
     # For Zynq7 PSS* tiles build a list of sites, wires and PIPs to ignore
     if tile_type_name.startswith("PSS"):
         masked_sites, masked_wires, masked_pips = build_pss_object_mask(
-            db, tile_type_name
-        )
+            db, tile_type_name)
 
     else:
         masked_sites = []
         masked_wires = []
         masked_pips = []
 
-    write_cur.execute(
-        "INSERT INTO tile_type(name) VALUES (?)", (tile_type_name, )
-    )
+    write_cur.execute("INSERT INTO tile_type(name) VALUES (?)",
+                      (tile_type_name, ))
     tile_types[tile_type_name] = write_cur.lastrowid
 
     wires = {}
@@ -77,9 +69,10 @@ def import_tile_type(
 INSERT INTO wire_in_tile(name, phy_tile_type_pkey, tile_type_pkey)
 VALUES
   (?, ?, ?)""", (
-                wire, tile_types[tile_type_name], tile_types[tile_type_name],
-            )
-        )
+                wire,
+                tile_types[tile_type_name],
+                tile_types[tile_type_name],
+            ))
         wires[wire] = write_cur.lastrowid
 
     for site in tile_type.get_sites():
@@ -90,9 +83,8 @@ VALUES
             import_site_type(db, write_cur, site_types, site.type)
 
 
-def add_wire_to_site_relation(
-        db, write_cur, tile_types, site_types, tile_type_name
-):
+def add_wire_to_site_relation(db, write_cur, tile_types, site_types,
+                              tile_type_name):
     tile_type = db.get_tile_type(tile_type_name)
     for site in tile_type.get_sites():
 
@@ -103,11 +95,8 @@ def add_wire_to_site_relation(
             """
 INSERT INTO site(name, x_coord, y_coord, site_type_pkey, tile_type_pkey)
 VALUES
-  (?, ?, ?, ?, ?)""", (
-                site.name, site.x, site.y, site_types[site.type],
-                tile_types[tile_type_name]
-            )
-        )
+  (?, ?, ?, ?, ?)""", (site.name, site.x, site.y, site_types[site.type],
+                       tile_types[tile_type_name]))
 
         site_pkey = write_cur.lastrowid
 
@@ -120,8 +109,7 @@ FROM
   site_pin
 WHERE
   name = ?
-  AND site_type_pkey = ?""", (site_pin.name, site_types[site.type])
-            )
+  AND site_type_pkey = ?""", (site_pin.name, site_types[site.type]))
             result = write_cur.fetchone()
             site_pin_pkey = result[0]
 
@@ -134,36 +122,28 @@ SET
   site_pin_pkey = ?
 WHERE
   name = ?
-  and tile_type_pkey = ?;""", (
-                    site_pkey, site_pin_pkey,
-                    site_pin.wire, tile_types[tile_type_name]
-                )
-            )
+  and tile_type_pkey = ?;""", (site_pkey, site_pin_pkey, site_pin.wire,
+                               tile_types[tile_type_name]))
 
 
 def build_tile_type_indicies(write_cur):
     write_cur.execute(
-        "CREATE INDEX site_pin_index ON site_pin(name, site_type_pkey);"
-    )
+        "CREATE INDEX site_pin_index ON site_pin(name, site_type_pkey);")
     write_cur.execute(
-        "CREATE INDEX wire_name_index ON wire_in_tile(name, tile_type_pkey);"
-    )
+        "CREATE INDEX wire_name_index ON wire_in_tile(name, tile_type_pkey);")
     write_cur.execute(
         "CREATE INDEX wire_tile_site_index ON wire_in_tile(tile_type_pkey, site_pkey);"
     )
     write_cur.execute(
-        "CREATE INDEX wire_site_pin_index ON wire_in_tile(site_pin_pkey);"
-    )
+        "CREATE INDEX wire_site_pin_index ON wire_in_tile(site_pin_pkey);")
     write_cur.execute(
-        "CREATE INDEX tile_type_index ON phy_tile(tile_type_pkey);"
-    )
+        "CREATE INDEX tile_type_index ON phy_tile(tile_type_pkey);")
 
 
 def build_other_indicies(write_cur):
     write_cur.execute("CREATE INDEX phy_tile_name_index ON phy_tile(name);")
     write_cur.execute(
-        "CREATE INDEX phy_tile_location_index ON phy_tile(grid_x, grid_y);"
-    )
+        "CREATE INDEX phy_tile_location_index ON phy_tile(grid_x, grid_y);")
 
 
 def import_phy_grid(db, grid, conn):
@@ -179,9 +159,8 @@ def import_phy_grid(db, grid, conn):
             if gridinfo.tile_type in tile_types:
                 continue
 
-            import_tile_type(
-                db, write_cur, tile_types, site_types, gridinfo.tile_type
-            )
+            import_tile_type(db, write_cur, tile_types, site_types,
+                             gridinfo.tile_type)
 
     write_cur.connection.commit()
 
@@ -189,9 +168,8 @@ def import_phy_grid(db, grid, conn):
     write_cur.connection.commit()
 
     for tile_type in tile_types:
-        add_wire_to_site_relation(
-            db, write_cur, tile_types, site_types, tile_type
-        )
+        add_wire_to_site_relation(db, write_cur, tile_types, site_types,
+                                  tile_type)
 
     for tile in grid.tiles():
         gridinfo = grid.gridinfo_at_tilename(tile)
@@ -209,8 +187,7 @@ VALUES
                 tile_types[gridinfo.tile_type],
                 loc.grid_x,
                 loc.grid_y,
-            )
-        )
+            ))
         phy_tile_pkey = write_cur.lastrowid
 
     build_other_indicies(write_cur)
@@ -232,8 +209,7 @@ def import_nodes(db, grid, conn):
 
         cur.execute(
             """SELECT pkey, tile_type_pkey FROM phy_tile WHERE name = ?;""",
-            (tile, )
-        )
+            (tile, ))
         phy_tile_pkey, tile_type_pkey = cur.fetchone()
 
         for wire in tile_type.get_wires():
@@ -241,8 +217,7 @@ def import_nodes(db, grid, conn):
             cur.execute(
                 """
 SELECT pkey FROM wire_in_tile WHERE name = ? and tile_type_pkey = ?;""",
-                (wire, tile_type_pkey)
-            )
+                (wire, tile_type_pkey))
 
             wire_in_tile_pkey = cur.fetchone()
             if wire_in_tile_pkey is None:
@@ -253,8 +228,7 @@ SELECT pkey FROM wire_in_tile WHERE name = ? and tile_type_pkey = ?;""",
                 """
 INSERT INTO wire(phy_tile_pkey, wire_in_tile_pkey)
 VALUES
-  (?, ?);""", (phy_tile_pkey, wire_in_tile_pkey)
-            )
+  (?, ?);""", (phy_tile_pkey, wire_in_tile_pkey))
 
             assert (tile, wire) not in tile_wire_map
             wire_pkey = write_cur.lastrowid
@@ -267,10 +241,10 @@ VALUES
 
     for connection in progressbar_utils.progressbar(
             connections.get_connections()):
-        a_pkey = tile_wire_map[
-            (connection.wire_a.tile, connection.wire_a.wire)]
-        b_pkey = tile_wire_map[
-            (connection.wire_b.tile, connection.wire_b.wire)]
+        a_pkey = tile_wire_map[(connection.wire_a.tile,
+                                connection.wire_a.wire)]
+        b_pkey = tile_wire_map[(connection.wire_b.tile,
+                                connection.wire_b.wire)]
 
         a_node = wires[a_pkey]
         b_node = wires[b_pkey]
@@ -308,8 +282,7 @@ VALUES
             UPDATE wire
                 SET node_pkey = ?
                 WHERE pkey = ?
-            ;""", (node_pkey, wire_pkey)
-            )
+            ;""", (node_pkey, wire_pkey))
 
     assert len(set(wires.keys()) ^ wires_assigned) == 0
 
@@ -318,11 +291,9 @@ VALUES
     del wires
 
     write_cur.execute(
-        "CREATE INDEX wire_in_tile_index ON wire(wire_in_tile_pkey);"
-    )
+        "CREATE INDEX wire_in_tile_index ON wire(wire_in_tile_pkey);")
     write_cur.execute(
-        "CREATE INDEX wire_index ON wire(phy_tile_pkey, wire_in_tile_pkey);"
-    )
+        "CREATE INDEX wire_index ON wire(phy_tile_pkey, wire_in_tile_pkey);")
     write_cur.execute("CREATE INDEX wire_node_index ON wire(node_pkey);")
 
     write_cur.connection.commit()
@@ -343,8 +314,7 @@ def import_nodes(db, grid, conn):
 
         cur.execute(
             """SELECT pkey, tile_type_pkey FROM phy_tile WHERE name = ?;""",
-            (tile, )
-        )
+            (tile, ))
         phy_tile_pkey, tile_type_pkey = cur.fetchone()
 
         for wire in tile_type.get_wires():
@@ -352,8 +322,7 @@ def import_nodes(db, grid, conn):
             cur.execute(
                 """
 SELECT pkey FROM wire_in_tile WHERE name = ? and tile_type_pkey = ?;""",
-                (wire, tile_type_pkey)
-            )
+                (wire, tile_type_pkey))
 
             wire_in_tile_pkey = cur.fetchone()
             if wire_in_tile_pkey is None:
@@ -364,8 +333,7 @@ SELECT pkey FROM wire_in_tile WHERE name = ? and tile_type_pkey = ?;""",
                 """
 INSERT INTO wire(phy_tile_pkey, wire_in_tile_pkey)
 VALUES
-  (?, ?);""", (phy_tile_pkey, wire_in_tile_pkey)
-            )
+  (?, ?);""", (phy_tile_pkey, wire_in_tile_pkey))
 
             assert (tile, wire) not in tile_wire_map
             wire_pkey = write_cur.lastrowid
@@ -378,10 +346,10 @@ VALUES
 
     for connection in progressbar_utils.progressbar(
             connections.get_connections()):
-        a_pkey = tile_wire_map[
-            (connection.wire_a.tile, connection.wire_a.wire)]
-        b_pkey = tile_wire_map[
-            (connection.wire_b.tile, connection.wire_b.wire)]
+        a_pkey = tile_wire_map[(connection.wire_a.tile,
+                                connection.wire_a.wire)]
+        b_pkey = tile_wire_map[(connection.wire_b.tile,
+                                connection.wire_b.wire)]
 
         a_node = wires[a_pkey]
         b_node = wires[b_pkey]
@@ -419,8 +387,7 @@ VALUES
             UPDATE wire
                 SET node_pkey = ?
                 WHERE pkey = ?
-            ;""", (node_pkey, wire_pkey)
-            )
+            ;""", (node_pkey, wire_pkey))
 
     assert len(set(wires.keys()) ^ wires_assigned) == 0
 
@@ -429,11 +396,9 @@ VALUES
     del wires
 
     write_cur.execute(
-        "CREATE INDEX wire_in_tile_index ON wire(wire_in_tile_pkey);"
-    )
+        "CREATE INDEX wire_in_tile_index ON wire(wire_in_tile_pkey);")
     write_cur.execute(
-        "CREATE INDEX wire_index ON wire(phy_tile_pkey, wire_in_tile_pkey);"
-    )
+        "CREATE INDEX wire_index ON wire(phy_tile_pkey, wire_in_tile_pkey);")
     write_cur.execute("CREATE INDEX wire_node_index ON wire(node_pkey);")
 
     write_cur.connection.commit()
@@ -443,8 +408,7 @@ def count_sites_on_nodes(conn):
     cur = conn.cursor()
 
     print("{}: Counting sites on nodes".format(datetime.datetime.now()))
-    cur.execute(
-        """
+    cur.execute("""
 WITH node_sites(node_pkey, number_site_pins) AS (
   SELECT
     wire.node_pkey,
@@ -461,15 +425,13 @@ SELECT
   max(node_sites.number_site_pins)
 FROM
   node_sites;
-"""
-    )
+""")
 
     # Nodes are only expected to have 1 site
     assert cur.fetchone()[0] == 1
 
     print("{}: Assigning site wires for nodes".format(datetime.datetime.now()))
-    cur.execute(
-        """
+    cur.execute("""
 WITH site_wires(wire_pkey, node_pkey) AS (
   SELECT
     wire.pkey,
@@ -491,10 +453,10 @@ SET
     WHERE
       site_wires.node_pkey = node.pkey
   );
-      """
-    )
+      """)
 
     cur.connection.commit()
+
 
 def create_channels(db_root, part, connection_database):
     db = prjxray.db.Database(db_root, part)
