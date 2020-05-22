@@ -51,11 +51,8 @@ def cleanup_capnp_leak(f):
     strays = {}
 
     # Some strays hold a reference to the input file
-    strays.update(
-        (id(obj), obj)
-        for obj in gc.get_referrers(f)
-        if 'capnp' in str(type(obj))
-    )
+    strays.update((id(obj), obj) for obj in gc.get_referrers(f)
+                  if 'capnp' in str(type(obj)))
 
     # Some strays are "floating"
     for obj in gc.get_objects():
@@ -68,11 +65,9 @@ def cleanup_capnp_leak(f):
         # a reference to them (via the _parent pointer).
         for obj_id in set(strays.keys()) - popped:
             popped.add(obj_id)
-            strays.update(
-                (id(obj), obj)
-                for obj in gc.get_referrers(strays[obj_id])
-                if 'capnp' in str(type(obj))
-            )
+            strays.update((id(obj), obj)
+                          for obj in gc.get_referrers(strays[obj_id])
+                          if 'capnp' in str(type(obj)))
 
         # Clear their _parent pointer
         for obj in strays.values():
@@ -118,14 +113,12 @@ def read_switch(sw):
 
 def read_segment(seg):
     timing = seg.timing
-    return graph2.Segment(
-        id=seg.id,
-        name=str(seg.name),
-        timing=graph2.SegmentTiming(
-            r_per_meter=timing.rPerMeter,
-            c_per_meter=timing.cPerMeter,
-        )
-    )
+    return graph2.Segment(id=seg.id,
+                          name=str(seg.name),
+                          timing=graph2.SegmentTiming(
+                              r_per_meter=timing.rPerMeter,
+                              c_per_meter=timing.cPerMeter,
+                          ))
 
 
 def read_pin(pin):
@@ -136,22 +129,20 @@ def read_pin(pin):
 
 
 def read_pin_class(pin_class):
-    return graph2.PinClass(
-        type=enum_from_string(graph2.PinType, pin_class.type),
-        pin=[read_pin(pin) for pin in pin_class.pins]
-    )
+    return graph2.PinClass(type=enum_from_string(graph2.PinType,
+                                                 pin_class.type),
+                           pin=[read_pin(pin) for pin in pin_class.pins])
 
 
 def read_block_type(block_type):
-    return graph2.BlockType(
-        id=block_type.id,
-        name=str(block_type.name),
-        width=block_type.width,
-        height=block_type.height,
-        pin_class=[
-            read_pin_class(pin_class) for pin_class in block_type.pinClasses
-        ]
-    )
+    return graph2.BlockType(id=block_type.id,
+                            name=str(block_type.name),
+                            width=block_type.width,
+                            height=block_type.height,
+                            pin_class=[
+                                read_pin_class(pin_class)
+                                for pin_class in block_type.pinClasses
+                            ])
 
 
 def read_grid_loc(grid_loc):
@@ -192,8 +183,7 @@ def read_node(node, new_node_id=None):
         metadata=None,
         segment=graph2.NodeSegment(segment_id=node.segment.segmentId),
         canonical_loc=None,
-        connection_box=None
-    )
+        connection_box=None)
 
 
 def read_edge(edge):
@@ -206,12 +196,12 @@ def read_edge(edge):
 
 
 def graph_from_capnp(
-        rr_graph_schema,
-        input_file_name,
-        progressbar=None,
-        filter_nodes=True,
-        load_edges=False,
-        rebase_nodes=False,
+    rr_graph_schema,
+    input_file_name,
+    progressbar=None,
+    filter_nodes=True,
+    load_edges=False,
+    rebase_nodes=False,
 ):
     """
     Loads relevant information about the routing resource graph from an capnp
@@ -224,9 +214,9 @@ def graph_from_capnp(
         progressbar = lambda x: x  # noqa: E731
 
     with open(input_file_name, 'rb') as f:
-        graph = rr_graph_schema.RrGraph.read(
-            f, traversal_limit_in_words=2**63 - 1
-        )
+        graph = rr_graph_schema.RrGraph.read(f,
+                                             traversal_limit_in_words=2**63 -
+                                             1)
 
         root_attrib = {
             'tool_comment': str(graph.toolComment),
@@ -244,8 +234,9 @@ def graph_from_capnp(
 
         nodes = []
         for n in progressbar(graph.rrNodes.nodes):
-            if filter_nodes and n.type not in ['source', 'sink', 'opin', 'ipin'
-                                               ]:
+            if filter_nodes and n.type not in [
+                    'source', 'sink', 'opin', 'ipin'
+            ]:
                 continue
 
             if rebase_nodes:
@@ -267,27 +258,25 @@ def graph_from_capnp(
         # Cleanup leaked capnp objects due to _parent in Cython.
         cleanup_capnp_leak(f)
 
-        return dict(
-            root_attrib=root_attrib,
-            switches=switches,
-            segments=segments,
-            block_types=block_types,
-            grid=grid,
-            nodes=nodes,
-            edges=edges
-        )
+        return dict(root_attrib=root_attrib,
+                    switches=switches,
+                    segments=segments,
+                    block_types=block_types,
+                    grid=grid,
+                    nodes=nodes,
+                    edges=edges)
 
 
 class Graph(object):
     def __init__(
-            self,
-            rr_graph_schema_fname,
-            input_file_name,
-            output_file_name=None,
-            progressbar=None,
-            build_pin_edges=True,
-            rebase_nodes=True,
-            filter_nodes=True,
+        self,
+        rr_graph_schema_fname,
+        input_file_name,
+        output_file_name=None,
+        progressbar=None,
+        build_pin_edges=True,
+        rebase_nodes=True,
+        filter_nodes=True,
     ):
         if progressbar is None:
             progressbar = lambda x: x  # noqa: E731
@@ -298,8 +287,7 @@ class Graph(object):
 
         self.rr_graph_schema = capnp.load(
             rr_graph_schema_fname,
-            imports=[os.path.dirname(os.path.dirname(capnp.__file__))]
-        )
+            imports=[os.path.dirname(os.path.dirname(capnp.__file__))])
 
         graph_input = graph_from_capnp(
             rr_graph_schema=self.rr_graph_schema,
@@ -346,11 +334,11 @@ class Graph(object):
         rr_graph.connectionBoxes.numBoxes = len(connection_box.boxes)
 
         connection_boxes = rr_graph.connectionBoxes.init(
-            'connectionBoxes', len(connection_box.boxes)
-        )
+            'connectionBoxes', len(connection_box.boxes))
 
-        for idx, (out_box, box) in enumerate(zip(connection_boxes,
-                                                 connection_box.boxes)):
+        for idx, (out_box,
+                  box) in enumerate(zip(connection_boxes,
+                                        connection_box.boxes)):
             out_box.id = idx
             out_box.name = box
 
@@ -374,22 +362,19 @@ class Graph(object):
             nodes_written += 1
 
             out_node.id = node_remap(node.id)
-            out_node.type = to_capnp_enum(
-                self.rr_graph_schema.NodeType, node.type
-            )
+            out_node.type = to_capnp_enum(self.rr_graph_schema.NodeType,
+                                          node.type)
             out_node.capacity = node.capacity
 
             if node.direction is not None:
                 out_node.direction = to_capnp_enum(
-                    self.rr_graph_schema.NodeDirection, node.direction
-                )
+                    self.rr_graph_schema.NodeDirection, node.direction)
 
             node_loc = out_node.loc
             node_loc.ptc = node.loc.ptc
             if node.loc.side is not None:
-                node_loc.side = to_capnp_enum(
-                    self.rr_graph_schema.LocSide, node.loc.side
-                )
+                node_loc.side = to_capnp_enum(self.rr_graph_schema.LocSide,
+                                              node.loc.side)
             node_loc.xhigh = node.loc.x_high
             node_loc.xlow = node.loc.x_low
             node_loc.yhigh = node.loc.y_high
@@ -477,9 +462,8 @@ class Graph(object):
         for out_switch, switch in zip(switches, self.graph.switches):
             out_switch.id = switch.id
             out_switch.name = switch.name
-            out_switch.type = to_capnp_enum(
-                self.rr_graph_schema.SwitchType, switch.type
-            )
+            out_switch.type = to_capnp_enum(self.rr_graph_schema.SwitchType,
+                                            switch.type)
 
             if switch.timing:
                 timing = out_switch.timing
@@ -516,9 +500,8 @@ class Graph(object):
         Writes the RR graph block types.
         """
 
-        block_types = rr_graph.blockTypes.init(
-            'blockTypes', len(self.graph.block_types)
-        )
+        block_types = rr_graph.blockTypes.init('blockTypes',
+                                               len(self.graph.block_types))
 
         for out_blk, blk in zip(block_types, self.graph.block_types):
             out_blk.id = blk.id
@@ -530,8 +513,7 @@ class Graph(object):
 
             for out_pin_class, pin_class in zip(pin_classes, blk.pin_class):
                 out_pin_class.type = to_capnp_enum(
-                    self.rr_graph_schema.PinType, pin_class.type
-                )
+                    self.rr_graph_schema.PinType, pin_class.type)
 
                 pins = out_pin_class.init('pins', len(pin_class.pin))
 
@@ -552,16 +534,14 @@ class Graph(object):
             out_grid_loc.widthOffset = grid_loc.width_offset
             out_grid_loc.heightOffset = grid_loc.height_offset
 
-    def serialize_to_capnp(
-            self,
-            channels_obj,
-            connection_box_obj,
-            num_nodes,
-            nodes_obj,
-            num_edges,
-            edges_obj,
-            node_remap=lambda x: x
-    ):
+    def serialize_to_capnp(self,
+                           channels_obj,
+                           connection_box_obj,
+                           num_nodes,
+                           nodes_obj,
+                           num_edges,
+                           edges_obj,
+                           node_remap=lambda x: x):
         """
         Writes the routing graph to the capnp file.
         """

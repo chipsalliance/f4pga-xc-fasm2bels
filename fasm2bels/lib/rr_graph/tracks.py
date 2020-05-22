@@ -106,8 +106,7 @@ def make_tracks(xs, ys, points, grid_width=None, grid_height=None):
                 x_high=x,
                 y_low=y_low,
                 y_high=y_high,
-            )
-        )
+            ))
         y_tracks.append(len(tracks) - 1)
 
     for y in ys:
@@ -123,8 +122,7 @@ def make_tracks(xs, ys, points, grid_width=None, grid_height=None):
                 x_high=x_high,
                 y_low=y,
                 y_high=y,
-            )
-        )
+            ))
         x_tracks.append(len(tracks) - 1)
 
     if len(tracks) == 1:
@@ -153,7 +151,6 @@ def make_tracks(xs, ys, points, grid_width=None, grid_height=None):
 class Tracks(object):
     """Tracks groups tracks and their connections (AKA Node).
     """
-
     def __init__(self, tracks, track_connections):
         self.tracks = tracks
         self.track_connections = track_connections
@@ -171,17 +168,16 @@ class Tracks(object):
             if track_connections[conn_a] is track_connections[conn_b]:
                 continue
 
-            assert self.tracks[conn_a].direction != self.tracks[conn_b
-                                                                ].direction
+            assert self.tracks[conn_a].direction != self.tracks[
+                conn_b].direction
 
             track_connections[conn_a] |= track_connections[conn_b]
 
             for track_idx in track_connections[conn_a]:
                 track_connections[track_idx] = track_connections[conn_a]
 
-        assert len(
-            set(id(s) for s in track_connections.values())
-        ) == 1, track_connections
+        assert len(set(
+            id(s) for s in track_connections.values())) == 1, track_connections
 
     def is_wire_adjacent_to_track(self, idx, coord):
         """returns direction if wire at coord is adjacent to track at index idx
@@ -193,9 +189,9 @@ class Tracks(object):
         if track.direction == 'X':
             pin_top = track.y_low == wire_y
             pin_bottom = track.y_low == wire_y - 1
-            adjacent_channel = (pin_top or pin_bottom) and (
-                track.x_low <= wire_x and wire_x <= track.x_high
-            )
+            adjacent_channel = (pin_top
+                                or pin_bottom) and (track.x_low <= wire_x
+                                                    and wire_x <= track.x_high)
 
             if adjacent_channel:
                 if pin_top:
@@ -210,9 +206,9 @@ class Tracks(object):
         elif track.direction == 'Y':
             pin_right = track.x_low == wire_x
             pin_left = track.x_low == wire_x - 1
-            adjacent_channel = (pin_right or pin_left) and (
-                track.y_low <= wire_y and wire_y <= track.y_high
-            )
+            adjacent_channel = (pin_right
+                                or pin_left) and (track.y_low <= wire_y
+                                                  and wire_y <= track.y_high)
 
             if adjacent_channel:
                 if pin_right:

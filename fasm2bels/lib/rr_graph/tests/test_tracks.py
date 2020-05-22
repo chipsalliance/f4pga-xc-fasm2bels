@@ -17,16 +17,14 @@ class TracksTests(unittest.TestCase):
 
     def test_verify_tracks_not_connected(self):
         self.trks.tracks.append(
-            Track(direction='X', x_low=1, x_high=3, y_low=4, y_high=4)
-        )
+            Track(direction='X', x_low=1, x_high=3, y_low=4, y_high=4))
 
         with self.assertRaises(AssertionError):
             self.trks.verify_tracks()
 
     def test_verify_tracks_directon_error(self):
         self.trks.tracks.append(
-            Track(direction='Y', x_low=1, x_high=1, y_low=5, y_high=6)
-        )
+            Track(direction='Y', x_low=1, x_high=1, y_low=5, y_high=6))
         self.trks.track_connections.append((0, 3))
 
         with self.assertRaises(AssertionError):
@@ -34,25 +32,19 @@ class TracksTests(unittest.TestCase):
 
     def test_adjacent_simple(self):
 
-        self.assertEqual(
-            self.trks.is_wire_adjacent_to_track(0, (1, 1)), Direction.RIGHT
-        )
-        self.assertEqual(
-            self.trks.is_wire_adjacent_to_track(0, (2, 1)), Direction.LEFT
-        )
-        self.assertEqual(
-            self.trks.is_wire_adjacent_to_track(0, (5, 2)), Direction.NO_SIDE
-        )
+        self.assertEqual(self.trks.is_wire_adjacent_to_track(0, (1, 1)),
+                         Direction.RIGHT)
+        self.assertEqual(self.trks.is_wire_adjacent_to_track(0, (2, 1)),
+                         Direction.LEFT)
+        self.assertEqual(self.trks.is_wire_adjacent_to_track(0, (5, 2)),
+                         Direction.NO_SIDE)
 
-        self.assertEqual(
-            self.trks.is_wire_adjacent_to_track(1, (2, 1)), Direction.TOP
-        )
-        self.assertEqual(
-            self.trks.is_wire_adjacent_to_track(1, (2, 2)), Direction.BOTTOM
-        )
-        self.assertEqual(
-            self.trks.is_wire_adjacent_to_track(1, (5, 2)), Direction.NO_SIDE
-        )
+        self.assertEqual(self.trks.is_wire_adjacent_to_track(1, (2, 1)),
+                         Direction.TOP)
+        self.assertEqual(self.trks.is_wire_adjacent_to_track(1, (2, 2)),
+                         Direction.BOTTOM)
+        self.assertEqual(self.trks.is_wire_adjacent_to_track(1, (5, 2)),
+                         Direction.NO_SIDE)
 
     def test_adjacenet_assert(self):
         trk_array = [

@@ -62,8 +62,7 @@ FROM wire_in_tile
 INNER JOIN tiles
 ON tiles.tile_type_pkey = wire_in_tile.phy_tile_type_pkey
 WHERE
-    name = ?;""", (can_x, can_y, pin)
-                )
+    name = ?;""", (can_x, can_y, pin))
 
             results = c.fetchall()
 
@@ -79,8 +78,7 @@ WHERE
 
         c.execute(
             "SELECT pkey FROM wire WHERE wire_in_tile_pkey = ? AND phy_tile_pkey = ?",
-            (wire_in_tile_pkey, phy_tile_pkey)
-        )
+            (wire_in_tile_pkey, phy_tile_pkey))
         wire_pkey = c.fetchone()[0]
 
         yield Net(name=net, wire_pkey=wire_pkey, tile=tile_name, site_pin=pin)

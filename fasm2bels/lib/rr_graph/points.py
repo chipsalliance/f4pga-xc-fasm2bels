@@ -21,7 +21,6 @@ _NamedPosition = namedtuple("NamedPosition", ["pos", "names"])
 
 class NamedPosition(_NamedPosition):
     """Class to store a position and a set of names associated with it."""
-
     def __new__(cls, pos, names):
         assert_type(pos, Position)
         assert_type(names, list)
@@ -88,8 +87,7 @@ class StraightSegment(list):
         assert_type(positions, list)
         if direction == StraightSegment.Type.S:
             assert len(positions) == 1, (
-                "Stubs must only have one position not {}".format(positions)
-            )
+                "Stubs must only have one position not {}".format(positions))
         else:
             for p in positions:
                 assert_type(p, (Position, NamedPosition))
@@ -176,8 +174,7 @@ class StraightSegment(list):
             assert len(self) <= 1, "Stub must have at most single point"
             self.direction = direction
         assert direction == self.direction, "Can't append in different direction {} {}".format(
-            self.direction, direction
-        )
+            self.direction, direction)
         list.append(self, pos)
 
     def extend_to(self, pos):
@@ -568,8 +565,7 @@ def decompose_into_straight_lines(positions):
             assert_type(np, NamedPosition)
             if not is_spine:
                 assert np.pos not in position_used_by, (
-                    np.pos, s, position_used_by[np.pos]
-                )
+                    np.pos, s, position_used_by[np.pos])
                 position_used_by[np.pos] = (np, s)
 
         for p, (other_p, other_s) in position_used_by.items():
@@ -780,9 +776,8 @@ class Point(object):
         self.tracks = 0
 
     def __repr__(self):
-        return 'Point(coord=({},{}),tracks={})'.format(
-            self.x, self.y, repr(self.tracks)
-        )
+        return 'Point(coord=({},{}),tracks={})'.format(self.x, self.y,
+                                                       repr(self.tracks))
 
 
 class Track(object):
@@ -800,14 +795,14 @@ class Track(object):
         p.tracks += 1
 
     def __repr__(self):
-        return 'Track(dim={},points={})'.format(
-            repr(self.dim), repr(self.points)
-        )
+        return 'Track(dim={},points={})'.format(repr(self.dim),
+                                                repr(self.points))
 
 
-def decompose_points_into_tracks(
-        points, grid_width=None, grid_height=None, right_only=False
-):
+def decompose_points_into_tracks(points,
+                                 grid_width=None,
+                                 grid_height=None,
+                                 right_only=False):
     """ This function takes a bag of points and returns a set of x lines and
         y lines that cover all points, and all lines touch each other.
 

@@ -35,9 +35,9 @@ class DatabaseCache(object):
 
         # Load the database
         print("Loading database from '{}'".format(self.file_name))
-        self.file_connection.backup(
-            self.memory_connection, pages=100, progress=self._progress
-        )
+        self.file_connection.backup(self.memory_connection,
+                                    pages=100,
+                                    progress=self._progress)
 
         self.bar.finish()
         self.bar = None
@@ -57,9 +57,9 @@ class DatabaseCache(object):
                 self.memory_connection.rollback()
 
             print("Dumping database to '{}'".format(self.file_name))
-            self.memory_connection.backup(
-                self.file_connection, pages=100, progress=self._progress
-            )
+            self.memory_connection.backup(self.file_connection,
+                                          pages=100,
+                                          progress=self._progress)
 
             self.bar.finish()
             self.bar = None

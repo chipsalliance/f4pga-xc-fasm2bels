@@ -41,7 +41,6 @@ class Channel(object):
     ptc=2 (2, 3)
     ptc=2 (5, 10)
     """
-
     def __init__(self, tracks):
         """
 

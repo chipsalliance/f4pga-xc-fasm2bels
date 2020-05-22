@@ -79,8 +79,7 @@ def process_pll(conn, top, tile_name, features):
     # Create the site
     site = Site(
         pll_features,
-        get_pll_site(top.db, top.grid, tile=tile_name, site='PLLE2_ADV')
-    )
+        get_pll_site(top.db, top.grid, tile=tile_name, site='PLLE2_ADV'))
 
     # If the PLL is not used then skip the rest
     if not site.has_feature("IN_USE"):
@@ -122,11 +121,9 @@ def process_pll(conn, top, tile_name, features):
 
             # Calculate the divider and duty cycle
             high_time = site.decode_multi_bit_feature(
-                'CLK{}_CLKOUT1_HIGH_TIME'.format(clkout)
-            )
+                'CLK{}_CLKOUT1_HIGH_TIME'.format(clkout))
             low_time = site.decode_multi_bit_feature(
-                'CLK{}_CLKOUT1_LOW_TIME'.format(clkout)
-            )
+                'CLK{}_CLKOUT1_LOW_TIME'.format(clkout))
 
             if site.decode_multi_bit_feature(
                     'CLK{}_CLKOUT2_EDGE'.format(clkout)):
@@ -145,16 +142,14 @@ def process_pll(conn, top, tile_name, features):
                 pll.parameters['CLKFBOUT_MULT'] = divider
             else:
                 pll.parameters['CLK{}_DIVIDE'.format(clkout)] = divider
-                pll.parameters['CLK{}_DUTY_CYCLE'.format(clkout)
-                               ] = "{0:.3f}".format(duty)
+                pll.parameters['CLK{}_DUTY_CYCLE'.format(
+                    clkout)] = "{0:.3f}".format(duty)
 
             # Phase shift
             delay = site.decode_multi_bit_feature(
-                'CLK{}_CLKOUT2_DELAY_TIME'.format(clkout)
-            )
+                'CLK{}_CLKOUT2_DELAY_TIME'.format(clkout))
             phase = site.decode_multi_bit_feature(
-                'CLK{}_CLKOUT1_PHASE_MUX'.format(clkout)
-            )
+                'CLK{}_CLKOUT1_PHASE_MUX'.format(clkout))
 
             phase = float(delay) + phase / 8.0  # Delay in VCO cycles
             phase = 360.0 * phase / divider  # Phase of CLK in degrees
@@ -162,8 +157,8 @@ def process_pll(conn, top, tile_name, features):
             if clkout == 'FBOUT':
                 pll.parameters['CLKFBOUT_PHASE'] = "{0:.3f}".format(phase)
             else:
-                pll.parameters['CLK{}_PHASE'.format(clkout)
-                               ] = "{0:.3f}".format(phase)
+                pll.parameters['CLK{}_PHASE'.format(
+                    clkout)] = "{0:.3f}".format(phase)
 
     # Input clock divider
     high_time = site.decode_multi_bit_feature('DIVCLK_DIVCLK_HIGH_TIME')
@@ -180,8 +175,8 @@ def process_pll(conn, top, tile_name, features):
     # Compute CLKIN1 and CLKIN2 periods so the VCO frequency derived from
     # it falls within its operation range. This is needed to pass Vivado
     # DRC checks. Those calculations are NOT based on any design constraints!
-    clkin_period = (vco_m /
-                    vco_d) * (2.0 / (vco_range[0] + vco_range[1])) * 1e3
+    clkin_period = (vco_m / vco_d) * (2.0 /
+                                      (vco_range[0] + vco_range[1])) * 1e3
     clkin_period = min(clkin_period, max_clkin_period)
 
     pll.parameters['CLKIN1_PERIOD'] = "{:.3f}".format(clkin_period)
@@ -189,8 +184,7 @@ def process_pll(conn, top, tile_name, features):
 
     # Startup wait
     pll.parameters['STARTUP_WAIT'] = '"TRUE"' if site.has_feature(
-        'STARTUP_WAIT'
-    ) else '"FALSE"'
+        'STARTUP_WAIT') else '"FALSE"'
 
     # Bandwidth
     table = site.decode_multi_bit_feature('TABLE')
@@ -201,8 +195,8 @@ def process_pll(conn, top, tile_name, features):
     # Compensation  TODO: Probably need to rework database tags for those.
     if site.has_feature('COMPENSATION.INTERNAL'):
         pll.parameters['COMPENSATION'] = '"INTERNAL"'
-    elif site.has_feature('COMPENSATION.BUF_IN_OR_EXTERNAL_OR_ZHOLD_CLKIN_BUF'
-                          ):
+    elif site.has_feature(
+            'COMPENSATION.BUF_IN_OR_EXTERNAL_OR_ZHOLD_CLKIN_BUF'):
         pll.parameters['COMPENSATION'] = '"BUF_IN"'
 
     # Built-in inverters

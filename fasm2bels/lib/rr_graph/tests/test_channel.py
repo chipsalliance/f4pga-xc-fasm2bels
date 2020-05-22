@@ -12,14 +12,10 @@ class TestGraph(unittest.TestCase):
         with self.assertRaises(ValueError):
             Track((1, 1), (1, 1)).type
 
-        self.assertEqual(
-            Track.Type.X,
-            Track((1, 1), (1, 1), type_hint=Track.Type.X).type
-        )
-        self.assertEqual(
-            Track.Type.Y,
-            Track((1, 1), (1, 1), type_hint=Track.Type.Y).type
-        )
+        self.assertEqual(Track.Type.X,
+                         Track((1, 1), (1, 1), type_hint=Track.Type.X).type)
+        self.assertEqual(Track.Type.Y,
+                         Track((1, 1), (1, 1), type_hint=Track.Type.Y).type)
 
     def test_track_type_guess(self):
         self.assertEqual(Track.Type.X, Track((1, 0), (10, 0)).type_guess)
@@ -32,10 +28,8 @@ class TestGraph(unittest.TestCase):
         with self.assertRaises(ValueError):
             Track((1, 1), (1, 1)).start0
 
-        self.assertEqual(
-            1,
-            Track((1, 1), (1, 1), type_hint=Track.Type.X).start0
-        )
+        self.assertEqual(1,
+                         Track((1, 1), (1, 1), type_hint=Track.Type.X).start0)
         self.assertEqual(10, Track((10, 0), (1, 0)).start0)
         self.assertEqual(10, Track((0, 10), (0, 1)).start0)
 
@@ -55,10 +49,8 @@ class TestGraph(unittest.TestCase):
         with self.assertRaises(ValueError):
             Track((1, 1), (1, 1)).common
 
-        self.assertEqual(
-            1,
-            Track((1, 1), (1, 1), type_hint=Track.Type.X).common
-        )
+        self.assertEqual(1,
+                         Track((1, 1), (1, 1), type_hint=Track.Type.X).common)
         self.assertEqual(0, Track((10, 0), (0, 0)).common)
         self.assertEqual(0, Track((0, 10), (0, 0)).common)
         self.assertEqual(4, Track((4, 10), (4, 0)).common)
@@ -83,24 +75,20 @@ class TestGraph(unittest.TestCase):
     def test_track_repr(self):
         self.assertEqual('T((0,0), (10,0))', repr(Track((0, 0), (10, 0))))
         self.assertEqual('T((0,0), (0,10))', repr(Track((0, 0), (0, 10))))
-        self.assertEqual(
-            'T((1,2), (3,2), 5)', repr(Track((1, 2), (3, 2), idx=5))
-        )
+        self.assertEqual('T((1,2), (3,2), 5)',
+                         repr(Track((1, 2), (3, 2), idx=5)))
         self.assertEqual('T(ABC)', repr(Track((1, 2), (3, 2), name="ABC")))
-        self.assertEqual(
-            'T(ABC,5)', repr(Track((1, 2), (3, 2), idx=5, name="ABC"))
-        )
+        self.assertEqual('T(ABC,5)',
+                         repr(Track((1, 2), (3, 2), idx=5, name="ABC")))
 
     def test_track_str(self):
         self.assertEqual('CHANX 0,0->10,0', str(Track((0, 0), (10, 0))))
         self.assertEqual('CHANY 0,0->0,10', str(Track((0, 0), (0, 10))))
-        self.assertEqual(
-            'CHANX 1,2->3,2 @5', str(Track((1, 2), (3, 2), idx=5))
-        )
+        self.assertEqual('CHANX 1,2->3,2 @5', str(Track((1, 2), (3, 2),
+                                                        idx=5)))
         self.assertEqual('ABC', str(Track((1, 2), (3, 2), name="ABC")))
-        self.assertEqual(
-            'ABC@5', str(Track((1, 2), (3, 2), idx=5, name="ABC"))
-        )
+        self.assertEqual('ABC@5', str(Track((1, 2), (3, 2), idx=5,
+                                            name="ABC")))
 
     def test_channelgrid_width(self):
         g = ChannelGrid((6, 7), Track.Type.Y)
