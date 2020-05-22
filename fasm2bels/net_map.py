@@ -1,6 +1,6 @@
 """ Utilities for match VPR route names with xc7 site pin sources. """
 from collections import namedtuple
-from lib.parse_route import find_net_sources
+from .lib.parse_route import find_net_sources
 import re
 
 
@@ -21,7 +21,7 @@ class Net(namedtuple('Net', 'name wire_pkey tile site_pin')):
 PIN_NAME_TO_PARTS = re.compile(r'^([^\.]+)\.([^\]]+)\[0\]$')
 
 
-def create_net_list(conn, graph, route_file):
+def create_net_list(conn, graph, route_file, vpr_grid_map):
     """ From connection database, rrgraph and VPR route file, yields net_map.Net.
     """
     c = conn.cursor()
@@ -46,74 +46,36 @@ def create_net_list(conn, graph, route_file):
 
         pin = m.group(2)
 
-        c.execute(
-            """
-        SELECT site_as_tile_pkey, phy_tile_pkey FROM tile WHERE grid_x = ? AND grid_y = ?
-        """, (node.x_low, node.y_low)
-        )
-        site_as_tile_pkey, phy_tile_pkey = c.fetchone()
+        canon_loc_list = vpr_grid_map[(node.x_low, node.y_low)]
 
-        if site_as_tile_pkey is None:
+        wire_found = False
+
+        for can_x, can_y in canon_loc_list:
             c.execute(
                 """
 WITH tiles(phy_tile_pkey, tile_name, tile_type_pkey) AS (
     SELECT DISTINCT pkey, name, tile_type_pkey FROM phy_tile
-    WHERE pkey IN (
-        SELECT phy_tile_pkey FROM tile_map WHERE tile_pkey = (
-            SELECT pkey FROM tile WHERE grid_x = ? AND grid_y = ?
-        )
-    )
+    WHERE grid_x = ? AND grid_y = ?
 )
 SELECT wire_in_tile.pkey, tiles.phy_tile_pkey, tiles.tile_name
 FROM wire_in_tile
 INNER JOIN tiles
 ON tiles.tile_type_pkey = wire_in_tile.phy_tile_type_pkey
 WHERE
-    name = ?;""", (node.x_low, node.y_low, pin)
-            )
+    name = ?;""", (can_x, can_y, pin)
+                )
+
             results = c.fetchall()
-            assert len(results) == 1, (node, pin)
+
+            if len(results) != 1:
+                continue
+
             wire_in_tile_pkey, phy_tile_pkey, tile_name = results[0]
-        else:
-            c.execute(
-                "SELECT tile_type_pkey, name FROM phy_tile WHERE pkey = ?",
-                (phy_tile_pkey, )
-            )
-            phy_tile_type_pkey, tile_name = c.fetchone()
+            wire_found = True
 
-            c.execute(
-                "SELECT site_pkey FROM site_as_tile WHERE pkey = ?",
-                (site_as_tile_pkey, )
-            )
-            site_pkey = c.fetchone()[0]
+            break
 
-            c.execute(
-                """
-              SELECT pkey FROM site_pin WHERE name = ? AND site_type_pkey = (
-                SELECT site_type_pkey FROM site WHERE pkey = ?
-              );""", (
-                    pin,
-                    site_pkey,
-                )
-            )
-            site_pin_pkey = c.fetchone()[0]
-
-            c.execute(
-                """
-            SELECT pkey
-            FROM wire_in_tile
-            WHERE
-                site_pkey = ?
-            AND
-                site_pin_pkey = ?
-            AND
-                phy_tile_type_pkey = ?""", (
-                    site_pkey,
-                    site_pin_pkey,
-                    phy_tile_type_pkey,
-                )
-            )
-            wire_in_tile_pkey = c.fetchone()[0]
+        assert wire_found, (node, pin)
 
         c.execute(
             "SELECT pkey FROM wire WHERE wire_in_tile_pkey = ? AND phy_tile_pkey = ?",

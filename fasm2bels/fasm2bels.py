@@ -31,21 +31,24 @@ from prjxray import fasm_disassembler
 from prjxray import bitstream
 import prjxray.db
 
-from .cmt_models import process_pll
-from .bram_models import process_bram
-from .clb_models import process_clb
-from .clk_models import process_hrow, process_bufg
-from .connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
-from .iob_models import process_iobs
-from .ioi_models import process_ioi
-from .hclk_ioi3_models import process_hclk_ioi3
-from .pss_models import get_ps7_site, insert_ps7
-from .verilog_modeling import Module
 from .net_map import create_net_list
 
-import lib.rr_graph_capnp.graph2 as capnp_graph2
-from lib.parse_pcf import parse_simple_pcf
-import eblif
+from .models.verilog_modeling import Module
+from .models.cmt_models import process_pll
+from .models.bram_models import process_bram
+from .models.clb_models import process_clb
+from .models.clk_models import process_hrow, process_bufg
+from .models.iob_models import process_iobs
+from .models.ioi_models import process_ioi
+from .models.hclk_ioi3_models import process_hclk_ioi3
+from .models.pss_models import get_ps7_site, insert_ps7
+
+from .database.create_channels import create_channels
+from .database.connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
+
+from .lib.rr_graph_capnp import graph2 as capnp_graph2
+from .lib.parse_pcf import parse_simple_pcf
+from .lib import eblif
 
 
 def null_process(conn, top, tile, tiles):
@@ -235,7 +238,7 @@ def load_io_sites(db_root, part, pcf):
     return site_to_signal
 
 
-def load_net_list(conn, vpr_capnp_schema_dir, rr_graph_file, route_file):
+def load_net_list(conn, vpr_capnp_schema_dir, rr_graph_file, route_file, vpr_grid_map):
     capnp_graph = capnp_graph2.Graph(
         rr_graph_schema_fname=os.path.join(
             vpr_capnp_schema_dir, 'rr_graph_uxsdcxx.capnp'
@@ -249,7 +252,7 @@ def load_net_list(conn, vpr_capnp_schema_dir, rr_graph_file, route_file):
 
     net_map = {}
     with open(route_file) as f:
-        for net in create_net_list(conn, graph, f):
+        for net in create_net_list(conn, graph, f, vpr_grid_map):
             net_map[net.wire_pkey] = net.name
 
     return net_map
@@ -313,15 +316,14 @@ def main():
     parser.add_argument('--pcf', help="Mapping of top-level pins to pads.")
     parser.add_argument('--route_file', help="VPR route output file.")
     parser.add_argument('--rr_graph', help="Real or virt xc7 graph")
-    parser.add_argument(
-        '--vpr_capnp_schema_dir',
-        help='Directory container VPR schema files',
-    )
     parser.add_argument('--eblif', help="EBLIF file used to generate design")
+    parser.add_argument('--vpr_grid_map', help="VPR grid to Canonical grid map")
     parser.add_argument('verilog_file', help="Filename of output verilog file")
     parser.add_argument('tcl_file', help="Filename of output tcl script.")
 
     args = parser.parse_args()
+
+    create_channels(args.db_root, args.part, args.connection_database)
 
     conn = sqlite3.connect(
         'file:{}?mode=ro'.format(args.connection_database), uri=True
@@ -348,9 +350,27 @@ def main():
 
     if args.route_file:
         assert args.rr_graph
-        assert args.vpr_capnp_schema_dir
+        assert args.vpr_grid_map
+
+        grid_map = dict()
+        with open(args.vpr_grid_map, 'r') as csv_grid_map:
+            csv_reader = csv.DictReader(csv_grid_map)
+            for row in csv_reader:
+                vpr_x = int(row['vpr_x'])
+                vpr_y = int(row['vpr_y'])
+                can_x = int(row['canon_x'])
+                can_y = int(row['canon_y'])
+
+                if (vpr_x, vpr_y) in grid_map:
+                    grid_map[(vpr_x, vpr_y)].append((can_x, can_y))
+                else:
+                    grid_map[(vpr_x, vpr_y)] = [(can_x, can_y)]
+
+        cur_dir = os.path.dirname(__file__)
+        capnp_schema_dir = os.path.join(cur_dir, 'capnp')
+
         net_map = load_net_list(
-            conn, args.vpr_capnp_schema_dir, args.rr_graph, args.route_file
+            conn, capnp_schema_dir, args.rr_graph, args.route_file, grid_map
         )
         top.set_net_map(net_map)
 
