@@ -19,6 +19,7 @@ setuptools.setup(
         "simplejson",
         "pycapnp",
         "intervaltree",
+        "parameterized"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
