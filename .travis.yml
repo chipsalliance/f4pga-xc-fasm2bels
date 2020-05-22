@@ -20,16 +20,10 @@ addons:
 install:
   - export CC=gcc-6
   - export CXX=g++-6
-  - make build
-  - python -m pip install . yapf
+  - python -m pip install -e .
+  - python -m pip install yapf
 
-jobs:
-  include:
-    - name: "Python format"
-      script:
-        - make format
-        - test $(git status --porcelain | wc -l) -eq 0 || { git diff; false; }
-
-    - name: "Python tests"
-      script:
-        - make test-py
+script:
+  - make format
+  - test $(git status --porcelain | wc -l) -eq 0 || { git diff; false; }
+  - make test-py
