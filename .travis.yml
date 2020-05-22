@@ -20,6 +20,7 @@ addons:
 install:
   - export CC=gcc-6
   - export CXX=g++-6
+  - python -m pip install -r requirements.txt
   - python -m pip install -e .
   - python -m pip install yapf
 

@@ -1,0 +1,8 @@
+parameterized
+simplejson
+lxml
+pycapnp
+intervaltree
+progressbar2
+-e git://github.com/SymbiFlow/prjxray.git#egg=prjxray
+-e git://github.com/SymbiFlow/fasm.git#egg=fasm
