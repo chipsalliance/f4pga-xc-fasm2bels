@@ -21,10 +21,9 @@ setuptools.setup(
         "intervaltree",
         "parameterized",
         "progressbar2",
-    ],
-    dependency_links=[
-        "git+git://github.com/SymbiFlow/prjxray.git#egg=prjxray",
-        "git+git://github.com/SymbiFlow/fasm.git#egg=fasm",
+        "prjxray@git+git://github.com/SymbiFlow/prjxray.git#egg=prjxray",
+        "fasm@git+git://github.com/SymbiFlow/fasm.git#egg=fasm",
+        "rr-graph@git+git://github.com/SymbiFlow/symbiflow-rr-graph.git@fix-for-python-packaging#egg=symbiflow-rr-graph",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
