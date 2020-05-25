@@ -29,6 +29,7 @@ import fasm.output
 from fasm import SetFasmFeature
 from prjxray import fasm_disassembler
 from prjxray import bitstream
+from rr_graph_capnp import graph2 as capnp_graph2
 import prjxray.db
 
 from .net_map import create_net_list
@@ -46,7 +47,6 @@ from .models.pss_models import get_ps7_site, insert_ps7
 from .database.create_channels import create_channels
 from .database.connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
 
-from .lib.rr_graph_capnp import graph2 as capnp_graph2
 from .lib.parse_pcf import parse_simple_pcf
 from .lib import eblif
 
