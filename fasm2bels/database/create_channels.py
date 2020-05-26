@@ -41,6 +41,45 @@ VALUES
                  pin_info.direction.value))
 
 
+def build_pss_object_mask(db, tile_type_name):
+    """
+    Looks for objects present in PSS* tiles of Zynq7 and masks out those
+    that are purely PS related and not configued by the PL.
+    """
+
+    tile_type = db.get_tile_type(tile_type_name)
+    sites = tile_type.get_sites()
+
+    masked_wires = []
+    masked_pips = []
+
+    # Get all IOPADS for MIO and DDR signals
+    iopad_sites = [s for s in sites if s.type == "IOPAD"]
+    for site in iopad_sites:
+
+        # Get pins/wires
+        site_pins = [p for p in site.site_pins if p.name == "IO"]
+        for site_pin in site_pins:
+
+            # Mask the wire
+            masked_wires.append(site_pin.wire)
+
+            # Find a PIP(s) for this wire, mask them as well as wires on
+            # their other sides.
+            for p in tile_type.get_pips():
+                if p.net_from == site_pin.wire:
+                    masked_pips.append(p.name)
+                    masked_wires.append(p.net_to)
+                if p.net_to == site_pin.wire:
+                    masked_pips.append(p.name)
+                    masked_wires.append(p.net_from)
+
+    # Masked sites names
+    masked_sites = [(s.prefix, s.name) for s in iopad_sites]
+
+    return masked_sites, masked_wires, masked_pips
+
+
 def import_tile_type(db, write_cur, tile_types, site_types, tile_type_name):
     assert tile_type_name not in tile_types
     tile_type = db.get_tile_type(tile_type_name)
