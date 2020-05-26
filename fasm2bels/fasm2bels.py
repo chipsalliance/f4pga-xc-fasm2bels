@@ -305,7 +305,10 @@ def main():
 
     args = parser.parse_args()
 
-    create_channels(args.db_root, args.part, args.connection_database)
+    if not os.path.exists(
+            os.path.join(os.path.realpath(__file__),
+                         args.connection_database)):
+        create_channels(args.db_root, args.part, args.connection_database)
 
     conn = sqlite3.connect('file:{}?mode=ro'.format(args.connection_database),
                            uri=True)
