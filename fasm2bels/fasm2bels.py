@@ -29,23 +29,26 @@ import fasm.output
 from fasm import SetFasmFeature
 from prjxray import fasm_disassembler
 from prjxray import bitstream
+from rr_graph_capnp import graph2 as capnp_graph2
 import prjxray.db
 
-from .cmt_models import process_pll
-from .bram_models import process_bram
-from .clb_models import process_clb
-from .clk_models import process_hrow, process_bufg
-from .connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
-from .iob_models import process_iobs
-from .ioi_models import process_ioi
-from .hclk_ioi3_models import process_hclk_ioi3
-from .pss_models import get_ps7_site, insert_ps7
-from .verilog_modeling import Module
 from .net_map import create_net_list
 
-import lib.rr_graph_capnp.graph2 as capnp_graph2
-from lib.parse_pcf import parse_simple_pcf
-import eblif
+from .models.verilog_modeling import Module
+from .models.cmt_models import process_pll
+from .models.bram_models import process_bram
+from .models.clb_models import process_clb
+from .models.clk_models import process_hrow, process_bufg
+from .models.iob_models import process_iobs
+from .models.ioi_models import process_ioi
+from .models.hclk_ioi3_models import process_hclk_ioi3
+from .models.pss_models import get_ps7_site, insert_ps7
+
+from .database.create_channels import create_channels
+from .database.connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
+
+from .lib.parse_pcf import parse_simple_pcf
+from .lib import eblif
 
 
 def null_process(conn, top, tile, tiles):
@@ -152,13 +155,11 @@ def process_set_feature(set_feature):
         # Return the modified PIP feature
         feature = "{}.{}.{}".format(tile, wires[0], wires[1])
 
-        return SetFasmFeature(
-            feature=feature,
-            start=set_feature.start,
-            end=set_feature.end,
-            value=set_feature.value,
-            value_format=set_feature.value_format
-        )
+        return SetFasmFeature(feature=feature,
+                              start=set_feature.start,
+                              end=set_feature.end,
+                              value=set_feature.value,
+                              value_format=set_feature.value_format)
 
     # Return unchanged feature
     return set_feature
@@ -180,12 +181,9 @@ def bit2fasm(db_root, db, grid, bit_file, fasm_file, bitread, part):
     part_yaml = os.path.join(db_root, part, 'part.yaml')
     with tempfile.NamedTemporaryFile() as f:
         bits_file = f.name
-        subprocess.check_output(
-            '{} --part_file {} -o {} -z -y {}'.format(
-                bitread, part_yaml, bits_file, bit_file
-            ),
-            shell=True
-        )
+        subprocess.check_output('{} --part_file {} -o {} -z -y {}'.format(
+            bitread, part_yaml, bits_file, bit_file),
+                                shell=True)
 
         disassembler = fasm_disassembler.FasmDisassembler(db)
 
@@ -199,9 +197,9 @@ def bit2fasm(db_root, db, grid, bit_file, fasm_file, bitread, part):
     )
 
     with open(fasm_file, 'w') as f:
-        print(
-            fasm.fasm_tuple_to_string(model, canonical=False), end='', file=f
-        )
+        print(fasm.fasm_tuple_to_string(model, canonical=False),
+              end='',
+              file=f)
 
 
 def load_io_sites(db_root, part, pcf):
@@ -235,11 +233,11 @@ def load_io_sites(db_root, part, pcf):
     return site_to_signal
 
 
-def load_net_list(conn, vpr_capnp_schema_dir, rr_graph_file, route_file):
+def load_net_list(conn, vpr_capnp_schema_dir, rr_graph_file, route_file,
+                  vpr_grid_map):
     capnp_graph = capnp_graph2.Graph(
-        rr_graph_schema_fname=os.path.join(
-            vpr_capnp_schema_dir, 'rr_graph_uxsdcxx.capnp'
-        ),
+        rr_graph_schema_fname=os.path.join(vpr_capnp_schema_dir,
+                                           'rr_graph_uxsdcxx.capnp'),
         input_file_name=rr_graph_file,
         build_pin_edges=False,
         rebase_nodes=False,
@@ -249,7 +247,7 @@ def load_net_list(conn, vpr_capnp_schema_dir, rr_graph_file, route_file):
 
     net_map = {}
     with open(route_file) as f:
-        for net in create_net_list(conn, graph, f):
+        for net in create_net_list(conn, graph, f, vpr_grid_map):
             net_map[net.wire_pkey] = net.name
 
     return net_map
@@ -260,35 +258,26 @@ def main():
     parser.add_argument(
         '--connection_database',
         required=True,
-        help="Path to SQLite3 database for given FASM file part."
-    )
+        help="Path to SQLite3 database for given FASM file part.")
     parser.add_argument(
         '--db_root',
         required=True,
-        help="Path to prjxray database for given FASM file part."
-    )
-    parser.add_argument(
-        '--allow_orphan_sinks',
-        action='store_true',
-        help="Allow sinks to have no connection."
-    )
+        help="Path to prjxray database for given FASM file part.")
+    parser.add_argument('--allow_orphan_sinks',
+                        action='store_true',
+                        help="Allow sinks to have no connection.")
     parser.add_argument(
         '--prune-unconnected-ports',
         action='store_true',
-        help="Prune top-level I/O ports that are not connected to any logic."
-    )
-    parser.add_argument(
-        '--fasm_file',
-        help="FASM file to convert BELs and routes.",
-        required=True
-    )
-    parser.add_argument(
-        '--bit_file', help="Bitstream file to convert to FASM."
-    )
+        help="Prune top-level I/O ports that are not connected to any logic.")
+    parser.add_argument('--fasm_file',
+                        help="FASM file to convert BELs and routes.",
+                        required=True)
+    parser.add_argument('--bit_file',
+                        help="Bitstream file to convert to FASM.")
     parser.add_argument(
         '--bitread',
-        help="Path to bitread executable, required if --bit_file is provided."
-    )
+        help="Path to bitread executable, required if --bit_file is provided.")
     parser.add_argument(
         '--part',
         help="Name of part being targeted, required if --bit_file is provided."
@@ -296,45 +285,40 @@ def main():
     parser.add_argument(
         '--allow-non-dedicated-clk-routes',
         action='store_true',
-        help="Effectively sets CLOCK_DEDICATED_ROUTE to FALSE on all nets."
-    )
-    parser.add_argument(
-        '--iostandard',
-        default=None,
-        help="Default IOSTANDARD to use for IO buffers."
-    )
-    parser.add_argument(
-        '--drive',
-        type=int,
-        default=None,
-        help="Default DRIVE to use for IO buffers."
-    )
+        help="Effectively sets CLOCK_DEDICATED_ROUTE to FALSE on all nets.")
+    parser.add_argument('--iostandard',
+                        default=None,
+                        help="Default IOSTANDARD to use for IO buffers.")
+    parser.add_argument('--drive',
+                        type=int,
+                        default=None,
+                        help="Default DRIVE to use for IO buffers.")
     parser.add_argument('--top', default="top", help="Root level module name.")
     parser.add_argument('--pcf', help="Mapping of top-level pins to pads.")
     parser.add_argument('--route_file', help="VPR route output file.")
     parser.add_argument('--rr_graph', help="Real or virt xc7 graph")
-    parser.add_argument(
-        '--vpr_capnp_schema_dir',
-        help='Directory container VPR schema files',
-    )
     parser.add_argument('--eblif', help="EBLIF file used to generate design")
+    parser.add_argument('--vpr_grid_map',
+                        help="VPR grid to Canonical grid map")
     parser.add_argument('verilog_file', help="Filename of output verilog file")
     parser.add_argument('tcl_file', help="Filename of output tcl script.")
 
     args = parser.parse_args()
 
-    conn = sqlite3.connect(
-        'file:{}?mode=ro'.format(args.connection_database), uri=True
-    )
+    if not os.path.exists(
+            os.path.join(os.path.realpath(__file__),
+                         args.connection_database)):
+        create_channels(args.db_root, args.part, args.connection_database)
+
+    conn = sqlite3.connect('file:{}?mode=ro'.format(args.connection_database),
+                           uri=True)
 
     db = prjxray.db.Database(args.db_root, args.part)
     grid = db.grid()
 
     if args.bit_file:
-        bit2fasm(
-            args.db_root, db, grid, args.bit_file, args.fasm_file,
-            args.bitread, args.part
-        )
+        bit2fasm(args.db_root, db, grid, args.bit_file, args.fasm_file,
+                 args.bitread, args.part)
 
     tiles = {}
 
@@ -342,16 +326,32 @@ def main():
 
     top = Module(db, grid, conn, name=args.top)
     if args.pcf:
-        top.set_site_to_signal(
-            load_io_sites(args.db_root, args.part, args.pcf)
-        )
+        top.set_site_to_signal(load_io_sites(args.db_root, args.part,
+                                             args.pcf))
 
     if args.route_file:
         assert args.rr_graph
-        assert args.vpr_capnp_schema_dir
-        net_map = load_net_list(
-            conn, args.vpr_capnp_schema_dir, args.rr_graph, args.route_file
-        )
+        assert args.vpr_grid_map
+
+        grid_map = dict()
+        with open(args.vpr_grid_map, 'r') as csv_grid_map:
+            csv_reader = csv.DictReader(csv_grid_map)
+            for row in csv_reader:
+                vpr_x = int(row['vpr_x'])
+                vpr_y = int(row['vpr_y'])
+                can_x = int(row['canon_x'])
+                can_y = int(row['canon_y'])
+
+                if (vpr_x, vpr_y) in grid_map:
+                    grid_map[(vpr_x, vpr_y)].append((can_x, can_y))
+                else:
+                    grid_map[(vpr_x, vpr_y)] = [(can_x, can_y)]
+
+        cur_dir = os.path.dirname(__file__)
+        capnp_schema_dir = os.path.join(cur_dir, 'capnp')
+
+        net_map = load_net_list(conn, capnp_schema_dir, args.rr_graph,
+                                args.route_file, grid_map)
         top.set_net_map(net_map)
 
     if args.part:
@@ -407,8 +407,7 @@ def main():
 
     if args.allow_non_dedicated_clk_routes:
         top.add_extra_tcl_line(
-            "set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets]"
-        )
+            "set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets]")
 
     with open(args.verilog_file, 'w') as f:
         for line in top.output_verilog():

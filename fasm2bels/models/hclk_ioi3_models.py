@@ -24,8 +24,7 @@ def process_hclk_ioi3(conn, top, tile, features):
 
             top.add_extra_tcl_line(
                 'set_property INTERNAL_VREF 0.{VREF} [get_iobanks {iobank}]'.
-                format(VREF=value, iobank=iobank)
-            )
+                format(VREF=value, iobank=iobank))
 
     if not have_idelayctrl:
         return

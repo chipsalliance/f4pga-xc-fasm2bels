@@ -1,4 +1,4 @@
-from .utils import eprint
+from fasm2bels.lib.utils import eprint
 from .verilog_modeling import Bel, Site
 
 # Mapping of IOB type to its IO ports
@@ -27,8 +27,6 @@ IOB_PORTS = {
         "IOB",
     ),
 }
-
-DRIVE_NOT_ALLOWED = ["SSTL135", "SSTL15"]
 
 
 def get_iob_site(db, grid, tile, site):
@@ -92,9 +90,12 @@ def get_iob_site(db, grid, tile, site):
         iob_site.name]
 
 
-def append_obuf_iostandard_params(
-        top, site, bel, possible_iostandards, slew="SLOW", in_term=None
-):
+def append_obuf_iostandard_params(top,
+                                  site,
+                                  bel,
+                                  possible_iostandards,
+                                  slew="SLOW",
+                                  in_term=None):
     """
     Appends IOSTANDARD, DRIVE and SLEW parameters to the bel. The IOSTANDARD
     and DRIVE parameters have to be read from an EBLIF file. If parameters
@@ -111,9 +112,9 @@ def append_obuf_iostandard_params(
             "DRIVE": top.default_drive
         }
 
-    # SSTL135/SSTL15 must have no DRIVE setting. If present, the DRIVE setting
-    # gets removes, as it was set by DEFAULT in the EBLIF
-    if iosettings["IOSTANDARD"] in DRIVE_NOT_ALLOWED:
+    # SSTL135 must have no DRIVE setting. If present, the DRIVE setting gets removes,
+    # as it was set by DEFAULT in the EBLIF
+    if "SSTL135" in iosettings["IOSTANDARD"]:
         iosettings["DRIVE"] = None
 
     iostandard = iosettings.get("IOSTANDARD", None)
@@ -122,10 +123,9 @@ def append_obuf_iostandard_params(
     # Check if this is possible according to decoded fasm
     is_valid = (iostandard, drive, slew) in possible_iostandards
     if not is_valid:
-        eprint(
-            "IOSTANDARD+DRIVE+SLEW settings provided for {} do not match "
-            "their counterparts decoded from the fasm".format(site.site.name)
-        )
+        eprint("IOSTANDARD+DRIVE+SLEW settings provided for {} do not match "
+               "their counterparts decoded from the fasm".format(
+                   site.site.name))
 
         eprint("Requested:")
         eprint(" IOSTANDARD={}, DRIVE={}".format(iostandard, drive))
@@ -134,12 +134,8 @@ def append_obuf_iostandard_params(
         eprint(" IOSTANDARD        | DRIVE  | SLEW |")
         eprint("-------------------|--------|------|")
         for i, d, s in possible_iostandards:
-            eprint(
-                " {}| {}| {}|".format(
-                    i.ljust(18),
-                    str(d).ljust(7), s.ljust(5)
-                )
-            )
+            eprint(" {}| {}| {}|".format(i.ljust(18),
+                                         str(d).ljust(7), s.ljust(5)))
         eprint("")
 
         # Demote NSTD-1 to warning
@@ -157,17 +153,17 @@ def append_obuf_iostandard_params(
         for port in IOB_PORTS[bel.module]:
             top.add_extra_tcl_line(
                 "set_property IN_TERM {} [get_ports {}]".format(
-                    in_term, bel.connections[port]
-                )
-            )
+                    in_term, bel.connections[port]))
 
     # Slew rate
     bel.parameters["SLEW"] = '"{}"'.format(slew)
 
 
-def append_ibuf_iostandard_params(
-        top, site, bel, possible_iostandards, in_term=None
-):
+def append_ibuf_iostandard_params(top,
+                                  site,
+                                  bel,
+                                  possible_iostandards,
+                                  in_term=None):
     """
     Appends IOSTANDARD parameter to the bel. The parameter has to be decoded
     from the EBLIF file. If the parameter from the EBLIF contradicts the one
@@ -184,9 +180,9 @@ def append_ibuf_iostandard_params(
             "DRIVE": top.default_drive
         }
 
-    # SSTL135/SSTL15 must have no DRIVE setting. If present, the DRIVE setting
-    # gets removes, as it was set by DEFAULT in the EBLIF
-    if iosettings["IOSTANDARD"] in DRIVE_NOT_ALLOWED:
+    # SSTL135 must have no DRIVE setting. If present, the DRIVE setting gets removes,
+    # as it was set by DEFAULT in the EBLIF
+    if "SSTL135" in iosettings["IOSTANDARD"]:
         iosettings["DRIVE"] = None
 
     iostandard = iosettings.get("IOSTANDARD", None)
@@ -194,10 +190,8 @@ def append_ibuf_iostandard_params(
     # Check if this is possible according to decoded fasm
     is_valid = iostandard in possible_iostandards
     if not is_valid:
-        eprint(
-            "IOSTANDARD setting provided for {} do not match "
-            "its counterpart decoded from the fasm".format(site.site.name)
-        )
+        eprint("IOSTANDARD setting provided for {} do not match "
+               "its counterpart decoded from the fasm".format(site.site.name))
 
         eprint("Requested:")
         eprint(" {}".format(iostandard))
@@ -219,9 +213,7 @@ def append_ibuf_iostandard_params(
         for port in IOB_PORTS[bel.module]:
             top.add_extra_tcl_line(
                 "set_property IN_TERM {} [get_ports {}]".format(
-                    in_term, bel.connections[port]
-                )
-            )
+                    in_term, bel.connections[port]))
 
 
 def decode_iostandard_params(site, diff=False):
@@ -246,20 +238,15 @@ def decode_iostandard_params(site, diff=False):
             if parts[idx + 1] == "I_FIXED":
                 drives = [None]
             else:
-                drives_str = parts[idx + 1].replace("_I_FIXED", "")
-                drives = [int(s[1:]) for s in drives_str.split("_")]
+                drives = [int(s[1:]) for s in parts[idx + 1].split("_")]
 
             iostds = [s for s in parts[idx - 1].split("_")]
 
             for ios in iostds:
                 if ios not in iostd_drive.keys():
                     iostd_drive[ios] = set()
-
-                if ios in DRIVE_NOT_ALLOWED:
-                    iostd_drive[ios].add(None)
-                else:
-                    for drv in drives:
-                        iostd_drive[ios].add(drv)
+                for drv in drives:
+                    iostd_drive[ios].add(drv)
 
         if "SLEW" in parts:
             idx = parts.index("SLEW")
@@ -278,13 +265,11 @@ def decode_iostandard_params(site, diff=False):
     for iostd in set(list(iostd_drive.keys())) | set(list(iostd_slew.keys())):
         if iostd in iostd_drive and iostd in iostd_slew:
             for drive in iostd_drive[iostd]:
-                iostd_out.append(
-                    (
-                        iostd_prefix + iostd,
-                        drive,
-                        iostd_slew[iostd],
-                    )
-                )
+                iostd_out.append((
+                    iostd_prefix + iostd,
+                    drive,
+                    iostd_slew[iostd],
+                ))
 
     return iostd_in, iostd_out
 
@@ -328,8 +313,7 @@ def process_single_ended_iob(top, iob):
     aparts = iob[0].feature.split('.')
     tile_name = aparts[0]
     iob_site, iologic_tile, ilogic_site, ologic_site, pin_functions = get_iob_site(
-        top.db, top.grid, aparts[0], aparts[1]
-    )
+        top.db, top.grid, aparts[0], aparts[1])
 
     # It seems that this IOB is always configured as an input at least in
     # Artix7. So skip it here.
@@ -346,13 +330,11 @@ def process_single_ended_iob(top, iob):
     in_term = decode_in_term(site)
 
     # Buffer direction
-    is_input = (
-        site.has_feature_with_part("IN")
-        or site.has_feature_with_part("IN_ONLY")
-    ) and not site.has_feature_with_part("DRIVE")
+    is_input = (site.has_feature_with_part("IN")
+                or site.has_feature_with_part("IN_ONLY")
+                ) and not site.has_feature_with_part("DRIVE")
     is_inout = site.has_feature_with_part("IN") and site.has_feature_with_part(
-        "DRIVE"
-    )
+        "DRIVE")
     is_output = not site.has_feature_with_part("IN") and \
         site.has_feature_with_part("DRIVE")
 
@@ -474,14 +456,12 @@ def process_differential_iob(top, iob, in_diff, out_diff):
     aparts = iob['S'][0].feature.split('.')
     tile_name = aparts[0]
     iob_site_s, iologic_tile, ilogic_site_s, ologic_site_s, _ = get_iob_site(
-        top.db, top.grid, aparts[0], aparts[1]
-    )
+        top.db, top.grid, aparts[0], aparts[1])
 
     aparts = iob['M'][0].feature.split('.')
     tile_name = aparts[0]
     iob_site_m, iologic_tile, ilogic_site_m, ologic_site_m, _ = get_iob_site(
-        top.db, top.grid, aparts[0], aparts[1]
-    )
+        top.db, top.grid, aparts[0], aparts[1])
 
     site_s = Site(iob['S'], iob_site_s)
     site_m = Site(iob['M'], iob_site_m)
@@ -515,9 +495,8 @@ def process_differential_iob(top, iob, in_diff, out_diff):
         site_m.add_sink(bel, bel_pin='T', sink='T')
 
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
-        append_obuf_iostandard_params(
-            top, site_m, bel, iostd_out, slew, in_term
-        )
+        append_obuf_iostandard_params(top, site_m, bel, iostd_out, slew,
+                                      in_term)
 
         site_m.add_bel(bel)
 
