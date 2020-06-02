@@ -151,6 +151,7 @@ class ConnectionModel(object):
     """ Constant, Wire, Bus and NoConnect objects represent a small interface
     for Verilog module instance connection descriptions.
     """
+
     def to_string(self, net_map=None):
         """ Returns the string representing this models connection in verilog.
 
@@ -184,6 +185,7 @@ class ConnectionModel(object):
 
 class Constant(ConnectionModel):
     """ Represents a boolean constant, e.g. 1'b0 or 1'b1. """
+
     def __init__(self, value):
         assert value in [0, 1]
         self.value = value
@@ -200,6 +202,7 @@ class Constant(ConnectionModel):
 
 class Wire(ConnectionModel):
     """ Represents a single wire connection. """
+
     def __init__(self, wire):
         self.wire = wire
 
@@ -227,6 +230,7 @@ class Bus(ConnectionModel):
     wires : list of Constant or Wire objects.
 
     """
+
     def __init__(self, wires):
         self.wires = wires
 
@@ -245,6 +249,7 @@ class Bus(ConnectionModel):
 
 class NoConnect(ConnectionModel):
     """ Represents an unconnected port. """
+
     def __init__(self):
         pass
 
@@ -302,6 +307,7 @@ def flatten_wires(wire, wire_assigns, wire_name_net_map):
 
 class Bel(object):
     """ Object to model a BEL. """
+
     def __init__(self, module, name=None, keep=True, priority=0):
         """ Construct Bel object.
 
@@ -508,8 +514,8 @@ class Bel(object):
         dead_wires, connections = self.create_connections(top)
 
         for dead_wire in dead_wires:
-            yield '{indent}wire [0:0] {wire};'.format(indent=indent,
-                                                      wire=dead_wire)
+            yield '{indent}wire [0:0] {wire};'.format(
+                indent=indent, wire=dead_wire)
 
         yield ''
 
@@ -522,22 +528,22 @@ class Bel(object):
             if self.bel:
                 comment.append('BEL = "{bel}"'.format(bel=self.bel))
 
-            yield '{indent}(* {comment} *)'.format(indent=indent,
-                                                   comment=', '.join(comment))
+            yield '{indent}(* {comment} *)'.format(
+                indent=indent, comment=', '.join(comment))
 
         yield '{indent}{site} #('.format(indent=indent, site=self.module)
 
         parameters = []
-        for param, value in sorted(self.parameters.items(),
-                                   key=lambda x: x[0]):
+        for param, value in sorted(
+                self.parameters.items(), key=lambda x: x[0]):
             parameters.append('{indent}{indent}.{param}({value})'.format(
                 indent=indent, param=param, value=value))
 
         if parameters:
             yield ',\n'.join(parameters)
 
-        yield '{indent}) {name} ('.format(indent=indent,
-                                          name=self.get_cell(top))
+        yield '{indent}) {name} ('.format(
+            indent=indent, name=self.get_cell(top))
 
         if connections:
             yield ',\n'.join(
@@ -577,6 +583,7 @@ class Site(object):
         SLICE_X0.
 
     """
+
     def __init__(self, features, site, tile=None, merged_site=False):
         self.bels = []
         self.sinks = {}
@@ -1166,6 +1173,7 @@ def merge_exclusive_dicts(dict_a, dict_b):
 
 class Module(object):
     """ Object to model a design. """
+
     def __init__(self, db, grid, conn, name="top"):
         self.name = name
         self.db = db
@@ -1530,9 +1538,8 @@ class Module(object):
         for site in self.sites:
             for bel in sorted(site.bels, key=lambda bel: bel.priority):
                 yield ''
-                for line in bel.output_verilog(top=self,
-                                               net_map=self.wire_name_net_map,
-                                               indent='  '):
+                for line in bel.output_verilog(
+                        top=self, net_map=self.wire_name_net_map, indent='  '):
                     yield line
 
         for lhs, rhs in self.wire_name_net_map.items():

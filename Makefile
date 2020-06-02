@@ -1,9 +1,20 @@
 SHELL=bash
 
-PYTHON_SRCS=$(shell find . -name "*py" -not -path "./third_party/*")
+ALL_EXCLUDE = third_party .git env build
+FORMAT_EXCLUDE = $(foreach x,$(ALL_EXCLUDE),-and -not -path './$(x)/*')
+
+PYTHON_SRCS=$(shell find . -name "*py" $(FORMAT_EXCLUDE))
+
+IN_ENV = if [ -e env/bin/activate ]; then . env/bin/activate; fi;
+env:
+	virtualenv --python=python3 env
+	$(IN_ENV) pip install --upgrade -r requirements.txt
+
+.PHONY: env
+
 
 format: ${PYTHON_SRCS}
-	yapf -i $?
+	$(IN_ENV) yapf -i $?
 
 build:
 	git submodule update --init --recursive

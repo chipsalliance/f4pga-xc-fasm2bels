@@ -100,6 +100,7 @@ def output_builder(fixed_route):
 
 class Net(object):
     """ Object to present a net (e.g. a source and it sinks). """
+
     def __init__(self, source_wire_pkey):
         """ Create a net.
 
@@ -154,9 +155,8 @@ class Net(object):
 
         while True:
             parent_node_pkey = source_node_pkey
-            source_node_pkey = find_downstream_node(conn,
-                                                    check_downstream_default,
-                                                    source_node_pkey)
+            source_node_pkey = find_downstream_node(
+                conn, check_downstream_default, source_node_pkey)
 
             if source_node_pkey is not None:
                 self.add_node(conn, net_map, source_node_pkey,
@@ -267,8 +267,8 @@ class Net(object):
 
         if self.source_wire_pkey not in [ZERO_NET, ONE_NET]:
             fixed_route = []
-            descend_fixed_route(get_node_pkey(conn, self.source_wire_pkey),
-                                fixed_route)
+            descend_fixed_route(
+                get_node_pkey(conn, self.source_wire_pkey), fixed_route)
 
             for i in output_builder(fixed_route):
                 yield i
@@ -409,13 +409,14 @@ def expand_sink(conn, check_for_default, nets, net_map, source_to_sink_pip_map,
             upstream_sink_wire_pkey = source_to_sink_pip_map[node_wire_pkey]
 
             if upstream_sink_wire_pkey not in net_map:
-                expand_sink(conn=conn,
-                            check_for_default=check_for_default,
-                            nets=nets,
-                            net_map=net_map,
-                            source_to_sink_pip_map=source_to_sink_pip_map,
-                            sink_wire_pkey=upstream_sink_wire_pkey,
-                            allow_orphan_sinks=allow_orphan_sinks)
+                expand_sink(
+                    conn=conn,
+                    check_for_default=check_for_default,
+                    nets=nets,
+                    net_map=net_map,
+                    source_to_sink_pip_map=source_to_sink_pip_map,
+                    sink_wire_pkey=upstream_sink_wire_pkey,
+                    allow_orphan_sinks=allow_orphan_sinks)
 
             if upstream_sink_wire_pkey in net_map:
                 if DEBUG:
@@ -424,12 +425,13 @@ def expand_sink(conn, check_for_default, nets, net_map, source_to_sink_pip_map,
                             tile_name, wire_name, upstream_sink_wire_pkey))
 
                 for net in net_map[upstream_sink_wire_pkey]:
-                    nets[net].add_node(conn=conn,
-                                       net_map=net_map,
-                                       node_pkey=sink_node_pkey,
-                                       parent_node_pkey=get_node_pkey(
-                                           conn, upstream_sink_wire_pkey),
-                                       incoming_wire_pkey=node_wire_pkey)
+                    nets[net].add_node(
+                        conn=conn,
+                        net_map=net_map,
+                        node_pkey=sink_node_pkey,
+                        parent_node_pkey=get_node_pkey(
+                            conn, upstream_sink_wire_pkey),
+                        incoming_wire_pkey=node_wire_pkey)
                 return
 
     # There are no active pips upstream from this node, check if this is a
@@ -480,15 +482,11 @@ SELECT name, site_pin_pkey FROM wire_in_tile WHERE pkey = (
                     tile_name, wire_name))
 
             if site_pin == 'HARD1':
-                nets[ONE_NET].add_node(conn,
-                                       net_map,
-                                       sink_node_pkey,
-                                       parent_node_pkey=ONE_NET)
+                nets[ONE_NET].add_node(
+                    conn, net_map, sink_node_pkey, parent_node_pkey=ONE_NET)
             elif site_pin == 'HARD0':
-                nets[ZERO_NET].add_node(conn,
-                                        net_map,
-                                        sink_node_pkey,
-                                        parent_node_pkey=ZERO_NET)
+                nets[ZERO_NET].add_node(
+                    conn, net_map, sink_node_pkey, parent_node_pkey=ZERO_NET)
             else:
                 c.execute(
                     """
@@ -519,13 +517,14 @@ SELECT name FROM phy_tile WHERE pkey = (SELECT phy_tile_pkey FROM wire WHERE pke
             upstream_sink_wire_pkey = c.fetchone()[0]
 
             if upstream_sink_wire_pkey not in net_map:
-                expand_sink(conn=conn,
-                            check_for_default=check_for_default,
-                            nets=nets,
-                            net_map=net_map,
-                            source_to_sink_pip_map=source_to_sink_pip_map,
-                            sink_wire_pkey=upstream_sink_wire_pkey,
-                            allow_orphan_sinks=allow_orphan_sinks)
+                expand_sink(
+                    conn=conn,
+                    check_for_default=check_for_default,
+                    nets=nets,
+                    net_map=net_map,
+                    source_to_sink_pip_map=source_to_sink_pip_map,
+                    sink_wire_pkey=upstream_sink_wire_pkey,
+                    allow_orphan_sinks=allow_orphan_sinks)
 
             if upstream_sink_wire_pkey in net_map:
                 if DEBUG:
@@ -534,12 +533,13 @@ SELECT name FROM phy_tile WHERE pkey = (SELECT phy_tile_pkey FROM wire WHERE pke
                             tile_name, wire_name, upstream_sink_wire_pkey))
 
                 for net in net_map[upstream_sink_wire_pkey]:
-                    nets[net].add_node(conn=conn,
-                                       net_map=net_map,
-                                       node_pkey=sink_node_pkey,
-                                       parent_node_pkey=get_node_pkey(
-                                           conn, upstream_sink_wire_pkey),
-                                       incoming_wire_pkey=node_wire_pkey)
+                    nets[net].add_node(
+                        conn=conn,
+                        net_map=net_map,
+                        node_pkey=sink_node_pkey,
+                        parent_node_pkey=get_node_pkey(
+                            conn, upstream_sink_wire_pkey),
+                        incoming_wire_pkey=node_wire_pkey)
                 return
 
     # For Zynq PSS tiles ignore unconnected sinks. The fact that a sink is
@@ -614,10 +614,11 @@ def make_routes(db, conn, wire_pkey_to_wire, unrouted_sinks, unrouted_sources,
 
     for wire_pkey in unrouted_sources:
         nets[wire_pkey] = Net(wire_pkey)
-        nets[wire_pkey].add_node(conn,
-                                 net_map,
-                                 get_node_pkey(conn, wire_pkey),
-                                 parent_node_pkey=None)
+        nets[wire_pkey].add_node(
+            conn,
+            net_map,
+            get_node_pkey(conn, wire_pkey),
+            parent_node_pkey=None)
         nets[wire_pkey].expand_source(conn, check_downstream_default, net_map)
     del check_downstream_default
 
@@ -627,13 +628,14 @@ def make_routes(db, conn, wire_pkey_to_wire, unrouted_sinks, unrouted_sources,
     check_for_default = create_check_for_default(db, conn)
 
     for wire_pkey in unrouted_sinks:
-        expand_sink(conn=conn,
-                    check_for_default=check_for_default,
-                    nets=nets,
-                    net_map=net_map,
-                    source_to_sink_pip_map=source_to_sink_pip_map,
-                    sink_wire_pkey=wire_pkey,
-                    allow_orphan_sinks=allow_orphan_sinks)
+        expand_sink(
+            conn=conn,
+            check_for_default=check_for_default,
+            nets=nets,
+            net_map=net_map,
+            source_to_sink_pip_map=source_to_sink_pip_map,
+            sink_wire_pkey=wire_pkey,
+            allow_orphan_sinks=allow_orphan_sinks)
 
         if wire_pkey in net_map:
             for source_wire_pkey in net_map[wire_pkey]:

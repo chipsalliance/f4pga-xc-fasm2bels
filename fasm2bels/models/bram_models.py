@@ -34,8 +34,8 @@ def get_init(features, target_features, invert, width):
     if invert:
         final_init ^= (2**width) - 1
 
-    return "{{width}}'b{{init:0{}b}}".format(width).format(width=width,
-                                                           init=final_init)
+    return "{{width}}'b{{init:0{}b}}".format(width).format(
+        width=width, init=final_init)
 
 
 def get_bram_site(db, grid, tile, site):
@@ -232,9 +232,9 @@ def clean_up_to_bram36(top, site):
             "RSTRAMB",
             "RSTREGB",
     ]:
-        assert top.find_source_from_sink(site, input_wire +
-                                         'L') == top.find_source_from_sink(
-                                             site, input_wire + 'U')
+        assert top.find_source_from_sink(
+            site, input_wire + 'L') == top.find_source_from_sink(
+                site, input_wire + 'U')
         site.mask_sink(bel, input_wire + 'U')
 
     assert top.find_source_from_sink(
@@ -284,8 +284,8 @@ def process_bram_site(top, features, set_features):
     ]
 
     for pidx in range(8):
-        parameter_binds.append(
-            ('INITP_0{}'.format(pidx), ['INITP_0{}'.format(pidx)], False, 256))
+        parameter_binds.append(('INITP_0{}'.format(pidx),
+                                ['INITP_0{}'.format(pidx)], False, 256))
 
     for idx in range(0x40):
         parameter_binds.append(('INIT_{:02X}'.format(idx),

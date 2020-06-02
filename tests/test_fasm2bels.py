@@ -45,8 +45,8 @@ class TestFasm2Bels(unittest.TestCase):
 
         main()
 
-        self.assertTrue(os.path.exists(os.path.join(temp_dir,
-                                                    generated_top_v)))
+        self.assertTrue(
+            os.path.exists(os.path.join(temp_dir, generated_top_v)))
         self.assertTrue(
             os.path.exists(os.path.join(temp_dir, generated_top_tcl)))
 

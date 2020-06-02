@@ -806,9 +806,10 @@ def process_slice(top, s):
             if lut_modes[lut] == 'RAM64X1D':
                 assert lut_modes[minus_one] == lut_modes[lut]
 
-                ram64 = Bel('RAM64X1D',
-                            name='RAM64X1D_' + minus_one + lut,
-                            priority=priority)
+                ram64 = Bel(
+                    'RAM64X1D',
+                    name='RAM64X1D_' + minus_one + lut,
+                    priority=priority)
                 ram64.set_bel(minus_one + '6LUT')
 
                 site.add_sink(ram64, 'WE', WE)
@@ -816,10 +817,10 @@ def process_slice(top, s):
                 di_mux(site, ram64, 'D', lut)
 
                 for idx in range(6):
-                    site.add_sink(ram64, 'A{}'.format(idx),
-                                  "{}{}".format(lut, idx + 1))
-                    site.add_sink(ram64, 'DPRA{}'.format(idx),
-                                  "{}{}".format(minus_one, idx + 1))
+                    site.add_sink(ram64, 'A{}'.format(idx), "{}{}".format(
+                        lut, idx + 1))
+                    site.add_sink(ram64, 'DPRA{}'.format(idx), "{}{}".format(
+                        minus_one, idx + 1))
 
                 site.add_internal_source(ram64, 'SPO', lut + "O6")
                 site.add_internal_source(ram64, 'DPO', minus_one + "O6")
@@ -883,17 +884,16 @@ def process_slice(top, s):
                 luts[lut].parameters['INIT'] = get_lut_init(site, lut)
                 site.add_bel(luts[lut])
             elif lut_modes[lut] == 'RAM64X1S':
-                ram64 = Bel('RAM64X1S',
-                            name='RAM64X1S_' + lut,
-                            priority=priority)
+                ram64 = Bel(
+                    'RAM64X1S', name='RAM64X1S_' + lut, priority=priority)
 
                 site.add_sink(ram64, 'WE', WE)
                 site.add_sink(ram64, 'WCLK', "CLK")
                 di_mux(site, ram64, 'D', lut)
 
                 for idx in range(6):
-                    site.add_sink(ram64, 'A{}'.format(idx),
-                                  "{}{}".format(lut, idx + 1))
+                    site.add_sink(ram64, 'A{}'.format(idx), "{}{}".format(
+                        lut, idx + 1))
 
                 site.add_internal_source(ram64, 'O', lut + "O6")
 

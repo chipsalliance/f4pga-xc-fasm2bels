@@ -5,3 +5,4 @@ __main__.py
 src
 *egg-info*
 dist
+env
