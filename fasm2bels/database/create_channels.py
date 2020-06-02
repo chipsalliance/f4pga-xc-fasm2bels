@@ -11,8 +11,8 @@ from fasm2bels.database.connection_database_cache import DatabaseCache
 
 def create_tables(conn):
     """ Create connection database scheme. """
-    connection_database_sql_file = os.path.join(os.path.dirname(__file__),
-                                                "connection_database.sql")
+    connection_database_sql_file = os.path.join(
+        os.path.dirname(__file__), "connection_database.sql")
     with open(connection_database_sql_file, 'r') as f:
         c = conn.cursor()
         c.executescript(f.read())

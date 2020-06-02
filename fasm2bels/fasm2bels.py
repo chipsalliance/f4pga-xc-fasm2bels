@@ -155,11 +155,12 @@ def process_set_feature(set_feature):
         # Return the modified PIP feature
         feature = "{}.{}.{}".format(tile, wires[0], wires[1])
 
-        return SetFasmFeature(feature=feature,
-                              start=set_feature.start,
-                              end=set_feature.end,
-                              value=set_feature.value,
-                              value_format=set_feature.value_format)
+        return SetFasmFeature(
+            feature=feature,
+            start=set_feature.start,
+            end=set_feature.end,
+            value=set_feature.value,
+            value_format=set_feature.value_format)
 
     # Return unchanged feature
     return set_feature
@@ -181,9 +182,10 @@ def bit2fasm(db_root, db, grid, bit_file, fasm_file, bitread, part):
     part_yaml = os.path.join(db_root, part, 'part.yaml')
     with tempfile.NamedTemporaryFile() as f:
         bits_file = f.name
-        subprocess.check_output('{} --part_file {} -o {} -z -y {}'.format(
-            bitread, part_yaml, bits_file, bit_file),
-                                shell=True)
+        subprocess.check_output(
+            '{} --part_file {} -o {} -z -y {}'.format(bitread, part_yaml,
+                                                      bits_file, bit_file),
+            shell=True)
 
         disassembler = fasm_disassembler.FasmDisassembler(db)
 
@@ -197,9 +199,8 @@ def bit2fasm(db_root, db, grid, bit_file, fasm_file, bitread, part):
     )
 
     with open(fasm_file, 'w') as f:
-        print(fasm.fasm_tuple_to_string(model, canonical=False),
-              end='',
-              file=f)
+        print(
+            fasm.fasm_tuple_to_string(model, canonical=False), end='', file=f)
 
 
 def load_io_sites(db_root, part, pcf):
@@ -263,18 +264,20 @@ def main():
         '--db_root',
         required=True,
         help="Path to prjxray database for given FASM file part.")
-    parser.add_argument('--allow_orphan_sinks',
-                        action='store_true',
-                        help="Allow sinks to have no connection.")
+    parser.add_argument(
+        '--allow_orphan_sinks',
+        action='store_true',
+        help="Allow sinks to have no connection.")
     parser.add_argument(
         '--prune-unconnected-ports',
         action='store_true',
         help="Prune top-level I/O ports that are not connected to any logic.")
-    parser.add_argument('--fasm_file',
-                        help="FASM file to convert BELs and routes.",
-                        required=True)
-    parser.add_argument('--bit_file',
-                        help="Bitstream file to convert to FASM.")
+    parser.add_argument(
+        '--fasm_file',
+        help="FASM file to convert BELs and routes.",
+        required=True)
+    parser.add_argument(
+        '--bit_file', help="Bitstream file to convert to FASM.")
     parser.add_argument(
         '--bitread',
         help="Path to bitread executable, required if --bit_file is provided.")
@@ -286,20 +289,22 @@ def main():
         '--allow-non-dedicated-clk-routes',
         action='store_true',
         help="Effectively sets CLOCK_DEDICATED_ROUTE to FALSE on all nets.")
-    parser.add_argument('--iostandard',
-                        default=None,
-                        help="Default IOSTANDARD to use for IO buffers.")
-    parser.add_argument('--drive',
-                        type=int,
-                        default=None,
-                        help="Default DRIVE to use for IO buffers.")
+    parser.add_argument(
+        '--iostandard',
+        default=None,
+        help="Default IOSTANDARD to use for IO buffers.")
+    parser.add_argument(
+        '--drive',
+        type=int,
+        default=None,
+        help="Default DRIVE to use for IO buffers.")
     parser.add_argument('--top', default="top", help="Root level module name.")
     parser.add_argument('--pcf', help="Mapping of top-level pins to pads.")
     parser.add_argument('--route_file', help="VPR route output file.")
     parser.add_argument('--rr_graph', help="Real or virt xc7 graph")
     parser.add_argument('--eblif', help="EBLIF file used to generate design")
-    parser.add_argument('--vpr_grid_map',
-                        help="VPR grid to Canonical grid map")
+    parser.add_argument(
+        '--vpr_grid_map', help="VPR grid to Canonical grid map")
     parser.add_argument('verilog_file', help="Filename of output verilog file")
     parser.add_argument('tcl_file', help="Filename of output tcl script.")
 
@@ -310,8 +315,8 @@ def main():
                          args.connection_database)):
         create_channels(args.db_root, args.part, args.connection_database)
 
-    conn = sqlite3.connect('file:{}?mode=ro'.format(args.connection_database),
-                           uri=True)
+    conn = sqlite3.connect(
+        'file:{}?mode=ro'.format(args.connection_database), uri=True)
 
     db = prjxray.db.Database(args.db_root, args.part)
     grid = db.grid()
@@ -326,8 +331,8 @@ def main():
 
     top = Module(db, grid, conn, name=args.top)
     if args.pcf:
-        top.set_site_to_signal(load_io_sites(args.db_root, args.part,
-                                             args.pcf))
+        top.set_site_to_signal(
+            load_io_sites(args.db_root, args.part, args.pcf))
 
     if args.route_file:
         assert args.rr_graph

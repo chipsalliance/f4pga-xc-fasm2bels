@@ -134,8 +134,9 @@ def append_obuf_iostandard_params(top,
         eprint(" IOSTANDARD        | DRIVE  | SLEW |")
         eprint("-------------------|--------|------|")
         for i, d, s in possible_iostandards:
-            eprint(" {}| {}| {}|".format(i.ljust(18),
-                                         str(d).ljust(7), s.ljust(5)))
+            eprint(" {}| {}| {}|".format(
+                i.ljust(18),
+                str(d).ljust(7), s.ljust(5)))
         eprint("")
 
         # Demote NSTD-1 to warning
