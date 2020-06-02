@@ -4,6 +4,7 @@ from unittest.mock import patch
 import os
 import sys
 import tempfile
+import filecmp
 from fasm2bels.fasm2bels import main
 
 
@@ -45,10 +46,22 @@ class TestFasm2Bels(unittest.TestCase):
 
         main()
 
+        tmp_top_v = os.path.join(temp_dir, generated_top_v)
+        tmp_top_tcl = os.path.join(temp_dir, generated_top_tcl)
+
+        # Check if generated files exists
+        self.assertTrue(os.path.exists(tmp_top_v))
+        self.assertTrue(os.path.exists(tmp_top_tcl))
+
+        # Check if generated files are equal to the golden ones
         self.assertTrue(
-            os.path.exists(os.path.join(temp_dir, generated_top_v)))
+            filecmp.cmp(
+                os.path.join(cur_dir, 'test_data', 'top_bit.golden.v'),
+                tmp_top_v))
         self.assertTrue(
-            os.path.exists(os.path.join(temp_dir, generated_top_tcl)))
+            filecmp.cmp(
+                os.path.join(cur_dir, 'test_data', 'top_bit.golden.tcl'),
+                tmp_top_tcl))
 
 
 if __name__ == "__main__":
