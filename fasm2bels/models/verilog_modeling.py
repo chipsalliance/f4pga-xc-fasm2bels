@@ -30,7 +30,7 @@ import functools
 import re
 import fasm
 from ..make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
-from ..connection_db_utils import get_wire_pkey
+from ..database.connection_db_utils import get_wire_pkey
 
 
 def pin_to_wire_and_idx(pin):

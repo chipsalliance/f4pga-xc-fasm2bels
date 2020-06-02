@@ -1,4 +1,4 @@
-from .utils import eprint
+from ..lib.utils import eprint
 from .verilog_modeling import Bel, Site
 
 # Mapping of IOB type to its IO ports

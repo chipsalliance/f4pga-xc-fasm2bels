@@ -1,5 +1,5 @@
 import unittest
-from fasm2bels.verilog_modeling import Wire, Constant, Bus, NoConnect
+from fasm2bels.models.verilog_modeling import Wire, Constant, Bus, NoConnect
 
 
 class TestVerilogModeling(unittest.TestCase):

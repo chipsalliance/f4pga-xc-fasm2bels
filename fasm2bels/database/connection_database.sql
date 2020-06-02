@@ -66,13 +66,6 @@ CREATE TABLE site_type(
   name TEXT
 );
 
-CREATE TABLE clock_region(
-  pkey INTEGER PRIMARY KEY,
-  name TEXT,
-  x_coord INT,
-  y_coord INT
-);
-
 -- Physical tile table, contains type and name of tile and location in the prjxray grid.
 CREATE TABLE phy_tile(
   pkey INTEGER PRIMARY KEY,
@@ -109,99 +102,6 @@ CREATE TABLE site(
   FOREIGN KEY(tile_type_pkey) REFERENCES tile_type(pkey)
 );
 
--- Table recording each site instance in the grid, useful for lookups.
-CREATE TABLE site_instance(
-    pkey INTEGER PRIMARY KEY,
-    name TEXT,
-    x_coord INT,
-    y_coord INT,
-    site_pkey INT,
-    phy_tile_pkey INT,
-    prohibited BOOLEAN,
-    FOREIGN KEY(site_pkey) REFERENCES site(pkey),
-    FOREIGN KEY(phy_tile_pkey) REFERENCES phy_tile(pkey)
-);
-
--- This table provides a reference of synthetic tile types generated to
--- support tile splits.  When a tile is split, each contained site becomes a
--- new tile type, which is keyed in this table as the "parent_tile_type_pkey".
---
--- The tile_type and site that the parent_tile_type_pkey was generated
--- from is within the "tile_type_pkey" and "site_pkey".
---
--- All tile rows that are split tiles will set site_as_tile_pkey to point to
--- a row in this table mapping the synthetic tile_type back to the original
--- tile type and site that was used to generate it.
-CREATE TABLE site_as_tile(
-  pkey INTEGER PRIMARY KEY,
-  parent_tile_type_pkey INT,
-  tile_type_pkey INT,
-  site_pkey INT,
-  FOREIGN KEY(parent_tile_type_pkey) REFERENCES tile_type(pkey),
-  FOREIGN KEY(tile_type_pkey) REFERENCES tile_type(pkey),
-  FOREIGN KEY(site_pkey) REFERENCES site(pkey)
-);
-
--- Logical tile table, contains tile type and location within the VPR grid.
---
--- For tiles that represent split tiles, site_as_tile_pkey indicates the
--- original tile_type and site that was used to generate this tile.
---
--- phy_tile_pkey refers to the physical tile that is responsible for holding
--- the configuration of this tile.  When multiple tiles are merged, it is only
--- legal if only one of the tiles being merged has bitstream output, and that
--- physical tile should be referenced here.
---
--- If it is neccesary to determine where tiles without bitstream output ended
--- up, the tile_map table can be used.
-CREATE TABLE tile(
-  pkey INTEGER PRIMARY KEY,
-  phy_tile_pkey INT,
-  tile_type_pkey INT,
-  site_as_tile_pkey INT,
-  grid_x INT,
-  grid_y INT,
-  FOREIGN KEY(phy_tile_pkey) REFERENCES phy_tile(pkey),
-  FOREIGN KEY(tile_type_pkey) REFERENCES tile_type(pkey),
-  FOREIGN KEY(site_as_tile_pkey) REFERENCES site_as_tile(pkey)
-);
-
--- Bimap between physical and logical grids.
---
--- All rows in the tile and phy_tile tables appear at least once.
---
--- Both tile_pkey's and phy_tile_pkey's may be repeated depending on what
--- operatations were performed to form the VPR grid. Generally speaking, a tile
--- split will cause multiple instances of a phy_tile_pkey to appear in this
--- table.  A tile merge will cause multiple instances of a tile_pkey to appear
--- in this table.
-CREATE TABLE tile_map(
-  tile_pkey INT,
-  phy_tile_pkey INT,
-  FOREIGN KEY(tile_pkey) REFERENCES tile(pkey),
-  FOREIGN KEY(phy_tile_pkey) REFERENCES phy_tile(pkey)
-);
-
--- Table of switches.
-CREATE TABLE switch(
-  pkey INTEGER PRIMARY KEY,
-  name TEXT,
-  internal_capacitance REAL,
-  drive_resistance REAL,
-  intrinsic_delay REAL,
-  penalty_cost REAL,
-  switch_type TEXT
-);
-
--- Table of segments.
--- VPR's map lookahead uses segments to determine "wire types".  Each
--- significantly different interconnect type should have a segment.
-CREATE TABLE segment(
-    pkey INTEGER PRIMARY KEY,
-    name TEXT,
-    length INT
-);
-
 -- Table of tile type wires. This table is the of uninstanced tile type
 -- wires. Site pins wires will reference their site and site pin rows in
 -- the site and site_pin tables.
@@ -214,59 +114,10 @@ CREATE TABLE wire_in_tile(
   tile_type_pkey INT,
   site_pkey INT,
   site_pin_pkey INT,
-  capacitance REAL,
-  resistance REAL,
-  site_pin_switch_pkey INT,
   FOREIGN KEY(phy_tile_type_pkey) REFERENCES phy_tile_type(pkey),
   FOREIGN KEY(tile_type_pkey) REFERENCES tile_type(pkey),
   FOREIGN KEY(site_pkey) REFERENCES site(pkey),
-  FOREIGN KEY(site_pin_pkey) REFERENCES site_pin(pkey),
-  FOREIGN KEY(site_pin_switch_pkey) REFERENCES switch(pkey)
-);
-
--- Table of tile type pips.  This table is the table of uninstanced pips.
--- No concreate table of pips is created, instead this table is used to
--- add rows in the graph_edge table.
-CREATE TABLE pip_in_tile(
-  pkey INTEGER PRIMARY KEY,
-  name TEXT,
-  tile_type_pkey INT,
-  src_wire_in_tile_pkey INT,
-  dest_wire_in_tile_pkey INT,
-  can_invert BOOLEAN,
-  is_directional BOOLEAN,
-  is_pseudo BOOLEAN,
-  is_pass_transistor BOOLEAN,
-  switch_pkey INT,
-  backward_switch_pkey INT,
-  FOREIGN KEY(tile_type_pkey) REFERENCES tile_type(pkey),
-  FOREIGN KEY(src_wire_in_tile_pkey) REFERENCES wire_in_tile(pkey),
-  FOREIGN KEY(dest_wire_in_tile_pkey) REFERENCES wire_in_tile(pkey),
-  FOREIGN KEY(switch_pkey) REFERENCES switch(pkey),
-  FOREIGN KEY(backward_switch_pkey) REFERENCES switch(pkey)
-);
-
--- Table for find pips associated with a wire_in_tile_pkey, without considering
--- the direction of the pip.
-CREATE TABLE undirected_pips(
-    wire_in_tile_pkey INT,
-    pip_in_tile_pkey INT,
-    other_wire_in_tile_pkey INT,
-    FOREIGN KEY(wire_in_tile_pkey) REFERENCES wire_in_tile(pkey),
-    FOREIGN KEY(pip_in_tile_pkey) REFERENCES pip_in_tile(pkey),
-    FOREIGN KEY(other_wire_in_tile_pkey) REFERENCES wire_in_tile(pkey)
-);
-
-
--- Table of tracks. alive is a flag used during routing import to indicate
--- whether this a particular track is connected and should be imported.
-CREATE TABLE track(
-  pkey INTEGER PRIMARY KEY,
-  alive BOOL,
-  segment_pkey INT,
-  canon_phy_tile_pkey INT,
-  FOREIGN KEY(segment_pkey) REFERENCES segment_pkey(pkey),
-  FOREIGN KEY(canon_phy_tile_pkey) REFERENCES phy_tile(pkey)
+  FOREIGN KEY(site_pin_pkey) REFERENCES site_pin(pkey)
 );
 
 -- Table of nodes.  Provides the concrete relation for connected wire
@@ -284,43 +135,6 @@ CREATE TABLE node(
   classification INT,
   FOREIGN KEY(track_pkey) REFERENCES track_pkey(pkey),
   FOREIGN KEY(site_wire_pkey) REFERENCES wire(pkey)
-);
-
--- Table of edge with mux.  An edge_with_mux needs special handling in VPR,
--- in the form of architecture level direct connections.
---
--- This table is the list of these direct connections.
-CREATE TABLE edge_with_mux(
-  pkey INTEGER PRIMARY KEY,
-  src_wire_pkey INT,
-  dest_wire_pkey INT,
-  pip_in_tile_pkey INT,
-  switch_pkey INT,
-  FOREIGN KEY(src_wire_pkey) REFERENCES wire(pkey),
-  FOREIGN KEY(dest_wire_pkey) REFERENCES wire(pkey),
-  FOREIGN KEY(pip_in_tile_pkey) REFERENCES pip_in_tile(pkey),
-  FOREIGN KEY(switch_pkey) REFERENCES switch(pkey)
-);
-
--- Table of graph nodes.  This is a direction mapping of an VPR rr_node
--- instance.
-CREATE TABLE graph_node(
-  pkey INTEGER PRIMARY KEY,
-  graph_node_type INT,
-  track_pkey INT,
-  connection_box_wire_pkey INT,
-  node_pkey INT,
-  x_low INT,
-  x_high INT,
-  y_low INT,
-  y_high INT,
-  ptc INT,
-  capacity INT,
-  capacitance REAL,
-  resistance REAL,
-  FOREIGN KEY(connection_box_wire_pkey) REFERENCES wire(pkey),
-  FOREIGN KEY(track_pkey) REFERENCES track(pkey),
-  FOREIGN KEY(node_pkey) REFERENCES node(pkey)
 );
 
 -- Table of wires.  This table is the complete list of all wires in the
@@ -365,49 +179,4 @@ CREATE TABLE wire(
   FOREIGN KEY(left_graph_node_pkey) REFERENCES graph_node(pkey),
   FOREIGN KEY(right_graph_node_pkey) REFERENCES graph_node(pkey),
   FOREIGN KEY(site_pin_graph_node_pkey) REFERENCES graph_node(pkey)
-);
-
--- Table of graph edges.
-CREATE TABLE graph_edge(
-  src_graph_node_pkey INT,
-  dest_graph_node_pkey INT,
-  switch_pkey INT,
-  track_pkey INT,
-  phy_tile_pkey INT,
-  pip_in_tile_pkey INT,
-  backward BOOLEAN,
-  FOREIGN KEY(src_graph_node_pkey) REFERENCES graph_node(pkey),
-  FOREIGN KEY(dest_graph_node_pkey) REFERENCES graph_node(pkey),
-  FOREIGN KEY(track_pkey) REFERENCES track(pkey),
-  FOREIGN KEY(phy_tile_pkey) REFERENCES phy_tile(pkey),
-  FOREIGN KEY(pip_in_tile_pkey) REFERENCES pip(pkey)
-);
-
--- channel, x_list and y_list are direct mappings of the channel object
--- present in the rr_graph.
-CREATE TABLE channel(
-  chan_width_max INT,
-  x_min INT,
-  y_min INT,
-  x_max INT,
-  y_max INT
-);
-CREATE TABLE x_list(
-    idx INT,
-    info INT
-);
-CREATE TABLE y_list(
-    idx INT,
-    info INT
-);
-
--- Table that represents the (optional) VCC and GND global sources.
--- VPR cannot natively take advantage of local VCC and GND sources, so
--- a global source is generated, and local sources will connect to the global
--- sources.
-CREATE TABLE constant_sources(
-    vcc_track_pkey INT,
-    gnd_track_pkey INT,
-    FOREIGN KEY(vcc_track_pkey) REFERENCES track(pkey),
-    FOREIGN KEY(gnd_track_pkey) REFERENCES track(pkey)
 );
