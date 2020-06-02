@@ -58,11 +58,15 @@ BELs / Sites supported
 - IOI (no IDELAY/IDDR/ISERDES/ODDR/ISERDES support)
 - CLK\_HROW\_\*
 - CLK\_BUFG\_\*
+- PLLs
+- IDELAY/ISERDES
+- OSERDES
+- PSS
 
 Future work
 -----------
- - PLLs and MMCMs
- - IDELAY/IDRR/ISERDES
- - ODDR/OSERDES
+ - MMCMs
+ - IDRR
+ - ODDR
  - BUFR/BUFMR and other clock buffers
  - DSP
