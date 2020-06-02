@@ -35,8 +35,7 @@ def get_init(features, target_features, invert, width):
         final_init ^= (2**width) - 1
 
     return "{{width}}'b{{init:0{}b}}".format(width).format(
-        width=width, init=final_init
-    )
+        width=width, init=final_init)
 
 
 def get_bram_site(db, grid, tile, site):
@@ -97,11 +96,8 @@ def eligible_for_merge(top, bram_sites, verbose=False):
             source_b = top.find_source_from_sink(bram_sites[1], wire)
             if source_a != source_b:
                 if verbose:
-                    print(
-                        'Cannot merge because wire {}, {} != {}'.format(
-                            wire, source_a, source_b
-                        )
-                    )
+                    print('Cannot merge because wire {}, {} != {}'.format(
+                        wire, source_a, source_b))
                 return False
 
         return True
@@ -141,12 +137,9 @@ def eligible_for_merge(top, bram_sites, verbose=False):
     ]:
         if bram_y0.parameters[param] != bram_y1.parameters[param]:
             if verbose:
-                print(
-                    'Cannot merge because parameter {}, {} != {}'.format(
-                        param, bram_y0.parameters[param],
-                        bram_y1.parameters[param]
-                    )
-                )
+                print('Cannot merge because parameter {}, {} != {}'.format(
+                    param, bram_y0.parameters[param],
+                    bram_y1.parameters[param]))
             return False
 
     return True
@@ -210,12 +203,10 @@ def clean_up_to_bram36(top, site):
         site.mask_sink(bel, 'ADDRARDADDRU[{}]'.format(idx))
         site.mask_sink(bel, 'ADDRBWRADDRU[{}]'.format(idx))
 
-        site.rename_sink(
-            bel, 'ADDRARDADDRL[{}]'.format(idx), 'ADDRARDADDR[{}]'.format(idx)
-        )
-        site.rename_sink(
-            bel, 'ADDRBWRADDRL[{}]'.format(idx), 'ADDRBWRADDR[{}]'.format(idx)
-        )
+        site.rename_sink(bel, 'ADDRARDADDRL[{}]'.format(idx),
+                         'ADDRARDADDR[{}]'.format(idx))
+        site.rename_sink(bel, 'ADDRBWRADDRL[{}]'.format(idx),
+                         'ADDRBWRADDR[{}]'.format(idx))
 
     site.rename_sink(bel, 'ADDRARDADDRL[15]', 'ADDRARDADDR[15]')
     site.rename_sink(bel, 'ADDRBWRADDRL[15]', 'ADDRBWRADDR[15]')
@@ -242,13 +233,13 @@ def clean_up_to_bram36(top, site):
             "RSTREGB",
     ]:
         assert top.find_source_from_sink(
-            site, input_wire + 'L'
-        ) == top.find_source_from_sink(site, input_wire + 'U')
+            site, input_wire + 'L') == top.find_source_from_sink(
+                site, input_wire + 'U')
         site.mask_sink(bel, input_wire + 'U')
 
     assert top.find_source_from_sink(
-        site, 'RSTRAMARSTRAMLRST'
-    ) == top.find_source_from_sink(site, 'RSTRAMARSTRAMU')
+        site, 'RSTRAMARSTRAMLRST') == top.find_source_from_sink(
+            site, 'RSTRAMARSTRAMU')
 
     site.mask_sink(bel, 'RSTRAMARSTRAMU')
 
@@ -293,24 +284,18 @@ def process_bram_site(top, features, set_features):
     ]
 
     for pidx in range(8):
-        parameter_binds.append(
-            ('INITP_0{}'.format(pidx), ['INITP_0{}'.format(pidx)], False, 256)
-        )
+        parameter_binds.append(('INITP_0{}'.format(pidx),
+                                ['INITP_0{}'.format(pidx)], False, 256))
 
     for idx in range(0x40):
-        parameter_binds.append(
-            (
-                'INIT_{:02X}'.format(idx), ['INIT_{:02X}'.format(idx)], False,
-                256
-            )
-        )
+        parameter_binds.append(('INIT_{:02X}'.format(idx),
+                                ['INIT_{:02X}'.format(idx)], False, 256))
 
     for vparam, fparam, invert, width in parameter_binds:
         bel.parameters[vparam] = get_init(
             features, [make_target_feature(p) for p in fparam],
             invert=invert,
-            width=width
-        )
+            width=width)
 
     bel.parameters['DOA_REG'] = int('DOA_REG' in set_features)
     bel.parameters['DOB_REG'] = int('DOB_REG' in set_features)
@@ -435,8 +420,8 @@ def process_bram_site(top, features, set_features):
             'RSTREGARSTREG',
             'RSTREGB',
     ):
-        bel.parameters['IS_{}_INVERTED'.format(wire)
-                       ] = int(not 'ZINV_{}'.format(wire) in set_features)
+        bel.parameters['IS_{}_INVERTED'.format(wire)] = int(
+            not 'ZINV_{}'.format(wire) in set_features)
     """
      WRITE_MODE_A_NO_CHANGE = WRITE_MODE_A_NO_CHANGE
      WRITE_MODE_A_READ_FIRST = WRITE_MODE_A_READ_FIRST
@@ -722,38 +707,25 @@ def process_bram36_site(top, features, set_features):
 
     for pidx in range(8):
         parameter_binds.append(
-            (
-                'INITP_{:02X}'.format(pidx),
-                ['RAMB18_Y0.INITP_{:02}'.format(pidx)], False, 256
-            )
-        )
+            ('INITP_{:02X}'.format(pidx),
+             ['RAMB18_Y0.INITP_{:02}'.format(pidx)], False, 256))
         parameter_binds.append(
-            (
-                'INITP_{:02X}'.format(pidx + 8),
-                ['RAMB18_Y1.INITP_{:02X}'.format(pidx)], False, 256
-            )
-        )
+            ('INITP_{:02X}'.format(pidx + 8),
+             ['RAMB18_Y1.INITP_{:02X}'.format(pidx)], False, 256))
 
     for idx in range(0x40):
         parameter_binds.append(
-            (
-                'INIT_{:02X}'.format(idx),
-                ['RAMB18_Y0.INIT_{:02X}'.format(idx)], False, 256
-            )
-        )
+            ('INIT_{:02X}'.format(idx), ['RAMB18_Y0.INIT_{:02X}'.format(idx)],
+             False, 256))
         parameter_binds.append(
-            (
-                'INIT_{:02X}'.format(idx + 0x40),
-                ['RAMB18_Y1.INIT_{:02X}'.format(idx)], False, 256
-            )
-        )
+            ('INIT_{:02X}'.format(idx + 0x40),
+             ['RAMB18_Y1.INIT_{:02X}'.format(idx)], False, 256))
 
     for vparam, fparam, invert, width in parameter_binds:
         bel.parameters[vparam] = get_init(
             features, [make_target_feature(p) for p in fparam],
             invert=invert,
-            width=width
-        )
+            width=width)
 
     remap_init(bel.parameters)
 
@@ -880,9 +852,8 @@ def process_bram36_site(top, features, set_features):
             'RSTREGARSTREG',
             'RSTREGB',
     ):
-        bel.parameters[
-            'IS_{}_INVERTED'.format(wire)
-        ] = int(not 'RAMB18_Y0.ZINV_{}'.format(wire) in set_features)
+        bel.parameters['IS_{}_INVERTED'.format(wire)] = int(
+            not 'RAMB18_Y0.ZINV_{}'.format(wire) in set_features)
     """
      WRITE_MODE_A_NO_CHANGE = WRITE_MODE_A_NO_CHANGE
      WRITE_MODE_A_READ_FIRST = WRITE_MODE_A_READ_FIRST
@@ -1104,8 +1075,7 @@ def process_bram(conn, top, tile, features):
         bram36_site = process_bram36_site(top, features, tile_features)
 
         sites[0].set_post_route_cleanup_function(
-            lambda top, site: clean_brams(top, sites, bram36_site)
-        )
+            lambda top, site: clean_brams(top, sites, bram36_site))
     else:
         for site in sites:
             if site is None:

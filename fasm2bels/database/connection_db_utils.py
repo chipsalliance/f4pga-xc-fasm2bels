@@ -6,10 +6,8 @@ def create_maybe_get_wire(conn):
 
     @functools.lru_cache(maxsize=None)
     def get_tile_type_pkey(tile):
-        c.execute(
-            'SELECT pkey, tile_type_pkey FROM phy_tile WHERE name = ?',
-            (tile, )
-        )
+        c.execute('SELECT pkey, tile_type_pkey FROM phy_tile WHERE name = ?',
+                  (tile, ))
         return c.fetchone()
 
     @functools.lru_cache(maxsize=None)
@@ -18,8 +16,7 @@ def create_maybe_get_wire(conn):
 
         c.execute(
             'SELECT pkey FROM wire_in_tile WHERE phy_tile_type_pkey = ? and name = ?',
-            (tile_type_pkey, wire)
-        )
+            (tile_type_pkey, wire))
 
         result = c.fetchone()
 
@@ -30,8 +27,7 @@ def create_maybe_get_wire(conn):
 
         c.execute(
             'SELECT pkey FROM wire WHERE phy_tile_pkey = ? AND wire_in_tile_pkey = ?',
-            (phy_tile_pkey, wire_in_tile_pkey)
-        )
+            (phy_tile_pkey, wire_in_tile_pkey))
 
         return c.fetchone()[0]
 
@@ -80,8 +76,7 @@ def get_wire(conn, phy_tile_pkey, wire_in_tile_pkey):
         (
             wire_in_tile_pkey,
             phy_tile_pkey,
-        )
-    )
+        ))
     return c.fetchone()[0]
 
 
@@ -91,8 +86,7 @@ def get_tile_type(conn, tile_name):
     c.execute(
         """
 SELECT name FROM tile_type WHERE pkey = (
-    SELECT tile_type_pkey FROM phy_tile WHERE name = ?);""", (tile_name, )
-    )
+    SELECT tile_type_pkey FROM phy_tile WHERE name = ?);""", (tile_name, ))
 
     return c.fetchone()[0]
 
@@ -135,8 +129,7 @@ WHERE
           selected_tile
       )
   );
-""", (tile_name, wire)
-    )
+""", (tile_name, wire))
 
     results = c.fetchone()
     assert results is not None, (tile_name, wire)

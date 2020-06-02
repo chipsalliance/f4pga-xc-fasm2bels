@@ -14,23 +14,20 @@ class NodeClassification(enum.Enum):
 def create_tables(conn):
     """ Create connection database scheme. """
     connection_database_sql_file = os.path.join(
-        os.path.dirname(__file__), "connection_database.sql"
-    )
+        os.path.dirname(__file__), "connection_database.sql")
     with open(connection_database_sql_file, 'r') as f:
         c = conn.cursor()
         c.executescript(f.read())
         conn.commit()
 
     c = conn.cursor()
-    c.execute(
-        """
+    c.execute("""
 INSERT INTO
     switch(name, internal_capacitance, drive_resistance, intrinsic_delay, penalty_cost, switch_type)
 VALUES
     ("__vpr_delayless_switch__", 0.0, 0.0, 0.0, 0.0, "mux"),
     ("short", 0.0, 0.0, 0.0, 0.0, "short")
-"""
-    )
+""")
     conn.commit()
 
 
@@ -72,8 +69,7 @@ WHERE
           selected_tile
       )
   );
-""", (tile_name, wire)
-    )
+""", (tile_name, wire))
 
     results = c.fetchone()
     assert results is not None, (tile_name, wire)
@@ -88,7 +84,9 @@ def get_track_model(conn, track_pkey):
     c2 = conn.cursor()
     graph_node_pkey = {}
     for idx, (pkey, graph_node_type, x_low, x_high, y_low,
-              y_high) in enumerate(c2.execute("""
+              y_high) in enumerate(
+                  c2.execute(
+                      """
     SELECT pkey, graph_node_type, x_low, x_high, y_low, y_high
       FROM graph_node WHERE track_pkey = ?""", (track_pkey, ))):
         node_type = graph2.NodeType(graph_node_type)
@@ -105,12 +103,11 @@ def get_track_model(conn, track_pkey):
                 x_low=x_low,
                 x_high=x_high,
                 y_low=y_low,
-                y_high=y_high
-            )
-        )
+                y_high=y_high))
 
     track_connections = set()
-    for src_graph_node_pkey, dest_graph_node_pkey in c2.execute("""
+    for src_graph_node_pkey, dest_graph_node_pkey in c2.execute(
+            """
     SELECT src_graph_node_pkey, dest_graph_node_pkey
         FROM graph_edge WHERE track_pkey = ?""", (track_pkey, )):
 
@@ -146,7 +143,8 @@ def yield_wire_info_from_node(conn, node_pkey):
 
     """
     c2 = conn.cursor()
-    for tile_type, wire in c2.execute("""
+    for tile_type, wire in c2.execute(
+            """
 WITH wires_in_node(phy_tile_pkey, wire_in_tile_pkey) AS (
   SELECT
     phy_tile_pkey,
@@ -208,7 +206,8 @@ def yield_logical_wire_info_from_node(conn, node_pkey):
 
     """
     c2 = conn.cursor()
-    for tile_type, wire in c2.execute("""
+    for tile_type, wire in c2.execute(
+            """
 WITH wires_in_node(tile_pkey, wire_in_tile_pkey) AS (
   SELECT
     tile_pkey,
@@ -305,31 +304,27 @@ def get_pin_name_of_wire(conn, wire_pkey):
     c.execute(
         """
 SELECT wire_in_tile_pkey, tile_pkey FROM wire WHERE pkey = ?
-        """, (wire_pkey, )
-    )
+        """, (wire_pkey, ))
     wire_in_tile_pkey, tile_pkey = c.fetchone()
 
     c.execute(
         """
 SELECT site_as_tile_pkey FROM tile WHERE pkey = ?
-        """, (tile_pkey, )
-    )
+        """, (tile_pkey, ))
     site_as_tile_pkey = c.fetchone()[0]
 
     c.execute(
         """
 SELECT name, site_pin_pkey FROM wire_in_tile WHERE pkey = ?;
-    """, (wire_in_tile_pkey, )
-    )
+    """, (wire_in_tile_pkey, ))
     wire_name, site_pin_pkey = c.fetchone()
 
     if site_pin_pkey is None:
         return None
 
     if site_as_tile_pkey is not None:
-        c.execute(
-            "SELECT name FROM site_pin WHERE pkey = ?", (site_pin_pkey, )
-        )
+        c.execute("SELECT name FROM site_pin WHERE pkey = ?",
+                  (site_pin_pkey, ))
         return c.fetchone()[0]
     else:
         return wire_name
@@ -381,8 +376,7 @@ WHERE
     WHERE
       name = ?
   );
-        """, (tile_type_str, )
-    )
+        """, (tile_type_str, ))
     result = c.fetchone()
     wire_is_pin = result is not None
 
@@ -414,8 +408,7 @@ WHERE
           pkey = ?
       )
       AND name = ?
-  );""", (site_pkey, wire_str)
-        )
+  );""", (site_pkey, wire_str))
     else:
         c.execute(
             """
@@ -435,8 +428,7 @@ WHERE
     WHERE
       name = ?
   );
-""", (wire_str, tile_type_str)
-        )
+""", (wire_str, tile_type_str))
 
     wire_in_tile_pkeys = {}
     the_site_pin_pkey = None
@@ -444,9 +436,8 @@ WHERE
         wire_in_tile_pkeys[site_pkey] = wire_in_tile_pkey
 
         if the_site_pin_pkey is not None:
-            assert the_site_pin_pkey == site_pin_pkey, (
-                tile_type_str, wire_str
-            )
+            assert the_site_pin_pkey == site_pin_pkey, (tile_type_str,
+                                                        wire_str)
         else:
             the_site_pin_pkey = site_pin_pkey
 

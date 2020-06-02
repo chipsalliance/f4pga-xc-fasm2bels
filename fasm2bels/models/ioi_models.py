@@ -96,12 +96,10 @@ def process_ilogic_idelay(top, features):
     idelay_aparts = idelay_features[0].feature.split('.')
 
     # tile_name = aparts[0]
-    ioi_ilogic_site = get_ioi_site(
-        top.db, top.grid, ilogic_aparts[0], ilogic_aparts[1]
-    )
-    ioi_idelay_site = get_ioi_site(
-        top.db, top.grid, idelay_aparts[0], idelay_aparts[1]
-    )
+    ioi_ilogic_site = get_ioi_site(top.db, top.grid, ilogic_aparts[0],
+                                   ilogic_aparts[1])
+    ioi_idelay_site = get_ioi_site(top.db, top.grid, idelay_aparts[0],
+                                   idelay_aparts[1])
 
     site = Site(ilogic_features, ioi_ilogic_site)
 
@@ -143,9 +141,9 @@ def process_ilogic_idelay(top, features):
         interface = None
         if site.has_feature("ISERDES.INTERFACE_TYPE.MEMORY_DDR3"):
             interface = '"MEMORY_DDR3"'
-        elif site.has_feature("ISERDES.INTERFACE_TYPE.NOT_MEMORY"
-                              ) and site.has_feature(
-                                  "ISERDES.INTERFACE_TYPE.Z_MEMORY"):
+        elif site.has_feature(
+                "ISERDES.INTERFACE_TYPE.NOT_MEMORY") and site.has_feature(
+                    "ISERDES.INTERFACE_TYPE.Z_MEMORY"):
             interface = '"NETWORKING"'
         elif site.has_feature("ISERDES.INTERFACE_TYPE.OVERSAMPLE"):
             interface = '"OVERSAMPLE"'
@@ -267,11 +265,9 @@ def process_ologic(top, features):
         bel.parameters['DATA_WIDTH'] = data_width
 
         bel.parameters['TRISTATE_WIDTH'] = "4" if site.has_feature(
-            "OSERDES.TRISTATE_WIDTH.W4"
-        ) else "1"
+            "OSERDES.TRISTATE_WIDTH.W4") else "1"
         bel.parameters['SERDES_MODE'] = '"SLAVE"' if site.has_feature(
-            "OSERES.SERDES_MODE.SLAVE"
-        ) else '"MASTER"'
+            "OSERES.SERDES_MODE.SLAVE") else '"MASTER"'
 
         site.add_source(bel, 'OQ', 'OQ')
         site.add_source(bel, 'TQ', 'TQ')

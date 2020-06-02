@@ -157,8 +157,7 @@ def process_set_feature(set_feature):
             start=set_feature.start,
             end=set_feature.end,
             value=set_feature.value,
-            value_format=set_feature.value_format
-        )
+            value_format=set_feature.value_format)
 
     # Return unchanged feature
     return set_feature
@@ -181,11 +180,9 @@ def bit2fasm(db_root, db, grid, bit_file, fasm_file, bitread, part):
     with tempfile.NamedTemporaryFile() as f:
         bits_file = f.name
         subprocess.check_output(
-            '{} --part_file {} -o {} -z -y {}'.format(
-                bitread, part_yaml, bits_file, bit_file
-            ),
-            shell=True
-        )
+            '{} --part_file {} -o {} -z -y {}'.format(bitread, part_yaml,
+                                                      bits_file, bit_file),
+            shell=True)
 
         disassembler = fasm_disassembler.FasmDisassembler(db)
 
@@ -200,8 +197,7 @@ def bit2fasm(db_root, db, grid, bit_file, fasm_file, bitread, part):
 
     with open(fasm_file, 'w') as f:
         print(
-            fasm.fasm_tuple_to_string(model, canonical=False), end='', file=f
-        )
+            fasm.fasm_tuple_to_string(model, canonical=False), end='', file=f)
 
 
 def load_io_sites(db_root, part, pcf):
@@ -237,9 +233,8 @@ def load_io_sites(db_root, part, pcf):
 
 def load_net_list(conn, vpr_capnp_schema_dir, rr_graph_file, route_file):
     capnp_graph = capnp_graph2.Graph(
-        rr_graph_schema_fname=os.path.join(
-            vpr_capnp_schema_dir, 'rr_graph_uxsdcxx.capnp'
-        ),
+        rr_graph_schema_fname=os.path.join(vpr_capnp_schema_dir,
+                                           'rr_graph_uxsdcxx.capnp'),
         input_file_name=rr_graph_file,
         build_pin_edges=False,
         rebase_nodes=False,
@@ -260,35 +255,28 @@ def main():
     parser.add_argument(
         '--connection_database',
         required=True,
-        help="Path to SQLite3 database for given FASM file part."
-    )
+        help="Path to SQLite3 database for given FASM file part.")
     parser.add_argument(
         '--db_root',
         required=True,
-        help="Path to prjxray database for given FASM file part."
-    )
+        help="Path to prjxray database for given FASM file part.")
     parser.add_argument(
         '--allow_orphan_sinks',
         action='store_true',
-        help="Allow sinks to have no connection."
-    )
+        help="Allow sinks to have no connection.")
     parser.add_argument(
         '--prune-unconnected-ports',
         action='store_true',
-        help="Prune top-level I/O ports that are not connected to any logic."
-    )
+        help="Prune top-level I/O ports that are not connected to any logic.")
     parser.add_argument(
         '--fasm_file',
         help="FASM file to convert BELs and routes.",
-        required=True
-    )
+        required=True)
     parser.add_argument(
-        '--bit_file', help="Bitstream file to convert to FASM."
-    )
+        '--bit_file', help="Bitstream file to convert to FASM.")
     parser.add_argument(
         '--bitread',
-        help="Path to bitread executable, required if --bit_file is provided."
-    )
+        help="Path to bitread executable, required if --bit_file is provided.")
     parser.add_argument(
         '--part',
         help="Name of part being targeted, required if --bit_file is provided."
@@ -296,19 +284,16 @@ def main():
     parser.add_argument(
         '--allow-non-dedicated-clk-routes',
         action='store_true',
-        help="Effectively sets CLOCK_DEDICATED_ROUTE to FALSE on all nets."
-    )
+        help="Effectively sets CLOCK_DEDICATED_ROUTE to FALSE on all nets.")
     parser.add_argument(
         '--iostandard',
         default=None,
-        help="Default IOSTANDARD to use for IO buffers."
-    )
+        help="Default IOSTANDARD to use for IO buffers.")
     parser.add_argument(
         '--drive',
         type=int,
         default=None,
-        help="Default DRIVE to use for IO buffers."
-    )
+        help="Default DRIVE to use for IO buffers.")
     parser.add_argument('--top', default="top", help="Root level module name.")
     parser.add_argument('--pcf', help="Mapping of top-level pins to pads.")
     parser.add_argument('--route_file', help="VPR route output file.")
@@ -324,17 +309,14 @@ def main():
     args = parser.parse_args()
 
     conn = sqlite3.connect(
-        'file:{}?mode=ro'.format(args.connection_database), uri=True
-    )
+        'file:{}?mode=ro'.format(args.connection_database), uri=True)
 
     db = prjxray.db.Database(args.db_root, args.part)
     grid = db.grid()
 
     if args.bit_file:
-        bit2fasm(
-            args.db_root, db, grid, args.bit_file, args.fasm_file,
-            args.bitread, args.part
-        )
+        bit2fasm(args.db_root, db, grid, args.bit_file, args.fasm_file,
+                 args.bitread, args.part)
 
     tiles = {}
 
@@ -343,15 +325,13 @@ def main():
     top = Module(db, grid, conn, name=args.top)
     if args.pcf:
         top.set_site_to_signal(
-            load_io_sites(args.db_root, args.part, args.pcf)
-        )
+            load_io_sites(args.db_root, args.part, args.pcf))
 
     if args.route_file:
         assert args.rr_graph
         assert args.vpr_capnp_schema_dir
-        net_map = load_net_list(
-            conn, args.vpr_capnp_schema_dir, args.rr_graph, args.route_file
-        )
+        net_map = load_net_list(conn, args.vpr_capnp_schema_dir, args.rr_graph,
+                                args.route_file)
         top.set_net_map(net_map)
 
     if args.part:
@@ -407,8 +387,7 @@ def main():
 
     if args.allow_non_dedicated_clk_routes:
         top.add_extra_tcl_line(
-            "set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets]"
-        )
+            "set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets]")
 
     with open(args.verilog_file, 'w') as f:
         for line in top.output_verilog():

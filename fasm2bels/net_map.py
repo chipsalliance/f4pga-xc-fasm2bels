@@ -49,8 +49,7 @@ def create_net_list(conn, graph, route_file):
         c.execute(
             """
         SELECT site_as_tile_pkey, phy_tile_pkey FROM tile WHERE grid_x = ? AND grid_y = ?
-        """, (node.x_low, node.y_low)
-        )
+        """, (node.x_low, node.y_low))
         site_as_tile_pkey, phy_tile_pkey = c.fetchone()
 
         if site_as_tile_pkey is None:
@@ -69,22 +68,18 @@ FROM wire_in_tile
 INNER JOIN tiles
 ON tiles.tile_type_pkey = wire_in_tile.phy_tile_type_pkey
 WHERE
-    name = ?;""", (node.x_low, node.y_low, pin)
-            )
+    name = ?;""", (node.x_low, node.y_low, pin))
             results = c.fetchall()
             assert len(results) == 1, (node, pin)
             wire_in_tile_pkey, phy_tile_pkey, tile_name = results[0]
         else:
             c.execute(
                 "SELECT tile_type_pkey, name FROM phy_tile WHERE pkey = ?",
-                (phy_tile_pkey, )
-            )
+                (phy_tile_pkey, ))
             phy_tile_type_pkey, tile_name = c.fetchone()
 
-            c.execute(
-                "SELECT site_pkey FROM site_as_tile WHERE pkey = ?",
-                (site_as_tile_pkey, )
-            )
+            c.execute("SELECT site_pkey FROM site_as_tile WHERE pkey = ?",
+                      (site_as_tile_pkey, ))
             site_pkey = c.fetchone()[0]
 
             c.execute(
@@ -94,8 +89,7 @@ WHERE
               );""", (
                     pin,
                     site_pkey,
-                )
-            )
+                ))
             site_pin_pkey = c.fetchone()[0]
 
             c.execute(
@@ -111,14 +105,12 @@ WHERE
                     site_pkey,
                     site_pin_pkey,
                     phy_tile_type_pkey,
-                )
-            )
+                ))
             wire_in_tile_pkey = c.fetchone()[0]
 
         c.execute(
             "SELECT pkey FROM wire WHERE wire_in_tile_pkey = ? AND phy_tile_pkey = ?",
-            (wire_in_tile_pkey, phy_tile_pkey)
-        )
+            (wire_in_tile_pkey, phy_tile_pkey))
         wire_pkey = c.fetchone()[0]
 
         yield Net(name=net, wire_pkey=wire_pkey, tile=tile_name, site_pin=pin)
