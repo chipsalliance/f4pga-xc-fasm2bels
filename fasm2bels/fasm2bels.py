@@ -29,23 +29,25 @@ import fasm.output
 from fasm import SetFasmFeature
 from prjxray import fasm_disassembler
 from prjxray import bitstream
+from rr_graph_capnp import graph2 as capnp_graph2
 import prjxray.db
 
-from .cmt_models import process_pll
-from .bram_models import process_bram
-from .clb_models import process_clb
-from .clk_models import process_hrow, process_bufg
-from .connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
-from .iob_models import process_iobs
-from .ioi_models import process_ioi
-from .hclk_ioi3_models import process_hclk_ioi3
-from .pss_models import get_ps7_site, insert_ps7
-from .verilog_modeling import Module
 from .net_map import create_net_list
 
-import lib.rr_graph_capnp.graph2 as capnp_graph2
-from lib.parse_pcf import parse_simple_pcf
-import eblif
+from .models.verilog_modeling import Module
+from .models.cmt_models import process_pll
+from .models.bram_models import process_bram
+from .models.clb_models import process_clb
+from .models.clk_models import process_hrow, process_bufg
+from .models.iob_models import process_iobs
+from .models.ioi_models import process_ioi
+from .models.hclk_ioi3_models import process_hclk_ioi3
+from .models.pss_models import get_ps7_site, insert_ps7
+
+from .database.connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
+
+from .lib.parse_pcf import parse_simple_pcf
+from .lib import eblif
 
 
 def null_process(conn, top, tile, tiles):

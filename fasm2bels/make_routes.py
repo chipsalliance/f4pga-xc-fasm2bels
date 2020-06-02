@@ -2,7 +2,7 @@ import functools
 
 from prjxray.tile_segbits import PsuedoPipType
 
-from .connection_db_utils import get_node_pkey, get_wires_in_node, get_wire
+from .database.connection_db_utils import get_node_pkey, get_wires_in_node, get_wire
 
 ZERO_NET = -1
 ONE_NET = -2
