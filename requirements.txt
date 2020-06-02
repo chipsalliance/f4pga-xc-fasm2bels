@@ -7,3 +7,4 @@ progressbar2
 -e git://github.com/SymbiFlow/prjxray.git#egg=prjxray
 -e git://github.com/SymbiFlow/fasm.git#egg=fasm
 -e git://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=symbiflow-rr-graph
+yapf==0.24.0
