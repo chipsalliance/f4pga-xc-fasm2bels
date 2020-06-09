@@ -21,4 +21,4 @@ build:
 	cd third_party/prjxray; make build -j`nproc`
 
 test-py:
-	cd tests; python -m unittest
+	$(IN_ENV) cd tests; python -m unittest

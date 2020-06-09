@@ -29,8 +29,8 @@ location.
 import functools
 import re
 import fasm
-from fasm2bels.make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
-from fasm2bels.database.connection_db_utils import get_wire_pkey
+from ..make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
+from ..database.connection_db_utils import get_wire_pkey
 
 
 def pin_to_wire_and_idx(pin):
@@ -1016,8 +1016,8 @@ class Site(object):
         sources = set(self.sources.keys())
 
         assert len(internal_sources & sinks) == 0, (internal_sources & sinks)
-        assert len(internal_sources & sources) == 0, (internal_sources
-                                                      & sources)
+        assert len(internal_sources & sources) == 0, (
+            internal_sources & sources)
 
         bel_ids = set()
         for bel in self.bels:

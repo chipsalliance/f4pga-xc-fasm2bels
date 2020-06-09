@@ -1,4 +1,4 @@
-from fasm2bels.lib.utils import eprint
+from ..lib.utils import eprint
 from .verilog_modeling import Bel, Site
 
 # Mapping of IOB type to its IO ports
@@ -27,6 +27,8 @@ IOB_PORTS = {
         "IOB",
     ),
 }
+
+DRIVE_NOT_ALLOWED = ["SSTL135", "SSTL15"]
 
 
 def get_iob_site(db, grid, tile, site):
@@ -112,9 +114,9 @@ def append_obuf_iostandard_params(top,
             "DRIVE": top.default_drive
         }
 
-    # SSTL135 must have no DRIVE setting. If present, the DRIVE setting gets removes,
-    # as it was set by DEFAULT in the EBLIF
-    if "SSTL135" in iosettings["IOSTANDARD"]:
+    # SSTL135/SSTL15 must have no DRIVE setting. If present, the DRIVE setting
+    # gets removes, as it was set by DEFAULT in the EBLIF
+    if iosettings["IOSTANDARD"] in DRIVE_NOT_ALLOWED:
         iosettings["DRIVE"] = None
 
     iostandard = iosettings.get("IOSTANDARD", None)
@@ -181,9 +183,9 @@ def append_ibuf_iostandard_params(top,
             "DRIVE": top.default_drive
         }
 
-    # SSTL135 must have no DRIVE setting. If present, the DRIVE setting gets removes,
-    # as it was set by DEFAULT in the EBLIF
-    if "SSTL135" in iosettings["IOSTANDARD"]:
+    # SSTL135/SSTL15 must have no DRIVE setting. If present, the DRIVE setting
+    # gets removes, as it was set by DEFAULT in the EBLIF
+    if iosettings["IOSTANDARD"] in DRIVE_NOT_ALLOWED:
         iosettings["DRIVE"] = None
 
     iostandard = iosettings.get("IOSTANDARD", None)
@@ -239,15 +241,20 @@ def decode_iostandard_params(site, diff=False):
             if parts[idx + 1] == "I_FIXED":
                 drives = [None]
             else:
-                drives = [int(s[1:]) for s in parts[idx + 1].split("_")]
+                drives_str = parts[idx + 1].replace("_I_FIXED", "")
+                drives = [int(s[1:]) for s in drives_str.split("_")]
 
             iostds = [s for s in parts[idx - 1].split("_")]
 
             for ios in iostds:
                 if ios not in iostd_drive.keys():
                     iostd_drive[ios] = set()
-                for drv in drives:
-                    iostd_drive[ios].add(drv)
+
+                if ios in DRIVE_NOT_ALLOWED:
+                    iostd_drive[ios].add(None)
+                else:
+                    for drv in drives:
+                        iostd_drive[ios].add(drv)
 
         if "SLEW" in parts:
             idx = parts.index("SLEW")
