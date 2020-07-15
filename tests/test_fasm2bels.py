@@ -34,24 +34,24 @@ class TestFasm2Bels(unittest.TestCase):
         part = 'xc7a35tcpg236-1'
 
         generated_top_v = os.path.join(temp_dir, 'top_bit.v')
-        generated_top_tcl = os.path.join(temp_dir, 'top_bit.tcl')
+        generated_top_xdc = os.path.join(temp_dir, 'top_bit.xdc')
 
         sys.argv = [
             'fasm2bels', '--db_root', db_root, '--part', part, '--bitread',
             bitread, '--bit_file', bit_file, '--fasm_file', fasm_file, '--pcf',
             pcf, '--eblif', eblif, '--top', top, '--iostandard', iostandard,
             '--drive', drive, '--connection_database', channels_file,
-            generated_top_v, generated_top_tcl
+            generated_top_v, generated_top_xdc
         ]
 
         main()
 
         tmp_top_v = os.path.join(temp_dir, generated_top_v)
-        tmp_top_tcl = os.path.join(temp_dir, generated_top_tcl)
+        tmp_top_xdc = os.path.join(temp_dir, generated_top_xdc)
 
         # Check if generated files exists
         self.assertTrue(os.path.exists(tmp_top_v))
-        self.assertTrue(os.path.exists(tmp_top_tcl))
+        self.assertTrue(os.path.exists(tmp_top_xdc))
 
         # Check if generated files are equal to the golden ones
         self.assertTrue(
@@ -60,8 +60,8 @@ class TestFasm2Bels(unittest.TestCase):
                 tmp_top_v))
         self.assertTrue(
             filecmp.cmp(
-                os.path.join(cur_dir, 'test_data', 'top_bit.golden.tcl'),
-                tmp_top_tcl))
+                os.path.join(cur_dir, 'test_data', 'top_bit.golden.xdc'),
+                tmp_top_xdc))
 
 
 if __name__ == "__main__":
