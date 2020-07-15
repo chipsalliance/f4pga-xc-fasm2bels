@@ -1551,8 +1551,7 @@ class Module(object):
         """ Yields lines of tcl that will assign set the location of BELs. """
         for bel in sorted(self.get_bels(), key=lambda bel: bel.priority):
             get_cell = "[get_cells *{cell}]".format(
-                cell=bel.get_prefixed_name()
-            )
+                cell=bel.get_prefixed_name())
 
             if bel.bel is not None:
                 yield """\
@@ -1563,8 +1562,7 @@ set_property BEL {bel} {get_cell}""".format(
 
             yield """\
 set_property LOC {site} {get_cell}""".format(
-                site=bel.site, get_cell=get_cell
-            )
+                site=bel.site, get_cell=get_cell)
 
     def output_nets(self):
         """ Yields lines of tcl that will assign the exact routing path for nets.
@@ -1604,8 +1602,7 @@ set net [get_nets -of_object $pin]""".format(
                 continue
 
             yield """set route {fixed_route}""".format(
-                fixed_route=' '.join(fixed_route)
-            )
+                fixed_route=' '.join(fixed_route))
 
             # Remove extra {} elements required to construct 1-length lists.
             yield """set_property FIXED_ROUTE $route $net"""

@@ -234,10 +234,8 @@ def load_io_sites(db_root, part, pcf, eblif):
                 print(
                     """ERROR:
 Conflicting pin constraints for pad {}:\n{}\n{}""".format(
-                        pad, net, pin_to_signal[pad]
-                    ),
-                    file=sys.stderr
-                )
+                        pad, net, pin_to_signal[pad]),
+                    file=sys.stderr)
                 sys.exit(1)
 
     site_to_signal = {}
@@ -326,8 +324,7 @@ def main():
         '--vpr_grid_map', help="VPR grid to Canonical grid map")
     parser.add_argument('verilog_file', help="Filename of output verilog file")
     parser.add_argument(
-        'xdc_file', help="Filename of output xdc constraints file."
-    )
+        'xdc_file', help="Filename of output xdc constraints file.")
 
     args = parser.parse_args()
 
@@ -357,8 +354,7 @@ def main():
 
     if args.eblif or args.pcf:
         top.set_site_to_signal(
-            load_io_sites(args.db_root, args.part, args.pcf, parsed_eblif)
-        )
+            load_io_sites(args.db_root, args.part, args.pcf, parsed_eblif))
 
     if args.route_file:
         assert args.rr_graph

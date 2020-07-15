@@ -498,12 +498,10 @@ def process_differential_iob(top, iob, in_diff, out_diff):
 
         if in_diff:
 
-            top_wire_n = top.add_top_inout_port(
-                tile_name, iob_site_s.name, 'IOPAD_N'
-            )
-            top_wire_p = top.add_top_inout_port(
-                tile_name, iob_site_m.name, 'IOPAD_P'
-            )
+            top_wire_n = top.add_top_inout_port(tile_name, iob_site_s.name,
+                                                'IOPAD_N')
+            top_wire_p = top.add_top_inout_port(tile_name, iob_site_m.name,
+                                                'IOPAD_P')
 
             # Options are:
             # IOBUFDS or IOBUFDS_INTERMDISABLE
@@ -531,12 +529,10 @@ def process_differential_iob(top, iob, in_diff, out_diff):
 
         else:
 
-            top_wire_n = top.add_top_out_port(
-                tile_name, iob_site_s.name, 'OPAD_N'
-            )
-            top_wire_p = top.add_top_out_port(
-                tile_name, iob_site_m.name, 'OPAD_P'
-            )
+            top_wire_n = top.add_top_out_port(tile_name, iob_site_s.name,
+                                              'OPAD_N')
+            top_wire_p = top.add_top_out_port(tile_name, iob_site_m.name,
+                                              'OPAD_P')
 
             # Since we cannot distinguish between OBUFDS and OBUFTDS we add the
             # "T" one. If it is the OBUFDS then the T input will be forced to 0.

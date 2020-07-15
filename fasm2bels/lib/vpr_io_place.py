@@ -2,8 +2,9 @@ from __future__ import print_function
 from collections import OrderedDict, namedtuple
 import itertools
 import re
-import eblif
 import lxml.etree as ET
+
+from fasm2bels.lib import eblif
 
 IoConstraint = namedtuple('IoConstraint', 'name x y z comment')
 
@@ -129,10 +130,8 @@ class IoPlace(object):
         max_name_length = max(len(c.name) for c in self.constraints.values())
         print(
             HEADER_TEMPLATE.format(
-                name="Block Name", nl=max_name_length, s=""
-            ),
-            file=f
-        )
+                name="Block Name", nl=max_name_length, s=""),
+            file=f)
 
         constrained_blocks = {}
 
@@ -151,8 +150,7 @@ class IoPlace(object):
 
                     print(
                         "Error: block '{}' has multiple conflicting constraints!"
-                        .format(name)
-                    )
+                        .format(name))
                     print("", constrained_blocks[name])
                     print("", constraint)
                     exit(-1)
@@ -169,10 +167,8 @@ class IoPlace(object):
                         x=constraint.x,
                         y=constraint.y,
                         z=constraint.z,
-                        comment=constraint.comment
-                    ),
-                    file=f
-                )
+                        comment=constraint.comment),
+                    file=f)
 
                 # Add to constrained block list
                 constrained_blocks[name] = constraint
