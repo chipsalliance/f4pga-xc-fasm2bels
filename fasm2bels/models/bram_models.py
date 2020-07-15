@@ -158,6 +158,9 @@ def clean_up_to_bram18(top, site):
         site.mask_sink(bel, 'ADDRATIEHIGH[{}]'.format(idx))
         site.mask_sink(bel, 'ADDRBTIEHIGH[{}]'.format(idx))
 
+    site.mask_sink(bel, 'REGCLKB')
+    site.mask_sink(bel, 'REGCLKARDRCLK')
+
     site.mask_sink(bel, 'WEA[1]')
     site.mask_sink(bel, 'WEA[3]')
     site.mask_sink(bel, 'WEBWE[1]')
@@ -221,6 +224,9 @@ def clean_up_to_bram36(top, site):
             top.find_source_from_sink(site, 'WEBWEU{}'.format(idx))
         site.mask_sink(bel, "WEBWEU[{}]".format(idx))
 
+    site.mask_sink(bel, 'REGCLKB')
+    site.mask_sink(bel, 'REGCLKARDRCLK')
+
     for input_wire in [
             "CLKARDCLK",
             "CLKBWRCLK",
@@ -231,6 +237,8 @@ def clean_up_to_bram36(top, site):
             "RSTREGARSTREG",
             "RSTRAMB",
             "RSTREGB",
+            "REGCLKB",
+            "REGCLKARDRCLK",
     ]:
         assert top.find_source_from_sink(
             site, input_wire + 'L') == top.find_source_from_sink(
@@ -480,6 +488,8 @@ def process_bram_site(top, features, set_features):
             "RSTRAMB",
             "RSTREGARSTREG",
             "RSTREGB",
+            "REGCLKB",
+            "REGCLKARDRCLK",
     ]:
         wire_name = make_wire(input_wire)
         site.add_sink(bel, input_wire, wire_name)
@@ -884,6 +894,8 @@ def process_bram36_site(top, features, set_features):
             "RSTREGARSTREG",
             "RSTRAMB",
             "RSTREGB",
+            "REGCLKB",
+            "REGCLKARDRCLK",
     ]:
         site.add_sink(bel, input_wire, input_wire + 'L')
         site.add_sink(bel, input_wire + 'U', input_wire + 'U')
