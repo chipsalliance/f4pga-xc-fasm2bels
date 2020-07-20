@@ -319,6 +319,10 @@ def main():
     parser.add_argument('--pcf', help="Mapping of top-level pins to pads.")
     parser.add_argument('--route_file', help="VPR route output file.")
     parser.add_argument('--rr_graph', help="Real or virt xc7 graph")
+    parser.add_argument(
+        '--vpr_capnp_schema_dir',
+        default=None,
+        help="VPR capnp schemas directory.")
     parser.add_argument('--eblif', help="EBLIF file used to generate design")
     parser.add_argument(
         '--vpr_grid_map', help="VPR grid to Canonical grid map")
@@ -375,7 +379,11 @@ def main():
                     grid_map[(vpr_x, vpr_y)] = [(can_x, can_y)]
 
         cur_dir = os.path.dirname(__file__)
-        capnp_schema_dir = os.path.join(cur_dir, 'capnp')
+
+        if args.vpr_capnp_schema_dir is None:
+            capnp_schema_dir = os.path.join(cur_dir, 'capnp')
+        else:
+            capnp_schema_dir = args.vpr_capnp_schema_dir
 
         net_map = load_net_list(conn, capnp_schema_dir, args.rr_graph,
                                 args.route_file, grid_map)
