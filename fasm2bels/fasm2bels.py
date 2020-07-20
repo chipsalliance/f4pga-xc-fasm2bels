@@ -320,9 +320,7 @@ def main():
     parser.add_argument('--route_file', help="VPR route output file.")
     parser.add_argument('--rr_graph', help="Real or virt xc7 graph")
     parser.add_argument(
-        '--vpr_capnp_schema_dir',
-        default=None,
-        help="VPR capnp schemas directory.")
+        '--vpr_capnp_schema_dir', help="VPR capnp schemas directory.")
     parser.add_argument('--eblif', help="EBLIF file used to generate design")
     parser.add_argument(
         '--vpr_grid_map', help="VPR grid to Canonical grid map")
@@ -361,8 +359,9 @@ def main():
             load_io_sites(args.db_root, args.part, args.pcf, parsed_eblif))
 
     if args.route_file:
-        assert args.rr_graph
-        assert args.vpr_grid_map
+        assert args.rr_graph, "RR graph file required."
+        assert args.vpr_grid_map, "VPR grid map required."
+        assert args.vpr_capnp_schema_dir, "VPR capnp schemas dir path required."
 
         grid_map = dict()
         with open(args.vpr_grid_map, 'r') as csv_grid_map:
@@ -380,12 +379,7 @@ def main():
 
         cur_dir = os.path.dirname(__file__)
 
-        if args.vpr_capnp_schema_dir is None:
-            capnp_schema_dir = os.path.join(cur_dir, 'capnp')
-        else:
-            capnp_schema_dir = args.vpr_capnp_schema_dir
-
-        net_map = load_net_list(conn, capnp_schema_dir, args.rr_graph,
+        net_map = load_net_list(conn, args.vpr_capnp_schema_dir, args.rr_graph,
                                 args.route_file, grid_map)
         top.set_net_map(net_map)
 
