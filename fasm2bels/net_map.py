@@ -27,13 +27,6 @@ def create_net_list(conn, graph, route_file, vpr_grid_map):
     c = conn.cursor()
 
     for net, node in find_net_sources(route_file):
-        graph_node = graph.nodes[node.inode]
-        assert graph_node.id == node.inode
-        assert graph_node.loc.x_low == node.x_low
-        assert graph_node.loc.x_high == node.x_high
-        assert graph_node.loc.y_low == node.y_low
-        assert graph_node.loc.y_high == node.y_high
-
         gridloc = graph.loc_map[(node.x_low, node.y_low)]
         pin_name = graph.pin_ptc_to_name_map[(gridloc.block_type_id, node.ptc)]
 

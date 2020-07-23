@@ -260,6 +260,7 @@ def load_net_list(conn, vpr_capnp_schema_dir, rr_graph_file, route_file,
         build_pin_edges=False,
         rebase_nodes=False,
         filter_nodes=False,
+        load_nodes=False,
     )
     graph = capnp_graph.graph
 
