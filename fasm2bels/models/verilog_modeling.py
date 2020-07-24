@@ -270,7 +270,7 @@ def flatten_wires(wire, wire_assigns, wire_name_net_map):
     ---------
     wire : str
         Wire to translate to source
-    wire_assigns : dict of str to str
+    wire_assigns : WireAssignsBimap object
         Map of wires to their parents.  Equivilant to assign statements in
         verilog.  Example:
 
@@ -288,13 +288,7 @@ def flatten_wires(wire, wire_assigns, wire_name_net_map):
 
     """
 
-    while True:
-        if wire not in wire_assigns:
-            break
-
-        wires = wire_assigns[wire]
-        assert len(wires) == 1, wires
-        wire = wires[0]
+    wire = wire_assigns.get_source_for_sink(wire)
 
     if wire in wire_name_net_map:
         return wire_name_net_map[wire]
@@ -1171,6 +1165,124 @@ def merge_exclusive_dicts(dict_a, dict_b):
     dict_a.update(dict_b)
 
 
+class WireAssignsBimap():
+    """ Bidirectional map of sink wires to source wires modelling wires.
+
+    Provides methods to add and remove assignments to the bimap.
+
+    Supports having multiple sources per sink in the event of ambiguous models.
+    Extra sources must be removed before final wire assignments can be
+    generated.
+
+    """
+
+    def __init__(self):
+        self.sink_to_source_wires = {}
+        self.source_to_sink_wires = {}
+
+    def add_wire(self, sink_wire, src_wire):
+        """ Add a wire assignment to the bimap.
+
+        Models the verilog:
+
+        assign <sink_wire> = <source_wire>;
+
+        """
+        if sink_wire not in self.sink_to_source_wires:
+            self.sink_to_source_wires[sink_wire] = set()
+
+        self.sink_to_source_wires[sink_wire].add(src_wire)
+
+        if src_wire not in self.source_to_sink_wires:
+            self.source_to_sink_wires[src_wire] = set()
+
+        self.source_to_sink_wires[src_wire].add(sink_wire)
+
+    def yield_wires(self):
+        """ Yields (sink, source) pairs.
+
+            AssertionError : If multiple sources are currently defined for
+            this sink.
+        """
+        for sink_wire, source_wires in self.sink_to_source_wires.items():
+            assert len(source_wires) == 1
+
+            yield sink_wire, list(source_wires)[0]
+
+    def is_sink(self, wire):
+        """ Is the wire a sink wire? """
+        return wire in self.sink_to_source_wires
+
+    def is_source(self, wire):
+        """ Is the wire a source wire? """
+        return wire in self.source_to_sink_wires
+
+    def get_source_for_sink(self, wire):
+        """ Get the root source for a specified sink.
+
+        In the event that the source is also a sink, returns the source of
+        that wire, repeated tile the root is found.
+        """
+        while True:
+            if not self.is_sink(wire):
+                break
+
+            wires = self.sink_to_source_wires[wire]
+            assert len(wires) == 1, wires
+            wire = list(wires)[0]
+
+        return wire
+
+    def find_sources_from_sink(self, sink_wire):
+        """ Return a set of sources from the sink, empty if there are no sources. """
+        if sink_wire not in self.sink_to_source_wires:
+            return set()
+
+        return self.sink_to_source_wires[sink_wire]
+
+    def find_sinks_from_source(self, source_wire):
+        """ Return a set of sinks from the source, empty if there are no sink. """
+        if source_wire not in self.source_to_sink_wires:
+            return set()
+
+        return self.source_to_sink_wires[source_wire]
+
+    def remove_source(self, source_wire):
+        """ Remove a source from the map.
+
+        Generates an AssertionError if the last source from a sink is removed.
+
+        """
+        if source_wire not in self.source_to_sink_wires:
+            return
+
+        for sink in self.source_to_sink_wires[source_wire]:
+            other_source_wires = self.sink_to_source_wires[sink]
+            if len(other_source_wires) == 1:
+                assert source_wire not in other_source_wires, source_wire
+            else:
+                other_source_wires.remove(source_wire)
+
+        del self.source_to_sink_wires[source_wire]
+
+    def remove_sink(self, sink_wire):
+        """ Remove a sink from the map. """
+        if sink_wire in self.sink_to_source_wires:
+            for source_wire in self.sink_to_source_wires[sink_wire]:
+                self.source_to_sink_wires[source_wire].remove(sink_wire)
+
+            del self.sink_to_source_wires[sink_wire]
+
+    def merge_wire_assigns_dict(self, wire_assigns_dict):
+        """ Add additional wire assigns in the form of a sink to source list map. """
+        assert len(
+            set(self.sink_to_source_wires.keys()) & set(wire_assigns_dict.
+                                                        keys())) == 0
+        for sink_wire, source_wires in wire_assigns_dict.items():
+            for source_wire in source_wires:
+                self.add_wire(sink_wire, source_wire)
+
+
 class Module(object):
     """ Object to model a design. """
 
@@ -1207,7 +1319,7 @@ class Module(object):
         self.root_inout = set()
 
         self.wires = set()
-        self.wire_assigns = {}
+        self.wire_assigns = WireAssignsBimap()
 
         # Optional map of site to signal names.
         # This was originally intended for IPAD and OPAD signal naming.
@@ -1445,8 +1557,8 @@ class Module(object):
         merge_exclusive_dicts(self.wire_pkey_to_wire,
                               integrated_site['wire_pkey_to_wire'])
         merge_exclusive_dicts(self.source_bels, integrated_site['source_bels'])
-        merge_exclusive_dicts(self.wire_assigns,
-                              integrated_site['wire_assigns'])
+        self.wire_assigns.merge_wire_assigns_dict(
+            integrated_site['wire_assigns'])
         merge_exclusive_dicts(self.shorted_nets,
                               integrated_site['shorted_nets'])
         merge_exclusive_dicts(self.wire_name_net_map,
@@ -1477,10 +1589,7 @@ class Module(object):
                 nets=self.nets,
                 net_map=self.net_map,
         ):
-            if sink_wire not in self.wire_assigns:
-                self.wire_assigns[sink_wire] = []
-
-            self.wire_assigns[sink_wire].append(src_wire)
+            self.wire_assigns.add_wire(sink_wire=sink_wire, src_wire=src_wire)
 
         self.handle_post_route_cleanup()
 
@@ -1530,10 +1639,9 @@ class Module(object):
             for bel in site.bels:
                 bel.make_net_map(top=self, net_map=self.wire_name_net_map)
 
-        for lhs, rhs in self.wire_assigns.items():
-            assert len(rhs) == 1
-            self.wire_name_net_map[lhs] = flatten_wires(
-                rhs[0], self.wire_assigns, self.wire_name_net_map)
+        for sink_wire, source_wire in self.wire_assigns.yield_wires():
+            self.wire_name_net_map[sink_wire] = flatten_wires(
+                source_wire, self.wire_assigns, self.wire_name_net_map)
 
         for site in self.sites:
             for bel in sorted(site.bels, key=lambda bel: bel.priority):
@@ -1633,20 +1741,14 @@ set net [get_nets -of_object $pin]""".format(
 
         source_wire = self.wire_pkey_to_wire[wire_pkey]
 
-        for sink_wire, other_source_wires in self.wire_assigns.items():
-            for other_source_wire in other_source_wires:
-                if source_wire == other_source_wire:
-                    yield sink_wire
+        return self.wire_assigns.find_sinks_from_source(source_wire)
 
     def find_sources_from_sink(self, site, site_wire):
         """ Return all source wire names from a site wire sink. """
         wire_pkey = site.site_wire_to_wire_pkey[site_wire]
         sink_wire = self.wire_pkey_to_wire[wire_pkey]
 
-        if sink_wire not in self.wire_assigns:
-            return []
-
-        return self.wire_assigns[sink_wire]
+        return self.wire_assigns.find_sources_from_sink(sink_wire)
 
     def find_source_from_sink(self, site, site_wire):
         """ Return source wire name from a site wire sink.
@@ -1655,9 +1757,12 @@ set net [get_nets -of_object $pin]""".format(
         ------
             AssertionError : If multiple sources are currently defined for
             this sink. """
-        sources = self.find_sources_from_sink(site, site_wire)
-        assert len(sources) == 1, sources
-        return sources[0]
+        wire_pkey = site.site_wire_to_wire_pkey[site_wire]
+        sink_wire = self.wire_pkey_to_wire[wire_pkey]
+
+        sources = self.wire_assigns.find_sources_from_sink(sink_wire)
+        assert len(sources) == 1
+        return list(sources)[0]
 
     def remove_site(self, site):
         site_idx = None
@@ -1683,13 +1788,7 @@ set net [get_nets -of_object $pin]""".format(
         # Make sure none of the sources are the only source for a net.
         for wire_pkey in removed_sources:
             source_wire = self.wire_pkey_to_wire[wire_pkey]
-
-            for _, other_source_wires in self.wire_assigns.items():
-                if source_wire in other_source_wires:
-                    if len(other_source_wires) == 1:
-                        assert source_wire != other_source_wires[0], source_wire
-                    else:
-                        other_source_wires.remove(source_wire)
+            self.wire_assigns.remove_source(source_wire)
 
         # Remove the sources and sinks from the wires, wire assigns, and net
         for wire_pkey in removed_sources:
@@ -1706,8 +1805,7 @@ set net [get_nets -of_object $pin]""".format(
         self.unrouted_sinks.remove(wire_pkey)
         self.wires.remove(self.wire_pkey_to_wire[wire_pkey])
         sink_wire = self.wire_pkey_to_wire[wire_pkey]
-        if sink_wire in self.wire_assigns:
-            del self.wire_assigns[sink_wire]
+        self.wire_assigns.remove_sink(sink_wire)
 
     def prune_unconnected_ports(self):
         """
@@ -1725,12 +1823,11 @@ set net [get_nets -of_object $pin]""".format(
 
         # Check whether a top level port is used in assign
         def is_used(port):
-            if port in self.wire_assigns:
+            if self.wire_assigns.is_sink(port):
                 return True
-            for other_wires in self.wire_assigns.values():
-                for other_wire in other_wires:
-                    if other_wire == port:
-                        return True
+            if self.wire_assigns.is_source(port):
+                return True
+
             return False
 
         # Remove
