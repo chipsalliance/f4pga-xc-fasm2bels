@@ -24,7 +24,7 @@ setuptools.setup(
         "lxml",
         "prjxray@git+git://github.com/SymbiFlow/prjxray.git#egg=prjxray",
         "fasm@git+git://github.com/SymbiFlow/fasm.git#egg=fasm",
-        "rr-graph@git+git://github.com/SymbiFlow/symbiflow-rr-graph.git@fix-for-python-packaging#egg=symbiflow-rr-graph",
+        "rr-graph@git+git://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=symbiflow-rr-graph",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
