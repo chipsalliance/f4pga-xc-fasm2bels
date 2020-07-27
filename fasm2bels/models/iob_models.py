@@ -517,8 +517,7 @@ def cleanup_single_ended_iob(top, site):
                     break
     else:
         assert False, "No IOI site found for the IOB site '{}'".format(
-            site.site.name
-        )
+            site.site.name)
 
     # Check whether we have pure inversion of the T signal
     if ioi_site.has_feature("OSERDES.DATA_RATE_TQ.BUF"):

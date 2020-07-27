@@ -57,8 +57,7 @@ def cleanup_ilogic(top, site):
 
         if ck_source is not None and ckb_source is not None and ck_source == ckb_source:
             is_cb_inverted = bool(
-                int(bel.parameters.get("IS_CB_INVERTED", "0"))
-            )
+                int(bel.parameters.get("IS_CB_INVERTED", "0")))
             bel.parameters["IS_CB_INVERTED"] = str(int(not is_cb_inverted))
 
     # Check if we have an ODDR for OQ/TQ
@@ -181,9 +180,9 @@ def process_iserdes(top, site, idelay_site=None):
     interface = None
     if site.has_feature("ISERDES.INTERFACE_TYPE.MEMORY_DDR3"):
         interface = '"MEMORY_DDR3"'
-    elif site.has_feature("ISERDES.INTERFACE_TYPE.NOT_MEMORY"
-                          ) and site.has_feature(
-                              "ISERDES.INTERFACE_TYPE.Z_MEMORY"):
+    elif site.has_feature(
+            "ISERDES.INTERFACE_TYPE.NOT_MEMORY") and site.has_feature(
+                "ISERDES.INTERFACE_TYPE.Z_MEMORY"):
         interface = '"NETWORKING"'
     elif site.has_feature("ISERDES.INTERFACE_TYPE.OVERSAMPLE"):
         interface = '"OVERSAMPLE"'
@@ -269,8 +268,7 @@ def process_iddr(top, site, idelay_site=None):
 
     # Determine whether we have SET or RESET
     assert site.has_feature('IFF.ZSRVAL_Q1') == site.has_feature(
-        'IFF.ZSRVAL_Q2'
-    ), (site.tile, site.site)
+        'IFF.ZSRVAL_Q2'), (site.tile, site.site)
 
     if site.has_feature('IFF.ZSRVAL_Q1'):
         site.add_sink(bel, 'R', 'SR')
@@ -279,8 +277,7 @@ def process_iddr(top, site, idelay_site=None):
 
     # DDR_CLK_EDGE
     assert site.has_feature('IFF.DDR_CLK_EDGE.SAME_EDGE') != site.has_feature(
-        'IFF.DDR_CLK_EDGE.OPPOSITE_EDGE'
-    ), (site.tile, site.site)
+        'IFF.DDR_CLK_EDGE.OPPOSITE_EDGE'), (site.tile, site.site)
 
     if site.has_feature('IFF.DDR_CLK_EDGE.SAME_EDGE'):
         bel.parameters['DDR_CLK_EDGE'] = '"SAME_EDGE"'
@@ -533,11 +530,9 @@ def process_oserdes(top, site):
     bel.parameters['DATA_WIDTH'] = data_width
 
     bel.parameters['TRISTATE_WIDTH'] = "4" if site.has_feature(
-        "OSERDES.TRISTATE_WIDTH.W4"
-    ) else "1"
+        "OSERDES.TRISTATE_WIDTH.W4") else "1"
     bel.parameters['SERDES_MODE'] = '"SLAVE"' if site.has_feature(
-        "OSERES.SERDES_MODE.SLAVE"
-    ) else '"MASTER"'
+        "OSERES.SERDES_MODE.SLAVE") else '"MASTER"'
 
     site.add_source(bel, 'OQ', 'OQ')
     site.add_source(bel, 'TQ', 'TQ')
