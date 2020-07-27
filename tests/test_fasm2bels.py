@@ -9,17 +9,18 @@ from fasm2bels.fasm2bels import main
 
 
 class TestFasm2Bels(unittest.TestCase):
-    @parameterized.expand([["simple_ff"]])
+    @parameterized.expand([["simple_ff"], ["iddr"], ["oddr"]])
     def test_simple_ff(self, test_name):
         cur_dir = os.path.dirname(__file__)
         base_dir = os.path.join(cur_dir, '..')
         db_root = os.path.join(base_dir, 'third_party', 'prjxray-db', 'artix7')
         bitread = os.path.join(base_dir, 'third_party', 'prjxray', 'build',
                                'tools', 'bitread')
-        bit_file = os.path.join(cur_dir, 'test_data',
+        bit_file = os.path.join(cur_dir, 'test_data', test_name,
                                 '{}.bit'.format(test_name))
-        pcf = os.path.join(cur_dir, 'test_data', '{}.pcf'.format(test_name))
-        eblif = os.path.join(cur_dir, 'test_data',
+        pcf = os.path.join(cur_dir, 'test_data', test_name,
+                           '{}.pcf'.format(test_name))
+        eblif = os.path.join(cur_dir, 'test_data', test_name,
                              '{}.eblif'.format(test_name))
 
         temp_dir = tempfile.mkdtemp(
@@ -56,12 +57,12 @@ class TestFasm2Bels(unittest.TestCase):
         # Check if generated files are equal to the golden ones
         self.assertTrue(
             filecmp.cmp(
-                os.path.join(cur_dir, 'test_data', 'top_bit.golden.v'),
-                tmp_top_v))
+                os.path.join(cur_dir, 'test_data', test_name,
+                             'top_bit.golden.v'), tmp_top_v))
         self.assertTrue(
             filecmp.cmp(
-                os.path.join(cur_dir, 'test_data', 'top_bit.golden.xdc'),
-                tmp_top_xdc))
+                os.path.join(cur_dir, 'test_data', test_name,
+                             'top_bit.golden.xdc'), tmp_top_xdc))
 
 
 if __name__ == "__main__":
