@@ -10,17 +10,17 @@ env:
 	virtualenv --python=python3 env
 	$(IN_ENV) pip install --upgrade -r requirements.txt
 
-format: env ${PYTHON_SRCS}
+format: ${PYTHON_SRCS}
 	$(IN_ENV) yapf -i ${PYTHON_SRCS}
 
 build:
 	git submodule update --init --recursive
 	cd third_party/prjxray; make build -j`nproc`
 
-test-py: env build
+test-py:
 	$(IN_ENV) cd tests; PYTHONPATH=../ python -m unittest
 
 clean:
 	rm -rf env
 
-.PHONY: clean build test-py
+.PHONY: clean env build test-py
