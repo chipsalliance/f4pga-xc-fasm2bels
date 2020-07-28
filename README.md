@@ -55,18 +55,17 @@ BELs / Sites supported
 - SLICEM (all)
 - RAMB18/RAMB36 (BRAM only, no FIFO support)
 - IOB (limited IOSTANDARDs)
-- IOI (no IDELAY/IDDR/ISERDES/ODDR/ISERDES support)
+- IOI
+    - IDELAY
+    - IDDR/ISERDES
+    - ODDR/OSERDES
 - CLK\_HROW\_\*
 - CLK\_BUFG\_\*
 - PLLs
-- IDELAY/ISERDES
-- OSERDES
 - PSS
 
 Future work
 -----------
  - MMCMs
- - IDRR
- - ODDR
  - BUFR/BUFMR and other clock buffers
  - DSP

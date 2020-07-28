@@ -432,8 +432,9 @@ def process_single_ended_iob(top, iob):
     # Output
     elif is_output:
 
-        # TODO: Could be a OBUFT?
-        bel = Bel('OBUF')
+        # OBUF or OBUFT. They cannot be distinguished so we insert OBUFT. If it
+        # originally was an OBUF then the T will be routed to 1'b0.
+        bel = Bel('OBUFT')
         top_wire = top.add_top_out_port(tile_name, iob_site.name, 'OPAD')
         bel.connections['O'] = top_wire
 
@@ -441,10 +442,12 @@ def process_single_ended_iob(top, iob):
         # is called O, so it is in fact correct.
         site.add_sink(bel, bel_pin='I', sink='O')
 
+        site.add_sink(bel, 'T', 'T')
+
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
         append_obuf_iostandard_params(top, site, bel, iostd_out, slew, in_term)
 
-        site.add_bel(bel)
+        site.add_bel(bel, name="OBUFT")
 
     # Neither
     else:
@@ -455,7 +458,79 @@ def process_single_ended_iob(top, iob):
     if top_wire is not None:
         add_pull_bel(site, top_wire)
 
+    site.set_post_route_cleanup_function(cleanup_single_ended_iob)
     top.add_site(site)
+
+
+def cleanup_single_ended_iob(top, site):
+    """
+    Cleans up a single-ended IOB
+    - Detects whether there is an OBUFT with T input routed to const1. If so
+      then checks whether the ZINV_T1 inverter is enabled in the neighboring
+      OLOGIC site. If both cases are true then the OBUFT is replaced with an
+      OBUF.
+    """
+
+    # Check if there is an OBUFT
+    bel = site.maybe_get_bel("OBUFT")
+    if bel is None:
+        return
+
+    # Check if its T input is routed to const1
+    src = top.find_source_from_sink(site, "T")
+    if src != 1:
+        return
+
+    # Get the IOB tile location
+    grid = top.grid
+    iob_tile_loc = grid.loc_of_tilename(site.tile)
+
+    # Advance left/right to get to the neighboring IOI
+    if site.tile.startswith("LIOB33"):
+        ioi_tile_loc = (
+            iob_tile_loc.grid_x + 1,
+            iob_tile_loc.grid_y,
+        )
+    elif site.tile.startswith("RIOB33"):
+        ioi_tile_loc = (
+            iob_tile_loc.grid_x - 1,
+            iob_tile_loc.grid_y,
+        )
+    else:
+        assert False, site.tile
+
+    # Get the IOI tile
+    ioi_tile_name = grid.tilename_at_loc(ioi_tile_loc)
+
+    # Get the site loc. Fortunately IOB and OLOGIC sites have the same LOCs.
+    ioi_site_xy = (
+        site.site.x,
+        site.site.y,
+    )
+
+    # Find the OLOGIC site of the IOI3 tile
+    for s in top.sites:
+        if s.tile == ioi_tile_name:
+            if s.site.type == "OLOGICE3":
+                if (s.site.x, s.site.y) == ioi_site_xy:
+                    ioi_site = s
+                    break
+    else:
+        assert False, "No IOI site found for the IOB site '{}'".format(
+            site.site.name)
+
+    # Check whether we have pure inversion of the T signal
+    if ioi_site.has_feature("OSERDES.DATA_RATE_TQ.BUF"):
+        if not ioi_site.has_feature("ZINV_T1"):
+
+            # Replace OBUFT with OBUF
+            bel.module = "OBUF"
+            bel.name = "OBUF"
+            del bel.connections["T"]
+
+            # Remove the sink for "T". That connection is now implicit
+            wire_pkey = site.site_wire_to_wire_pkey["T"]
+            top.remove_sink(wire_pkey)
 
 
 def process_differential_iob(top, iob, in_diff, out_diff):
