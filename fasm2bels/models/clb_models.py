@@ -372,6 +372,15 @@ def cleanup_dram(top, site):
     """
     lut_modes = decode_dram(site)
 
+    if 'RAM32X1D' in lut_modes.values():
+        for lut in 'BD':
+            if lut_modes[lut] == 'RAM32X1D':
+                for idx in range(2):
+                    name = 'RAM32X1D_{}_{}'.format(lut, idx)
+                    ram32 = site.maybe_get_bel(name)
+                    assert ram32 is not None, name
+                    site.mask_sink(ram32, "D0")
+
     if 'RAM128X1D' in lut_modes.values():
         ram128 = site.maybe_get_bel('RAM128X1D')
         for idx in range(6):
@@ -851,11 +860,14 @@ def process_slice(top, s):
                                       "{}{}".format(minus_one, aidx + 1))
 
                 site.add_sink(ram32[0], 'D', lut + "X")
+                site.add_sink(ram32[0], 'D0', minus_one + "X")
+
                 site.add_internal_source(ram32[0], 'SPO', lut + "O6")
                 site.add_internal_source(ram32[0], 'DPO', minus_one + "O6")
                 ram32[0].set_bel('{}6LUT'.format(lut))
 
                 di_mux(site, ram32[1], 'D', lut)
+                di_mux(site, ram32[1], 'D0', minus_one)
                 site.add_internal_source(ram32[1], 'SPO', lut + "O5")
                 site.add_internal_source(ram32[1], 'DPO', minus_one + "O5")
                 ram32[1].set_bel('{}5LUT'.format(lut))
@@ -869,8 +881,8 @@ def process_slice(top, s):
                 ram32[0].parameters['INIT'] = "32'b{}".format(bits[:32])
                 ram32[1].parameters['INIT'] = "32'b{}".format(bits[32:])
 
-                site.add_bel(ram32[0])
-                site.add_bel(ram32[1])
+                site.add_bel(ram32[0], name=ram32[0].name)
+                site.add_bel(ram32[1], name=ram32[1].name)
 
                 del lut_modes[lut]
                 del lut_modes[minus_one]
