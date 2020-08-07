@@ -152,44 +152,39 @@ def process_iserdes(top, site, idelay_site=None):
     # ISERDES
     bel = Bel('ISERDESE2')
 
-    data_rate = None
-    if site.has_feature("ISERDES.DATA_RATE.SDR"):
-        data_rate = '"SDR"'
-    else:
-        data_rate = '"DDR"'
-    bel.parameters['DATA_RATE'] = data_rate
+    # Data rate, data width and interface type
+    config_features = {
+        "ISERDES.MEMORY.DDR.W4",
+        "ISERDES.MEMORY_DDR3.DDR.W4",
+        "ISERDES.MEMORY_QDR.DDR.W4",
+        "ISERDES.NETWORKING.SDR.W2",
+        "ISERDES.NETWORKING.SDR.W3",
+        "ISERDES.NETWORKING.SDR.W4",
+        "ISERDES.NETWORKING.SDR.W5",
+        "ISERDES.NETWORKING.SDR.W6",
+        "ISERDES.NETWORKING.SDR.W7",
+        "ISERDES.NETWORKING.SDR.W8",
+        "ISERDES.NETWORKING.DDR.W4",
+        "ISERDES.NETWORKING.DDR.W6",
+        "ISERDES.NETWORKING.DDR.W8",
+        "ISERDES.NETWORKING.DDR.W10",
+        "ISERDES.NETWORKING.DDR.W14",
+        "ISERDES.OVERSAMPLE.DDR.W4",
+    }
 
-    # TODO: There shouldn't be mixed width in FASM features.
-    #       Probably it is worth revisiting the fuzzer, as it
-    #       is not possible to determine the width in case there
-    #       is a multiple choice in the fasm features.
-    data_width = None
-    if site.has_feature("ISERDES.DATA_WIDTH.W3"):
-        data_width = 3
-    elif site.has_feature("ISERDES.DATA_WIDTH.W4_6"):
-        data_width = 6
-    elif site.has_feature("ISERDES.DATA_WIDTH.W5_7"):
-        data_width = 7
-    elif site.has_feature("ISERDES.DATA_WIDTH.W8"):
-        data_width = 8
-    else:
-        data_width = 2
+    # Isolate config features, only one of them can be set.
+    set_features = set([f.feature for f in site.set_features if f.value])
+    set_config_features = set_features & config_features
 
-    bel.parameters['DATA_WIDTH'] = data_width
+    assert len(set_config_features) == 1, set_config_features
 
-    interface = None
-    if site.has_feature("ISERDES.INTERFACE_TYPE.MEMORY_DDR3"):
-        interface = '"MEMORY_DDR3"'
-    elif site.has_feature(
-            "ISERDES.INTERFACE_TYPE.NOT_MEMORY") and site.has_feature(
-                "ISERDES.INTERFACE_TYPE.Z_MEMORY"):
-        interface = '"NETWORKING"'
-    elif site.has_feature("ISERDES.INTERFACE_TYPE.OVERSAMPLE"):
-        interface = '"OVERSAMPLE"'
-    else:
-        assert False
+    # Decode
+    feature = next(iter(set_config_features))
+    parts = feature.split(".")
 
-    bel.parameters['INTERFACE_TYPE'] = interface
+    bel.parameters['INTERFACE_TYPE'] = parts[1]
+    bel.parameters['DATA_RATE'] = parts[2]
+    bel.parameters['DATA_WIDTH'] = int(parts[3][1:])
 
     site.add_source(bel, 'O', 'O')
 
