@@ -182,8 +182,8 @@ def process_iserdes(top, site, idelay_site=None):
     feature = next(iter(set_config_features))
     parts = feature.split(".")
 
-    bel.parameters['INTERFACE_TYPE'] = parts[1]
-    bel.parameters['DATA_RATE'] = parts[2]
+    bel.parameters['INTERFACE_TYPE'] = '"{}"'.format(parts[1])
+    bel.parameters['DATA_RATE'] = '"{}"'.format(parts[2])
     bel.parameters['DATA_WIDTH'] = int(parts[3][1:])
 
     site.add_source(bel, 'O', 'O')
