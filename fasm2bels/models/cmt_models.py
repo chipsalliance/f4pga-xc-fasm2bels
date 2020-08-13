@@ -88,10 +88,10 @@ def process_pll(conn, top, tile_name, features):
     # Create the PLLE2_ADV bel and add its ports
     pll = Bel('PLLE2_ADV')
 
-    for i in range(6):
+    for i in range(7):
         site.add_sink(pll, 'DADDR[{}]'.format(i), 'DADDR{}'.format(i))
 
-    for i in range(15):
+    for i in range(16):
         site.add_sink(pll, 'DI[{}]'.format(i), 'DI{}'.format(i))
 
     site.add_sink(pll, 'DCLK', 'DCLK')
