@@ -13,6 +13,20 @@ In the absence of bugs, it is expected that after consuming the BEL
 connections and TCL constraints Vivado will produce a bitstream identical to
 the bitstream the FASM file would generate.
 
+Installing
+----------
+After cloning this repo:
+  - `make env` - required python >=3.7 - may have to upgrade and then change Makefile to use new version (same for Invoking below)
+    - To get python3.7 on Ubuntu 16.04 I had to do:
+      - sudo apt update
+      - sudo apt install software-properties-common
+      - sudo add-apt-repository ppa:deadsnakes/ppa
+      - sudo apt update
+      - sudo apt install python3.7
+    - Then, had to modify the Makefile to use python3.7 instead of python3
+ - `make build`
+ - `make test-py` - will run a few tests (6), takes a few minutes
+
 Invoking
 --------
 
@@ -25,6 +39,17 @@ Required arguments are:
  - `--fasm_file` - Path to FASM file to process
  - verilog - Path to verilog file to write
  - tcl - Path to TCL file to write
+
+The first time you run it you will not have a connection database for the part.  Provide a name for this parameter such as `./basys3.db` and the program will generate the database the first time you run.  On subsequent runs you can then specify that filename and avoid re-building the database each time.
+
+Here is an example run:
+```
+python3.7 -mfasm2bels --connection_database mydb \
+                      --db_root ~/prjxray/database/artix7 \
+                      --part xc7a35tcpg236-1 \
+                      --fasm_file cnt.fasm \
+                      cnt.v cnt.tcl
+```
 
 Once the verilog and TCL is generated, it should be importable to Vivado with
 a script roughly like:
