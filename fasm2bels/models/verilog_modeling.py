@@ -147,6 +147,14 @@ def escape_verilog_name(name):
     return '\\' + name[:idx] + ' ' + name[idx:]
 
 
+def unescape_verilog_quote(name):
+    # TODO: This is pretty terrible. Maybe defer usage of verilog_modeling.escape_verilog_name?
+    if not name.startswith('\\'):
+        return name
+    else:
+        return name[1:].replace(' ', '')
+
+
 class ConnectionModel(object):
     """ Constant, Wire, Bus and NoConnect objects represent a small interface
     for Verilog module instance connection descriptions.
@@ -199,6 +207,16 @@ class Constant(ConnectionModel):
     def iter_wires(self):
         return iter([])
 
+    def output_interchange(self, parent_cell, instance_name, port, constant_nets, net_map, idx=None):
+        parent_cell.connect_net_to_instance(
+                net_name=constant_nets[self.value],
+                instance_name=instance_name,
+                port=port,
+                idx=idx)
+
+    def bus_width(self):
+        return None
+
 
 class Wire(ConnectionModel):
     """ Represents a single wire connection. """
@@ -220,6 +238,23 @@ class Wire(ConnectionModel):
 
     def iter_wires(self):
         yield (None, self.wire)
+
+    def output_interchange(self, parent_cell, instance_name, port, constant_nets, net_map, idx=None):
+        net_name = unescape_verilog_quote(self.to_string(net_map))
+
+        if net_name == "1'b1":
+            net_name = constant_nets[1]
+        elif net_name == "1'b0":
+            net_name = constant_nets[0]
+
+        parent_cell.connect_net_to_instance(
+                net_name=net_name,
+                instance_name=instance_name,
+                port=port,
+                idx=idx)
+
+    def bus_width(self):
+        return None
 
 
 class Bus(ConnectionModel):
@@ -246,6 +281,13 @@ class Bus(ConnectionModel):
             for _, real_wire in wire.iter_wires():
                 yield (idx, real_wire)
 
+    def output_interchange(self, parent_cell, instance_name, port, constant_nets, net_map):
+        for idx, wire in enumerate(self.wires):
+            wire.output_interchange(parent_cell, instance_name, port, constant_nets, net_map, idx)
+
+    def bus_width(self):
+        return len(self.wires)
+
 
 class NoConnect(ConnectionModel):
     """ Represents an unconnected port. """
@@ -261,6 +303,12 @@ class NoConnect(ConnectionModel):
 
     def iter_wires(self):
         return iter([])
+
+    def output_interchange(self, parent_cell, instance_name, port, constant_nets, net_map, idx=None):
+        pass
+
+    def bus_width(self):
+        return None
 
 
 def flatten_wires(wire, wire_assigns, wire_name_net_map):
@@ -440,6 +488,7 @@ class Bel(object):
                 if connection_wire is None:
                     connection_wire = NoConnect()
                 connections[wire] = connection_wire
+                bus_is_output[wire] = wire in self.outputs
 
         dead_wires = []
 
@@ -461,7 +510,7 @@ class Bel(object):
         for unused_connection in self.unused_connections:
             connections[unused_connection] = NoConnect()
 
-        return dead_wires, connections
+        return dead_wires, connections, bus_is_output
 
     def make_net_map(self, top, net_map):
         """ Create a mapping of programatic net names to VPR net names.
@@ -490,7 +539,7 @@ class Bel(object):
         place and route.
 
         """
-        _, connections = self.create_connections(top)
+        _, connections, _ = self.create_connections(top)
 
         for pin, connection in connections.items():
             for idx, wire in connection.iter_wires():
@@ -505,7 +554,7 @@ class Bel(object):
 
     def output_verilog(self, top, net_map, indent='  '):
         """ Output the Verilog to represent this BEL. """
-        dead_wires, connections = self.create_connections(top)
+        dead_wires, connections, _ = self.create_connections(top)
 
         for dead_wire in dead_wires:
             yield '{indent}wire [0:0] {wire};'.format(
@@ -545,6 +594,29 @@ class Bel(object):
                 for port in sorted(connections))
 
         yield '{indent});'.format(indent=indent)
+
+    def output_interchange(self, top_cell, top, net_map, constant_nets):
+        """ Output the Verilog to represent this BEL. """
+        dead_wires, connections, _ = self.create_connections(top)
+
+        for wire in dead_wires:
+            top_cell.add_net(unescape_verilog_quote(wire))
+
+        cell_instance = unescape_verilog_quote(self.get_cell(top))
+
+        top_cell.add_cell_instance(
+                name=cell_instance,
+                cell_name=self.module,
+                property_map=self.parameters)
+
+        if connections:
+            for port in connections:
+                connections[port].output_interchange(
+                        parent_cell=top_cell,
+                        instance_name=cell_instance,
+                        port=port,
+                        constant_nets=constant_nets,
+                        net_map=net_map)
 
     def add_net_name(self, pin, net_name):
         """ Add name of net attached to this pin ."""

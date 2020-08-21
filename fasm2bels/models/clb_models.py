@@ -1,6 +1,10 @@
 from .verilog_modeling import Bel, Site
 
 
+def make_binary_verilog_value(width, value):
+    return "{width}'b{{:0{width}b}}".format(width=width).format(value)
+
+
 def get_clb_site(db, grid, tile, site):
     """ Return the prjxray.tile.Site object for the given CLB site. """
     gridinfo = grid.gridinfo_at_tilename(tile)
@@ -15,6 +19,11 @@ def get_lut_init(site, lut):
     """ Return the INIT value for the specified LUT. """
     init = site.decode_multi_bit_feature('{}LUT.INIT'.format(lut))
     return "64'b{:064b}".format(init)
+
+def get_lut_hex_init(site, lut):
+    """ Return the INIT value for the specified LUT. """
+    init = site.decode_multi_bit_feature('{}LUT.INIT'.format(lut))
+    return "64'h{:08x}".format(init)
 
 
 def get_shifted_lut_init(site, lut, shift=0):
@@ -505,10 +514,11 @@ def process_slice(top, s):
     """
 
     aparts = s[0].feature.split('.')
-    site = Site(s,
-                get_clb_site(top.db, top.grid, tile=aparts[0], site=aparts[1]))
 
     mlut = aparts[1].startswith('SLICEM')
+
+    site_obj = get_clb_site(top.db, top.grid, tile=aparts[0], site=aparts[1])
+    site = Site(s, site_obj)
 
     def connect_ce_sr(bel, ce, sr):
         if site.has_feature('CEUSEDMUX'):
@@ -614,7 +624,7 @@ def process_slice(top, s):
             # LUT
             else:
                 luts[row] = create_lut(site, row)
-                luts[row].parameters['INIT'] = get_lut_init(site, row)
+                luts[row].parameters['INIT'] = get_lut_hex_init(site, row)
                 site.add_bel(luts[row])
     else:
         # DRAM is active.  Determine what BELs are in use.
@@ -646,10 +656,10 @@ def process_slice(top, s):
             site.add_sink(ram256, 'AX', "AX")
 
             ram256.parameters['INIT'] = (
-                get_shifted_lut_init(site, 'D')
+                make_binary_verilog_value(256, get_shifted_lut_init(site, 'D')
                 | get_shifted_lut_init(site, 'C', 64)
                 | get_shifted_lut_init(site, 'B', 128)
-                | get_shifted_lut_init(site, 'A', 192))
+                | get_shifted_lut_init(site, 'A', 192)))
 
             site.add_bel(ram256, name="RAM256X1S")
 
@@ -674,8 +684,11 @@ def process_slice(top, s):
             site.add_sink(ram128, 'A6', "CX")
             site.add_internal_source(ram128, 'O', 'F7BMUX_O')
 
-            ram128.parameters['INIT'] = (get_shifted_lut_init(site, 'D')
-                                         | get_shifted_lut_init(site, 'C', 64))
+            ram128.parameters['INIT'] = make_binary_verilog_value(128,
+                    (
+                        get_shifted_lut_init(site, 'D')
+                      | get_shifted_lut_init(site, 'C', 64))
+                    )
 
             site.add_bel(ram128, name='RAM128X1S_CD')
             muxes.remove('F7BMUX')
@@ -700,9 +713,8 @@ def process_slice(top, s):
 
                 site.add_internal_source(ram128, 'O', 'F7AMUX_O')
 
-                ram128.parameters['INIT'] = (get_shifted_lut_init(site, 'B')
-                                             | get_shifted_lut_init(
-                                                 site, 'A', 64))
+                ram128.parameters['INIT'] = make_binary_verilog_value(128,
+                        (get_shifted_lut_init(site, 'B') | get_shifted_lut_init(site, 'A', 64)))
 
                 site.add_bel(ram128, name='RAM128X1S_AB')
 
@@ -736,11 +748,11 @@ def process_slice(top, s):
             site.add_internal_source(ram128, 'SPO', 'F7BMUX_O')
             site.add_internal_source(ram128, 'DPO', 'F7AMUX_O')
 
-            ram128.parameters['INIT'] = (get_shifted_lut_init(site, 'D')
-                                         | get_shifted_lut_init(site, 'C', 64))
+            ram128.parameters['INIT'] = make_binary_verilog_value(128, (get_shifted_lut_init(site, 'D')
+                                         | get_shifted_lut_init(site, 'C', 64)))
 
-            other_init = (get_shifted_lut_init(site, 'B')
-                          | get_shifted_lut_init(site, 'A', 64))
+            other_init = make_binary_verilog_value(128, (get_shifted_lut_init(site, 'B')
+                          | get_shifted_lut_init(site, 'A', 64)))
 
             assert ram128.parameters['INIT'] == other_init
 

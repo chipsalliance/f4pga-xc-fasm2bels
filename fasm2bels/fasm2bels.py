@@ -51,6 +51,7 @@ from .database.connection_db_utils import create_maybe_get_wire, maybe_add_pip, 
 from .lib.parse_pcf import parse_simple_pcf
 from .lib import eblif
 from .lib import vpr_io_place
+from .lib.interchange_capnp import output_interchange
 
 
 def null_process(conn, top, tile, tiles):
@@ -325,9 +326,12 @@ def main():
     parser.add_argument('--eblif', help="EBLIF file used to generate design")
     parser.add_argument(
         '--vpr_grid_map', help="VPR grid to Canonical grid map")
-    parser.add_argument('verilog_file', help="Filename of output verilog file")
+    parser.add_argument('--verilog_file', help="Filename of output verilog file")
     parser.add_argument(
-        'xdc_file', help="Filename of output xdc constraints file.")
+        '--xdc_file', help="Filename of output xdc constraints file.")
+    parser.add_argument('--logical_netlist')
+    parser.add_argument('--physical_netlist')
+    parser.add_argument('--capnp_folder')
 
     args = parser.parse_args()
 
@@ -377,8 +381,6 @@ def main():
                     grid_map[(vpr_x, vpr_y)].append((can_x, can_y))
                 else:
                     grid_map[(vpr_x, vpr_y)] = [(can_x, can_y)]
-
-        cur_dir = os.path.dirname(__file__)
 
         net_map = load_net_list(conn, args.vpr_capnp_schema_dir, args.rr_graph,
                                 args.route_file, grid_map)
@@ -436,22 +438,32 @@ def main():
         top.add_extra_tcl_line(
             "set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets]")
 
-    with open(args.verilog_file, 'w') as f:
-        for line in top.output_verilog():
-            print(line, file=f)
+    if args.verilog_file:
+        assert args.xdc_file
+        with open(args.verilog_file, 'w') as f:
+            for line in top.output_verilog():
+                print(line, file=f)
 
-    with open(args.xdc_file, 'w') as f:
-        for line in top.output_bel_locations():
-            print(line, file=f)
+        with open(args.xdc_file, 'w') as f:
+            for line in top.output_bel_locations():
+                print(line, file=f)
 
-        for line in top.output_nets():
-            print(line, file=f)
+            for line in top.output_nets():
+                print(line, file=f)
 
-        for line in top.output_disabled_drcs():
-            print(line, file=f)
+            for line in top.output_disabled_drcs():
+                print(line, file=f)
 
-        for line in top.output_extra_tcl():
-            print(line, file=f)
+            for line in top.output_extra_tcl():
+                print(line, file=f)
+
+    if args.logical_netlist:
+        assert args.physical_netlist
+        assert args.capnp_folder
+        assert args.part
+
+        with open(args.logical_netlist, 'wb') as f_log, open(args.physical_netlist, 'wb') as f_phys:
+            output_interchange(top, args.capnp_folder, args.part, f_log, f_phys)
 
 
 if __name__ == "__main__":
