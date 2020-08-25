@@ -383,6 +383,9 @@ class Bel(object):
         self.net_names = {}
         self.priority = priority
 
+        self.bel_pins_to_cell_pins = {}
+        self.other_bels = []
+
     def set_prefix(self, prefix):
         """ Set the prefix used for wire and BEL naming.
 
@@ -624,6 +627,11 @@ class Bel(object):
         key = pin_to_wire_and_idx(pin)
         self.net_names[key] = net_name
 
+    def map_bel_pin_to_cell_pin(self, bel_name, bel_pin, cell_pin):
+        key = bel_name, bel_pin
+        assert key not in self.bel_pins_to_cell_pins
+        self.bel_pins_to_cell_pins[key] = cell_pin
+
 
 class Site(object):
     """ Object to model a Site.
@@ -663,6 +671,10 @@ class Site(object):
         self.bel_map = {}
 
         self.site_wire_to_wire_pkey = {}
+
+        # Map of site pins to list of active site pips attached to that site
+        # pin.
+        self.site_pin_to_site_pips = {}
 
         if features:
             aparts = features[0].feature.split('.')
@@ -1412,6 +1424,8 @@ class Module(object):
         # IO bank lookup (if part was provided).
         self.iobank_lookup = {}
 
+        self.port_property = {}
+
     def set_default_iostandard(self, iostandard, drive):
         self.default_iostandard = iostandard
         self.default_drive = drive
@@ -1521,6 +1535,11 @@ class Module(object):
             return None
 
         return self.net_to_iosettings[signal]
+
+    def add_port_property(self, port, prop, value):
+        if port not in self.port_property:
+            self.port_property[port] = {}
+        self.port_property[port][prop] = value
 
     def add_extra_tcl_line(self, tcl_line):
         self.extra_tcl.append(tcl_line)
@@ -1951,7 +1970,12 @@ set net [get_nets -of_object $pin]""".format(
         return self.cname_map.get((pin, idx, net))
 
     def output_extra_tcl(self):
-        return self.extra_tcl
+        output = list(self.extra_tcl)
+
+        for (port, prop), value in self.port_property:
+            output.append('set_property {} {} [get_ports {}]'.format(prop, value, port))
+
+        return output
 
     def set_io_banks(self, iobanks):
         self.iobank_lookup = dict((v, int(k)) for k, v in iobanks.items())

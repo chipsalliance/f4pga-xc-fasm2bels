@@ -154,9 +154,10 @@ def append_obuf_iostandard_params(top,
     # Input termination (here for inouts)
     if in_term is not None:
         for port in IOB_PORTS[bel.module]:
-            top.add_extra_tcl_line(
-                "set_property IN_TERM {} [get_ports {}]".format(
-                    in_term, bel.connections[port]))
+            top.add_port_property(
+                    bel.connections[port],
+                    'IN_TERM',
+                    in_term)
 
     # Slew rate
     bel.parameters["SLEW"] = '"{}"'.format(slew)
@@ -214,9 +215,10 @@ def append_ibuf_iostandard_params(top,
     # Input termination
     if in_term is not None:
         for port in IOB_PORTS[bel.module]:
-            top.add_extra_tcl_line(
-                "set_property IN_TERM {} [get_ports {}]".format(
-                    in_term, bel.connections[port]))
+            top.add_port_property(
+                    bel.connections[port],
+                    'IN_TERM',
+                    in_term)
 
 
 def decode_iostandard_params(site, diff=False):
@@ -380,6 +382,16 @@ def process_single_ended_iob(top, iob):
         else:
             bel = Bel('IBUF')
 
+        bel.set_bel('INBUF_EN')
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel,
+            bel_pin='PAD',
+            cell_pin='I')
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel,
+            bel_pin='OUT',
+            cell_pin='O')
+
         top_wire = top.add_top_in_port(tile_name, iob_site.name, 'IPAD')
         bel.connections['I'] = top_wire
 
@@ -435,6 +447,16 @@ def process_single_ended_iob(top, iob):
         # OBUF or OBUFT. They cannot be distinguished so we insert OBUFT. If it
         # originally was an OBUF then the T will be routed to 1'b0.
         bel = Bel('OBUFT')
+        bel.set_bel('OUTBUF')
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel,
+            bel_pin='IN',
+            cell_pin='I')
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel,
+            bel_pin='OUT',
+            cell_pin='O')
+
         top_wire = top.add_top_out_port(tile_name, iob_site.name, 'OPAD')
         bel.connections['O'] = top_wire
 
@@ -531,6 +553,11 @@ def cleanup_single_ended_iob(top, site):
             # Remove the sink for "T". That connection is now implicit
             wire_pkey = site.site_wire_to_wire_pkey["T"]
             top.remove_sink(wire_pkey)
+        else:
+            bel.map_bel_pin_to_cell_pin(
+                bel_name=bel.bel,
+                bel_pin='TRI',
+                cell_pin='T')
 
 
 def process_differential_iob(top, iob, in_diff, out_diff):

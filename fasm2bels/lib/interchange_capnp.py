@@ -3,6 +3,7 @@ import capnp.lib.capnp
 capnp.remove_import_hook()
 import os.path
 from .logical_netlist import check_logical_netlist, Library, Cell, Direction
+from .physical_netlist import Placement
 from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_quote
 
 
@@ -185,9 +186,9 @@ def output_logical_netlist(logical_netlist_schema, libraries, top_level_cell, to
                         port_obj.port = ports[cell.name, port.name]
 
                     if port.idx is not None:
-                        port_obj.idx = port.idx
+                        port_obj.busIdx.idx = port.idx
                     else:
-                        port_obj.idx = 2**32-1
+                        port_obj.busIdx.singleBit = None
 
     top_level_cell_instance = logical_netlist.get_top_cell_instance()
 
@@ -218,8 +219,8 @@ class PhysicalNetlistBuilder():
     def add_physical_cell(self, cell_name, cell_type):
         self.physical_cells.append((cell_name, cell_type))
 
-    def add_cell_loc(self, cell_type, cell_name, site, bel):
-        self.placements.append((cell_type, cell_name, site, bel))
+    def add_cell_loc(self, placement):
+        self.placements.append(placement)
 
     def add_physical_net(self, net_name, pips):
         self.nets.append((net_name, pips))
@@ -234,16 +235,38 @@ class PhysicalNetlistBuilder():
     def finish_encode(self):
         self.physical_netlist.init('placements', len(self.placements))
         placements = self.physical_netlist.placements
-        for idx, (cell_type, cell_name, site, bel) in enumerate(self.placements):
-            placement = placements[idx]
+        for idx, placement in enumerate(self.placements):
+            placement_obj = placements[idx]
 
-            placement.cellName = self.string_id(cell_name)
-            placement.type = self.string_id(cell_type)
+            placement_obj.cellName = self.string_id(placement.cell_name)
+            placement_obj.type = self.string_id(placement.cell_type)
 
-            placement.site = self.string_id(site)
-            placement.bel = self.string_id(bel)
-            placement.isSiteFixed = True
-            placement.isBelFixed = True
+            placement_obj.site = self.string_id(placement.site)
+            placement_obj.bel = self.string_id(placement.bel)
+            placement_obj.isSiteFixed = True
+            placement_obj.isBelFixed = True
+
+            if placement.other_bels:
+                placement_obj.init('otherBels', len(placement.other_bels))
+                other_bels_obj = placement_obj.otherBels
+                for idx, s in enumerate(placement.other_bels):
+                    other_bels_obj[idx] = self.string_id(s)
+
+            placement_obj.init('pinMap', len(placement.pins))
+            pin_map = placement_obj.pinMap
+            for idx, pin in enumerate(placement.pins):
+                pin_map[idx].cellPin = self.string_id(pin.cell_pin)
+                pin_map[idx].belPin = self.string_id(pin.bel_pin)
+                if pin.bel is None:
+                    pin_map[idx].bel = placement_obj.bel
+                else:
+                    pin_map[idx].bel = self.string_id(pin.bel)
+                pin_map[idx].isFixed = True
+
+                if pin.other_cell_type:
+                    assert pin.other_cell_name is not None
+                    pin.otherCell.multiCell = self.string_id(pin.other_cell_name)
+                    pin.otherCell.multiType = self.string_id(pin.other_cell_type)
 
         self.physical_netlist.init('physNets', len(self.nets))
         nets = self.physical_netlist.physNets
@@ -346,12 +369,17 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     for in_wire, width in make_bus(top.root_in):
         in_wire = unescape_verilog_quote(in_wire)
+        if in_wire in top.port_property:
+            prop = top.port_property[in_wire]
+        else:
+            prop = {}
+
         if width is None:
-            top_cell.add_port(in_wire, Direction.Input)
+            top_cell.add_port(in_wire, Direction.Input, property_map=prop)
             top_cell.add_net(in_wire)
             top_cell.connect_net_to_cell_port(in_wire, in_wire)
         else:
-            top_cell.add_bus_port(in_wire, Direction.Input, start=0, end=width)
+            top_cell.add_bus_port(in_wire, Direction.Input, start=0, end=width, property_map=prop)
             for idx in range(width+1):
                 net_name = '{}[{}]'.format(in_wire, idx)
                 top_cell.add_net(net_name)
@@ -360,12 +388,17 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     for out_wire, width in make_bus(top.root_out):
         out_wire = unescape_verilog_quote(out_wire)
+        if out_wire in top.port_property:
+            prop = top.port_property[out_wire]
+        else:
+            prop = {}
+
         if width is None:
-            top_cell.add_port(out_wire, Direction.Output)
+            top_cell.add_port(out_wire, Direction.Output, property_map=prop)
             top_cell.add_net(out_wire)
             top_cell.connect_net_to_cell_port(out_wire, out_wire)
         else:
-            top_cell.add_bus_port(out_wire, Direction.Output, start=0, end=width)
+            top_cell.add_bus_port(out_wire, Direction.Output, start=0, end=width, property_map=prop)
             for idx in range(width+1):
                 net_name = '{}[{}]'.format(out_wire, idx)
                 top_cell.add_net(net_name)
@@ -373,12 +406,17 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     for inout_wire, width in make_bus(top.root_inout):
         inout_wire = unescape_verilog_quote(inout_wire)
+        if inout_wire in top.port_property:
+            prop = top.port_property[inout_wire]
+        else:
+            prop = {}
+
         if width is None:
-            top_cell.add_port(inout_wire, Direction.Inout)
+            top_cell.add_port(inout_wire, Direction.Inout, property_map=prop)
             top_cell.add_net(inout_wire)
             top_cell.connect_net_to_cell_port(inout_wire, inout_wire)
         else:
-            top_cell.add_bus_port(inout_wire, Direction.Inout, start=0, end=width)
+            top_cell.add_bus_port(inout_wire, Direction.Inout, start=0, end=width, property_map=prop)
             for idx in range(width+1):
                 net_name = '{}[{}]'.format(inout_wire, idx)
                 top_cell.add_net(net_name)
@@ -488,12 +526,22 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
                 continue
 
             cell_instance = unescape_verilog_quote(bel.get_cell(top))
-            physical_netlist_builder.add_cell_loc(
+
+            placement = Placement(
                     cell_type=bel.module,
                     cell_name=cell_instance,
                     site=bel.site,
                     bel=bel.bel,
                     )
+
+            for (bel, bel_pin), cell_pin in bel.bel_pins_to_cell_pins.items():
+                placement.add_bel_pin_to_cell_pin(
+                        bel_pin=bel_pin,
+                        cell_pin=cell_pin,
+                        bel=bel,
+                        )
+
+            physical_netlist_builder.placements.append(placement)
 
     physical_netlist = physical_netlist_builder.finish_encode()
     physical_netlist.write_packed(f_physical)

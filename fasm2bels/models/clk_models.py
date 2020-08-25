@@ -78,6 +78,7 @@ def process_bufg(conn, top, tile, features):
         site = Site(features, site=bufg_site)
 
         bel = Bel('BUFGCTRL')
+        bel.set_bel('BUFGCTRL')
         bel.parameters['IS_IGNORE0_INVERTED'] = int(
             'IS_IGNORE0_INVERTED' not in set_features)
         bel.parameters['IS_IGNORE1_INVERTED'] = int(
@@ -95,8 +96,16 @@ def process_bufg(conn, top, tile, features):
         for sink in ('I0', 'I1', 'S0', 'S1', 'CE0', 'CE1', 'IGNORE0',
                      'IGNORE1'):
             site.add_sink(bel, sink, sink)
+            bel.map_bel_pin_to_cell_pin(
+                    bel_name=bel.bel,
+                    bel_pin=sink,
+                    cell_pin=sink)
 
         site.add_source(bel, 'O', 'O')
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel.bel,
+                bel_pin='O',
+                cell_pin='O')
 
         site.add_bel(bel)
 
@@ -135,6 +144,7 @@ def process_hrow(conn, top, tile, features):
         site = Site(features, site=bufhce_site)
 
         bel = Bel('BUFHCE')
+        bel.set_bel('BUFHCE')
         if 'CE_TYPE.ASYNC' in set_features:
             bel.parameters['CE_TYPE'] = '"ASYNC"'
         else:
@@ -144,8 +154,16 @@ def process_hrow(conn, top, tile, features):
 
         for sink in ('I', 'CE'):
             site.add_sink(bel, sink, sink)
+            bel.map_bel_pin_to_cell_pin(
+                    bel_name=bel.bel,
+                    bel_pin=sink,
+                    cell_pin=sink)
 
         site.add_source(bel, 'O', 'O')
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel.bel,
+                bel_pin='O',
+                cell_pin='O')
 
         site.add_bel(bel)
 

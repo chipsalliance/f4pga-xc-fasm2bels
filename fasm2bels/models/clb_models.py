@@ -36,16 +36,46 @@ def get_shifted_lut_init(site, lut, shift=0):
 
 def create_lut(site, lut):
     """ Create the BEL for the specified LUT. """
-    bel = Bel('LUT6_2', lut + 'LUT', priority=3)
-    bel.set_bel(lut + '6LUT')
+    bel = Bel('LUT6', lut + '6LUT', priority=3)
+    bel_name = lut + '6LUT'
+    bel.set_bel(bel_name)
 
     for idx in range(6):
         site.add_sink(bel, 'I{}'.format(idx), '{}{}'.format(lut, idx + 1))
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin='A{}'.format(idx+1),
+                cell_pin='I{}'.format(idx))
 
-    site.add_internal_source(bel, 'O6', lut + 'O6')
-    site.add_internal_source(bel, 'O5', lut + 'O5')
+    site.add_internal_source(bel, 'O', lut + 'O6')
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin='O6',
+            cell_pin='O')
 
-    return bel
+    bel.parameters['INIT'] = get_lut_hex_init(site, lut)
+    site.add_bel(bel)
+
+    bel = Bel('LUT5', lut + '5LUT', priority=3)
+    bel_name = lut + '5LUT'
+    bel.set_bel(bel_name)
+
+    for idx in range(5):
+        site.add_sink(bel, 'I{}'.format(idx), '{}{}'.format(lut, idx + 1))
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin='A{}'.format(idx+1),
+                cell_pin='I{}'.format(idx))
+
+    site.add_internal_source(bel, 'O', lut + 'O5')
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin='O5',
+            cell_pin='O')
+
+    init = site.decode_multi_bit_feature('{}LUT.INIT'.format(lut))
+    bel.parameters['INIT'] = "32'h{:04x}".format(init & 0xFFFFFFFF)
+    site.add_bel(bel)
 
 
 def get_srl32_init(site, srl):
@@ -60,15 +90,34 @@ def get_srl32_init(site, srl):
 
 def create_srl32(site, srl):
     bel = Bel('SRLC32E', srl + 'SRL', priority=2)
-    bel.set_bel(srl + '6LUT')
+    bel_name = srl + '6LUT'
+    bel.set_bel(bel_name)
 
     site.add_sink(bel, 'CLK', 'CLK')
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin='CLK',
+            cell_pin='CLK')
+
     site.add_sink(bel, 'D', '{}I'.format(srl))
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin='DI1',
+            cell_pin='D')
 
     for idx in range(5):
         site.add_sink(bel, 'A[{}]'.format(idx), '{}{}'.format(srl, idx + 2))
 
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin='A{}'.format(idx+2),
+                cell_pin='A[{}]'.format(idx))
+
     site.add_internal_source(bel, 'Q', srl + 'O6')
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin='O6',
+            cell_pin='Q')
 
     return bel
 
@@ -97,19 +146,40 @@ def create_srl16(site, srl, srl_type, part):
     assert part == '5' or part == '6'
 
     bel = Bel(srl_type, srl + part + 'SRL', priority=2)
-    bel.set_bel(srl + part + 'LUT')
+    bel_name = srl + part + 'LUT'
+    bel.set_bel()
 
     site.add_sink(bel, 'CLK', 'CLK')
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin='CLK',
+            cell_pin='CLK')
 
     if part == '5':
         site.add_sink(bel, 'D', '{}I'.format(srl))
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin='DI1',
+                cell_pin='D')
     if part == '6':
         site.add_sink(bel, 'D', '{}X'.format(srl))
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin='DI2',
+                cell_pin='D')
 
     for idx in range(4):
         site.add_sink(bel, 'A{}'.format(idx), '{}{}'.format(srl, idx + 2))
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin='A{}'.format(idx+2),
+                cell_pin='A{}'.format(idx))
 
     site.add_internal_source(bel, 'Q', srl + 'O' + part)
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin='Q',
+            cell_pin='O'+part)
 
     return bel
 
@@ -526,10 +596,22 @@ def process_slice(top, s):
         else:
             bel.connections[ce] = 1
 
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel,
+            bel_pin='CE',
+            cell_pin=ce
+            )
+
         if site.has_feature('SRUSEDMUX'):
             site.add_sink(bel, sr, 'SR')
         else:
             bel.connections[sr] = 0
+
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel,
+            bel_pin='SR',
+            cell_pin=sr
+            )
 
     IS_C_INVERTED = int(site.has_feature('CLKINV'))
 
@@ -567,6 +649,11 @@ def process_slice(top, s):
                     srl.parameters['INIT'] = get_srl32_init(site, row)
 
                     site.add_sink(srl, 'CE', WE)
+                    srl.map_bel_pin_to_cell_pin(
+                        bel_name=srl.bel,
+                        bel_pin='WE',
+                        cell_pin='CE',
+                        )
 
                     if row == 'A' and site.has_feature('DOUTMUX.MC31'):
                         site.add_internal_source(srl, 'Q31', 'AMC31')
@@ -612,6 +699,11 @@ def process_slice(top, s):
                         srl.parameters['INIT'] = init[i]
 
                         site.add_sink(srl, 'CE', WE)
+                        srl.map_bel_pin_to_cell_pin(
+                            bel_name=srl.bel,
+                            bel_pin='WE',
+                            cell_pin='CE',
+                            )
 
                         if use_mc31 and srl_type == 'SRLC16E':
                             site.add_internal_source(srl, 'Q15', 'AMC31')
@@ -624,8 +716,6 @@ def process_slice(top, s):
             # LUT
             else:
                 luts[row] = create_lut(site, row)
-                luts[row].parameters['INIT'] = get_lut_hex_init(site, row)
-                site.add_bel(luts[row])
     else:
         # DRAM is active.  Determine what BELs are in use.
         lut_modes = decode_dram(site)
@@ -905,8 +995,6 @@ def process_slice(top, s):
 
             if lut_modes[lut] == 'LUT':
                 luts[lut] = create_lut(site, lut)
-                luts[lut].parameters['INIT'] = get_lut_init(site, lut)
-                site.add_bel(luts[lut])
             elif lut_modes[lut] == 'RAM64X1S':
                 ram64 = Bel(
                     'RAM64X1S', name='RAM64X1S_' + lut, priority=priority)
@@ -1059,6 +1147,7 @@ def process_slice(top, s):
 
     if can_have_carry4:
         bel = Bel('CARRY4', priority=1)
+        bel.set_bel('CARRY4')
 
         for idx in range(4):
             lut = chr(ord('A') + idx)
@@ -1068,16 +1157,43 @@ def process_slice(top, s):
             else:
                 site.add_sink(bel, 'DI[{}]'.format(idx), lut + 'X')
 
+            bel.map_bel_pin_to_cell_pin(
+                bel_name=bel.bel,
+                bel_pin='DI{}'.format(idx),
+                cell_pin='DI[{}]'.format(idx))
+
             source = lut + 'O6'
 
             site.connect_internal(bel, 'S[{}]'.format(idx), source)
+            bel.map_bel_pin_to_cell_pin(
+                bel_name=bel.bel,
+                bel_pin='S{}'.format(idx),
+                cell_pin='S[{}]'.format(idx))
 
             site.add_internal_source(bel, 'O[{}]'.format(idx), lut + '_XOR')
+            bel.map_bel_pin_to_cell_pin(
+                bel_name=bel.bel,
+                bel_pin='O{}'.format(idx),
+                cell_pin='O[{}]'.format(idx))
 
             co_pin = 'CO[{}]'.format(idx)
             if idx == 3:
                 site.add_source(bel, co_pin, 'COUT')
             site.add_internal_source(bel, co_pin, lut + '_CY')
+
+            bel.map_bel_pin_to_cell_pin(
+                bel_name=bel.bel,
+                bel_pin='CO{}'.format(idx),
+                cell_pin='CO[{}]'.format(idx))
+
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel,
+            bel_pin='CIN',
+            cell_pin='CI')
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel,
+            bel_pin='CYINIT',
+            cell_pin='CYINIT')
 
         if site.has_feature('PRECYINIT.AX'):
             site.add_sink(bel, 'CYINIT', 'AX')
@@ -1118,10 +1234,24 @@ def process_slice(top, s):
 
             site.add_sink(ff5, clk, "CLK")
 
+            bel.map_bel_pin_to_cell_pin(
+                bel_name=ff5.bel,
+                bel_pin='D',
+                cell_pin='D')
+            bel.map_bel_pin_to_cell_pin(
+                bel_name=ff5.bel,
+                bel_pin='CK',
+                cell_pin=clk)
+            bel.map_bel_pin_to_cell_pin(
+                bel_name=ff5.bel,
+                bel_pin='Q',
+                cell_pin='Q')
+
             connect_ce_sr(ff5, ce, sr)
 
             site.add_internal_source(ff5, 'Q', lut + '5Q')
             ff5.parameters['INIT'] = init
+
 
             if name in ['LDCE', 'LDPE']:
                 ff5.parameters['IS_G_INVERTED'] = IS_C_INVERTED
@@ -1134,6 +1264,19 @@ def process_slice(top, s):
         name, clk, ce, sr, init = ff_bel(site, lut, ff5=False)
         ff = Bel(name, "{}_{}".format(lut, name))
         ff.set_bel(lut + 'FF')
+
+        ff.map_bel_pin_to_cell_pin(
+            bel_name=ff.bel,
+            bel_pin='D',
+            cell_pin='D')
+        ff.map_bel_pin_to_cell_pin(
+            bel_name=ff.bel,
+            bel_pin='CK',
+            cell_pin=clk)
+        ff.map_bel_pin_to_cell_pin(
+            bel_name=ff.bel,
+            bel_pin='Q',
+            cell_pin='Q')
 
         if site.has_feature('{}FFMUX.{}X'.format(lut, lut)):
             site.add_sink(ff, 'D', lut + 'X')
