@@ -326,7 +326,8 @@ def main():
     parser.add_argument('--eblif', help="EBLIF file used to generate design")
     parser.add_argument(
         '--vpr_grid_map', help="VPR grid to Canonical grid map")
-    parser.add_argument('--verilog_file', help="Filename of output verilog file")
+    parser.add_argument(
+        '--verilog_file', help="Filename of output verilog file")
     parser.add_argument(
         '--xdc_file', help="Filename of output xdc constraints file.")
     parser.add_argument('--logical_netlist')
@@ -462,8 +463,10 @@ def main():
         assert args.capnp_folder
         assert args.part
 
-        with open(args.logical_netlist, 'wb') as f_log, open(args.physical_netlist, 'wb') as f_phys:
-            output_interchange(top, args.capnp_folder, args.part, f_log, f_phys)
+        with open(args.logical_netlist, 'wb') as f_log, open(
+                args.physical_netlist, 'wb') as f_phys:
+            output_interchange(top, args.capnp_folder, args.part, f_log,
+                               f_phys)
 
 
 if __name__ == "__main__":

@@ -20,6 +20,7 @@ def get_lut_init(site, lut):
     init = site.decode_multi_bit_feature('{}LUT.INIT'.format(lut))
     return "64'b{:064b}".format(init)
 
+
 def get_lut_hex_init(site, lut):
     """ Return the INIT value for the specified LUT. """
     init = site.decode_multi_bit_feature('{}LUT.INIT'.format(lut))
@@ -42,24 +43,24 @@ def create_lut(site, lut):
 
     for idx in range(6):
         site.add_sink(
-                bel=bel,
-                cell_pin='I{}'.format(idx),
-                sink_site_pin='{}{}'.format(lut, idx + 1),
-                bel_name=bel_name,
-                bel_pin='A{}'.format(idx + 1))
+            bel=bel,
+            cell_pin='I{}'.format(idx),
+            sink_site_pin='{}{}'.format(lut, idx + 1),
+            bel_name=bel_name,
+            bel_pin='A{}'.format(idx + 1))
 
     site.add_internal_source(
-            bel=bel,
-            cell_pin='O6',
-            wire_name=lut + 'O6',
-            bel_name=bel_name,
-            bel_pin='O6')
+        bel=bel,
+        cell_pin='O6',
+        wire_name=lut + 'O6',
+        bel_name=bel_name,
+        bel_pin='O6')
     site.add_internal_source(
-            bel=bel,
-            cell_pin='O5',
-            wire_name=lut + 'O5',
-            bel_name=lut+'5LUT',
-            bel_pin='O5')
+        bel=bel,
+        cell_pin='O5',
+        wire_name=lut + 'O5',
+        bel_name=lut + '5LUT',
+        bel_pin='O5')
 
     bel.parameters['INIT'] = get_lut_hex_init(site, lut)
     site.add_bel(bel)
@@ -70,14 +71,12 @@ def create_lut(site, lut):
 
     for idx in range(6):
         bel_lut6.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin='A{}'.format(idx + 1),
-                cell_pin='I{}'.format(idx))
+            bel_name=bel_name,
+            bel_pin='A{}'.format(idx + 1),
+            cell_pin='I{}'.format(idx))
 
     bel_lut6.map_bel_pin_to_cell_pin(
-            bel_name=bel_name,
-            bel_pin='O6',
-            cell_pin='O')
+        bel_name=bel_name, bel_pin='O6', cell_pin='O')
 
     bel.add_physical_bel(bel_lut6)
     bel.physical_net_names[bel_name, 'O6'] = 'O6'
@@ -91,14 +90,12 @@ def create_lut(site, lut):
 
     for idx in range(5):
         bel_lut5.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin='A{}'.format(idx + 1),
-                cell_pin='I{}'.format(idx))
+            bel_name=bel_name,
+            bel_pin='A{}'.format(idx + 1),
+            cell_pin='I{}'.format(idx))
 
     bel_lut5.map_bel_pin_to_cell_pin(
-            bel_name=bel_name,
-            bel_pin='O5',
-            cell_pin='O')
+        bel_name=bel_name, bel_pin='O5', cell_pin='O')
 
     bel.add_physical_bel(bel_lut5)
     bel.physical_net_names[bel_name, 'O5'] = 'O5'
@@ -120,34 +117,34 @@ def create_srl32(site, srl):
     bel.set_bel(bel_name)
 
     site.add_sink(
-            bel=bel,
-            cell_pin='CLK',
-            sink_site_pin='CLK',
-            bel_name=bel_name,
-            bel_pin='CLK')
+        bel=bel,
+        cell_pin='CLK',
+        sink_site_pin='CLK',
+        bel_name=bel_name,
+        bel_pin='CLK')
 
     site.add_sink(
-            bel=bel,
-            cell_pin='D',
-            sink_site_pin='{}I'.format(srl),
-            bel_name=bel_name,
-            bel_pin='DI1',
-            )
+        bel=bel,
+        cell_pin='D',
+        sink_site_pin='{}I'.format(srl),
+        bel_name=bel_name,
+        bel_pin='DI1',
+    )
 
     for idx in range(5):
         site.add_sink(
-                bel=bel,
-                cell_pin='A[{}]'.format(idx),
-                sink_site_pin='{}{}'.format(srl, idx + 2),
-                bel_name=bel_name,
-                bel_pin='A{}'.format(idx+2))
+            bel=bel,
+            cell_pin='A[{}]'.format(idx),
+            sink_site_pin='{}{}'.format(srl, idx + 2),
+            bel_name=bel_name,
+            bel_pin='A{}'.format(idx + 2))
 
     site.add_internal_source(
-            bel=bel,
-            cell_pin='Q',
-            wire_name=srl + 'O6',
-            bel_name=bel_name,
-            bel_pin='O6')
+        bel=bel,
+        cell_pin='Q',
+        wire_name=srl + 'O6',
+        bel_name=bel_name,
+        bel_pin='O6')
 
     return bel
 
@@ -181,35 +178,27 @@ def create_srl16(site, srl, srl_type, part):
 
     site.add_sink(bel, 'CLK', 'CLK')
     bel.map_bel_pin_to_cell_pin(
-            bel_name=bel_name,
-            bel_pin='CLK',
-            cell_pin='CLK')
+        bel_name=bel_name, bel_pin='CLK', cell_pin='CLK')
 
     if part == '5':
         site.add_sink(bel, 'D', '{}I'.format(srl))
         bel.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin='DI1',
-                cell_pin='D')
+            bel_name=bel_name, bel_pin='DI1', cell_pin='D')
     if part == '6':
         site.add_sink(bel, 'D', '{}X'.format(srl))
         bel.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin='DI2',
-                cell_pin='D')
+            bel_name=bel_name, bel_pin='DI2', cell_pin='D')
 
     for idx in range(4):
         site.add_sink(bel, 'A{}'.format(idx), '{}{}'.format(srl, idx + 2))
         bel.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin='A{}'.format(idx+2),
-                cell_pin='A{}'.format(idx))
+            bel_name=bel_name,
+            bel_pin='A{}'.format(idx + 2),
+            cell_pin='A{}'.format(idx))
 
     site.add_internal_source(bel, 'Q', srl + 'O' + part)
     bel.map_bel_pin_to_cell_pin(
-            bel_name=bel_name,
-            bel_pin='Q',
-            cell_pin='O'+part)
+        bel_name=bel_name, bel_pin='Q', cell_pin='O' + part)
 
     return bel
 
@@ -638,34 +627,36 @@ def process_slice(top, s):
 
     def connect_ce_sr(bel, ce, sr):
         if site.has_feature('CEUSEDMUX'):
-            site.add_sink(bel, ce, 'CE', bel.bel, 'CE', [('site_pip', 'CEUSEDMUX', 'IN')])
+            site.add_sink(bel, ce, 'CE', bel.bel, 'CE',
+                          [('site_pip', 'CEUSEDMUX', 'IN')])
         else:
             site.connect_constant(
-                    bel=bel,
-                    cell_pin=ce,
-                    bel_name=bel.bel,
-                    bel_pin='CE',
-                    value=1,
-                    source_bel='CEUSEDVCC',
-                    source_bel_pin='1',
-                    site_pips=[
-                        ('site_pip', 'CEUSEDMUX', '1'),
-                        ])
+                bel=bel,
+                cell_pin=ce,
+                bel_name=bel.bel,
+                bel_pin='CE',
+                value=1,
+                source_bel='CEUSEDVCC',
+                source_bel_pin='1',
+                site_pips=[
+                    ('site_pip', 'CEUSEDMUX', '1'),
+                ])
 
         if site.has_feature('SRUSEDMUX'):
-            site.add_sink(bel, sr, 'SR', bel.bel, 'SR', [('site_pip', 'SRUSEDMUX', 'IN')])
+            site.add_sink(bel, sr, 'SR', bel.bel, 'SR',
+                          [('site_pip', 'SRUSEDMUX', 'IN')])
         else:
             site.connect_constant(
-                    bel=bel,
-                    cell_pin=sr,
-                    bel_name=bel.bel,
-                    bel_pin='SR',
-                    value=0,
-                    source_bel='SRUSEDGND',
-                    source_bel_pin='0',
-                    site_pips=[
-                        ('site_pip', 'SRUSEDMUX', '0'),
-                        ])
+                bel=bel,
+                cell_pin=sr,
+                bel_name=bel.bel,
+                bel_pin='SR',
+                value=0,
+                source_bel='SRUSEDGND',
+                source_bel_pin='0',
+                site_pips=[
+                    ('site_pip', 'SRUSEDMUX', '0'),
+                ])
 
     IS_C_INVERTED = int(site.has_feature('CLKINV'))
     if IS_C_INVERTED:
@@ -711,7 +702,7 @@ def process_slice(top, s):
                         bel_name=srl.bel,
                         bel_pin='WE',
                         cell_pin='CE',
-                        )
+                    )
 
                     if row == 'A' and site.has_feature('DOUTMUX.MC31'):
                         site.add_internal_source(srl, 'Q31', 'AMC31')
@@ -761,7 +752,7 @@ def process_slice(top, s):
                             bel_name=srl.bel,
                             bel_pin='WE',
                             cell_pin='CE',
-                            )
+                        )
 
                         if use_mc31 and srl_type == 'SRLC16E':
                             site.add_internal_source(srl, 'Q15', 'AMC31')
@@ -803,8 +794,9 @@ def process_slice(top, s):
             # The AX pin is used in the same net as for the CX pin.
             site.add_sink(ram256, 'AX', "AX")
 
-            ram256.parameters['INIT'] = (
-                make_binary_verilog_value(256, get_shifted_lut_init(site, 'D')
+            ram256.parameters['INIT'] = (make_binary_verilog_value(
+                256,
+                get_shifted_lut_init(site, 'D')
                 | get_shifted_lut_init(site, 'C', 64)
                 | get_shifted_lut_init(site, 'B', 128)
                 | get_shifted_lut_init(site, 'A', 192)))
@@ -832,11 +824,9 @@ def process_slice(top, s):
             site.add_sink(ram128, 'A6', "CX")
             site.add_internal_source(ram128, 'O', 'F7BMUX_O')
 
-            ram128.parameters['INIT'] = make_binary_verilog_value(128,
-                    (
-                        get_shifted_lut_init(site, 'D')
-                      | get_shifted_lut_init(site, 'C', 64))
-                    )
+            ram128.parameters['INIT'] = make_binary_verilog_value(
+                128, (get_shifted_lut_init(site, 'D')
+                      | get_shifted_lut_init(site, 'C', 64)))
 
             site.add_bel(ram128, name='RAM128X1S_CD')
             muxes.remove('F7BMUX')
@@ -861,8 +851,9 @@ def process_slice(top, s):
 
                 site.add_internal_source(ram128, 'O', 'F7AMUX_O')
 
-                ram128.parameters['INIT'] = make_binary_verilog_value(128,
-                        (get_shifted_lut_init(site, 'B') | get_shifted_lut_init(site, 'A', 64)))
+                ram128.parameters['INIT'] = make_binary_verilog_value(
+                    128, (get_shifted_lut_init(site, 'B')
+                          | get_shifted_lut_init(site, 'A', 64)))
 
                 site.add_bel(ram128, name='RAM128X1S_AB')
 
@@ -896,11 +887,13 @@ def process_slice(top, s):
             site.add_internal_source(ram128, 'SPO', 'F7BMUX_O')
             site.add_internal_source(ram128, 'DPO', 'F7AMUX_O')
 
-            ram128.parameters['INIT'] = make_binary_verilog_value(128, (get_shifted_lut_init(site, 'D')
-                                         | get_shifted_lut_init(site, 'C', 64)))
+            ram128.parameters['INIT'] = make_binary_verilog_value(
+                128, (get_shifted_lut_init(site, 'D')
+                      | get_shifted_lut_init(site, 'C', 64)))
 
-            other_init = make_binary_verilog_value(128, (get_shifted_lut_init(site, 'B')
-                          | get_shifted_lut_init(site, 'A', 64)))
+            other_init = make_binary_verilog_value(
+                128, (get_shifted_lut_init(site, 'B')
+                      | get_shifted_lut_init(site, 'A', 64)))
 
             assert ram128.parameters['INIT'] == other_init
 
@@ -1212,72 +1205,73 @@ def process_slice(top, s):
             if site.has_feature('CARRY4.{}CY0'.format(lut)):
                 source = lut + 'O5'
                 site.connect_internal(
-                        bel=bel,
-                        cell_pin='DI[{}]'.format(idx),
-                        wire_name=source,
-                        bel_name=bel.bel,
-                        bel_pin='DI{}'.format(idx),
-                        site_pips=[('site_pip', '{}CY0'.format(lut), 'O5')])
+                    bel=bel,
+                    cell_pin='DI[{}]'.format(idx),
+                    wire_name=source,
+                    bel_name=bel.bel,
+                    bel_pin='DI{}'.format(idx),
+                    site_pips=[('site_pip', '{}CY0'.format(lut), 'O5')])
             else:
                 site.add_sink(
-                        bel=bel,
-                        cell_pin='DI[{}]'.format(idx),
-                        sink_site_pin=lut + 'X',
-                        bel_name=bel.bel,
-                        bel_pin='DI{}'.format(idx),
-                        site_pips=[('site_pip', '{}CY0'.format(lut), '{}X'.format(lut))])
+                    bel=bel,
+                    cell_pin='DI[{}]'.format(idx),
+                    sink_site_pin=lut + 'X',
+                    bel_name=bel.bel,
+                    bel_pin='DI{}'.format(idx),
+                    site_pips=[('site_pip', '{}CY0'.format(lut),
+                                '{}X'.format(lut))])
 
             source = lut + 'O6'
 
-            site.connect_internal(bel, 'S[{}]'.format(idx), source, bel.bel, 'S{}'.format(idx))
+            site.connect_internal(bel, 'S[{}]'.format(idx), source, bel.bel,
+                                  'S{}'.format(idx))
 
-            site.add_internal_source(bel, 'O[{}]'.format(idx), lut + '_XOR', bel.bel, 'O{}'.format(idx))
+            site.add_internal_source(bel, 'O[{}]'.format(idx), lut + '_XOR',
+                                     bel.bel, 'O{}'.format(idx))
 
             co_pin = 'CO[{}]'.format(idx)
             if idx == 3:
-                site.add_source(bel, co_pin, 'COUT', bel.bel, 'CO3', [('site_pip', 'COUTUSED', '0')])
-            site.add_internal_source(bel, co_pin, lut + '_CY', bel.bel, 'CO{}'.format(idx))
+                site.add_source(bel, co_pin, 'COUT', bel.bel, 'CO3',
+                                [('site_pip', 'COUTUSED', '0')])
+            site.add_internal_source(bel, co_pin, lut + '_CY', bel.bel,
+                                     'CO{}'.format(idx))
 
         bel.map_bel_pin_to_cell_pin(
-            bel_name=bel.bel,
-            bel_pin='CIN',
-            cell_pin='CI')
+            bel_name=bel.bel, bel_pin='CIN', cell_pin='CI')
         bel.map_bel_pin_to_cell_pin(
-            bel_name=bel.bel,
-            bel_pin='CYINIT',
-            cell_pin='CYINIT')
+            bel_name=bel.bel, bel_pin='CYINIT', cell_pin='CYINIT')
 
         if site.has_feature('PRECYINIT.AX'):
             site.add_sink(bel, 'CYINIT', 'AX', bel.bel, 'CYINIT',
-                    [('site_pip', 'PRECYINIT', 'AX')])
+                          [('site_pip', 'PRECYINIT', 'AX')])
             bel.connections['CI'] = 0
 
         elif site.has_feature('PRECYINIT.C0'):
             site.connect_constant(
-                    bel=bel,
-                    cell_pin='CYINIT',
-                    bel_name=bel.bel,
-                    bel_pin='CYINIT',
-                    value=0,
-                    source_bel='CYINITGND',
-                    source_bel_pin='0',
-                    site_pips=[
-                        ('site_pip', 'PRECYINIT', '0'),
-                        ])
+                bel=bel,
+                cell_pin='CYINIT',
+                bel_name=bel.bel,
+                bel_pin='CYINIT',
+                value=0,
+                source_bel='CYINITGND',
+                source_bel_pin='0',
+                site_pips=[
+                    ('site_pip', 'PRECYINIT', '0'),
+                ])
             bel.connections['CI'] = 0
 
         elif site.has_feature('PRECYINIT.C1'):
             site.connect_constant(
-                    bel=bel,
-                    cell_pin='CYINIT',
-                    bel_name=bel.bel,
-                    bel_pin='CYINIT',
-                    value=1,
-                    source_bel='CYINITVCC',
-                    source_bel_pin='1',
-                    site_pips=[
-                        ('site_pip', 'PRECYINIT', '1'),
-                        ])
+                bel=bel,
+                cell_pin='CYINIT',
+                bel_name=bel.bel,
+                bel_pin='CYINIT',
+                value=1,
+                source_bel='CYINITVCC',
+                source_bel_pin='1',
+                site_pips=[
+                    ('site_pip', 'PRECYINIT', '1'),
+                ])
             bel.connections['CI'] = 0
 
         elif site.has_feature('PRECYINIT.CIN'):
@@ -1308,23 +1302,16 @@ def process_slice(top, s):
             site.add_sink(ff5, clk, "CLK")
 
             bel.map_bel_pin_to_cell_pin(
-                bel_name=ff5.bel,
-                bel_pin='D',
-                cell_pin='D')
+                bel_name=ff5.bel, bel_pin='D', cell_pin='D')
             bel.map_bel_pin_to_cell_pin(
-                bel_name=ff5.bel,
-                bel_pin='CK',
-                cell_pin=clk)
+                bel_name=ff5.bel, bel_pin='CK', cell_pin=clk)
             bel.map_bel_pin_to_cell_pin(
-                bel_name=ff5.bel,
-                bel_pin='Q',
-                cell_pin='Q')
+                bel_name=ff5.bel, bel_pin='Q', cell_pin='Q')
 
             connect_ce_sr(ff5, ce, sr)
 
             site.add_internal_source(ff5, 'Q', lut + '5Q')
             ff5.parameters['INIT'] = init
-
 
             if name in ['LDCE', 'LDPE']:
                 ff5.parameters['IS_G_INVERTED'] = IS_C_INVERTED
@@ -1339,60 +1326,88 @@ def process_slice(top, s):
         ff.set_bel(lut + 'FF')
 
         if site.has_feature('{}FFMUX.{}X'.format(lut, lut)):
-            site.add_sink(ff, 'D', lut + 'X', ff.bel, 'D',
-                    site_pips=[
-                        ('site_pip', '{}FFMUX'.format(lut), '{}X'.format(lut))
-                        ])
+            site.add_sink(
+                ff,
+                'D',
+                lut + 'X',
+                ff.bel,
+                'D',
+                site_pips=[('site_pip', '{}FFMUX'.format(lut),
+                            '{}X'.format(lut))])
 
         elif lut == 'A' and site.has_feature('AFFMUX.F7'):
-            site.connect_internal(ff, 'D', 'F7AMUX_O', ff.bel, 'D',
-                    site_pips=[
-                        ('site_pip', 'AFFMUX', 'F7')
-                        ])
+            site.connect_internal(
+                ff,
+                'D',
+                'F7AMUX_O',
+                ff.bel,
+                'D',
+                site_pips=[('site_pip', 'AFFMUX', 'F7')])
 
         elif lut == 'C' and site.has_feature('CFFMUX.F7'):
-            site.connect_internal(ff, 'D', 'F7BMUX_O', ff.bel, 'D',
-                    site_pips=[
-                        ('site_pip', 'CFFMUX', 'F7')
-                        ])
+            site.connect_internal(
+                ff,
+                'D',
+                'F7BMUX_O',
+                ff.bel,
+                'D',
+                site_pips=[('site_pip', 'CFFMUX', 'F7')])
 
         elif lut == 'B' and site.has_feature('BFFMUX.F8'):
-            site.connect_internal(ff, 'D', 'F8MUX_O', ff.bel, 'D',
-                    site_pips=[
-                        ('site_pip', 'BFFMUX', 'F8')
-                        ])
+            site.connect_internal(
+                ff,
+                'D',
+                'F8MUX_O',
+                ff.bel,
+                'D',
+                site_pips=[('site_pip', 'BFFMUX', 'F8')])
 
         elif lut == 'D' and site.has_feature('DFFMUX.MC31'):
-            site.connect_internal(ff, 'D', 'AMC31', ff.bel, 'D',
-                    site_pips=[
-                        ('site_pip', 'DFFMUX', 'MC31')
-                        ])
+            site.connect_internal(
+                ff,
+                'D',
+                'AMC31',
+                ff.bel,
+                'D',
+                site_pips=[('site_pip', 'DFFMUX', 'MC31')])
 
         elif site.has_feature('{}FFMUX.O5'.format(lut)):
-            site.connect_internal(ff, 'D', lut + 'O5', ff.bel, 'D',
-                    site_pips=[
-                        ('site_pip', '{}FFMUX'.format(lut), 'O5')
-                        ])
+            site.connect_internal(
+                ff,
+                'D',
+                lut + 'O5',
+                ff.bel,
+                'D',
+                site_pips=[('site_pip', '{}FFMUX'.format(lut), 'O5')])
 
         elif site.has_feature('{}FFMUX.O6'.format(lut)):
-            site.connect_internal(ff, 'D', lut + 'O6', ff.bel, 'D',
-                    site_pips=[
-                        ('site_pip', '{}FFMUX'.format(lut), 'O6')
-                        ])
+            site.connect_internal(
+                ff,
+                'D',
+                lut + 'O6',
+                ff.bel,
+                'D',
+                site_pips=[('site_pip', '{}FFMUX'.format(lut), 'O6')])
 
         elif site.has_feature('{}FFMUX.CY'.format(lut)):
             assert can_have_carry4
-            site.connect_internal(ff, 'D', lut + '_CY', ff.bel, 'D',
-                    site_pips=[
-                        ('site_pip', '{}FFMUX'.format(lut), 'CY')
-                        ])
+            site.connect_internal(
+                ff,
+                'D',
+                lut + '_CY',
+                ff.bel,
+                'D',
+                site_pips=[('site_pip', '{}FFMUX'.format(lut), 'CY')])
 
         elif site.has_feature('{}FFMUX.XOR'.format(lut)):
             assert can_have_carry4
-            site.connect_internal(ff, 'D', lut + '_XOR', ff.bel, 'D',
-                    site_pips=[
-                        ('site_pip', '{}FFMUX'.format(lut), 'XOR')
-                        ])
+            site.connect_internal(
+                ff,
+                'D',
+                lut + '_XOR',
+                ff.bel,
+                'D',
+                site_pips=[('site_pip', '{}FFMUX'.format(lut), 'XOR')])
         else:
             continue
 
@@ -1412,75 +1427,68 @@ def process_slice(top, s):
 
     for lut in 'ABCD':
         if lut + 'O6' in site.internal_sources:
-            site.add_output_from_internal(lut, lut + 'O6',
-                    site_pips=[
-                        ('site_pip', '{}USED'.format(lut), '0')
-                        ])
+            site.add_output_from_internal(
+                lut,
+                lut + 'O6',
+                site_pips=[('site_pip', '{}USED'.format(lut), '0')])
 
     for lut in 'ABCD':
         output_wire = lut + 'MUX'
         if site.has_feature('{}OUTMUX.{}5Q'.format(lut, lut)):
-            site.add_output_from_internal(output_wire, lut + '5Q',
-                    site_pips=[
-                        ('site_pip', '{}OUTMUX'.format(lut), '{}5Q'.format(lut))
-                        ]
-                    )
+            site.add_output_from_internal(
+                output_wire,
+                lut + '5Q',
+                site_pips=[('site_pip', '{}OUTMUX'.format(lut),
+                            '{}5Q'.format(lut))])
 
         elif lut == 'A' and site.has_feature('AOUTMUX.F7'):
-            site.add_output_from_internal(output_wire, 'F7AMUX_O',
-                    site_pips=[
-                        ('site_pip', 'AOUTMUX', 'F7')
-                        ]
-                    )
+            site.add_output_from_internal(
+                output_wire,
+                'F7AMUX_O',
+                site_pips=[('site_pip', 'AOUTMUX', 'F7')])
 
         elif lut == 'C' and site.has_feature('COUTMUX.F7'):
-            site.add_output_from_internal(output_wire, 'F7BMUX_O',
-                    site_pips=[
-                        ('site_pip', 'COUTMUX', 'F7')
-                        ]
-                    )
+            site.add_output_from_internal(
+                output_wire,
+                'F7BMUX_O',
+                site_pips=[('site_pip', 'COUTMUX', 'F7')])
 
         elif lut == 'B' and site.has_feature('BOUTMUX.F8'):
-            site.add_output_from_internal(output_wire, 'F8MUX_O',
-                    site_pips=[
-                        ('site_pip', 'BOUTMUX', 'F8')
-                        ]
-                    )
+            site.add_output_from_internal(
+                output_wire,
+                'F8MUX_O',
+                site_pips=[('site_pip', 'BOUTMUX', 'F8')])
 
         elif site.has_feature('{}OUTMUX.O5'.format(lut)):
-            site.add_output_from_internal(output_wire, lut + 'O5',
-                    site_pips=[
-                        ('site_pip', '{}OUTMUX'.format(lut), 'O5')
-                        ]
-                    )
+            site.add_output_from_internal(
+                output_wire,
+                lut + 'O5',
+                site_pips=[('site_pip', '{}OUTMUX'.format(lut), 'O5')])
 
         elif site.has_feature('{}OUTMUX.O6'.format(lut)):
             # Note: There is a dedicated O6 output.  Fixed routing requires
             # treating xMUX.O6 as a routing connection.
             site.add_output_from_output(output_wire, lut)
-            site.link_site_routing(
-                    [
-                        site.internal_source_bel_pins[lut+'O6'],
-                        ('site_pip', '{}OUTMUX'.format(lut), 'O6'),
-                        ('bel_pin', output_wire, output_wire),
-                        ('site_pin', output_wire)
-                        ])
+            site.link_site_routing([
+                site.internal_source_bel_pins[lut + 'O6'],
+                ('site_pip', '{}OUTMUX'.format(lut), 'O6'),
+                ('bel_pin', output_wire, output_wire), ('site_pin',
+                                                        output_wire)
+            ])
 
         elif site.has_feature('{}OUTMUX.CY'.format(lut)):
             assert can_have_carry4
-            site.add_output_from_internal(output_wire, lut + '_CY',
-                    site_pips=[
-                        ('site_pip', '{}OUTMUX'.format(lut), 'CY')
-                        ]
-                    )
+            site.add_output_from_internal(
+                output_wire,
+                lut + '_CY',
+                site_pips=[('site_pip', '{}OUTMUX'.format(lut), 'CY')])
 
         elif site.has_feature('{}OUTMUX.XOR'.format(lut)):
             assert can_have_carry4
-            site.add_output_from_internal(output_wire, lut + '_XOR',
-                    site_pips=[
-                        ('site_pip', '{}OUTMUX'.format(lut), 'XOR')
-                        ]
-                    )
+            site.add_output_from_internal(
+                output_wire,
+                lut + '_XOR',
+                site_pips=[('site_pip', '{}OUTMUX'.format(lut), 'XOR')])
         else:
             continue
 

@@ -154,10 +154,7 @@ def append_obuf_iostandard_params(top,
     # Input termination (here for inouts)
     if in_term is not None:
         for port in IOB_PORTS[bel.module]:
-            top.add_port_property(
-                    bel.connections[port],
-                    'IN_TERM',
-                    in_term)
+            top.add_port_property(bel.connections[port], 'IN_TERM', in_term)
 
     # Slew rate
     bel.parameters["SLEW"] = '"{}"'.format(slew)
@@ -215,10 +212,7 @@ def append_ibuf_iostandard_params(top,
     # Input termination
     if in_term is not None:
         for port in IOB_PORTS[bel.module]:
-            top.add_port_property(
-                    bel.connections[port],
-                    'IN_TERM',
-                    in_term)
+            top.add_port_property(bel.connections[port], 'IN_TERM', in_term)
 
 
 def decode_iostandard_params(site, diff=False):
@@ -387,17 +381,20 @@ def process_single_ended_iob(top, iob):
 
         bel.set_bel('INBUF_EN')
         bel.map_bel_pin_to_cell_pin(
-            bel_name=bel.bel,
-            bel_pin='PAD',
-            cell_pin='I')
+            bel_name=bel.bel, bel_pin='PAD', cell_pin='I')
 
         top_wire = top.add_top_in_port(tile_name, iob_site.name, 'IPAD')
         bel.connections['I'] = top_wire
 
         # Note this looks weird, but the BEL pin is O, and the site wire is
         # called I, so it is in fact correct.
-        site.add_source(bel, cell_pin='O', source_site_pin='I', bel_name=bel.bel, bel_pin='OUT',
-                site_pips=[('site_pip', 'IUSED', '0')])
+        site.add_source(
+            bel,
+            cell_pin='O',
+            source_site_pin='I',
+            bel_name=bel.bel,
+            bel_pin='OUT',
+            site_pips=[('site_pip', 'IUSED', '0')])
 
         append_ibuf_iostandard_params(top, site, bel, iostd_in, in_term)
 
@@ -449,20 +446,28 @@ def process_single_ended_iob(top, iob):
         bel = Bel('OBUFT')
         bel.set_bel('OUTBUF')
         bel.map_bel_pin_to_cell_pin(
-            bel_name=bel.bel,
-            bel_pin='OUT',
-            cell_pin='O')
+            bel_name=bel.bel, bel_pin='OUT', cell_pin='O')
 
         top_wire = top.add_top_out_port(tile_name, iob_site.name, 'OPAD')
         bel.connections['O'] = top_wire
 
         # Note this looks weird, but the BEL pin is I, and the site wire
         # is called O, so it is in fact correct.
-        site.add_sink(bel, cell_pin='I', sink_site_pin='O', bel_name=bel.bel, bel_pin='IN',
-                site_pips=[('site_pip', 'OUSED', '0')])
+        site.add_sink(
+            bel,
+            cell_pin='I',
+            sink_site_pin='O',
+            bel_name=bel.bel,
+            bel_pin='IN',
+            site_pips=[('site_pip', 'OUSED', '0')])
 
-        site.add_sink(bel, 'T', 'T', bel.bel, 'TRI',
-                site_pips=[('site_pip', 'TUSED', '0')])
+        site.add_sink(
+            bel,
+            'T',
+            'T',
+            bel.bel,
+            'TRI',
+            site_pips=[('site_pip', 'TUSED', '0')])
 
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
         append_obuf_iostandard_params(top, site, bel, iostd_out, slew, in_term)

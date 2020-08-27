@@ -209,12 +209,18 @@ class Constant(ConnectionModel):
     def iter_wires(self):
         return iter([])
 
-    def output_interchange(self, parent_cell, instance_name, port, constant_nets, net_map, idx=None):
+    def output_interchange(self,
+                           parent_cell,
+                           instance_name,
+                           port,
+                           constant_nets,
+                           net_map,
+                           idx=None):
         parent_cell.connect_net_to_instance(
-                net_name=constant_nets[self.value],
-                instance_name=instance_name,
-                port=port,
-                idx=idx)
+            net_name=constant_nets[self.value],
+            instance_name=instance_name,
+            port=port,
+            idx=idx)
 
     def create_net_map(self, bel_name, constant_nets, net_map):
         return constant_nets[self.value]
@@ -244,7 +250,13 @@ class Wire(ConnectionModel):
     def iter_wires(self):
         yield (None, self.wire)
 
-    def output_interchange(self, parent_cell, instance_name, port, constant_nets, net_map, idx=None):
+    def output_interchange(self,
+                           parent_cell,
+                           instance_name,
+                           port,
+                           constant_nets,
+                           net_map,
+                           idx=None):
         net_name = unescape_verilog_quote(self.to_string(net_map))
 
         if net_name == "1'b1":
@@ -253,10 +265,7 @@ class Wire(ConnectionModel):
             net_name = constant_nets[0]
 
         parent_cell.connect_net_to_instance(
-                net_name=net_name,
-                instance_name=instance_name,
-                port=port,
-                idx=idx)
+            net_name=net_name, instance_name=instance_name, port=port, idx=idx)
 
     def get_interchange_net(self, constant_nets, net_map):
         net_name = unescape_verilog_quote(self.to_string(net_map))
@@ -296,9 +305,11 @@ class Bus(ConnectionModel):
             for _, real_wire in wire.iter_wires():
                 yield (idx, real_wire)
 
-    def output_interchange(self, parent_cell, instance_name, port, constant_nets, net_map):
+    def output_interchange(self, parent_cell, instance_name, port,
+                           constant_nets, net_map):
         for idx, wire in enumerate(self.wires):
-            wire.output_interchange(parent_cell, instance_name, port, constant_nets, net_map, idx)
+            wire.output_interchange(parent_cell, instance_name, port,
+                                    constant_nets, net_map, idx)
 
     def bus_width(self):
         return len(self.wires)
@@ -319,7 +330,13 @@ class NoConnect(ConnectionModel):
     def iter_wires(self):
         return iter([])
 
-    def output_interchange(self, parent_cell, instance_name, port, constant_nets, net_map, idx=None):
+    def output_interchange(self,
+                           parent_cell,
+                           instance_name,
+                           port,
+                           constant_nets,
+                           net_map,
+                           idx=None):
         pass
 
     def bus_width(self):
@@ -628,18 +645,18 @@ class Bel(object):
         cell_instance = unescape_verilog_quote(self.get_cell(top))
 
         top_cell.add_cell_instance(
-                name=cell_instance,
-                cell_name=self.module,
-                property_map=self.parameters)
+            name=cell_instance,
+            cell_name=self.module,
+            property_map=self.parameters)
 
         if connections:
             for port in connections:
                 connections[port].output_interchange(
-                        parent_cell=top_cell,
-                        instance_name=cell_instance,
-                        port=port,
-                        constant_nets=constant_nets,
-                        net_map=net_map)
+                    parent_cell=top_cell,
+                    instance_name=cell_instance,
+                    port=port,
+                    constant_nets=constant_nets,
+                    net_map=net_map)
 
     def add_net_name(self, pin, net_name):
         """ Add name of net attached to this pin ."""
@@ -839,7 +856,8 @@ class Site(object):
                 continue
 
             cell_pin = bel.bel_pins_to_cell_pins[bel_name, bel_pin]
-            sub_net_name = bel.get_physical_net_name(instance_name, bel_name, bel_pin)
+            sub_net_name = bel.get_physical_net_name(instance_name, bel_name,
+                                                     bel_pin)
             net_name = parent_cell.get_net_name(instance_name, cell_pin)
 
             if sub_net_name is not None:
@@ -850,7 +868,8 @@ class Site(object):
                 key = dest_to_src[key]
 
             if key in net_roots:
-                assert net_roots[key] == net_name, (key, net_roots[key], net_name)
+                assert net_roots[key] == net_name, (key, net_roots[key],
+                                                    net_name)
             else:
                 net_roots[key] = net_name
 
@@ -859,7 +878,8 @@ class Site(object):
             if v in sub_cell_nets:
                 net_roots[k] = sub_cell_nets[v]
 
-        return create_site_routing(self.site, net_roots, self.site_routing, constant_nets)
+        return create_site_routing(self.site, net_roots, self.site_routing,
+                                   constant_nets)
 
     def has_feature(self, feature):
         """ Does this set have the specified feature set? """
@@ -904,7 +924,13 @@ class Site(object):
 
         return value
 
-    def add_sink(self, bel, cell_pin, sink_site_pin, bel_name, bel_pin, site_pips=[]):
+    def add_sink(self,
+                 bel,
+                 cell_pin,
+                 sink_site_pin,
+                 bel_name,
+                 bel_pin,
+                 site_pips=[]):
         """ Adds a sink.
 
         Attaches sink to the specified bel.
@@ -926,16 +952,12 @@ class Site(object):
 
         bel.connections[cell_pin] = sink_site_pin
         bel.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin=bel_pin,
-                cell_pin=cell_pin)
+            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
         self.sinks[sink_site_pin].append((bel, cell_pin))
 
-        self.link_site_routing(
-            [('site_pin', sink_site_pin),
-             ('bel_pin', sink_site_pin, sink_site_pin)] +
-            site_pips +
-            [('bel_pin', bel_name, bel_pin)])
+        self.link_site_routing([('site_pin', sink_site_pin),
+                                ('bel_pin', sink_site_pin, sink_site_pin)] +
+                               site_pips + [('bel_pin', bel_name, bel_pin)])
 
     def mask_sink(self, bel, bel_pin):
         """ Mark a BEL pin as not visible in the Verilog.
@@ -987,7 +1009,13 @@ class Site(object):
         assert sink_idx is not None, (old_bel, old_bel_pin, sink)
         self.sinks[sink][sink_idx] = (new_bel, new_bel_pin)
 
-    def add_source(self, bel, cell_pin, source_site_pin, bel_name, bel_pin, site_pips=[]):
+    def add_source(self,
+                   bel,
+                   cell_pin,
+                   source_site_pin,
+                   bel_name,
+                   bel_pin,
+                   site_pips=[]):
         """ Adds a source.
 
         Attaches source to bel.
@@ -1008,16 +1036,11 @@ class Site(object):
         bel.outputs.add(cell_pin)
         self.sources[source_site_pin] = (bel, cell_pin)
         bel.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin=bel_pin,
-                cell_pin=cell_pin)
+            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
 
-        self.link_site_routing(
-                [('bel_pin', bel_name, bel_pin)] +
-                site_pips +
-                [
-                    ('bel_pin', source_site_pin, source_site_pin),
-                    ('site_pin', source_site_pin)])
+        self.link_site_routing([('bel_pin', bel_name, bel_pin)] + site_pips +
+                               [('bel_pin', source_site_pin, source_site_pin),
+                                ('site_pin', source_site_pin)])
 
     def rename_source(self, bel, old_bel_pin, new_bel_pin):
         """ Rename a BEL source from one pin name to another.
@@ -1063,13 +1086,8 @@ class Site(object):
         self.sources[source] = self.internal_sources[internal_source]
 
         self.link_site_routing(
-                [self.internal_source_bel_pins[internal_source]] +
-                site_pips +
-                [
-                    ('bel_pin', source, source),
-                    ('site_pin', source)
-                ]
-            )
+            [self.internal_source_bel_pins[internal_source]] + site_pips +
+            [('bel_pin', source, source), ('site_pin', source)])
 
     def add_output_from_output(self, source, other_source):
         """ Adds an output wire from an existing source wire.
@@ -1106,14 +1124,19 @@ class Site(object):
 
         assert wire_name not in self.internal_sources, wire_name
         self.internal_sources[wire_name] = (bel, cell_pin)
-        self.internal_source_bel_pins[wire_name] = ('bel_pin', bel_name, bel_pin)
+        self.internal_source_bel_pins[wire_name] = ('bel_pin', bel_name,
+                                                    bel_pin)
 
         bel.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin=bel_pin,
-                cell_pin=cell_pin)
+            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
 
-    def connect_internal(self, bel, cell_pin, source, bel_name, bel_pin, site_pips=[]):
+    def connect_internal(self,
+                         bel,
+                         cell_pin,
+                         source,
+                         bel_name,
+                         bel_pin,
+                         site_pips=[]):
         """ Connect a BEL pin to an existing internal source.
 
         bel (Bel): Bel object
@@ -1129,28 +1152,28 @@ class Site(object):
         assert cell_pin not in bel.connections
         bel.connections[cell_pin] = source
         bel.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin=bel_pin,
-                cell_pin=cell_pin)
+            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
 
-        self.link_site_routing(
-                [self.internal_source_bel_pins[source]] +
-                site_pips +
-                [('bel_pin', bel_name, bel_pin)])
+        self.link_site_routing([self.internal_source_bel_pins[source]] +
+                               site_pips + [('bel_pin', bel_name, bel_pin)])
 
-    def connect_constant(self, bel, cell_pin, bel_name, bel_pin, value, source_bel, source_bel_pin, site_pips=[]):
+    def connect_constant(self,
+                         bel,
+                         cell_pin,
+                         bel_name,
+                         bel_pin,
+                         value,
+                         source_bel,
+                         source_bel_pin,
+                         site_pips=[]):
         assert value in [0, 1]
         assert cell_pin not in bel.connections
         bel.connections[cell_pin] = value
         bel.map_bel_pin_to_cell_pin(
-                bel_name=bel_name,
-                bel_pin=bel_pin,
-                cell_pin=cell_pin)
+            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
 
-        self.link_site_routing(
-                [('bel_pin', source_bel, source_bel_pin)] +
-                site_pips +
-                [('bel_pin', bel_name, bel_pin)])
+        self.link_site_routing([('bel_pin', source_bel, source_bel_pin)] +
+                               site_pips + [('bel_pin', bel_name, bel_pin)])
 
     def add_bel(self, bel, name=None):
         """ Adds a BEL to the site.
@@ -2178,7 +2201,8 @@ set net [get_nets -of_object $pin]""".format(
         output = list(self.extra_tcl)
 
         for (port, prop), value in self.port_property:
-            output.append('set_property {} {} [get_ports {}]'.format(prop, value, port))
+            output.append('set_property {} {} [get_ports {}]'.format(
+                prop, value, port))
 
         return output
 

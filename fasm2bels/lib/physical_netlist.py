@@ -13,6 +13,7 @@ Pip = namedtuple('Pip', 'tile wire0 wire1 forward')
 
 Pin = namedtuple('Pin', 'bel_pin cell_pin bel other_cell_type other_cell_name')
 
+
 class Placement():
     def __init__(self, cell_type, cell_name, site, bel):
         self.cell_type = cell_type
@@ -24,16 +25,22 @@ class Placement():
         self.pins = []
         self.other_bels = set()
 
-    def add_bel_pin_to_cell_pin(self, bel_pin, cell_pin, bel=None, other_cell_type=None, other_cell_name=None):
+    def add_bel_pin_to_cell_pin(self,
+                                bel_pin,
+                                cell_pin,
+                                bel=None,
+                                other_cell_type=None,
+                                other_cell_name=None):
         if bel != self.bel:
             self.other_bels.add(bel)
 
-        self.pins.append(Pin(
-            bel_pin=bel_pin,
-            cell_pin=cell_pin,
-            bel=bel,
-            other_cell_type=other_cell_type,
-            other_cell_name=other_cell_name,
+        self.pins.append(
+            Pin(
+                bel_pin=bel_pin,
+                cell_pin=cell_pin,
+                bel=bel,
+                other_cell_type=other_cell_type,
+                other_cell_name=other_cell_name,
             ))
 
 
@@ -127,7 +134,8 @@ def convert_tuple_to_object(site, tup):
         assert False, tup
 
 
-def add_site_routing_children(site, root_obj, root_key, site_routing, inverted_root):
+def add_site_routing_children(site, root_obj, root_key, site_routing,
+                              inverted_root):
     if root_key in site_routing:
         for child in site_routing[root_key]:
             if child[0] == 'inverter' and inverted_root is not None:
@@ -138,7 +146,8 @@ def add_site_routing_children(site, root_obj, root_key, site_routing, inverted_r
                 obj = convert_tuple_to_object(site, child)
                 root_obj.branches.append(obj)
 
-                add_site_routing_children(site, obj, child, site_routing, inverted_root)
+                add_site_routing_children(site, obj, child, site_routing,
+                                          inverted_root)
 
 
 def create_site_routing(site, net_roots, site_routing, constant_nets):
@@ -155,7 +164,8 @@ def create_site_routing(site, net_roots, site_routing, constant_nets):
             nets[net_name] = []
 
         root_obj = convert_tuple_to_object(site, root)
-        add_site_routing_children(site, root_obj, root, site_routing, inverted_roots.get(net_name, None))
+        add_site_routing_children(site, root_obj, root, site_routing,
+                                  inverted_roots.get(net_name, None))
 
         nets[net_name].append(root_obj)
 

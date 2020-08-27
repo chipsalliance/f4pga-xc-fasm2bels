@@ -1,10 +1,12 @@
 import enum
 from collections import namedtuple
 
+
 class Direction(enum.Enum):
     Input = 0
     Output = 1
     Inout = 2
+
 
 Bus = namedtuple('Bus', 'start end')
 
@@ -16,7 +18,8 @@ Net = namedtuple('Net', 'name property_map ports')
 
 CellInstance = namedtuple('CellInstance', 'property_map view cell_name')
 
-Cell = namedtuple('Cell', 'name property_map view lib cell_instances nets ports')
+Cell = namedtuple('Cell',
+                  'name property_map view lib cell_instances nets ports')
 
 
 class Cell():
@@ -35,23 +38,19 @@ class Cell():
         assert name not in self.ports
 
         self.ports[name] = Port(
-                direction=direction,
-                property_map=property_map,
-                bus=None)
+            direction=direction, property_map=property_map, bus=None)
 
     def add_bus_port(self, name, direction, start, end, property_map={}):
         assert name not in self.ports
         self.ports[name] = Port(
-                direction=direction,
-                property_map=property_map,
-                bus=Bus(start=start, end=end))
+            direction=direction,
+            property_map=property_map,
+            bus=Bus(start=start, end=end))
 
     def add_cell_instance(self, name, cell_name, property_map={}):
         assert name not in self.cell_instances, name
         self.cell_instances[name] = CellInstance(
-                property_map=property_map,
-                view="netlist",
-                cell_name=cell_name)
+            property_map=property_map, view="netlist", cell_name=cell_name)
 
     def add_net(self, name, property_map={}):
         assert name not in self.nets
@@ -60,7 +59,8 @@ class Cell():
     def connect_net_to_instance(self, net_name, instance_name, port, idx=None):
         assert instance_name in self.cell_instances
         port_name = port
-        port = PortInstance(name=port_name, instance_name=instance_name, idx=idx)
+        port = PortInstance(
+            name=port_name, instance_name=instance_name, idx=idx)
         self.nets[net_name].ports.append(port)
 
         if idx is None:
@@ -102,6 +102,7 @@ class Library():
         assert cell.name not in self.cells
         self.cells[cell.name] = cell
 
+
 def check_logical_netlist(libraries):
     master_cell_list = {}
 
@@ -115,16 +116,17 @@ def check_logical_netlist(libraries):
 
         for netname, net in cell.nets.items():
             port_directions = {
-                    Direction.Input: 0,
-                    Direction.Output: 0,
-                    Direction.Inout: 0,
-                    }
+                Direction.Input: 0,
+                Direction.Output: 0,
+                Direction.Inout: 0,
+            }
 
             for port in net.ports:
                 if port.instance_name is not None:
                     # This port connects to a cell instance, go find the
                     # master cell and port.
-                    instance_cell_name = cell.cell_instances[port.instance_name].cell_name
+                    instance_cell_name = cell.cell_instances[
+                        port.instance_name].cell_name
                     instance_cell = master_cell_list[instance_cell_name]
                     instance_port = instance_cell.ports[port.name]
 
@@ -147,7 +149,9 @@ def check_logical_netlist(libraries):
                     assert instance_port.bus is None, (netname, port)
 
             if port_directions[Direction.Inout] == 0:
-                assert port_directions[Direction.Input] in [0, 1], (netname, port_directions)
+                assert port_directions[Direction.Input] in [
+                    0, 1
+                ], (netname, port_directions)
             else:
                 # TODO: Not sure how to handle this case?
                 # Should only have 0 input?

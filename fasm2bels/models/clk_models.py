@@ -96,11 +96,12 @@ def process_bufg(conn, top, tile, features):
         for sink in ('S0', 'S1', 'CE0', 'CE1', 'IGNORE0', 'IGNORE1'):
             if bel.parameters['IS_{}_INVERTED'.format(sink)]:
                 site_pips = [
-                        ('site_pip', '{}INV'.format(sink), '{}_B'.format(sink)),
-                        ('inverter', '{}INV'.format(sink)),
-                        ]
+                    ('site_pip', '{}INV'.format(sink), '{}_B'.format(sink)),
+                    ('inverter', '{}INV'.format(sink)),
+                ]
             else:
-                site_pips = [('site_pip', '{}INV'.format(sink), '{}'.format(sink))]
+                site_pips = [('site_pip', '{}INV'.format(sink),
+                              '{}'.format(sink))]
 
             site.add_sink(bel, sink, sink, bel.bel, sink, site_pips=site_pips)
 

@@ -8,9 +8,11 @@ from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_
 
 
 class LogicalNetlistBuilder():
-    def __init__(self, logical_netlist_schema, name, cell_count, port_count, cell_instance_count, property_map):
+    def __init__(self, logical_netlist_schema, name, cell_count, port_count,
+                 cell_instance_count, property_map):
         self.logical_netlist_schema = logical_netlist_schema
-        self.logical_netlist = self.logical_netlist_schema.Netlist.new_message()
+        self.logical_netlist = self.logical_netlist_schema.Netlist.new_message(
+        )
 
         self.logical_netlist.name = name
 
@@ -33,7 +35,6 @@ class LogicalNetlistBuilder():
         self.cell_instances = self.logical_netlist.instList
 
         self.create_property_map(self.logical_netlist.propMap, property_map)
-
 
     def next_cell(self):
         assert self.cell_idx < self.cell_count
@@ -92,13 +93,19 @@ class LogicalNetlistBuilder():
             elif isinstance(v, int):
                 entry.intValue = v
             else:
-                assert False, "Unknown type of value {}, type = {}".format(repr(v), type(v))
+                assert False, "Unknown type of value {}, type = {}".format(
+                    repr(v), type(v))
 
     def get_top_cell_instance(self):
         return self.logical_netlist.topInst
 
 
-def output_logical_netlist(logical_netlist_schema, libraries, top_level_cell, top_level_name, view="netlist", property_map={}):
+def output_logical_netlist(logical_netlist_schema,
+                           libraries,
+                           top_level_cell,
+                           top_level_name,
+                           view="netlist",
+                           property_map={}):
     master_cell_list = check_logical_netlist(libraries)
 
     assert top_level_cell in master_cell_list
@@ -113,12 +120,12 @@ def output_logical_netlist(logical_netlist_schema, libraries, top_level_cell, to
             cell_instance_count += len(cell.cell_instances)
 
     logical_netlist = LogicalNetlistBuilder(
-            logical_netlist_schema=logical_netlist_schema,
-            name=top_level_name,
-            cell_count=cell_count,
-            port_count=port_count,
-            cell_instance_count=cell_instance_count,
-            property_map=property_map)
+        logical_netlist_schema=logical_netlist_schema,
+        name=top_level_name,
+        cell_count=cell_count,
+        port_count=port_count,
+        cell_instance_count=cell_instance_count,
+        property_map=property_map)
 
     cell_name_to_idx = {}
     ports = {}
@@ -131,7 +138,8 @@ def output_logical_netlist(logical_netlist_schema, libraries, top_level_cell, to
             cell_name_to_idx[cell.name] = cell_idx
 
             cell_obj.name = logical_netlist.string_id(cell.name)
-            logical_netlist.create_property_map(cell_obj.propMap, cell.property_map)
+            logical_netlist.create_property_map(cell_obj.propMap,
+                                                cell.property_map)
             cell_obj.view = logical_netlist.string_id(cell.view)
             cell_obj.lib = library_id
 
@@ -141,8 +149,10 @@ def output_logical_netlist(logical_netlist_schema, libraries, top_level_cell, to
                 ports[cell.name, port_name] = port_idx
                 cell_obj.ports[idx] = port_idx
 
-                port_obj.dir = logical_netlist_schema.Netlist.Direction.__dict__[port.direction.name.lower()]
-                logical_netlist.create_property_map(port_obj.propMap, port.property_map)
+                port_obj.dir = logical_netlist_schema.Netlist.Direction.__dict__[
+                    port.direction.name.lower()]
+                logical_netlist.create_property_map(port_obj.propMap,
+                                                    port.property_map)
                 if port.bus is not None:
                     port_obj.name = logical_netlist.string_id(port_name)
                     bus = port_obj.init('bus')
@@ -158,27 +168,36 @@ def output_logical_netlist(logical_netlist_schema, libraries, top_level_cell, to
 
             cell_instances = {}
             cell_obj.init('insts', len(cell.cell_instances))
-            for idx, (cell_instance_name, cell_instance) in enumerate(cell.cell_instances.items()):
-                cell_instance_idx, cell_instance_obj = logical_netlist.next_cell_instance()
+            for idx, (cell_instance_name,
+                      cell_instance) in enumerate(cell.cell_instances.items()):
+                cell_instance_idx, cell_instance_obj = logical_netlist.next_cell_instance(
+                )
                 cell_instances[cell_instance_name] = cell_instance_idx
 
-                cell_instance_obj.name = logical_netlist.string_id(cell_instance_name)
-                logical_netlist.create_property_map(cell_instance_obj.propMap, cell_instance.property_map)
-                cell_instance_obj.view = logical_netlist.string_id(cell_instance.view)
-                cell_instance_obj.cell = cell_name_to_idx[cell_instance.cell_name]
+                cell_instance_obj.name = logical_netlist.string_id(
+                    cell_instance_name)
+                logical_netlist.create_property_map(cell_instance_obj.propMap,
+                                                    cell_instance.property_map)
+                cell_instance_obj.view = logical_netlist.string_id(
+                    cell_instance.view)
+                cell_instance_obj.cell = cell_name_to_idx[cell_instance.
+                                                          cell_name]
 
                 cell_obj.insts[idx] = cell_instance_idx
 
             cell_obj.init('nets', len(cell.nets))
-            for net_obj, (netname, net) in zip(cell_obj.nets, cell.nets.items()):
+            for net_obj, (netname, net) in zip(cell_obj.nets,
+                                               cell.nets.items()):
                 net_obj.name = logical_netlist.string_id(netname)
-                logical_netlist.create_property_map(net_obj.propMap, net.property_map)
+                logical_netlist.create_property_map(net_obj.propMap,
+                                                    net.property_map)
 
                 net_obj.init('portInsts', len(net.ports))
 
                 for port_obj, port in zip(net_obj.portInsts, net.ports):
                     if port.instance_name is not None:
-                        instance_cell_name = cell.cell_instances[port.instance_name].cell_name
+                        instance_cell_name = cell.cell_instances[
+                            port.instance_name].cell_name
                         port_obj.inst = cell_instances[port.instance_name]
                         port_obj.port = ports[instance_cell_name, port.name]
                     else:
@@ -195,7 +214,8 @@ def output_logical_netlist(logical_netlist_schema, libraries, top_level_cell, to
     top_level_cell_instance.name = logical_netlist.string_id(top_level_name)
     top_level_cell_instance.cell = cell_name_to_idx[top_level_cell]
     top_level_cell_instance.view = logical_netlist.string_id(view)
-    logical_netlist.create_property_map(top_level_cell_instance.propMap, property_map)
+    logical_netlist.create_property_map(top_level_cell_instance.propMap,
+                                        property_map)
 
     return logical_netlist.finish_encode()
 
@@ -204,7 +224,8 @@ class PhysicalNetlistBuilder():
     def __init__(self, physical_netlist_schema, part):
         self.physical_netlist_schema = physical_netlist_schema
 
-        self.physical_netlist = self.physical_netlist_schema.PhysNetlist.new_message()
+        self.physical_netlist = self.physical_netlist_schema.PhysNetlist.new_message(
+        )
         self.physical_netlist.part = part
 
         self.placements = []
@@ -265,8 +286,10 @@ class PhysicalNetlistBuilder():
 
                 if pin.other_cell_type:
                     assert pin.other_cell_name is not None
-                    pin.otherCell.multiCell = self.string_id(pin.other_cell_name)
-                    pin.otherCell.multiType = self.string_id(pin.other_cell_type)
+                    pin.otherCell.multiCell = self.string_id(
+                        pin.other_cell_name)
+                    pin.otherCell.multiType = self.string_id(
+                        pin.other_cell_type)
 
         self.physical_netlist.init('physNets', len(self.nets))
         nets = self.physical_netlist.physNets
@@ -287,7 +310,8 @@ class PhysicalNetlistBuilder():
         for idx, (cell_name, cell_type) in enumerate(self.physical_cells):
             physical_cell = physical_cells[idx]
             physical_cell.cellName = self.string_id(cell_name)
-            physical_cell.physType = self.physical_netlist_schema.PhysNetlist.PhysCellType.__dict__[cell_type.name.lower()]
+            physical_cell.physType = self.physical_netlist_schema.PhysNetlist.PhysCellType.__dict__[
+                cell_type.name.lower()]
 
         self.physical_netlist.init('properties', len(self.properties))
         properties = self.physical_netlist.properties
@@ -312,19 +336,23 @@ class PhysicalNetlistBuilder():
 class Interchange():
     def __init__(self, schema_directory):
         self.logical_netlist_schema = capnp.load(
-                os.path.join(schema_directory, 'LogicalNetlist.capnp'),
-                imports=[os.path.dirname(os.path.dirname(capnp.__file__))]
-                )
+            os.path.join(schema_directory, 'LogicalNetlist.capnp'),
+            imports=[os.path.dirname(os.path.dirname(capnp.__file__))])
         self.physical_netlist_schema = capnp.load(
-                os.path.join(schema_directory, 'PhysicalNetlist.capnp'),
-                imports=[os.path.dirname(os.path.dirname(capnp.__file__))]
-                )
+            os.path.join(schema_directory, 'PhysicalNetlist.capnp'),
+            imports=[os.path.dirname(os.path.dirname(capnp.__file__))])
 
     def output_logical_netlist(self, *args, **kwargs):
-        return output_logical_netlist(logical_netlist_schema=self.logical_netlist_schema, *args, **kwargs)
+        return output_logical_netlist(
+            logical_netlist_schema=self.logical_netlist_schema,
+            *args,
+            **kwargs)
 
     def new_physical_netlist_builder(self, *args, **kwargs):
-        return PhysicalNetlistBuilder(physical_netlist_schema=self.physical_netlist_schema, *args, **kwargs)
+        return PhysicalNetlistBuilder(
+            physical_netlist_schema=self.physical_netlist_schema,
+            *args,
+            **kwargs)
 
 
 def output_interchange(top, capnp_folder, part, f_logical, f_physical):
@@ -332,36 +360,25 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     hdi_primitives = Library('hdi_primitives')
     work = Library('work')
-    libraries = {
-            hdi_primitives.name: hdi_primitives,
-            work.name: work
-            }
+    libraries = {hdi_primitives.name: hdi_primitives, work.name: work}
 
     top_cell = Cell(top.name)
 
     # TODO: Iterate on this?  This feels wrong/weird.
-    top_cell.add_cell_instance(
-            name='VCC',
-            cell_name="VCC")
+    top_cell.add_cell_instance(name='VCC', cell_name="VCC")
     top_cell.add_net('<const1>')
     top_cell.connect_net_to_instance(
-            net_name='<const1>',
-            instance_name='VCC',
-            port="P")
+        net_name='<const1>', instance_name='VCC', port="P")
 
-    top_cell.add_cell_instance(
-            name='GND',
-            cell_name="GND")
+    top_cell.add_cell_instance(name='GND', cell_name="GND")
     top_cell.add_net('<const0>')
     top_cell.connect_net_to_instance(
-            net_name='<const0>',
-            instance_name='GND',
-            port="G")
+        net_name='<const0>', instance_name='GND', port="G")
 
     constant_nets = {
-            0: "<const0>",
-            1: "<const1>",
-            }
+        0: "<const0>",
+        1: "<const1>",
+    }
 
     for in_wire, width in make_bus(top.root_in):
         in_wire = unescape_verilog_quote(in_wire)
@@ -375,12 +392,16 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
             top_cell.add_net(in_wire)
             top_cell.connect_net_to_cell_port(in_wire, in_wire)
         else:
-            top_cell.add_bus_port(in_wire, Direction.Input, start=0, end=width, property_map=prop)
-            for idx in range(width+1):
+            top_cell.add_bus_port(
+                in_wire,
+                Direction.Input,
+                start=0,
+                end=width,
+                property_map=prop)
+            for idx in range(width + 1):
                 net_name = '{}[{}]'.format(in_wire, idx)
                 top_cell.add_net(net_name)
                 top_cell.connect_net_to_cell_port(net_name, in_wire, idx=idx)
-
 
     for out_wire, width in make_bus(top.root_out):
         out_wire = unescape_verilog_quote(out_wire)
@@ -394,8 +415,13 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
             top_cell.add_net(out_wire)
             top_cell.connect_net_to_cell_port(out_wire, out_wire)
         else:
-            top_cell.add_bus_port(out_wire, Direction.Output, start=0, end=width, property_map=prop)
-            for idx in range(width+1):
+            top_cell.add_bus_port(
+                out_wire,
+                Direction.Output,
+                start=0,
+                end=width,
+                property_map=prop)
+            for idx in range(width + 1):
                 net_name = '{}[{}]'.format(out_wire, idx)
                 top_cell.add_net(net_name)
                 top_cell.connect_net_to_cell_port(net_name, out_wire, idx=idx)
@@ -412,18 +438,24 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
             top_cell.add_net(inout_wire)
             top_cell.connect_net_to_cell_port(inout_wire, inout_wire)
         else:
-            top_cell.add_bus_port(inout_wire, Direction.Inout, start=0, end=width, property_map=prop)
-            for idx in range(width+1):
+            top_cell.add_bus_port(
+                inout_wire,
+                Direction.Inout,
+                start=0,
+                end=width,
+                property_map=prop)
+            for idx in range(width + 1):
                 net_name = '{}[{}]'.format(inout_wire, idx)
                 top_cell.add_net(net_name)
-                top_cell.connect_net_to_cell_port(net_name, inout_wire, idx=idx)
+                top_cell.connect_net_to_cell_port(
+                    net_name, inout_wire, idx=idx)
 
     for wire, width in make_bus(top.wires):
         wire = unescape_verilog_quote(wire)
         if width is None:
             top_cell.add_net(name=wire)
         else:
-            for idx in range(width+1):
+            for idx in range(width + 1):
                 top_cell.add_net(name='{}[{}]'.format(wire, idx))
 
     for site in top.sites:
@@ -443,7 +475,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
                 top=top,
                 net_map=top.wire_name_net_map,
                 constant_nets=constant_nets,
-                )
+            )
 
             if bel.module not in hdi_primitives_cells:
                 hdi_primitives_cells[bel.module] = []
@@ -489,7 +521,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
         for port, (direction, width) in ports.items():
 
             if width is not None:
-                cell.add_bus_port(port, direction, start=0, end=width-1)
+                cell.add_bus_port(port, direction, start=0, end=width - 1)
             else:
                 cell.add_port(port, direction)
 
@@ -508,16 +540,16 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
         hdi_primitives.add_cell(cell)
 
     logical_netlist = interchange.output_logical_netlist(
-            libraries=libraries,
-            top_level_cell=top.name,
-            top_level_name=top.name)
+        libraries=libraries, top_level_cell=top.name, top_level_name=top.name)
     logical_netlist.write_packed(f_logical)
 
-    physical_netlist_builder = interchange.new_physical_netlist_builder(part=part)
+    physical_netlist_builder = interchange.new_physical_netlist_builder(
+        part=part)
 
     net_stubs = {}
     for site in top.sites:
-        physical_netlist_builder.site_instances[site.site.name] = site.site_type()
+        physical_netlist_builder.site_instances[site.site.
+                                                name] = site.site_type()
 
         for bel in site.bels:
             if bel.site is None or bel.bel is None or bel.no_place:
@@ -527,44 +559,45 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
             if len(bel.physical_bels) == 0:
                 placement = Placement(
-                        cell_type=bel.module,
-                        cell_name=cell_instance,
-                        site=bel.site,
-                        bel=bel.bel,
-                        )
+                    cell_type=bel.module,
+                    cell_name=cell_instance,
+                    site=bel.site,
+                    bel=bel.bel,
+                )
 
-                for (bel_name, bel_pin), cell_pin in bel.bel_pins_to_cell_pins.items():
+                for (bel_name,
+                     bel_pin), cell_pin in bel.bel_pins_to_cell_pins.items():
                     placement.add_bel_pin_to_cell_pin(
-                            bel_pin=bel_pin,
-                            cell_pin=cell_pin,
-                            bel=bel_name,
-                            )
+                        bel_pin=bel_pin,
+                        cell_pin=cell_pin,
+                        bel=bel_name,
+                    )
 
                 physical_netlist_builder.placements.append(placement)
             else:
                 for phys_bel in bel.physical_bels:
                     placement = Placement(
-                            cell_type=phys_bel.module,
-                            cell_name=cell_instance + '/' + phys_bel.name,
-                            site=bel.site,
-                            bel=phys_bel.bel,
-                            )
+                        cell_type=phys_bel.module,
+                        cell_name=cell_instance + '/' + phys_bel.name,
+                        site=bel.site,
+                        bel=phys_bel.bel,
+                    )
 
-                    for (bel_name, bel_pin), cell_pin in phys_bel.bel_pins_to_cell_pins.items():
+                    for (bel_name, bel_pin
+                         ), cell_pin in phys_bel.bel_pins_to_cell_pins.items():
                         placement.add_bel_pin_to_cell_pin(
-                                bel_pin=bel_pin,
-                                cell_pin=cell_pin,
-                                bel=bel_name,
-                                )
+                            bel_pin=bel_pin,
+                            cell_pin=cell_pin,
+                            bel=bel_name,
+                        )
 
                     physical_netlist_builder.placements.append(placement)
 
-
         new_nets = site.output_site_routing(
-                top=top,
-                parent_cell=top_cell,
-                net_map=top.wire_name_net_map,
-                constant_nets=constant_nets)
+            top=top,
+            parent_cell=top_cell,
+            net_map=top.wire_name_net_map,
+            constant_nets=constant_nets)
 
         for net_name in new_nets:
             if net_name not in net_stubs:
@@ -574,10 +607,10 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     for net_name in net_stubs:
         physical_netlist_builder.add_physical_net(
-                net_name=net_name,
-                roots=[],
-                stubs=net_stubs[net_name],
-                )
+            net_name=net_name,
+            roots=[],
+            stubs=net_stubs[net_name],
+        )
 
     physical_netlist = physical_netlist_builder.finish_encode()
     physical_netlist.write_packed(f_physical)
