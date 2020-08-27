@@ -552,7 +552,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
                                                 name] = site.site_type()
 
         for bel in site.bels:
-            if bel.site is None or bel.bel is None or bel.no_place:
+            if bel.site is None or bel.bel is None:
                 continue
 
             cell_instance = unescape_verilog_quote(bel.get_cell(top))

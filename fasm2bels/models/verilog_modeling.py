@@ -32,7 +32,6 @@ import fasm
 from ..make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
 from ..database.connection_db_utils import get_wire_pkey
 from ..lib.physical_netlist import create_site_routing
-import sys
 
 
 def pin_to_wire_and_idx(pin):
@@ -411,7 +410,6 @@ class Bel(object):
         self.site = None
         self.keep = keep
         self.bel = None
-        self.no_place = False
         self.nets = None
         self.net_names = {}
         self.priority = priority
@@ -436,14 +434,13 @@ class Bel(object):
         Site.integrate_site. """
         self.site = site
 
-    def set_bel(self, bel, no_place=False):
+    def set_bel(self, bel):
         """ Sets the BEL constraint.
 
         This method should be called if the parent site has multiple instances
         of the BEL (e.g. LUT6 in a SLICE).
         """
         self.bel = bel
-        self.no_place = no_place
 
     def _prefix_things(self, s):
         """ Apply the prefix (if any) to the input string. """
