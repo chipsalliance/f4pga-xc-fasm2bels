@@ -31,6 +31,8 @@ import re
 import fasm
 from ..make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
 from ..database.connection_db_utils import get_wire_pkey
+from ..lib.physical_netlist import create_site_routing
+import sys
 
 
 def pin_to_wire_and_idx(pin):
@@ -214,6 +216,9 @@ class Constant(ConnectionModel):
                 port=port,
                 idx=idx)
 
+    def create_net_map(self, bel_name, constant_nets, net_map):
+        return constant_nets[self.value]
+
     def bus_width(self):
         return None
 
@@ -252,6 +257,16 @@ class Wire(ConnectionModel):
                 instance_name=instance_name,
                 port=port,
                 idx=idx)
+
+    def get_interchange_net(self, constant_nets, net_map):
+        net_name = unescape_verilog_quote(self.to_string(net_map))
+
+        if net_name == "1'b1":
+            net_name = constant_nets[1]
+        elif net_name == "1'b0":
+            net_name = constant_nets[0]
+
+        return net_name
 
     def bus_width(self):
         return None
@@ -379,12 +394,16 @@ class Bel(object):
         self.site = None
         self.keep = keep
         self.bel = None
+        self.no_place = False
         self.nets = None
         self.net_names = {}
         self.priority = priority
 
         self.bel_pins_to_cell_pins = {}
-        self.other_bels = []
+        self.other_bels = set()
+
+        self.physical_bels = []
+        self.physical_net_names = {}
 
     def set_prefix(self, prefix):
         """ Set the prefix used for wire and BEL naming.
@@ -400,13 +419,14 @@ class Bel(object):
         Site.integrate_site. """
         self.site = site
 
-    def set_bel(self, bel):
+    def set_bel(self, bel, no_place=False):
         """ Sets the BEL constraint.
 
         This method should be called if the parent site has multiple instances
         of the BEL (e.g. LUT6 in a SLICE).
         """
         self.bel = bel
+        self.no_place = no_place
 
     def _prefix_things(self, s):
         """ Apply the prefix (if any) to the input string. """
@@ -629,8 +649,23 @@ class Bel(object):
 
     def map_bel_pin_to_cell_pin(self, bel_name, bel_pin, cell_pin):
         key = bel_name, bel_pin
-        assert key not in self.bel_pins_to_cell_pins
-        self.bel_pins_to_cell_pins[key] = cell_pin
+        if key in self.bel_pins_to_cell_pins:
+            assert self.bel_pins_to_cell_pins[key] == cell_pin
+        else:
+            self.bel_pins_to_cell_pins[key] = cell_pin
+
+        if bel_name not in self.bel:
+            self.other_bels.add(bel_name)
+
+    def add_physical_bel(self, physical_bel):
+        self.physical_bels.append(physical_bel)
+
+    def get_physical_net_name(self, instance_name, bel_name, bel_pin):
+        key = (bel_name, bel_pin)
+        physical_net_name = self.physical_net_names.get(key, None)
+
+        if physical_net_name:
+            return instance_name + '/' + physical_net_name
 
 
 class Site(object):
@@ -664,6 +699,7 @@ class Site(object):
         self.sources = {}
         self.outputs = {}
         self.internal_sources = {}
+        self.internal_source_bel_pins = {}
 
         self.set_features = set()
         self.features = set()
@@ -671,10 +707,6 @@ class Site(object):
         self.bel_map = {}
 
         self.site_wire_to_wire_pkey = {}
-
-        # Map of site pins to list of active site pips attached to that site
-        # pin.
-        self.site_pin_to_site_pips = {}
 
         if features:
             aparts = features[0].feature.split('.')
@@ -716,6 +748,118 @@ class Site(object):
             self.tile = tile
 
         self.site = site
+        self.site_type_override = None
+        self.site_routing = {}
+
+    def override_site_type(self, site_type):
+        self.site_type_override = site_type
+
+    def site_type(self):
+        if self.site_type_override is None:
+            return self.site.type
+        else:
+            return self.site_type_override
+
+    def link_site_routing(self, site_routing):
+        for src, dest in zip(site_routing, site_routing[1:]):
+            if src not in self.site_routing:
+                self.site_routing[src] = set()
+
+            self.site_routing[src].add(dest)
+
+    def prune_site_routing(self, key):
+        for sinks in self.site_routing.values():
+            if key in sinks:
+                sinks.remove(key)
+
+        def remove_drivers(key):
+            if key in self.site_routing:
+                children = self.site_routing[key]
+                del self.site_routing[key]
+
+                for child in children:
+                    remove_drivers(child)
+
+        remove_drivers(key)
+
+    def output_site_routing(self, top, parent_cell, net_map, constant_nets):
+        bel_map = {}
+
+        instance_names = {}
+
+        for bel in self.bels:
+            assert bel.bel not in bel_map
+            bel_map[bel.bel] = bel
+            for other_bel in bel.other_bels:
+                assert other_bel not in bel_map
+                bel_map[other_bel] = bel
+
+            instance_names[bel.bel] = unescape_verilog_quote(bel.get_cell(top))
+            for other_bel in bel.other_bels:
+                instance_names[other_bel] = instance_names[bel.bel]
+
+        dest_to_src = {}
+        bel_pins = set()
+
+        for parent in self.site_routing:
+            if parent[0] == 'bel_pin':
+                bel_pins.add(parent)
+
+            for child in self.site_routing[parent]:
+                if child[0] == 'bel_pin':
+                    bel_pins.add(child)
+
+                if child in dest_to_src:
+                    assert dest_to_src[child] == parent
+
+                dest_to_src[child] = parent
+
+        # Need: BEL name, BEL pin -> net
+        # BEL name -> Bel object
+        net_roots = {}
+
+        # Some "primatives" actually get transformed upon loading, e.g. LUT6_2.
+        # This appear to Vivado as nets sourcing from a cell below the root
+        # cell.
+        #
+        # This map converts the top-level net to the net from within the
+        # transformed cell.
+        sub_cell_nets = {}
+
+        for site_routing_type, bel_name, bel_pin in bel_pins:
+            assert site_routing_type == 'bel_pin'
+            if bel_name not in bel_map:
+                continue
+
+            bel = bel_map[bel_name]
+            instance_name = instance_names[bel_name]
+
+            key = bel_name, bel_pin
+            if key not in bel.bel_pins_to_cell_pins:
+                continue
+
+            cell_pin = bel.bel_pins_to_cell_pins[bel_name, bel_pin]
+            sub_net_name = bel.get_physical_net_name(instance_name, bel_name, bel_pin)
+            net_name = parent_cell.get_net_name(instance_name, cell_pin)
+
+            if sub_net_name is not None:
+                sub_cell_nets[net_name] = sub_net_name
+
+            key = site_routing_type, bel_name, bel_pin
+            while key in dest_to_src:
+                key = dest_to_src[key]
+
+            if key in net_roots:
+                assert net_roots[key] == net_name, (key, net_roots[key], net_name)
+            else:
+                net_roots[key] = net_name
+
+        for k in net_roots.keys():
+            v = net_roots[k]
+            if v in sub_cell_nets:
+                net_roots[k] = sub_cell_nets[v]
+
+        return create_site_routing(self.site, net_roots, self.site_routing, constant_nets)
 
     def has_feature(self, feature):
         """ Does this set have the specified feature set? """
@@ -760,7 +904,7 @@ class Site(object):
 
         return value
 
-    def add_sink(self, bel, bel_pin, sink):
+    def add_sink(self, bel, cell_pin, sink_site_pin, bel_name, bel_pin, site_pips=[]):
         """ Adds a sink.
 
         Attaches sink to the specified bel.
@@ -775,13 +919,23 @@ class Site(object):
 
         """
 
-        assert bel_pin not in bel.connections
+        assert cell_pin not in bel.connections
 
-        if sink not in self.sinks:
-            self.sinks[sink] = []
+        if sink_site_pin not in self.sinks:
+            self.sinks[sink_site_pin] = []
 
-        bel.connections[bel_pin] = sink
-        self.sinks[sink].append((bel, bel_pin))
+        bel.connections[cell_pin] = sink_site_pin
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin=bel_pin,
+                cell_pin=cell_pin)
+        self.sinks[sink_site_pin].append((bel, cell_pin))
+
+        self.link_site_routing(
+            [('site_pin', sink_site_pin),
+             ('bel_pin', sink_site_pin, sink_site_pin)] +
+            site_pips +
+            [('bel_pin', bel_name, bel_pin)])
 
     def mask_sink(self, bel, bel_pin):
         """ Mark a BEL pin as not visible in the Verilog.
@@ -833,7 +987,7 @@ class Site(object):
         assert sink_idx is not None, (old_bel, old_bel_pin, sink)
         self.sinks[sink][sink_idx] = (new_bel, new_bel_pin)
 
-    def add_source(self, bel, bel_pin, source):
+    def add_source(self, bel, cell_pin, source_site_pin, bel_name, bel_pin, site_pips=[]):
         """ Adds a source.
 
         Attaches source to bel.
@@ -847,12 +1001,23 @@ class Site(object):
             when Site.integrate_site is invoked.
 
         """
-        assert source not in self.sources
-        assert bel_pin not in bel.connections
+        assert source_site_pin not in self.sources
+        assert cell_pin not in bel.connections
 
-        bel.connections[bel_pin] = source
-        bel.outputs.add(bel_pin)
-        self.sources[source] = (bel, bel_pin)
+        bel.connections[cell_pin] = source_site_pin
+        bel.outputs.add(cell_pin)
+        self.sources[source_site_pin] = (bel, cell_pin)
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin=bel_pin,
+                cell_pin=cell_pin)
+
+        self.link_site_routing(
+                [('bel_pin', bel_name, bel_pin)] +
+                site_pips +
+                [
+                    ('bel_pin', source_site_pin, source_site_pin),
+                    ('site_pin', source_site_pin)])
 
     def rename_source(self, bel, old_bel_pin, new_bel_pin):
         """ Rename a BEL source from one pin name to another.
@@ -878,7 +1043,7 @@ class Site(object):
 
         self.sources[source] = (new_bel, new_bel_pin)
 
-    def add_output_from_internal(self, source, internal_source):
+    def add_output_from_internal(self, source, internal_source, site_pips=[]):
         """ Adds a source from a site internal source.
 
         This is used to convert an internal_source wire to a site source.
@@ -892,9 +1057,19 @@ class Site(object):
         """
         assert source not in self.sources, source
         assert internal_source in self.internal_sources, internal_source
+        assert internal_source in self.internal_source_bel_pins, internal_source
 
         self.outputs[source] = internal_source
         self.sources[source] = self.internal_sources[internal_source]
+
+        self.link_site_routing(
+                [self.internal_source_bel_pins[internal_source]] +
+                site_pips +
+                [
+                    ('bel_pin', source, source),
+                    ('site_pin', source)
+                ]
+            )
 
     def add_output_from_output(self, source, other_source):
         """ Adds an output wire from an existing source wire.
@@ -912,7 +1087,7 @@ class Site(object):
         assert other_source in self.sources
         self.outputs[source] = other_source
 
-    def add_internal_source(self, bel, bel_pin, wire_name):
+    def add_internal_source(self, bel, cell_pin, wire_name, bel_name, bel_pin):
         """ Adds a site internal source.
 
         Adds an internal source to the site.  This wire will not be used during
@@ -926,13 +1101,19 @@ class Site(object):
             overlap with a source or sink site pin name.
 
         """
-        bel.connections[bel_pin] = wire_name
-        bel.outputs.add(bel_pin)
+        bel.connections[cell_pin] = wire_name
+        bel.outputs.add(cell_pin)
 
         assert wire_name not in self.internal_sources, wire_name
-        self.internal_sources[wire_name] = (bel, bel_pin)
+        self.internal_sources[wire_name] = (bel, cell_pin)
+        self.internal_source_bel_pins[wire_name] = ('bel_pin', bel_name, bel_pin)
 
-    def connect_internal(self, bel, bel_pin, source):
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin=bel_pin,
+                cell_pin=cell_pin)
+
+    def connect_internal(self, bel, cell_pin, source, bel_name, bel_pin, site_pips=[]):
         """ Connect a BEL pin to an existing internal source.
 
         bel (Bel): Bel object
@@ -944,8 +1125,32 @@ class Site(object):
 
         """
         assert source in self.internal_sources, source
-        assert bel_pin not in bel.connections
-        bel.connections[bel_pin] = source
+        assert source in self.internal_source_bel_pins, source
+        assert cell_pin not in bel.connections
+        bel.connections[cell_pin] = source
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin=bel_pin,
+                cell_pin=cell_pin)
+
+        self.link_site_routing(
+                [self.internal_source_bel_pins[source]] +
+                site_pips +
+                [('bel_pin', bel_name, bel_pin)])
+
+    def connect_constant(self, bel, cell_pin, bel_name, bel_pin, value, source_bel, source_bel_pin, site_pips=[]):
+        assert value in [0, 1]
+        assert cell_pin not in bel.connections
+        bel.connections[cell_pin] = value
+        bel.map_bel_pin_to_cell_pin(
+                bel_name=bel_name,
+                bel_pin=bel_pin,
+                cell_pin=cell_pin)
+
+        self.link_site_routing(
+                [('bel_pin', source_bel, source_bel_pin)] +
+                site_pips +
+                [('bel_pin', bel_name, bel_pin)])
 
     def add_bel(self, bel, name=None):
         """ Adds a BEL to the site.

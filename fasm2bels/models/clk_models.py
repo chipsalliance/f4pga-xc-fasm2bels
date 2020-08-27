@@ -93,19 +93,21 @@ def process_bufg(conn, top, tile, features):
             'PRESELECT_I1' in set_features) else '"FALSE"'
         bel.parameters['INIT_OUT'] = int('INIT_OUT' in set_features)
 
-        for sink in ('I0', 'I1', 'S0', 'S1', 'CE0', 'CE1', 'IGNORE0',
-                     'IGNORE1'):
-            site.add_sink(bel, sink, sink)
-            bel.map_bel_pin_to_cell_pin(
-                    bel_name=bel.bel,
-                    bel_pin=sink,
-                    cell_pin=sink)
+        for sink in ('S0', 'S1', 'CE0', 'CE1', 'IGNORE0', 'IGNORE1'):
+            if bel.parameters['IS_{}_INVERTED'.format(sink)]:
+                site_pips = [
+                        ('site_pip', '{}INV'.format(sink), '{}_B'.format(sink)),
+                        ('inverter', '{}INV'.format(sink)),
+                        ]
+            else:
+                site_pips = [('site_pip', '{}INV'.format(sink), '{}'.format(sink))]
 
-        site.add_source(bel, 'O', 'O')
-        bel.map_bel_pin_to_cell_pin(
-                bel_name=bel.bel,
-                bel_pin='O',
-                cell_pin='O')
+            site.add_sink(bel, sink, sink, bel.bel, sink, site_pips=site_pips)
+
+        for sink in ('I0', 'I1'):
+            site.add_sink(bel, sink, sink, bel.bel, sink)
+
+        site.add_source(bel, 'O', 'O', bel.bel, 'O')
 
         site.add_bel(bel)
 
@@ -153,17 +155,9 @@ def process_hrow(conn, top, tile, features):
         bel.parameters['INIT_OUT'] = int('INIT_OUT' in set_features)
 
         for sink in ('I', 'CE'):
-            site.add_sink(bel, sink, sink)
-            bel.map_bel_pin_to_cell_pin(
-                    bel_name=bel.bel,
-                    bel_pin=sink,
-                    cell_pin=sink)
+            site.add_sink(bel, sink, sink, bel.bel, sink)
 
-        site.add_source(bel, 'O', 'O')
-        bel.map_bel_pin_to_cell_pin(
-                bel_name=bel.bel,
-                bel_pin='O',
-                cell_pin='O')
+        site.add_source(bel, 'O', 'O', bel.bel, 'O')
 
         site.add_bel(bel)
 

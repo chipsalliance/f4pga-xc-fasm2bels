@@ -222,8 +222,8 @@ class PhysicalNetlistBuilder():
     def add_cell_loc(self, placement):
         self.placements.append(placement)
 
-    def add_physical_net(self, net_name, pips):
-        self.nets.append((net_name, pips))
+    def add_physical_net(self, net_name, roots, stubs):
+        self.nets.append((net_name, roots, stubs))
 
     def string_id(self, s):
         if s not in self.string_map:
@@ -270,21 +270,17 @@ class PhysicalNetlistBuilder():
 
         self.physical_netlist.init('physNets', len(self.nets))
         nets = self.physical_netlist.physNets
-        for idx, (net_name, pips) in enumerate(self.nets):
+        for idx, (net_name, roots, stubs) in enumerate(self.nets):
             net = nets[idx]
 
             net.name = self.string_id(net_name)
-            net.init('stubs', len(pips))
-            stubs = net
+            net.init('sources', len(roots))
+            for root_obj, root in zip(net.sources, roots):
+                root.output_interchange(root_obj, self.string_id)
 
-            for idx, pip in enumerate(pips):
-                stub = stubs[idx]
-                pip_obj = stub.pip
-                pip_obj.tile = self.string_id(pip.tile)
-                pip_obj.wire0 = self.string_id(pip.wire0)
-                pip_obj.wire1 = self.string_id(pip.wire1)
-                pip_obj.forward = pip.forward
-                pip_obj.isFixed = True
+            net.init('stubs', len(stubs))
+            for stub_obj, stub in zip(net.stubs, stubs):
+                stub.output_interchange(stub_obj, self.string_id)
 
         self.physical_netlist.init('physCells', len(self.physical_cells))
         physical_cells = self.physical_netlist.physCells
@@ -519,29 +515,69 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     physical_netlist_builder = interchange.new_physical_netlist_builder(part=part)
 
+    net_stubs = {}
     for site in top.sites:
-        physical_netlist_builder.site_instances[site.site.name] = site.site.type
+        physical_netlist_builder.site_instances[site.site.name] = site.site_type()
+
         for bel in site.bels:
-            if bel.site is None or bel.bel is None:
+            if bel.site is None or bel.bel is None or bel.no_place:
                 continue
 
             cell_instance = unescape_verilog_quote(bel.get_cell(top))
 
-            placement = Placement(
-                    cell_type=bel.module,
-                    cell_name=cell_instance,
-                    site=bel.site,
-                    bel=bel.bel,
-                    )
-
-            for (bel, bel_pin), cell_pin in bel.bel_pins_to_cell_pins.items():
-                placement.add_bel_pin_to_cell_pin(
-                        bel_pin=bel_pin,
-                        cell_pin=cell_pin,
-                        bel=bel,
+            if len(bel.physical_bels) == 0:
+                placement = Placement(
+                        cell_type=bel.module,
+                        cell_name=cell_instance,
+                        site=bel.site,
+                        bel=bel.bel,
                         )
 
-            physical_netlist_builder.placements.append(placement)
+                for (bel_name, bel_pin), cell_pin in bel.bel_pins_to_cell_pins.items():
+                    placement.add_bel_pin_to_cell_pin(
+                            bel_pin=bel_pin,
+                            cell_pin=cell_pin,
+                            bel=bel_name,
+                            )
+
+                physical_netlist_builder.placements.append(placement)
+            else:
+                for phys_bel in bel.physical_bels:
+                    placement = Placement(
+                            cell_type=phys_bel.module,
+                            cell_name=cell_instance + '/' + phys_bel.name,
+                            site=bel.site,
+                            bel=phys_bel.bel,
+                            )
+
+                    for (bel_name, bel_pin), cell_pin in phys_bel.bel_pins_to_cell_pins.items():
+                        placement.add_bel_pin_to_cell_pin(
+                                bel_pin=bel_pin,
+                                cell_pin=cell_pin,
+                                bel=bel_name,
+                                )
+
+                    physical_netlist_builder.placements.append(placement)
+
+
+        new_nets = site.output_site_routing(
+                top=top,
+                parent_cell=top_cell,
+                net_map=top.wire_name_net_map,
+                constant_nets=constant_nets)
+
+        for net_name in new_nets:
+            if net_name not in net_stubs:
+                net_stubs[net_name] = []
+
+            net_stubs[net_name].extend(new_nets[net_name])
+
+    for net_name in net_stubs:
+        physical_netlist_builder.add_physical_net(
+                net_name=net_name,
+                roots=[],
+                stubs=net_stubs[net_name],
+                )
 
     physical_netlist = physical_netlist_builder.finish_encode()
     physical_netlist.write_packed(f_physical)

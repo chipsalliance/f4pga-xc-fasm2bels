@@ -29,6 +29,8 @@ class Cell():
         self.ports = {}
         self.cell_instances = {}
 
+        self.cell_pin_net_lookup = {}
+
     def add_port(self, name, direction, property_map={}):
         assert name not in self.ports
 
@@ -45,7 +47,7 @@ class Cell():
                 bus=Bus(start=start, end=end))
 
     def add_cell_instance(self, name, cell_name, property_map={}):
-        assert name not in self.cell_instances
+        assert name not in self.cell_instances, name
         self.cell_instances[name] = CellInstance(
                 property_map=property_map,
                 view="netlist",
@@ -57,8 +59,23 @@ class Cell():
 
     def connect_net_to_instance(self, net_name, instance_name, port, idx=None):
         assert instance_name in self.cell_instances
-        port = PortInstance(name=port, instance_name=instance_name, idx=idx)
+        port_name = port
+        port = PortInstance(name=port_name, instance_name=instance_name, idx=idx)
         self.nets[net_name].ports.append(port)
+
+        if idx is None:
+            cell_pin = port_name
+        else:
+            cell_pin = '{}[{}]'.format(port_name, idx)
+
+        key = instance_name, cell_pin
+        assert key not in self.cell_pin_net_lookup
+
+        self.cell_pin_net_lookup[key] = net_name
+
+    def get_net_name(self, instance_name, cell_pin):
+        assert instance_name in self.cell_instances
+        return self.cell_pin_net_lookup[instance_name, cell_pin]
 
     def connect_net_to_cell_port(self, net_name, port, idx=None):
         assert port in self.ports
