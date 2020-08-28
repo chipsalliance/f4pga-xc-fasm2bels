@@ -49,7 +49,7 @@ def maybe_add_pip(top, maybe_get_wire, feature):
     if src_wire is None:
         return
 
-    top.active_pips.add((sink_wire, src_wire))
+    top.active_pips.add((sink_wire, src_wire, feature.feature))
 
 
 def get_node_pkey(conn, wire_pkey):

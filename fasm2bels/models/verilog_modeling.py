@@ -796,7 +796,8 @@ class Site(object):
 
         remove_drivers(key)
 
-    def output_site_routing(self, top, parent_cell, net_map, constant_nets):
+    def output_site_routing(self, top, parent_cell, net_map, constant_nets,
+                            bel_net_map):
         bel_map = {}
 
         instance_names = {}
@@ -839,9 +840,11 @@ class Site(object):
         # This map converts the top-level net to the net from within the
         # transformed cell.
         sub_cell_nets = {}
+        bel_pin_to_net_root = {}
 
         for site_routing_type, bel_name, bel_pin in bel_pins:
             assert site_routing_type == 'bel_pin'
+
             if bel_name not in bel_map:
                 continue
 
@@ -863,6 +866,7 @@ class Site(object):
             key = site_routing_type, bel_name, bel_pin
             while key in dest_to_src:
                 key = dest_to_src[key]
+            bel_pin_to_net_root[(site_routing_type, bel_name, bel_pin)] = key
 
             if key in net_roots:
                 assert net_roots[key] == net_name, (key, net_roots[key],
@@ -874,6 +878,30 @@ class Site(object):
             v = net_roots[k]
             if v in sub_cell_nets:
                 net_roots[k] = sub_cell_nets[v]
+
+        for site_routing_type, bel_name, bel_pin in bel_pins:
+            assert site_routing_type == 'bel_pin'
+            key = site_routing_type, bel_name, bel_pin
+            if key not in bel_pin_to_net_root:
+                continue
+            key = bel_pin_to_net_root[key]
+
+            if key not in net_roots:
+                continue
+
+            net_name = net_roots[key]
+
+            if bel_name not in bel_map:
+                continue
+
+            bel = bel_map[bel_name]
+            cell_pin = bel.bel_pins_to_cell_pins[bel_name, bel_pin]
+            key = (id(bel), cell_pin)
+
+            if key in bel_net_map:
+                assert bel_net_map[key] == net_name
+            else:
+                bel_net_map[key] = net_name
 
         return create_site_routing(self.site, net_roots, self.site_routing,
                                    constant_nets)
@@ -1294,7 +1322,9 @@ class Site(object):
             source_wire_pkey = get_wire_pkey(conn, self.tile,
                                              site_pin_map[source_wire])
             if sink_wire_pkey in unrouted_sinks:
-                shorted_nets[source_wire_pkey] = sink_wire_pkey
+                pip = '{}.{}.{}'.format(self.tile, site_pin_map[source_wire],
+                                        site_pin_map[sink_wire])
+                shorted_nets[source_wire_pkey] = sink_wire_pkey, pip
 
                 # Because this is being treated as a short, remove the
                 # source and sink.
@@ -2030,6 +2060,29 @@ set net [get_nets -of_object $pin]""".format(
 
             # Remove extra {} elements required to construct 1-length lists.
             yield """set_property FIXED_ROUTE $route $net"""
+
+    def output_interchange_nets(self, constant_nets, bel_net_map):
+        assert len(self.nets) > 0
+
+        for net_wire_pkey, net in self.nets.items():
+            if net_wire_pkey == ZERO_NET:
+                net_name = constant_nets[0]
+            elif net_wire_pkey == ONE_NET:
+                net_name = constant_nets[1]
+            else:
+                if net_wire_pkey not in self.source_bels:
+                    continue
+
+                if not net.is_net_alive():
+                    continue
+
+                bel, cell_pin = self.source_bels[net_wire_pkey]
+                key = id(bel), cell_pin
+                net_name = bel_net_map[key]
+
+            out = []
+            net.output_pips(out)
+            yield net_name, out
 
     def output_disabled_drcs(self):
         for drc in self.disabled_drcs:

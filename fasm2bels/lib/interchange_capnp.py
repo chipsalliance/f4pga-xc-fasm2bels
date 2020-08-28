@@ -3,7 +3,7 @@ import capnp.lib.capnp
 capnp.remove_import_hook()
 import os.path
 from .logical_netlist import check_logical_netlist, Library, Cell, Direction
-from .physical_netlist import Placement
+from .physical_netlist import Placement, PhysicalPip
 from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_quote
 
 
@@ -547,6 +547,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
         part=part)
 
     net_stubs = {}
+    bel_net_map = {}
     for site in top.sites:
         physical_netlist_builder.site_instances[site.site.
                                                 name] = site.site_type()
@@ -597,13 +598,25 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
             top=top,
             parent_cell=top_cell,
             net_map=top.wire_name_net_map,
-            constant_nets=constant_nets)
+            constant_nets=constant_nets,
+            bel_net_map=bel_net_map)
 
         for net_name in new_nets:
             if net_name not in net_stubs:
                 net_stubs[net_name] = []
 
             net_stubs[net_name].extend(new_nets[net_name])
+
+    for net_name, pips in top.output_interchange_nets(
+            constant_nets=constant_nets, bel_net_map=bel_net_map):
+        if net_name not in net_stubs:
+            net_stubs[net_name] = []
+
+        for tile, wire0, wire1 in pips:
+            # TODO: Better handling of bipips?
+            net_stubs[net_name].append(
+                PhysicalPip(
+                    tile=tile, wire0=wire0, wire1=wire1, forward=False))
 
     for net_name in net_stubs:
         physical_netlist_builder.add_physical_net(

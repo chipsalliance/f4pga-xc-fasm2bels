@@ -64,9 +64,9 @@ def create_check_downstream_default(conn, db):
                     (downstream_wire, phy_tile_type_pkey))
                 downstream_wire_in_tile_pkey = c.fetchone()[0]
 
-                return downstream_wire_in_tile_pkey
+                return downstream_wire_in_tile_pkey, k
 
-        return None
+        return None, None
 
     return check_for_default
 
@@ -87,9 +87,11 @@ def find_downstream_node(conn, check_downstream_default, source_node_pkey):
             (wire_pkey, ))
         phy_tile_pkey, wire_in_tile_pkey = c.fetchone()
 
-        downstream_wire_in_tile_pkey = check_downstream_default(
+        downstream_wire_in_tile_pkey, pip = check_downstream_default(
             wire_in_tile_pkey)
         if downstream_wire_in_tile_pkey is not None:
+            pip = replace_tile(c, pip, phy_tile_pkey)
+
             c.execute(
                 "SELECT node_pkey FROM wire WHERE phy_tile_pkey = ? AND wire_in_tile_pkey = ?",
                 (
@@ -97,9 +99,9 @@ def find_downstream_node(conn, check_downstream_default, source_node_pkey):
                     downstream_wire_in_tile_pkey,
                 ))
             downstream_node_pkey = c.fetchone()[0]
-            return downstream_node_pkey
+            return downstream_node_pkey, pip
 
-    return None
+    return None, None
 
 
 def output_builder(fixed_route, first_run=False):
@@ -130,13 +132,15 @@ class Net(object):
         self.route_wire_pkeys = set()
         self.parent_nodes = {}
         self.incoming_wire_map = {}
+        self.pips = {}
 
     def add_node(self,
                  conn,
                  net_map,
                  node_pkey,
                  parent_node_pkey,
-                 incoming_wire_pkey=None):
+                 incoming_wire_pkey=None,
+                 pip=None):
         """ Add a node to a net.
 
         node_pkey (int): A pkey from the node table that is part of this net.
@@ -157,6 +161,9 @@ class Net(object):
             assert node_pkey not in self.incoming_wire_map, node_pkey
             self.incoming_wire_map[node_pkey] = incoming_wire_pkey
 
+        if pip is not None:
+            self.pips[node_pkey] = pip
+
         self.parent_nodes[node_pkey] = parent_node_pkey
 
         for wire_pkey in get_wires_in_node(conn, node_pkey):
@@ -172,12 +179,12 @@ class Net(object):
 
         while True:
             parent_node_pkey = source_node_pkey
-            source_node_pkey = find_downstream_node(
+            source_node_pkey, pip = find_downstream_node(
                 conn, check_downstream_default, source_node_pkey)
 
             if source_node_pkey is not None:
-                self.add_node(conn, net_map, source_node_pkey,
-                              parent_node_pkey)
+                self.add_node(
+                    conn, net_map, source_node_pkey, parent_node_pkey, pip=pip)
             else:
                 break
 
@@ -201,6 +208,8 @@ class Net(object):
 
         for dead_node in dead_nodes:
             del self.parent_nodes[dead_node]
+            if dead_node in self.pips:
+                del self.pips[dead_node]
 
     def is_net_alive(self):
         """ True if this net is connected to sinks.
@@ -308,6 +317,11 @@ class Net(object):
 
             yield TCL_LIST_CLOSE
 
+    def output_pips(self, out):
+        for _, pip in self.pips.items():
+            tile, dest, src = pip.split('.')
+            out.append((tile, src, dest))
+
 
 def create_check_for_default(db, conn):
     """ Returns check_for_default function. """
@@ -363,7 +377,7 @@ def create_check_for_default(db, conn):
 
             upstream_wire_in_tile_pkey = c.fetchone()[0]
 
-            return upstream_wire_in_tile_pkey
+            return upstream_wire_in_tile_pkey, None
 
         for k in tile.ppips:
             parts = k.split('.')
@@ -381,11 +395,24 @@ def create_check_for_default(db, conn):
 
                 upstream_wire_in_tile_pkey = c.fetchone()[0]
 
-                return upstream_wire_in_tile_pkey
+                return upstream_wire_in_tile_pkey, k
 
-        return None
+        return None, None
 
     return check_for_default
+
+
+def replace_tile(c, pip, phy_tile_pkey):
+    c.execute("SELECT name FROM phy_tile WHERE pkey = ?", (phy_tile_pkey, ))
+    tile_name = c.fetchone()[0]
+
+    c.execute(
+        "SELECT name FROM tile_type WHERE pkey = (SELECT tile_type_pkey FROM phy_tile WHERE pkey = ?)",
+        (phy_tile_pkey, ))
+    tile_type = c.fetchone()[0]
+    assert pip.startswith(tile_type), (pip, tile_name, tile_type)
+    assert pip[len(tile_type)] == '.', (pip, tile_name)
+    return tile_name + pip[len(tile_type):]
 
 
 def expand_sink(conn, check_for_default, nets, net_map, source_to_sink_pip_map,
@@ -421,7 +448,8 @@ def expand_sink(conn, check_for_default, nets, net_map, source_to_sink_pip_map,
         assert node_wire_pkey not in net_map
 
         if node_wire_pkey in source_to_sink_pip_map:
-            upstream_sink_wire_pkey = source_to_sink_pip_map[node_wire_pkey]
+            upstream_sink_wire_pkey, pip = source_to_sink_pip_map[
+                node_wire_pkey]
 
             if upstream_sink_wire_pkey not in net_map:
                 expand_sink(
@@ -446,7 +474,8 @@ def expand_sink(conn, check_for_default, nets, net_map, source_to_sink_pip_map,
                         node_pkey=sink_node_pkey,
                         parent_node_pkey=get_node_pkey(
                             conn, upstream_sink_wire_pkey),
-                        incoming_wire_pkey=node_wire_pkey)
+                        incoming_wire_pkey=node_wire_pkey,
+                        pip=pip)
                 return
 
     # There are no active pips upstream from this node, check if this is a
@@ -456,8 +485,12 @@ def expand_sink(conn, check_for_default, nets, net_map, source_to_sink_pip_map,
               (sink_node_pkey, ))
     site_wire_pkey = c.fetchone()[0]
     if site_wire_pkey is not None:
-        upstream_sink_wire_in_tile_pkey = check_for_default(wire_in_tile_pkey)
+        upstream_sink_wire_in_tile_pkey, pip = check_for_default(
+            wire_in_tile_pkey)
+
         if upstream_sink_wire_in_tile_pkey is not None:
+            if pip is not None:
+                pip = replace_tile(c, pip, phy_tile_pkey)
             upstream_sink_wire_pkey = get_wire(
                 conn, phy_tile_pkey, upstream_sink_wire_in_tile_pkey)
 
@@ -475,6 +508,7 @@ def expand_sink(conn, check_for_default, nets, net_map, source_to_sink_pip_map,
                         parent_node_pkey=get_node_pkey(
                             conn, upstream_sink_wire_pkey),
                         incoming_wire_pkey=sink_wire_pkey,
+                        pip=pip,
                     )
                 return
 
@@ -520,9 +554,12 @@ SELECT name FROM phy_tile WHERE pkey = (SELECT phy_tile_pkey FROM wire WHERE pke
             (node_wire_pkey, ))
         phy_tile_pkey, wire_in_tile_pkey = c.fetchone()
 
-        upstream_sink_wire_in_tile_pkey = check_for_default(wire_in_tile_pkey)
+        upstream_sink_wire_in_tile_pkey, pip = check_for_default(
+            wire_in_tile_pkey)
 
         if upstream_sink_wire_in_tile_pkey is not None:
+            if pip is not None:
+                pip = replace_tile(c, pip, phy_tile_pkey)
             c.execute(
                 "SELECT pkey FROM wire WHERE wire_in_tile_pkey = ? AND phy_tile_pkey = ?;",
                 (
@@ -554,7 +591,8 @@ SELECT name FROM phy_tile WHERE pkey = (SELECT phy_tile_pkey FROM wire WHERE pke
                         node_pkey=sink_node_pkey,
                         parent_node_pkey=get_node_pkey(
                             conn, upstream_sink_wire_pkey),
-                        incoming_wire_pkey=node_wire_pkey)
+                        incoming_wire_pkey=node_wire_pkey,
+                        pip=pip)
                 return
 
     # For Zynq PSS tiles ignore unconnected sinks. The fact that a sink is
@@ -592,14 +630,14 @@ def make_routes(db, conn, wire_pkey_to_wire, unrouted_sinks, unrouted_sources,
 
     source_to_sink_pip_map = {}
 
-    for sink_wire_pkey, source_wire_pkey in active_pips:
+    for sink_wire_pkey, source_wire_pkey, pip in active_pips:
         assert source_wire_pkey not in source_to_sink_pip_map
-        source_to_sink_pip_map[source_wire_pkey] = sink_wire_pkey
+        source_to_sink_pip_map[source_wire_pkey] = sink_wire_pkey, pip
 
     # Shorted nets can be treated like an active pip.
-    for source_wire_pkey, sink_wire_pkey in shorted_nets.items():
+    for source_wire_pkey, (sink_wire_pkey, pip) in shorted_nets.items():
         assert source_wire_pkey not in source_to_sink_pip_map
-        source_to_sink_pip_map[source_wire_pkey] = sink_wire_pkey
+        source_to_sink_pip_map[source_wire_pkey] = sink_wire_pkey, pip
 
     # Every sink should belong to exactly 1 net
     # Every net should have exactly 1 source

@@ -174,31 +174,27 @@ def create_srl16(site, srl, srl_type, part):
 
     bel = Bel(srl_type, srl + part + 'SRL', priority=2)
     bel_name = srl + part + 'LUT'
-    bel.set_bel()
+    bel.set_bel(bel_name)
 
-    site.add_sink(bel, 'CLK', 'CLK')
-    bel.map_bel_pin_to_cell_pin(
-        bel_name=bel_name, bel_pin='CLK', cell_pin='CLK')
+    site.add_sink(bel, 'CLK', 'CLK', bel_name=bel_name, bel_pin='CLK')
 
     if part == '5':
-        site.add_sink(bel, 'D', '{}I'.format(srl))
-        bel.map_bel_pin_to_cell_pin(
-            bel_name=bel_name, bel_pin='DI1', cell_pin='D')
+        site.add_sink(
+            bel, 'D', '{}I'.format(srl), bel_name=bel_name, bel_pin='DI1')
     if part == '6':
-        site.add_sink(bel, 'D', '{}X'.format(srl))
-        bel.map_bel_pin_to_cell_pin(
-            bel_name=bel_name, bel_pin='DI2', cell_pin='D')
+        site.add_sink(
+            bel, 'D', '{}X'.format(srl), bel_name=bel_name, bel_pin='DI2')
 
     for idx in range(4):
-        site.add_sink(bel, 'A{}'.format(idx), '{}{}'.format(srl, idx + 2))
-        bel.map_bel_pin_to_cell_pin(
+        site.add_sink(
+            bel,
+            'A{}'.format(idx),
+            '{}{}'.format(srl, idx + 2),
             bel_name=bel_name,
-            bel_pin='A{}'.format(idx + 2),
-            cell_pin='A{}'.format(idx))
+            bel_pin='A{}'.format(idx + 2))
 
-    site.add_internal_source(bel, 'Q', srl + 'O' + part)
-    bel.map_bel_pin_to_cell_pin(
-        bel_name=bel_name, bel_pin='Q', cell_pin='O' + part)
+    site.add_internal_source(
+        bel, 'Q', srl + 'O' + part, bel_name=bel_name, bel_pin='Q')
 
     return bel
 
