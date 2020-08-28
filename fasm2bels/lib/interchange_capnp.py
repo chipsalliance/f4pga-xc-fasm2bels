@@ -503,6 +503,7 @@ class Interchange():
 
 
 def create_top_level_ports(top_cell, top, port_list, direction):
+    """ Add top level ports to logical netlist. """
     for wire, width in make_bus(port_list):
         wire = unescape_verilog_quote(wire)
         if wire in top.port_property:
