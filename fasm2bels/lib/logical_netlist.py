@@ -1,29 +1,73 @@
 import enum
 from collections import namedtuple
 
+# Declares a port on a cell, which is bit or a bus.
+#
+# If the port is a bit, then bus should be None.
+# If the port is a bus, then bus should be a Bus object.
+#
+# direction should be the Direction object.
+#
+# property_map should be a dict with str keys, and the values can be str,
+# int or bool.
+Port = namedtuple('Port', 'direction property_map bus')
 
+# Bus range for a port.
+#
+# start and end should be int.
+Bus = namedtuple('Bus', 'start end')
+
+# Port instance either a part of a Net that connects to the Cell port or a
+# CellInstance port.
+#
+# name should be a str with the name of the port.
+# If the port is bussed, idx should be the index with the bus, otherwise idx
+# should be None.
+#
+# If the port connects the Cell port, instance_name should be None, otherwise
+# instance_name should be the name of the CellInstance this port connects too.
+PortInstance = namedtuple('PortInstance', 'name instance_name idx')
+
+# A cell net that connects a driver to one or more sink ports.
+#
+# name should be a Cell unique net idenfiier.
+#
+# ports should be a list, where the first entry is either None for an undriven
+# net, or the net driver.  Each entry should be a PortInstance object.
+#
+# property_map should be a dict with str keys, and the values can be str,
+# int or bool.
+Net = namedtuple('Net', 'name property_map ports')
+
+# A instance of a Cell within the current cell.  Must have a unique name
+# within the cell.
+#
+# property_map should be a dict with str keys, and the values can be str,
+# int or bool.
+#
+# view should be a str and is a deprecate field.
+# TODO: Remove view field.
+CellInstance = namedtuple('CellInstance', 'property_map view cell_name')
+
+
+# Direction of a Cell port
 class Direction(enum.Enum):
     Input = 0
     Output = 1
     Inout = 2
 
 
-Bus = namedtuple('Bus', 'start end')
-
-Port = namedtuple('Port', 'direction property_map bus')
-
-PortInstance = namedtuple('PortInstance', 'name instance_name idx')
-
-Net = namedtuple('Net', 'name property_map ports')
-
-CellInstance = namedtuple('CellInstance', 'property_map view cell_name')
-
-Cell = namedtuple('Cell',
-                  'name property_map view lib cell_instances nets ports')
-
-
 class Cell():
+    """ Utility class for creating a Cell within a logical netlist. """
+
     def __init__(self, name, property_map={}):
+        """ Create a new cell
+
+        name (str) - Name of the Cell within the library.
+        property_map (dict) - property_map should be a dict with str keys,
+                              and the values can be str,  int or bool.
+
+        """
         self.name = name
         self.property_map = property_map
         self.view = "netlist"
@@ -35,12 +79,30 @@ class Cell():
         self.cell_pin_net_lookup = {}
 
     def add_port(self, name, direction, property_map={}):
+        """ Add bit port to this cell
+
+        name (str) - Name of the port
+        direction (Direction) - Direction of the port.
+        property_map (dict) - property_map should be a dict with str keys,
+                              and the values can be str,  int or bool.
+
+        """
         assert name not in self.ports
 
         self.ports[name] = Port(
             direction=direction, property_map=property_map, bus=None)
 
     def add_bus_port(self, name, direction, start, end, property_map={}):
+        """ Add a bussed port to this cell
+
+        name (str) - Name of the port
+        direction (Direction) - Direction of the port.
+        start (int) - LSB of the port.
+        end (int) - MSB of the port.
+        property_map (dict) - property_map should be a dict with str keys,
+                              and the values can be str,  int or bool.
+
+        """
         assert name not in self.ports
         self.ports[name] = Port(
             direction=direction,
@@ -48,15 +110,40 @@ class Cell():
             bus=Bus(start=start, end=end))
 
     def add_cell_instance(self, name, cell_name, property_map={}):
+        """ Add a cell instance to this cell
+
+        name (str) - Name of Cell instance within this Cell.
+        cell_name (str) - Name of library Cell that this instance represents.
+        property_map (dict) - property_map should be a dict with str keys,
+                              and the values can be str,  int or bool.
+
+        """
         assert name not in self.cell_instances, name
         self.cell_instances[name] = CellInstance(
             property_map=property_map, view="netlist", cell_name=cell_name)
 
     def add_net(self, name, property_map={}):
+        """ Create a new name with the specified name
+
+        name (str) - Name of net within this Cell.
+        property_map (dict) - property_map should be a dict with str keys,
+                              and the values can be str,  int or bool.
+
+        """
         assert name not in self.nets
         self.nets[name] = Net(name=name, property_map=property_map, ports=[])
 
     def connect_net_to_instance(self, net_name, instance_name, port, idx=None):
+        """ Connect an existing net to an existing instance within the cell.
+
+        net_name (str) - Name of net that has been added with add_net.
+        instance_name (str) - Name of cell instance that has been added with
+                              add_cell_instance.
+        port (str) - Name of port on cell instance.
+        idx (int) - Should be None for bit ports or the bus index for bussed
+                    port.
+
+        """
         assert instance_name in self.cell_instances
         port_name = port
         port = PortInstance(
@@ -74,16 +161,29 @@ class Cell():
         self.cell_pin_net_lookup[key] = net_name
 
     def get_net_name(self, instance_name, cell_pin):
+        """ Get the net name for an instance name and cell pin that was added
+            via connect_net_to_instance.
+        """
         assert instance_name in self.cell_instances
         return self.cell_pin_net_lookup[instance_name, cell_pin]
 
     def connect_net_to_cell_port(self, net_name, port, idx=None):
+        """ Connect an existing net to a port on the cell.
+
+        net_name (str) - Name of net that has been added with add_net.
+        port (str) - Name of port on this Cell added with add_port or
+                     add_bus_port.
+        idx (int) - Should be None for bit ports or the bus index for bussed
+                    port.
+
+        """
         assert port in self.ports
         port = PortInstance(name=port, idx=idx, instance_name=None)
         self.nets[net_name].ports.append(port)
 
 
 def invert_direction(direction):
+    """ Inverts direction of Direction enum. """
     if direction == Direction.Input:
         return Direction.Output
     elif direction == Direction.Output:
@@ -94,6 +194,8 @@ def invert_direction(direction):
 
 
 class Library():
+    """ Library of cells. """
+
     def __init__(self, name):
         self.name = name
         self.cells = {}
@@ -104,10 +206,22 @@ class Library():
 
 
 def check_logical_netlist(libraries):
+    """ Check that a logical netlist is consistent.
+
+    The following things are checked:
+     - All cell instances have a paired cell.
+     - All cells have a unique cell definition.
+     - All port connections on nets match the paired cell model.
+     - Nets without Inout ports have only 1 driver.
+
+    Returns a set of Cell names.
+
+    """
     master_cell_list = {}
 
     for lib in libraries.values():
         for cell in lib.cells.values():
+            assert cell.name not in master_cell_list
             master_cell_list[cell.name] = cell
 
     for cell in master_cell_list.values():
