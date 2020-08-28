@@ -1,3 +1,26 @@
+""" Implements models for generating FPGA interchange formats.
+
+LogicalNetlistBuilder - Internal helper class for constructing logical netlist
+                        format.  Recommend use is to first construct logical
+                        netlist using classes from logical_netlist module
+                        and calling Interchange.output_logical_netlist.
+
+output_logical_netlist - Implements conversion of classes from logical_netlist
+                         module to FPGA interchange logical netlist format.
+                         This function requires LogicalNetlist schema loaded,
+                         recommend to use Interchange class to load schemas
+                         from interchange schema directory, and then invoke
+                         Interchange.output_logical_netlist.
+
+PhysicalNetlistBuilder - Internal helper class for constructing physical
+                         netlist format.
+
+Interchange - Class that handles loading capnp schemas.
+
+output_interchange - Function that converts completed top level Module into
+                     FPGA interchange format.
+
+"""
 import capnp
 import capnp.lib.capnp
 capnp.remove_import_hook()
@@ -8,6 +31,22 @@ from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_
 
 
 class LogicalNetlistBuilder():
+    """ Builder class for LogicalNetlist capnp format.
+
+    The total number of cells, ports, cell instances should be known prior to
+    calling the constructor for LogicalNetlistBuilder.
+
+    logical_netlist_schema - Loaded logical netlist schema.
+    name (str) - Name of logical netlist.
+    cell_count (int) - Total number of cells in all libraries for this file.
+    port_count (int) - Total number of cell ports in all cells in all
+                       libraries for this file.
+    cell_instance_count (int) - Total number of cell instances in all cells
+                                in all libraries for this file.
+    property_map (dict) - Root level property map for the netlist.
+
+    """
+
     def __init__(self, logical_netlist_schema, name, cell_count, port_count,
                  cell_instance_count, property_map):
         self.logical_netlist_schema = logical_netlist_schema
@@ -37,6 +76,7 @@ class LogicalNetlistBuilder():
         self.create_property_map(self.logical_netlist.propMap, property_map)
 
     def next_cell(self):
+        """ Return next logical_netlist.Cell pycapnp object and it's index. """
         assert self.cell_idx < self.cell_count
         cell = self.cells[self.cell_idx]
         cell_idx = self.cell_idx
@@ -45,9 +85,11 @@ class LogicalNetlistBuilder():
         return cell_idx, cell
 
     def get_cell(self, cell_idx):
+        """ Get logical_netlist.Cell pycapnp object at given index. """
         return self.logical_netlist.cellList[cell_idx]
 
     def next_port(self):
+        """ Return next logical_netlist.Port pycapnp object and it's index. """
         assert self.port_idx < self.port_count
         port = self.ports[self.port_idx]
         port_idx = self.port_idx
@@ -56,6 +98,7 @@ class LogicalNetlistBuilder():
         return port_idx, port
 
     def next_cell_instance(self):
+        """ Return next logical_netlist.CellInstance pycapnp object and it's index. """
         assert self.cell_instance_idx < self.cell_instance_count
         cell_instance = self.cell_instances[self.cell_instance_idx]
         cell_instance_idx = self.cell_instance_idx
@@ -64,6 +107,7 @@ class LogicalNetlistBuilder():
         return cell_instance_idx, cell_instance
 
     def string_id(self, s):
+        """ Intern string into file, and return its StringIdx. """
         if s not in self.string_map:
             self.string_map[s] = len(self.string_list)
             self.string_list.append(s)
@@ -71,6 +115,14 @@ class LogicalNetlistBuilder():
         return self.string_map[s]
 
     def finish_encode(self):
+        """ Completes the encoding of the logical netlist and returns root pycapnp object.
+
+        Invoke after all cells, ports and cell instances have been populated
+        with data.
+
+        Returns completed logical_netlist.Netlist pycapnp object.
+
+        """
         self.logical_netlist.init('strList', len(self.string_list))
 
         for idx, s in enumerate(self.string_list):
@@ -79,6 +131,15 @@ class LogicalNetlistBuilder():
         return self.logical_netlist
 
     def create_property_map(self, property_map, d):
+        """ Create a property_map from a python dictionary for this LogicalNetlist file.
+
+        property_map (logical_netlist.PropertyMap pycapnp object) - Pycapnp
+            object to write property map.
+        d (dict-like) - Dictionary to convert to property map.
+                        Keys must be strings.  Values can be strings, ints or
+                        bools.
+
+        """
         entries = property_map.init('entries', len(d))
         for entry, (k, v) in zip(entries, d.items()):
             assert isinstance(k, str)
@@ -97,6 +158,7 @@ class LogicalNetlistBuilder():
                     repr(v), type(v))
 
     def get_top_cell_instance(self):
+        """ Return the top cell instance from the LogicalNetlist. """
         return self.logical_netlist.topInst
 
 
@@ -106,10 +168,26 @@ def output_logical_netlist(logical_netlist_schema,
                            top_level_name,
                            view="netlist",
                            property_map={}):
+    """ Convert logical_netlist.Library python classes to a FPGA interchange LogicalNetlist capnp.
+
+    logical_netlist_schema - logical_netlist schema.
+    libraries (dict) - Dict of str to logical_netlist.Library python classes.
+    top_level_cell (str) - Name of Cell to instance at top level
+    top_level_name (str) - Name of top level cell instance
+    view (str) - EDIF internal constant.
+    property_map - PropertyMap for top level cell instance
+
+    """
+
+    # Sanity that the netlist libraries are complete and consistent, also
+    # output master cell list.
     master_cell_list = check_logical_netlist(libraries)
 
+    # Make sure top level cell is in the master cell list.
     assert top_level_cell in master_cell_list
 
+    # Count cell, port and cell instance counts to enable pre-allocation of
+    # capnp arrays.
     cell_count = 0
     port_count = 0
     cell_instance_count = 0
@@ -127,6 +205,12 @@ def output_logical_netlist(logical_netlist_schema,
         cell_instance_count=cell_instance_count,
         property_map=property_map)
 
+    # Assign each python Cell objects in libraries to capnp
+    # logical_netlist.Cell objects, and record the cell index for use with
+    # cell instances later.
+    #
+    # Ports can also be converted now, do that too.  Build a map of cell name
+    # and port name to port objects for use on constructing cell nets.
     cell_name_to_idx = {}
     ports = {}
 
@@ -162,11 +246,16 @@ def output_logical_netlist(logical_netlist_schema,
                     port_obj.name = logical_netlist.string_id(port_name)
                     port_obj.bit = None
 
+    # Now that each cell type has been assigned a cell index, add cell
+    # instances to cells as needed.
     for lib in libraries.values():
         for cell in lib.cells.values():
             cell_obj = logical_netlist.get_cell(cell_name_to_idx[cell.name])
 
+            # Save mapping of cell instance name to cell instance index for
+            # cell net construction
             cell_instances = {}
+
             cell_obj.init('insts', len(cell.cell_instances))
             for idx, (cell_instance_name,
                       cell_instance) in enumerate(cell.cell_instances.items()):
@@ -196,14 +285,19 @@ def output_logical_netlist(logical_netlist_schema,
 
                 for port_obj, port in zip(net_obj.portInsts, net.ports):
                     if port.instance_name is not None:
+                        # If port.instance_name is not None, then this is a
+                        # cell instance port connection.
                         instance_cell_name = cell.cell_instances[
                             port.instance_name].cell_name
                         port_obj.inst = cell_instances[port.instance_name]
                         port_obj.port = ports[instance_cell_name, port.name]
                     else:
+                        # If port.instance_name is None, then this is a cell
+                        # port connection
                         port_obj.extPort = None
                         port_obj.port = ports[cell.name, port.name]
 
+                    # Handle bussed port annotations
                     if port.idx is not None:
                         port_obj.busIdx.idx = port.idx
                     else:
@@ -211,6 +305,7 @@ def output_logical_netlist(logical_netlist_schema,
 
     top_level_cell_instance = logical_netlist.get_top_cell_instance()
 
+    # Convert the top level cell now that the libraries have been converted.
     top_level_cell_instance.name = logical_netlist.string_id(top_level_name)
     top_level_cell_instance.cell = cell_name_to_idx[top_level_cell]
     top_level_cell_instance.view = logical_netlist.string_id(view)
@@ -221,6 +316,13 @@ def output_logical_netlist(logical_netlist_schema,
 
 
 class PhysicalNetlistBuilder():
+    """ Builder class for PhysicalNetlist capnp format.
+
+    physical_netlist_schema - Loaded physical netlist schema.
+    part (str) - Part for physical netlist.
+
+    """
+
     def __init__(self, physical_netlist_schema, part):
         self.physical_netlist_schema = physical_netlist_schema
 
@@ -237,16 +339,53 @@ class PhysicalNetlistBuilder():
         self.string_map = {}
         self.string_list = []
 
+    def add_site_instance(self, site_name, site_type):
+        """ Add the site type for a site instance.
+
+        All sites used in placement require a site type.
+
+        """
+        self.site_instances[site_name] = site_type
+
     def add_physical_cell(self, cell_name, cell_type):
+        """ Add physical cell instance
+
+        cell_name (str) - Name of physical cell instance
+        cell_type (str) - Value of physical_netlist.PhysCellType
+
+        """
         self.physical_cells.append((cell_name, cell_type))
 
     def add_cell_loc(self, placement):
+        """ Add physical_netlist.Placement python object to this physical netlist.
+
+        placement (physical_netlist.Placement) - Placement to add.
+
+        """
         self.placements.append(placement)
 
-    def add_physical_net(self, net_name, roots, stubs):
-        self.nets.append((net_name, roots, stubs))
+    def add_physical_net(self, net_name, sources, stubs):
+        """ Adds a physical net to the physical netlist.
+
+        net_name (str) - Name of net.
+        sources (list of
+            physical_netlist.PhysicalBelPin - or -
+            physical_netlist.PhysicalSitePin - or -
+            physical_netlist.PhysicalSitePip - or -
+            physical_netlist.PhysicalPip
+            ) - Sources of this net.
+        stubs (list of
+            physical_netlist.PhysicalBelPin - or -
+            physical_netlist.PhysicalSitePin - or -
+            physical_netlist.PhysicalSitePip - or -
+            physical_netlist.PhysicalPip
+            ) - Stubs of this net.
+
+        """
+        self.nets.append((net_name, sources, stubs))
 
     def string_id(self, s):
+        """ Intern string into file, and return its StringIdx. """
         if s not in self.string_map:
             self.string_map[s] = len(self.string_list)
             self.string_list.append(s)
@@ -254,6 +393,14 @@ class PhysicalNetlistBuilder():
         return self.string_map[s]
 
     def finish_encode(self):
+        """ Completes the encoding of the physical netlist and returns root pycapnp object.
+
+        Invoke after all placements, physical cells and physical nets have
+        been added.
+
+        Returns completed physical_netlist.PhysNetlist pycapnp object.
+
+        """
         self.physical_netlist.init('placements', len(self.placements))
         placements = self.physical_netlist.placements
         for idx, placement in enumerate(self.placements):
@@ -355,7 +502,37 @@ class Interchange():
             **kwargs)
 
 
+def create_top_level_ports(top_cell, top, port_list, direction):
+    for wire, width in make_bus(port_list):
+        wire = unescape_verilog_quote(wire)
+        if wire in top.port_property:
+            prop = top.port_property[wire]
+        else:
+            prop = {}
+
+        if width is None:
+            top_cell.add_port(wire, direction, property_map=prop)
+            top_cell.add_net(wire)
+            top_cell.connect_net_to_cell_port(wire, wire)
+        else:
+            top_cell.add_bus_port(
+                wire, direction, start=0, end=width, property_map=prop)
+            for idx in range(width + 1):
+                net_name = '{}[{}]'.format(wire, idx)
+                top_cell.add_net(net_name)
+                top_cell.connect_net_to_cell_port(net_name, wire, idx=idx)
+
+
 def output_interchange(top, capnp_folder, part, f_logical, f_physical):
+    """ Output FPGA interchange from top level Module class object.
+
+    top (Module) - Top level module.
+    capnp_folder (str) - Path to the interchange capnp folder
+    part (str) - Part for physical netlist.
+    f_logical (file-like) - File to output logical_netlist.Netlist.
+    f_physical (file-like) - File to output physical_netlist.PhysNetlist.
+
+    """
     interchange = Interchange(capnp_folder)
 
     hdi_primitives = Library('hdi_primitives')
@@ -364,91 +541,30 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     top_cell = Cell(top.name)
 
-    # TODO: Iterate on this?  This feels wrong/weird.
-    top_cell.add_cell_instance(name='VCC', cell_name="VCC")
-    top_cell.add_net('<const1>')
-    top_cell.connect_net_to_instance(
-        net_name='<const1>', instance_name='VCC', port="P")
-
-    top_cell.add_cell_instance(name='GND', cell_name="GND")
-    top_cell.add_net('<const0>')
-    top_cell.connect_net_to_instance(
-        net_name='<const0>', instance_name='GND', port="G")
-
+    # Create source cells for constant nets.  They are required to have some
+    # name, so give them one.
+    #
+    # TODO: Iterate net names on this?  This feels wrong/weird.  Need to
+    # handle net name collisions?
     constant_nets = {
         0: "<const0>",
         1: "<const1>",
     }
 
-    for in_wire, width in make_bus(top.root_in):
-        in_wire = unescape_verilog_quote(in_wire)
-        if in_wire in top.port_property:
-            prop = top.port_property[in_wire]
-        else:
-            prop = {}
+    top_cell.add_cell_instance(name='VCC', cell_name="VCC")
+    top_cell.add_net(constant_nets[1])
+    top_cell.connect_net_to_instance(
+        net_name=constant_nets[1], instance_name='VCC', port="P")
 
-        if width is None:
-            top_cell.add_port(in_wire, Direction.Input, property_map=prop)
-            top_cell.add_net(in_wire)
-            top_cell.connect_net_to_cell_port(in_wire, in_wire)
-        else:
-            top_cell.add_bus_port(
-                in_wire,
-                Direction.Input,
-                start=0,
-                end=width,
-                property_map=prop)
-            for idx in range(width + 1):
-                net_name = '{}[{}]'.format(in_wire, idx)
-                top_cell.add_net(net_name)
-                top_cell.connect_net_to_cell_port(net_name, in_wire, idx=idx)
+    top_cell.add_cell_instance(name='GND', cell_name="GND")
+    top_cell.add_net(constant_nets[0])
+    top_cell.connect_net_to_instance(
+        net_name=constant_nets[0], instance_name='GND', port="G")
 
-    for out_wire, width in make_bus(top.root_out):
-        out_wire = unescape_verilog_quote(out_wire)
-        if out_wire in top.port_property:
-            prop = top.port_property[out_wire]
-        else:
-            prop = {}
-
-        if width is None:
-            top_cell.add_port(out_wire, Direction.Output, property_map=prop)
-            top_cell.add_net(out_wire)
-            top_cell.connect_net_to_cell_port(out_wire, out_wire)
-        else:
-            top_cell.add_bus_port(
-                out_wire,
-                Direction.Output,
-                start=0,
-                end=width,
-                property_map=prop)
-            for idx in range(width + 1):
-                net_name = '{}[{}]'.format(out_wire, idx)
-                top_cell.add_net(net_name)
-                top_cell.connect_net_to_cell_port(net_name, out_wire, idx=idx)
-
-    for inout_wire, width in make_bus(top.root_inout):
-        inout_wire = unescape_verilog_quote(inout_wire)
-        if inout_wire in top.port_property:
-            prop = top.port_property[inout_wire]
-        else:
-            prop = {}
-
-        if width is None:
-            top_cell.add_port(inout_wire, Direction.Inout, property_map=prop)
-            top_cell.add_net(inout_wire)
-            top_cell.connect_net_to_cell_port(inout_wire, inout_wire)
-        else:
-            top_cell.add_bus_port(
-                inout_wire,
-                Direction.Inout,
-                start=0,
-                end=width,
-                property_map=prop)
-            for idx in range(width + 1):
-                net_name = '{}[{}]'.format(inout_wire, idx)
-                top_cell.add_net(net_name)
-                top_cell.connect_net_to_cell_port(
-                    net_name, inout_wire, idx=idx)
+    # Parse top level port names, and convert to bussed ports as needed.
+    create_top_level_ports(top_cell, top, top.root_in, Direction.Input)
+    create_top_level_ports(top_cell, top, top.root_out, Direction.Output)
+    create_top_level_ports(top_cell, top, top.root_inout, Direction.Inout)
 
     for wire, width in make_bus(top.wires):
         wire = unescape_verilog_quote(wire)
@@ -458,16 +574,24 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
             for idx in range(width + 1):
                 top_cell.add_net(name='{}[{}]'.format(wire, idx))
 
+    # Update/create wire_name_net_map from the BELs.
     for site in top.sites:
         for bel in site.bels:
             bel.make_net_map(top=top, net_map=top.wire_name_net_map)
 
     for sink_wire, source_wire in top.wire_assigns.yield_wires():
-        top.wire_name_net_map[sink_wire] = flatten_wires(
-            source_wire, top.wire_assigns, top.wire_name_net_map)
+        net_name = flatten_wires(source_wire, top.wire_assigns,
+                                 top.wire_name_net_map)
+        if sink_wire in top.wire_name_net_map:
+            assert top.wire_name_net_map[sink_wire] == net_name
+        else:
+            top.wire_name_net_map[sink_wire] = net_name
 
+    # Create a list of each primative instances to later build up a primative
+    # model library.
     hdi_primitives_cells = {}
 
+    # Create cells instances from each bel in the design.
     for site in top.sites:
         for bel in sorted(site.bels, key=lambda bel: bel.priority):
             bel.output_interchange(
@@ -482,6 +606,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
             hdi_primitives_cells[bel.module].append(bel)
 
+    # Add top level cell to the work cell library.
     work.add_cell(top_cell)
 
     # Construct library cells based on data from top module.
@@ -496,6 +621,8 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
             for port in connections:
                 if port_is_output[port]:
+                    # The current model doesn't handle IO at all, so add
+                    # special cases for IO ports in the library.
                     if cellname.startswith('IOBUF') and port == "IO":
                         direction = Direction.Inout
                     else:
@@ -527,6 +654,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
         hdi_primitives.add_cell(cell)
 
+    # Make sure VCC and GND primatives are in the library.
     if "VCC" not in hdi_primitives.cells:
         cell = Cell("VCC")
         cell.add_port("P", Direction.Output)
@@ -539,6 +667,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
         hdi_primitives.add_cell(cell)
 
+    # Logical netlist is complete, output to file now!
     logical_netlist = interchange.output_logical_netlist(
         libraries=libraries, top_level_cell=top.name, top_level_name=top.name)
     logical_netlist.write_packed(f_logical)
@@ -546,11 +675,11 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
     physical_netlist_builder = interchange.new_physical_netlist_builder(
         part=part)
 
+    # Convert sites and bels into placement directives and physical nets.
     net_stubs = {}
-    bel_net_map = {}
     for site in top.sites:
-        physical_netlist_builder.site_instances[site.site.
-                                                name] = site.site_type()
+        physical_netlist_builder.add_site_instance(site.site.name,
+                                                   site.site_type())
 
         for bel in site.bels:
             if bel.site is None or bel.bel is None:
@@ -558,7 +687,17 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
             cell_instance = unescape_verilog_quote(bel.get_cell(top))
 
+            # bel.physical_bels is used to represent a transformation that
+            # happens from the library cell (e.g. LUT6_2) into lower
+            # primatives (LUT6_2 -> (LUT6, LUT5)).
+            #
+            # Rather than implement generic transformation support, for now
+            # models implement the transformation by adding physical bels to
+            # generate the correct placement constraints.
+            #
+            # TODO: Revisit this in the future?
             if len(bel.physical_bels) == 0:
+                # Straight forward case, 1 logical Cell -> 1 physical Bel
                 placement = Placement(
                     cell_type=bel.module,
                     cell_name=cell_instance,
@@ -576,6 +715,11 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
                 physical_netlist_builder.placements.append(placement)
             else:
+                # Transformation cases, create a placement constraint for
+                # each bel in the physical_bels list.
+                #
+                # These represent a cell within the primative, hence the "/"
+                # when constructing the cell name.
                 for phys_bel in bel.physical_bels:
                     placement = Placement(
                         cell_type=phys_bel.module,
@@ -594,21 +738,28 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
                     physical_netlist_builder.placements.append(placement)
 
+        # Convert site routing to PhysicalNetlist objects (PhysicalBelPin,
+        # PhysicalSitePin, PhysicalSitePip).
+        #
+        # Note: Calling output_site_routing must be done before
+        # output_interchange_nets to ensure that Bel.final_net_names gets
+        # populated, as that is computed during Site.output_site_routing.
         new_nets = site.output_site_routing(
             top=top,
             parent_cell=top_cell,
             net_map=top.wire_name_net_map,
-            constant_nets=constant_nets,
-            bel_net_map=bel_net_map)
+            constant_nets=constant_nets)
 
+        # Extend net stubs with the site routing.
         for net_name in new_nets:
             if net_name not in net_stubs:
                 net_stubs[net_name] = []
 
             net_stubs[net_name].extend(new_nets[net_name])
 
+    # Convert top level routing nets to pip lists and to relevant nets
     for net_name, pips in top.output_interchange_nets(
-            constant_nets=constant_nets, bel_net_map=bel_net_map):
+            constant_nets=constant_nets):
         if net_name not in net_stubs:
             net_stubs[net_name] = []
 
@@ -621,7 +772,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
     for net_name in net_stubs:
         physical_netlist_builder.add_physical_net(
             net_name=net_name,
-            roots=[],
+            sources=[],
             stubs=net_stubs[net_name],
         )
 

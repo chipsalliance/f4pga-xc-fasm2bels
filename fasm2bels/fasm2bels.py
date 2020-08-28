@@ -330,12 +330,15 @@ def main():
         '--verilog_file', help="Filename of output verilog file")
     parser.add_argument(
         '--xdc_file', help="Filename of output xdc constraints file.")
-    parser.add_argument('--logical_netlist',
-            help="Filename of output interchange logical netlist capnp.")
-    parser.add_argument('--physical_netlist',
-            help="Filename of output interchange physical netlist capnp.")
-    parser.add_argument('--interchange_capnp_schema_dir',
-            help="Folder containing interchange capnp definitions.")
+    parser.add_argument(
+        '--logical_netlist',
+        help="Filename of output interchange logical netlist capnp.")
+    parser.add_argument(
+        '--physical_netlist',
+        help="Filename of output interchange physical netlist capnp.")
+    parser.add_argument(
+        '--interchange_capnp_schema_dir',
+        help="Folder containing interchange capnp definitions.")
 
     args = parser.parse_args()
 
@@ -469,7 +472,7 @@ def main():
         with open(args.logical_netlist, 'wb') as f_log, open(
                 args.physical_netlist, 'wb') as f_phys:
             output_interchange(top, args.interchange_capnp_schema_dir,
-                    args.part, f_log, f_phys)
+                               args.part, f_log, f_phys)
 
 
 if __name__ == "__main__":

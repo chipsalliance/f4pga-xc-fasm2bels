@@ -420,6 +420,8 @@ class Bel(object):
         self.physical_bels = []
         self.physical_net_names = {}
 
+        self.final_net_names = {}
+
     def set_prefix(self, prefix):
         """ Set the prefix used for wire and BEL naming.
 
@@ -796,8 +798,7 @@ class Site(object):
 
         remove_drivers(key)
 
-    def output_site_routing(self, top, parent_cell, net_map, constant_nets,
-                            bel_net_map):
+    def output_site_routing(self, top, parent_cell, net_map, constant_nets):
         bel_map = {}
 
         instance_names = {}
@@ -898,10 +899,10 @@ class Site(object):
             cell_pin = bel.bel_pins_to_cell_pins[bel_name, bel_pin]
             key = (id(bel), cell_pin)
 
-            if key in bel_net_map:
-                assert bel_net_map[key] == net_name
+            if cell_pin in bel.final_net_names:
+                assert bel.final_net_names[cell_pin] == net_name
             else:
-                bel_net_map[key] = net_name
+                bel.final_net_names[cell_pin] = net_name
 
         return create_site_routing(self.site, net_roots, self.site_routing,
                                    constant_nets)
@@ -2061,7 +2062,7 @@ set net [get_nets -of_object $pin]""".format(
             # Remove extra {} elements required to construct 1-length lists.
             yield """set_property FIXED_ROUTE $route $net"""
 
-    def output_interchange_nets(self, constant_nets, bel_net_map):
+    def output_interchange_nets(self, constant_nets):
         assert len(self.nets) > 0
 
         for net_wire_pkey, net in self.nets.items():
@@ -2077,8 +2078,7 @@ set net [get_nets -of_object $pin]""".format(
                     continue
 
                 bel, cell_pin = self.source_bels[net_wire_pkey]
-                key = id(bel), cell_pin
-                net_name = bel_net_map[key]
+                net_name = bel.final_net_names[cell_pin]
 
             out = []
             net.output_pips(out)
