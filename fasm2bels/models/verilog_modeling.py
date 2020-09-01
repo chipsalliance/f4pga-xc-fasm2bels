@@ -29,9 +29,9 @@ location.
 import functools
 import re
 import fasm
-from ..make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
-from ..database.connection_db_utils import get_wire_pkey
-from ..lib.physical_netlist import create_site_routing
+from fasm2bels.make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
+from fasm2bels.database.connection_db_utils import get_wire_pkey
+from fasm2bels.lib.physical_netlist import create_site_routing
 
 
 def pin_to_wire_and_idx(pin):
@@ -148,7 +148,30 @@ def escape_verilog_name(name):
     return '\\' + name[:idx] + ' ' + name[idx:]
 
 
-def unescape_verilog_quote(name):
+def unescape_verilog_name(name):
+    """ Unescapes verilog names.
+
+    >>> s0 = '$abc$6513$auto$alumacc.cc:474:replace_alu$1259.B_buf[4]'
+    >>> s1 = escape_verilog_name(s0)
+    >>> s1
+    '\\\\$abc$6513$auto$alumacc.cc:474:replace_alu$1259.B_buf [4]'
+    >>> s2 = unescape_verilog_name(s1)
+    >>> assert s0 == s2
+    >>> s2
+    '$abc$6513$auto$alumacc.cc:474:replace_alu$1259.B_buf[4]'
+
+    >>> s0 = 'test'
+
+    >>> s1 = escape_verilog_name(
+    ...     'test')
+    >>> s1
+    '\\\\test '
+    >>> s2 = unescape_verilog_name(s1)
+    >>> assert s0 == s2
+    >>> s2
+    'test'
+
+    """
     # TODO: This is pretty terrible. Maybe defer usage of verilog_modeling.escape_verilog_name?
     if not name.startswith('\\'):
         return name
@@ -256,7 +279,7 @@ class Wire(ConnectionModel):
                            constant_nets,
                            net_map,
                            idx=None):
-        net_name = unescape_verilog_quote(self.to_string(net_map))
+        net_name = unescape_verilog_name(self.to_string(net_map))
 
         if net_name == "1'b1":
             net_name = constant_nets[1]
@@ -267,7 +290,7 @@ class Wire(ConnectionModel):
             net_name=net_name, instance_name=instance_name, port=port, idx=idx)
 
     def get_interchange_net(self, constant_nets, net_map):
-        net_name = unescape_verilog_quote(self.to_string(net_map))
+        net_name = unescape_verilog_name(self.to_string(net_map))
 
         if net_name == "1'b1":
             net_name = constant_nets[1]
@@ -639,9 +662,9 @@ class Bel(object):
         dead_wires, connections, _ = self.create_connections(top)
 
         for wire in dead_wires:
-            top_cell.add_net(unescape_verilog_quote(wire))
+            top_cell.add_net(unescape_verilog_name(wire))
 
-        cell_instance = unescape_verilog_quote(self.get_cell(top))
+        cell_instance = unescape_verilog_name(self.get_cell(top))
 
         top_cell.add_cell_instance(
             name=cell_instance,
@@ -810,7 +833,7 @@ class Site(object):
                 assert other_bel not in bel_map
                 bel_map[other_bel] = bel
 
-            instance_names[bel.bel] = unescape_verilog_quote(bel.get_cell(top))
+            instance_names[bel.bel] = unescape_verilog_name(bel.get_cell(top))
             for other_bel in bel.other_bels:
                 instance_names[other_bel] = instance_names[bel.bel]
 

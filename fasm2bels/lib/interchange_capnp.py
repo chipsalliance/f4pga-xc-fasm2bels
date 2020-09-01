@@ -27,7 +27,7 @@ capnp.remove_import_hook()
 import os.path
 from .logical_netlist import check_logical_netlist, Library, Cell, Direction
 from .physical_netlist import Placement, PhysicalPip
-from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_quote
+from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_name
 
 
 class LogicalNetlistBuilder():
@@ -505,7 +505,7 @@ class Interchange():
 def create_top_level_ports(top_cell, top, port_list, direction):
     """ Add top level ports to logical netlist. """
     for wire, width in make_bus(port_list):
-        wire = unescape_verilog_quote(wire)
+        wire = unescape_verilog_name(wire)
         if wire in top.port_property:
             prop = top.port_property[wire]
         else:
@@ -568,7 +568,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
     create_top_level_ports(top_cell, top, top.root_inout, Direction.Inout)
 
     for wire, width in make_bus(top.wires):
-        wire = unescape_verilog_quote(wire)
+        wire = unescape_verilog_name(wire)
         if width is None:
             top_cell.add_net(name=wire)
         else:
@@ -686,7 +686,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
             if bel.site is None or bel.bel is None:
                 continue
 
-            cell_instance = unescape_verilog_quote(bel.get_cell(top))
+            cell_instance = unescape_verilog_name(bel.get_cell(top))
 
             # bel.physical_bels is used to represent a transformation that
             # happens from the library cell (e.g. LUT6_2) into lower
