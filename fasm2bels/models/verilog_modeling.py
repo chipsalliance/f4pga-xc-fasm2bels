@@ -745,7 +745,7 @@ class Bel(object):
         else:
             self.bel_pins_to_cell_pins[key] = cell_pin
 
-        if bel_name not in self.bel:
+        if bel_name != self.bel:
             self.other_bels.add(bel_name)
 
     def add_physical_bel(self, physical_bel):
