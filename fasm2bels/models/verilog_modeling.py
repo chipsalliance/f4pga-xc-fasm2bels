@@ -455,12 +455,29 @@ class Bel(object):
         self.net_names = {}
         self.priority = priority
 
+        # Map of (bel_name, bel_pin) -> cell_pin name
         self.bel_pins_to_cell_pins = {}
+
+        # List of other bels named in bel_pins_to_cell_pins map.
+        # This list is used to populate some bel_name -> Bel object maps, so
+        # this set does need to be correct.
         self.other_bels = set()
 
+        # A list of BELs to be used when placing this Bel object within a
+        # design.  This is generally used to model cell mapping at load
+        # (e.g. LUT6_2 -> (LUT6, LUT5)).
         self.physical_bels = []
+
+        # When using a cell mapping, any nets that source from the mapping
+        # cell will be renamed.  This map should be populated with any remaps.
+        # Map of (bel_name, bel_pin) -> net name.
         self.physical_net_names = {}
 
+        # Map of cell pins -> net_names, as determined during
+        # output_site_routing.
+        #
+        # This map properly accounts for any physical_bels and
+        # physical_net_names present in the Bel object.
         self.final_net_names = {}
 
     def set_prefix(self, prefix):
@@ -527,6 +544,7 @@ class Bel(object):
             List of wires that represents unconnected input or output wires
             in vectors on this BEL.
         connections : map of str to ConnectionModel
+        bus_is_output : map of wire or bus name to whether it is an output.
 
         """
         connections = {}
@@ -676,7 +694,22 @@ class Bel(object):
         yield '{indent});'.format(indent=indent)
 
     def output_interchange(self, top_cell, top, net_map, constant_nets):
-        """ Output the Verilog to represent this BEL. """
+        """ Output this object into an interchange CellInstance.
+
+        top_cell : logical_netlist.Cell
+            Interchange logical netlist Cell that contains this object
+
+        top : Module
+
+        net_map : map of str to str
+            Optional wire renaming map.  If present, leaf wires should be
+            renamed through the map.
+
+        constant_nets : dict
+            Map of 0/1 to net names for constants nets (e.g.
+            {0: "<const0>", 1: "<const1>"}).
+
+        """
         dead_wires, connections, _ = self.create_connections(top)
 
         for wire in dead_wires:
@@ -705,6 +738,7 @@ class Bel(object):
         self.net_names[key] = net_name
 
     def map_bel_pin_to_cell_pin(self, bel_name, bel_pin, cell_pin):
+        """ Map a BEL pin to a Cell pin contained within this object. """
         key = bel_name, bel_pin
         if key in self.bel_pins_to_cell_pins:
             assert self.bel_pins_to_cell_pins[key] == cell_pin
@@ -715,9 +749,28 @@ class Bel(object):
             self.other_bels.add(bel_name)
 
     def add_physical_bel(self, physical_bel):
+        """ Add a Bel object to be used to place this object in the design.
+
+        physical_bel : Bel object
+
+        """
         self.physical_bels.append(physical_bel)
 
     def get_physical_net_name(self, instance_name, bel_name, bel_pin):
+        """ Maps a BEL pin to a net name if a physical net rename is required.
+
+        instance_name : str
+            Instance name for this Bel object
+
+        bel_name : str
+            Which BEL does the BEL pin being queried belong too?
+
+        bel_pin : str
+            Which BEL pin is being queried?
+
+        Returns a str with the physical net name or None if no mapping exists.
+
+        """
         key = (bel_name, bel_pin)
         physical_net_name = self.physical_net_names.get(key, None)
 
@@ -756,6 +809,8 @@ class Site(object):
         self.sources = {}
         self.outputs = {}
         self.internal_sources = {}
+
+        # Map of internal source name to site routing tuple.
         self.internal_source_bel_pins = {}
 
         self.set_features = set()
@@ -805,19 +860,45 @@ class Site(object):
             self.tile = tile
 
         self.site = site
+
+        # When site_type_override is not None, this site type will be used
+        # instead of self.site.type.
+        #
+        # This is typically used when the default site type is too generic,
+        # e.g. IOB33M -> IOB33.
         self.site_type_override = None
+
+        # Map of source site routing tuple to set of site routing tuples that
+        # are downstream from the source.
         self.site_routing = {}
 
     def override_site_type(self, site_type):
+        """ Set the site type override for this site.
+
+        site_type : str
+            Site type to use instead of self.site.type
+
+
+        """
         self.site_type_override = site_type
 
     def site_type(self):
+        """ Get the site type for this object. """
         if self.site_type_override is None:
             return self.site.type
         else:
             return self.site_type_override
 
     def link_site_routing(self, site_routing):
+        """ Add a site routing path.
+
+        site_routing : list of site routing tuples
+            This list should directly path in the site routing graph.
+            site_routing[0] should lead to site_routing[1], site_routing[1]
+            should lead to site_routing[2].  This **is** directed, so the
+            order matters.
+
+        """
         for src, dest in zip(site_routing, site_routing[1:]):
             if src not in self.site_routing:
                 self.site_routing[src] = set()
@@ -825,6 +906,7 @@ class Site(object):
             self.site_routing[src].add(dest)
 
     def prune_site_routing(self, key):
+        """ Remove a site routing tuple from the site routing graph. """
         for sinks in self.site_routing.values():
             if key in sinks:
                 sinks.remove(key)
@@ -840,8 +922,30 @@ class Site(object):
         remove_drivers(key)
 
     def output_site_routing(self, top, parent_cell, net_map, constant_nets):
+        """ Convert site routing to Physical* nets.
+
+        top : Module
+
+        parent_cell : logical_netlist.Cell
+            Cell that contains this Bel.
+
+        net_map : map of str to str
+            Optional wire renaming map.  If present, leaf wires should be
+            renamed through the map.
+
+        constant_nets : dict
+            Map of 0/1 to net names for constants nets (e.g.
+            {0: "<const0>", 1: "<const1>"}).
+
+        Returns dict of nets to Physical* objects that represent the site
+        local sources for that net.
+
+        """
+
+        # Map of bel_name in this site -> Bel objects.
         bel_map = {}
 
+        # Map of bel_name in this site -> instance name.
         instance_names = {}
 
         for bel in self.bels:
@@ -855,8 +959,11 @@ class Site(object):
             for other_bel in bel.other_bels:
                 instance_names[other_bel] = instance_names[bel.bel]
 
-        dest_to_src = {}
+        # Gather all BEL pins in this site.
         bel_pins = set()
+        # Also create a map from destination site routing tuple to source
+        # site routing tuple.
+        dest_to_src = {}
 
         for parent in self.site_routing:
             if parent[0] == 'bel_pin':
@@ -871,8 +978,10 @@ class Site(object):
 
                 dest_to_src[child] = parent
 
-        # Need: BEL name, BEL pin -> net
-        # BEL name -> Bel object
+        # At this point, the root of each site routing net needs to be
+        # identied, and for each root the net name needs to be determined.
+        #
+        # net_roots is the map of root site routing tuple to net name.
         net_roots = {}
 
         # Some "primatives" actually get transformed upon loading, e.g. LUT6_2.
@@ -884,67 +993,102 @@ class Site(object):
         sub_cell_nets = {}
         bel_pin_to_net_root = {}
 
+        # To ensure that all site routing roots are found, start from each
+        # bel pin, and walk to it's root.
+        #
+        # If the bel pin is a source, it will be it's own root.
+        # If the bel pin is a sink, it will source from another site routing
+        # tuple.
         for site_routing_type, bel_name, bel_pin in bel_pins:
             assert site_routing_type == 'bel_pin'
 
+            # If the bel_name isn't in the bel_map, this site routing is
+            # likely dead, so ignore it.
             if bel_name not in bel_map:
                 continue
 
             bel = bel_map[bel_name]
             instance_name = instance_names[bel_name]
 
+            # If no BEL pin -> Cell pin mapping has been made, this site
+            # routing is also likely dead, so ignore it.
             key = bel_name, bel_pin
             if key not in bel.bel_pins_to_cell_pins:
                 continue
 
+            # Map the BEL pin back to a net name.
             cell_pin = bel.bel_pins_to_cell_pins[bel_name, bel_pin]
-            sub_net_name = bel.get_physical_net_name(instance_name, bel_name,
-                                                     bel_pin)
             net_name = parent_cell.get_net_name(instance_name, cell_pin)
 
+            # In the event there is physical BELs in play, also get the
+            # physical net name to be used.
+            #
+            # To avoid mapping mismatches, wait until after all BEL pins have
+            # been mapped to translate from net_name to physical net name.
+            sub_net_name = bel.get_physical_net_name(instance_name, bel_name,
+                                                     bel_pin)
             if sub_net_name is not None:
-                sub_cell_nets[net_name] = sub_net_name
+                # Make sure mapping is unique.
+                if net_name in sub_cell_nets:
+                    assert sub_cell_nets[net_name] == sub_net_name
+                else:
+                    sub_cell_nets[net_name] = sub_net_name
 
+            # Walk back to the source in the site routing graph.
             key = site_routing_type, bel_name, bel_pin
             while key in dest_to_src:
                 key = dest_to_src[key]
+
+            # Create a map from BEL pin to net root within the site.
             bel_pin_to_net_root[(site_routing_type, bel_name, bel_pin)] = key
 
+            # Check that the net name for this BEL pin matches the previous
+            # net name or store it.
             if key in net_roots:
                 assert net_roots[key] == net_name, (key, net_roots[key],
                                                     net_name)
             else:
                 net_roots[key] = net_name
 
+        # Now that all BEL pins have net names, apply any physical net
+        # mappings afterwards
+        remapped_keys = set()
         for k in net_roots.keys():
             v = net_roots[k]
             if v in sub_cell_nets:
+                # Make sure net names are not double mapped.
+                assert k not in remapped_keys
+                remapped_keys.add(k)
+
                 net_roots[k] = sub_cell_nets[v]
 
+        # Now that final net names have been assigned to net roots, populate
+        # final_net_names.
         for site_routing_type, bel_name, bel_pin in bel_pins:
             assert site_routing_type == 'bel_pin'
-            key = site_routing_type, bel_name, bel_pin
-            if key not in bel_pin_to_net_root:
-                continue
-            key = bel_pin_to_net_root[key]
 
-            if key not in net_roots:
+            bel_pin_key = site_routing_type, bel_name, bel_pin
+            if bel_pin_key not in bel_pin_to_net_root:
                 continue
 
-            net_name = net_roots[key]
+            root_key = bel_pin_to_net_root[bel_pin_key]
+            if root_key not in net_roots:
+                continue
+
+            net_name = net_roots[root_key]
 
             if bel_name not in bel_map:
                 continue
 
             bel = bel_map[bel_name]
             cell_pin = bel.bel_pins_to_cell_pins[bel_name, bel_pin]
-            key = (id(bel), cell_pin)
 
             if cell_pin in bel.final_net_names:
                 assert bel.final_net_names[cell_pin] == net_name
             else:
                 bel.final_net_names[cell_pin] = net_name
 
+        # Convert site_routing tree into Physical* object tree.
         return create_site_routing(self.site, net_roots, self.site_routing,
                                    constant_nets)
 
