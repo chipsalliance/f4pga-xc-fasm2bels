@@ -1147,12 +1147,16 @@ class Site(object):
         Attaches sink to the specified bel.
 
         bel (Bel): Bel object
-        bel_pin (str): The exact tech library name for the relevant pin.  Can be
-            a bus (e.g. A[5]).  The name must identically match the library
-            name or an error will occur during synthesis.
-        sink (str): The exact site pin name for this sink.  The name must
-            identically match the site pin name, or an error will be generated
-            when Site.integrate_site is invoked.
+        cell_pin (str): The exact tech library name for the relevant pin.
+            Can be a bus (e.g. A[5]).  The name must identically match the
+            library name or an error will occur during synthesis.
+        sink_site_pin (str): The exact site pin name for this sink.  The name
+            must identically match the site pin name, or an error will be
+            generated when Site.integrate_site is invoked.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
+        site_pips (list): List of site routing tuples used to connect site pin
+            to BEL pin.
 
         """
 
@@ -1232,12 +1236,16 @@ class Site(object):
         Attaches source to bel.
 
         bel (Bel): Bel object
-        bel_pin (str): The exact tech library name for the relevant pin.  Can be
+        cel_pin (str): The exact tech library name for the relevant pin.  Can be
             a bus (e.g. A[5]).  The name must identically match the library
             name or an error will occur during synthesis.
-        source (str): The exact site pin name for this source.  The name must
-            identically match the site pin name, or an error will be generated
-            when Site.integrate_site is invoked.
+        source_site_pin (str): The exact site pin name for this source.  The
+            name mustidentically match the site pin name, or an error will be
+            generated when Site.integrate_site is invoked.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
+        site_pips (list): List of site routing tuples used to connect the BEL
+            pin to the site pin.
 
         """
         assert source_site_pin not in self.sources
@@ -1287,6 +1295,8 @@ class Site(object):
             when Site.integrate_site is invoked.
         internal_source (str): The internal_source must match the internal
             source name provided to Site.add_internal_source earlier.
+        site_pips (list): List of site routing tuples used to connect internal
+            source to site pin.
 
         """
         assert source not in self.sources, source
@@ -1323,11 +1333,13 @@ class Site(object):
         routing formation, but can be connected to other BELs within the site.
 
         bel (Bel): Bel object
-        bel_pin (str): The exact tech library name for the relevant pin.  Can be
-            a bus (e.g. A[5]).  The name must identically match the library
+        cell_pin (str): The exact tech library name for the relevant pin.  Can
+            be a bus (e.g. A[5]).  The name must identically match the library
             name or an error will occur during synthesis.
-        wire_name (str): The name of the site wire.  This wire_name must be
+        wire_name (str): The name of the site wire.  This wire_name must not
             overlap with a source or sink site pin name.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
 
         """
         bel.connections[cell_pin] = wire_name
@@ -1351,11 +1363,15 @@ class Site(object):
         """ Connect a BEL pin to an existing internal source.
 
         bel (Bel): Bel object
-        bel_pin (str): The exact tech library name for the relevant pin.  Can be
-            a bus (e.g. A[5]).  The name must identically match the library
+        cell_pin (str): The exact tech library name for the relevant pin.  Can
+            be a bus (e.g. A[5]).  The name must identically match the library
             name or an error will occur during synthesis.
         source (str): Existing internal source wire added via
             add_internal_source.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
+        site_pips (list): List of site routing tuples used to connect source
+            BEL pin to this BEL pin.
 
         """
         assert source in self.internal_sources, source
@@ -1377,6 +1393,20 @@ class Site(object):
                          source_bel,
                          source_bel_pin,
                          site_pips=[]):
+        """ Connect a BEL pin to an existing internal constant source.
+
+        bel (Bel): Bel object
+        cell_pin (str): The exact tech library name for the relevant pin.  Can
+            be a bus (e.g. A[5]).  The name must identically match the library
+            name or an error will occur during synthesis.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
+        value (int): Value of constant net being connected.
+        source_bel (str): Name of BEL that is supplying the constant.
+        source_bel_pin (str): Name of BEL pin that is supplying the constant.
+        site_pips (list): List of site routing tuples used to connect source
+            BEL pin to this BEL pin.
+        """
         assert value in [0, 1]
         assert cell_pin not in bel.connections
         bel.connections[cell_pin] = value
@@ -1865,6 +1895,7 @@ class Module(object):
         # IO bank lookup (if part was provided).
         self.iobank_lookup = {}
 
+        # Map of port -> (map of prop -> value).
         self.port_property = {}
 
     def set_default_iostandard(self, iostandard, drive):
@@ -2248,6 +2279,15 @@ set net [get_nets -of_object $pin]""".format(
             yield """set_property FIXED_ROUTE $route $net"""
 
     def output_interchange_nets(self, constant_nets):
+        """ Output nets in format suitable for interchange.
+
+        constant_nets : dict
+            Map of 0/1 to net names for constants nets (e.g.
+            {0: "<const0>", 1: "<const1>"}).
+
+        Yields net_name (str), list of pips
+
+        """
         assert len(self.nets) > 0
 
         for net_wire_pkey, net in self.nets.items():
@@ -2265,6 +2305,7 @@ set net [get_nets -of_object $pin]""".format(
                 bel, cell_pin = self.source_bels[net_wire_pkey]
                 net_name = bel.final_net_names[cell_pin]
 
+            # TODO: Output routing branch tree rather than flat pip list.
             out = []
             net.output_pips(out)
             yield net_name, out
