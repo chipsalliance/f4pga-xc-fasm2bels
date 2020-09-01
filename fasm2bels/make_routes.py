@@ -151,6 +151,8 @@ class Net(object):
             connected to the net via a pip, then incoming_wire_pkey should be
             the source wire_pkey from the pip.  This is important when dealing
             with bidirection pips.
+        pip (str): Name of pip that connects this node to it's parent node.
+            Pip format is "{tile_name}.{wire1}.{wire0}".
 
         """
         if DEBUG:
@@ -318,6 +320,12 @@ class Net(object):
             yield TCL_LIST_CLOSE
 
     def output_pips(self, out):
+        """ Append list of pips from this net to list in out.
+
+        out (list) - List of append too.
+
+        """
+        # TODO: Output pips into route tree, rather than flat list.
         for _, pip in self.pips.items():
             tile, dest, src = pip.split('.')
             out.append((tile, src, dest))
@@ -403,6 +411,15 @@ def create_check_for_default(db, conn):
 
 
 def replace_tile(c, pip, phy_tile_pkey):
+    """ Replace tile type with tile name for given pip.
+
+    c (sqlite3.Cursor) - Cursor pointing to connection database.
+    pip (str) - Pip string in form of "{tile_type}.{wire1}.{wire0}"
+    phy_tile_pkey (int) - phy_tile primary key containing this pip.
+
+    Returns pip string in form of "{tile_name}.{wire1}.{wire0}".
+
+    """
     c.execute("SELECT name FROM phy_tile WHERE pkey = ?", (phy_tile_pkey, ))
     tile_name = c.fetchone()[0]
 
