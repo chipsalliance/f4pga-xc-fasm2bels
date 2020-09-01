@@ -214,6 +214,37 @@ class ConnectionModel(object):
         """
         pass
 
+    def output_interchange(self, parent_cell, instance_name, port,
+                           constant_nets, net_map):
+        """ Output interchange format for connection.
+
+        parent_cell : Cell python object
+            Cell that contains this connection.
+
+        instance_name : str
+            Name of cell instance that this connection belongs too.
+
+        port : str
+            Name of port on cell instance this connection is connected too.
+
+        constant_nets : dict
+            Map of 0/1 to net names for constants nets (e.g.
+            {0: "<const0>", 1: "<const1>"}).
+
+        net_map : map of str to str
+            Optional wire renaming map.  If present, leaf wires should be
+            renamed through the map.
+
+        idx : int, optional
+            Bus index for bussed ports, should be None otherwise.
+
+        """
+        pass
+
+    def bus_width(self):
+        """ Returns the width of the bus if a bussed port, otherwise None. """
+        pass
+
 
 class Constant(ConnectionModel):
     """ Represents a boolean constant, e.g. 1'b0 or 1'b1. """
@@ -243,9 +274,6 @@ class Constant(ConnectionModel):
             instance_name=instance_name,
             port=port,
             idx=idx)
-
-    def create_net_map(self, bel_name, constant_nets, net_map):
-        return constant_nets[self.value]
 
     def bus_width(self):
         return None
@@ -288,16 +316,6 @@ class Wire(ConnectionModel):
 
         parent_cell.connect_net_to_instance(
             net_name=net_name, instance_name=instance_name, port=port, idx=idx)
-
-    def get_interchange_net(self, constant_nets, net_map):
-        net_name = unescape_verilog_name(self.to_string(net_map))
-
-        if net_name == "1'b1":
-            net_name = constant_nets[1]
-        elif net_name == "1'b0":
-            net_name = constant_nets[0]
-
-        return net_name
 
     def bus_width(self):
         return None
