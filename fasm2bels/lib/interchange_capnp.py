@@ -632,6 +632,11 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
                     direction = Direction.Input
 
                 width = connections[port].bus_width()
+                if port in instance.port_width:
+                    if width is not None:
+                        assert width <= instance.port_width[port], port
+
+                    width = instance.port_width[port]
 
                 if port in ports:
                     port_dir, port_width = ports[port]

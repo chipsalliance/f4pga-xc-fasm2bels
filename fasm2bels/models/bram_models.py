@@ -1,6 +1,7 @@
 import fasm
 import re
 from .verilog_modeling import Bel, Site
+import math
 
 
 def get_init(features, target_features, invert, width):
@@ -34,7 +35,7 @@ def get_init(features, target_features, invert, width):
     if invert:
         final_init ^= (2**width) - 1
 
-    return "{{width}}'b{{init:0{}b}}".format(width).format(
+    return "{{width}}'h{{init:0{}X}}".format(int(math.ceil(width / 4))).format(
         width=width, init=final_init)
 
 
@@ -155,8 +156,14 @@ def clean_up_to_bram18(top, site):
     assert bel is not None
 
     for idx in range(2):
+        bel.unmap_bel_pin(bel.bel, 'ADDRATIEHIGH{}'.format(idx))
+        bel.unmap_bel_pin(bel.bel, 'ADDRBTIEHIGH{}'.format(idx))
+
         site.mask_sink(bel, 'ADDRATIEHIGH[{}]'.format(idx))
         site.mask_sink(bel, 'ADDRBTIEHIGH[{}]'.format(idx))
+
+    bel.unmap_bel_pin(bel.bel, 'REGCLKB')
+    bel.unmap_bel_pin(bel.bel, 'REGCLKARDRCLK')
 
     site.mask_sink(bel, 'REGCLKB')
     site.mask_sink(bel, 'REGCLKARDRCLK')
@@ -176,15 +183,49 @@ def clean_up_to_bram18(top, site):
     if bel.parameters['WRITE_WIDTH_A'] < 18:
         site.mask_sink(bel, "WEA[1]")
 
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEA1", "WEA[0]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEA2", "WEA[0]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEA3", "WEA[0]")
+    else:
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEA1", "WEA[0]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEA2", "WEA[1]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEA3", "WEA[1]")
+
     if bel.parameters['WRITE_WIDTH_B'] < 18:
         site.mask_sink(bel, "WEBWE[1]")
         site.mask_sink(bel, "WEBWE[2]")
         site.mask_sink(bel, "WEBWE[3]")
+
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE1", "WEBWE[0]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE2", "WEBWE[0]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE3", "WEBWE[0]")
+
+        bel.unmap_bel_pin(bel.bel, "WEBWE4")
+        bel.unmap_bel_pin(bel.bel, "WEBWE5")
+        bel.unmap_bel_pin(bel.bel, "WEBWE6")
+        bel.unmap_bel_pin(bel.bel, "WEBWE7")
     elif bel.parameters['WRITE_WIDTH_B'] == 18:
         site.mask_sink(bel, "WEBWE[2]")
         site.mask_sink(bel, "WEBWE[3]")
+
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE1", "WEBWE[0]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE2", "WEBWE[1]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE3", "WEBWE[1]")
+
+        bel.unmap_bel_pin(bel.bel, "WEBWE4")
+        bel.unmap_bel_pin(bel.bel, "WEBWE5")
+        bel.unmap_bel_pin(bel.bel, "WEBWE6")
+        bel.unmap_bel_pin(bel.bel, "WEBWE7")
     else:
         assert bel.parameters['WRITE_WIDTH_B'] == 36
+
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE1", "WEBWE[0]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE2", "WEBWE[1]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE3", "WEBWE[1]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE4", "WEBWE[2]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE5", "WEBWE[2]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE6", "WEBWE[3]")
+        bel.remap_bel_pin_to_cell_pin(bel.bel, "WEBWE7", "WEBWE[3]")
 
 
 def clean_up_to_bram36(top, site):
@@ -277,7 +318,39 @@ def process_bram_site(top, features, set_features):
     site = Site(features, bram_site)
 
     bel = Bel('RAMB18E1')
+    bel.set_bel('RAMB18E1')
     site.add_bel(bel, name='RAMB18E1')
+    site.override_site_type('RAMB18E1')
+
+    bel.set_port_width('WEA', 2)
+    bel.set_port_width('WEBWE', 4)
+
+    fifo_site = bram_site.type == 'FIFO18E1'
+
+    fifo_site_wire_map = {
+        'REGCEAREGCE': 'REGCE',
+        'REGCLKARDRCLK': 'RDRCLK',
+        'RSTRAMARSTRAM': 'RST',
+        'RSTREGARSTREG': 'RSTREG',
+        'ENBWREN': 'WREN',
+        'CLKBWRCLK': 'WRCLK',
+        'ENARDEN': 'RDEN',
+        'CLKARDCLK': 'RDCLK',
+    }
+
+    for idx in range(16):
+        fifo_site_wire_map['DOADO{}'.format(idx)] = 'DO{}'.format(idx)
+        fifo_site_wire_map['DOBDO{}'.format(idx)] = 'DO{}'.format(idx + 16)
+
+    for idx in range(2):
+        fifo_site_wire_map['DOPADOP{}'.format(idx)] = 'DOP{}'.format(idx)
+        fifo_site_wire_map['DOPBDOP{}'.format(idx)] = 'DOP{}'.format(idx + 2)
+
+    def make_wire(wire_name):
+        if fifo_site and wire_name in fifo_site_wire_map:
+            return fifo_site_wire_map[wire_name]
+        else:
+            return wire_name
 
     # Parameters
 
@@ -430,6 +503,48 @@ def process_bram_site(top, features, set_features):
     ):
         bel.parameters['IS_{}_INVERTED'.format(wire)] = int(
             not 'ZINV_{}'.format(wire) in set_features)
+
+        if bel.parameters['IS_{}_INVERTED'.format(wire)]:
+            site_pips = [('site_pip', '{}INV'.format(wire),
+                          '{}_B'.format(wire)),
+                         ('inverter', '{}INV'.format(wire))]
+        else:
+            site_pips = [('site_pip', '{}INV'.format(wire), wire)]
+
+        wire_name = make_wire(wire)
+        site.add_sink(
+            bel=bel,
+            cell_pin=wire,
+            sink_site_pin=wire_name,
+            bel_name=bel.bel,
+            bel_pin=wire,
+            site_pips=site_pips,
+            sink_site_type_pin=wire,
+        )
+
+    for wire in (
+            "REGCLKARDRCLK",
+            "REGCLKB",
+    ):
+
+        if (not 'ZINV_{}'.format(wire) in set_features):
+            site_pips = [
+                ('site_pip', '{}INV'.format(wire), '{}_B'.format(wire)),
+                ('inverter', '{}INV'.format(wire)),
+            ]
+        else:
+            site_pips = [('site_pip', '{}INV'.format(wire), wire)]
+
+        wire_name = make_wire(wire)
+        site.add_sink(
+            bel=bel,
+            cell_pin=wire,
+            sink_site_pin=wire_name,
+            bel_name=bel.bel,
+            bel_pin=wire,
+            site_pips=site_pips,
+            sink_site_type_pin=wire,
+        )
     """
      WRITE_MODE_A_NO_CHANGE = WRITE_MODE_A_NO_CHANGE
      WRITE_MODE_A_READ_FIRST = WRITE_MODE_A_READ_FIRST
@@ -450,49 +565,19 @@ def process_bram_site(top, features, set_features):
     else:
         bel.parameters['WRITE_MODE_B'] = '"WRITE_FIRST"'
 
-    fifo_site = bram_site.type == 'FIFO18E1'
-
-    fifo_site_wire_map = {
-        'REGCEAREGCE': 'REGCE',
-        'REGCLKARDRCLK': 'RDRCLK',
-        'RSTRAMARSTRAM': 'RST',
-        'RSTREGARSTREG': 'RSTREG',
-        'ENBWREN': 'WREN',
-        'CLKBWRCLK': 'WRCLK',
-        'ENARDEN': 'RDEN',
-        'CLKARDCLK': 'RDCLK',
-    }
-
-    for idx in range(16):
-        fifo_site_wire_map['DOADO{}'.format(idx)] = 'DO{}'.format(idx)
-        fifo_site_wire_map['DOBDO{}'.format(idx)] = 'DO{}'.format(idx + 16)
-
-    for idx in range(2):
-        fifo_site_wire_map['DOPADOP{}'.format(idx)] = 'DOP{}'.format(idx)
-        fifo_site_wire_map['DOPBDOP{}'.format(idx)] = 'DOP{}'.format(idx + 2)
-
-    def make_wire(wire_name):
-        if fifo_site and wire_name in fifo_site_wire_map:
-            return fifo_site_wire_map[wire_name]
-        else:
-            return wire_name
-
     for input_wire in [
-            "CLKARDCLK",
-            "CLKBWRCLK",
-            "ENARDEN",
-            "ENBWREN",
             "REGCEAREGCE",
             "REGCEB",
-            "RSTRAMARSTRAM",
-            "RSTRAMB",
-            "RSTREGARSTREG",
-            "RSTREGB",
-            "REGCLKB",
-            "REGCLKARDRCLK",
     ]:
         wire_name = make_wire(input_wire)
-        site.add_sink(bel, input_wire, wire_name)
+        site.add_sink(
+            bel=bel,
+            cell_pin=input_wire,
+            sink_site_pin=wire_name,
+            bel_name=bel.bel,
+            bel_pin=input_wire,
+            sink_site_type_pin=input_wire,
+        )
 
     input_wires = [
         ("ADDRARDADDR", 14),
@@ -507,14 +592,31 @@ def process_bram_site(top, features, set_features):
 
     for input_wire, width in input_wires:
         for idx in range(width):
-            wire_name = make_wire('{}{}'.format(input_wire, idx))
-            site.add_sink(bel, '{}[{}]'.format(input_wire, idx), wire_name)
+            site_wire = '{}{}'.format(input_wire, idx)
+            wire_name = make_wire(site_wire)
+            site.add_sink(
+                bel=bel,
+                cell_pin='{}[{}]'.format(input_wire, idx),
+                sink_site_pin=wire_name,
+                bel_name=bel.bel,
+                bel_pin=site_wire,
+                sink_site_type_pin=site_wire)
 
     # If both BRAM's are in play, emit all wires and handle it in cleanup.
     for idx in range(4):
-        site.add_sink(bel, "WEA[{}]".format(idx), "WEA{}".format(idx))
+        site.add_sink(
+            bel=bel,
+            cell_pin="WEA[{}]".format(idx),
+            sink_site_pin="WEA{}".format(idx),
+            bel_name=bel.bel,
+            bel_pin="WEA{}".format(idx))
     for idx in range(8):
-        site.add_sink(bel, "WEBWE[{}]".format(idx), "WEBWE{}".format(idx))
+        site.add_sink(
+            bel=bel,
+            cell_pin="WEBWE[{}]".format(idx),
+            sink_site_pin="WEBWE{}".format(idx),
+            bel_name=bel.bel,
+            bel_pin="WEBWE{}".format(idx))
 
     for output_wire, width in [
         ('DOADO', 16),
@@ -523,9 +625,16 @@ def process_bram_site(top, features, set_features):
         ('DOPBDOP', 2),
     ]:
         for idx in range(width):
-            wire_name = make_wire('{}{}'.format(output_wire, idx))
+            input_wire = '{}{}'.format(output_wire, idx)
+            wire_name = make_wire(input_wire)
             pin_name = '{}[{}]'.format(output_wire, idx)
-            site.add_source(bel, pin_name, wire_name)
+            site.add_source(
+                bel=bel,
+                cell_pin=pin_name,
+                source_site_pin=wire_name,
+                bel_name=bel.bel,
+                bel_pin=input_wire,
+                source_site_type_pin=input_wire)
 
     top.add_site(site)
 

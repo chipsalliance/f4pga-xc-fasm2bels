@@ -480,6 +480,13 @@ class Bel(object):
         # physical_net_names present in the Bel object.
         self.final_net_names = {}
 
+        # Port widths for connections that are sometimes narrower.
+        self.port_width = {}
+
+    def set_port_width(self, port, width):
+        """ Explicitly set the width of a port, in the event that not all bits will be connected. """
+        self.port_width[port] = width
+
     def set_prefix(self, prefix):
         """ Set the prefix used for wire and BEL naming.
 
@@ -736,6 +743,26 @@ class Bel(object):
         assert pin not in self.net_names
         key = pin_to_wire_and_idx(pin)
         self.net_names[key] = net_name
+
+    def unmap_bel_pin(self, bel_name, bel_pin):
+        """ Remove BEL pin to Cell pin mapping.
+
+        This is useful for connections that get cleaned up after make_routes
+        process.  For example RAMB18E1.WEBWE[4-7].
+
+        """
+        key = bel_name, bel_pin
+        del self.bel_pins_to_cell_pins[key]
+
+    def remap_bel_pin_to_cell_pin(self, bel_name, bel_pin, cell_pin):
+        """ Remap BEL pin to Cell pin.
+
+        Unlike map_bel_pin_to_cell_pin, this will allow renaming of BEL pin to
+        Cell pin mapping.
+
+        """
+        key = bel_name, bel_pin
+        self.bel_pins_to_cell_pins[key] = cell_pin
 
     def map_bel_pin_to_cell_pin(self, bel_name, bel_pin, cell_pin):
         """ Map a BEL pin to a Cell pin contained within this object. """
@@ -1141,7 +1168,8 @@ class Site(object):
                  sink_site_pin,
                  bel_name,
                  bel_pin,
-                 site_pips=[]):
+                 site_pips=[],
+                 sink_site_type_pin=None):
         """ Adds a sink.
 
         Attaches sink to the specified bel.
@@ -1157,6 +1185,10 @@ class Site(object):
         bel_pin (str): Name of the BEL pin this cell pin is mapped too.
         site_pips (list): List of site routing tuples used to connect site pin
             to BEL pin.
+        sink_site_type_pin (str): In cases where a site pin is renamed when
+            the site type is changed (e.g. FIFO18E1 -> RAMB18E1), this is the
+            site pin name in the override site type, rather than the default
+            site type.
 
         """
 
@@ -1169,6 +1201,9 @@ class Site(object):
         bel.map_bel_pin_to_cell_pin(
             bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
         self.sinks[sink_site_pin].append((bel, cell_pin))
+
+        if sink_site_type_pin is not None:
+            sink_site_pin = sink_site_type_pin
 
         self.link_site_routing([('site_pin', sink_site_pin),
                                 ('bel_pin', sink_site_pin, sink_site_pin)] +
@@ -1230,7 +1265,8 @@ class Site(object):
                    source_site_pin,
                    bel_name,
                    bel_pin,
-                   site_pips=[]):
+                   site_pips=[],
+                   source_site_type_pin=None):
         """ Adds a source.
 
         Attaches source to bel.
@@ -1246,6 +1282,10 @@ class Site(object):
         bel_pin (str): Name of the BEL pin this cell pin is mapped too.
         site_pips (list): List of site routing tuples used to connect the BEL
             pin to the site pin.
+        source_site_type_pin (str): In cases where a site pin is renamed when
+            the site type is changed (e.g. FIFO18E1 -> RAMB18E1), this is the
+            site pin name in the override site type, rather than the default
+            site type.
 
         """
         assert source_site_pin not in self.sources
@@ -1256,6 +1296,9 @@ class Site(object):
         self.sources[source_site_pin] = (bel, cell_pin)
         bel.map_bel_pin_to_cell_pin(
             bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
+
+        if source_site_type_pin is not None:
+            source_site_pin = source_site_type_pin
 
         self.link_site_routing([('bel_pin', bel_name, bel_pin)] + site_pips +
                                [('bel_pin', source_site_pin, source_site_pin),
