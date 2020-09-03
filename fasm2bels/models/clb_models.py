@@ -24,7 +24,7 @@ def get_lut_init(site, lut):
 def get_lut_hex_init(site, lut):
     """ Return the INIT value for the specified LUT. """
     init = site.decode_multi_bit_feature('{}LUT.INIT'.format(lut))
-    return "64'h{:08x}".format(init)
+    return "64'h{:016x}".format(init)
 
 
 def get_shifted_lut_init(site, lut, shift=0):
@@ -86,7 +86,7 @@ def create_lut(site, lut):
     bel_lut5.set_bel(bel_name)
 
     init = site.decode_multi_bit_feature('{}LUT.INIT'.format(lut))
-    bel_lut5.parameters['INIT'] = "32'h{:04x}".format(init & 0xFFFFFFFF)
+    bel_lut5.parameters['INIT'] = "32'h{:08x}".format(init & 0xFFFFFFFF)
 
     for idx in range(5):
         bel_lut5.map_bel_pin_to_cell_pin(
