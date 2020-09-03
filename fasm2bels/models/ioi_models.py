@@ -1,4 +1,4 @@
-from .verilog_modeling import Site, Bel
+from .verilog_modeling import Site, Bel, make_inverter_path
 
 # =============================================================================
 
@@ -91,6 +91,7 @@ def process_idelay(top, features):
     if site.has_feature("IN_USE") and (site.has_feature("IDELAY_VALUE")
                                        or site.has_feature("ZIDELAY_VALUE")):
         bel = Bel('IDELAYE2')
+        bel.set_bel('IDELAYE2')
 
         if site.has_feature("CINVCTRL_SEL"):
             bel.parameters["CINVCTRL_SEL"] = '"TRUE"'
@@ -103,20 +104,39 @@ def process_idelay(top, features):
 
         if site.has_feature("DELAY_SRC_DATAIN"):
             bel.parameters['DELAY_SRC'] = '"DATAIN"'
-            site.add_sink(bel, 'DATAIN', 'DATAIN')
+            if site.has_feature("IS_DATAIN_INVERTED"):
+                bel.parameters['IS_DATAIN_INVERTED'] = 1
+                site_pips = make_inverter_path('DATAIN', 1)
+            else:
+                site_pips = make_inverter_path('DATAIN', 0)
+
+            site.add_sink(
+                bel,
+                'DATAIN',
+                'DATAIN',
+                bel.bel,
+                'DATAIN',
+                site_pips=site_pips)
         elif site.has_feature("DELAY_SRC_IDATAIN"):
             bel.parameters['DELAY_SRC'] = '"IDATAIN"'
-            site.add_sink(bel, 'IDATAIN', 'IDATAIN')
+
+            if site.has_feature("IS_IDATAIN_INVERTED"):
+                bel.parameters['IS_IDATAIN_INVERTED'] = 1
+                site_pips = make_inverter_path('IDATAIN', 1)
+            else:
+                site_pips = make_inverter_path('IDATAIN', 0)
+
+            site.add_sink(
+                bel,
+                'IDATAIN',
+                'IDATAIN',
+                bel.bel,
+                'IDATAIN',
+                site_pips=site_pips)
 
         if site.has_feature("IDELAY_VALUE"):
             idelay_value = site.decode_multi_bit_feature('IDELAY_VALUE')
             bel.parameters['IDELAY_VALUE'] = idelay_value
-
-        if site.has_feature("IS_DATAIN_INVERTED"):
-            bel.parameters['IS_DATAIN_INVERTED'] = 1
-
-        if site.has_feature("IS_IDATAIN_INVERTED"):
-            bel.parameters['IS_IDATAIN_INVERTED'] = 1
 
         if site.has_feature("IDELAY_TYPE_VARIABLE"):
             bel.parameters['IDELAY_TYPE'] = '"VARIABLE"'
@@ -126,16 +146,11 @@ def process_idelay(top, features):
             bel.parameters['IDELAY_TYPE'] = '"FIXED"'
 
         # Adding sinks
-        site.add_sink(bel, 'C', 'C')
-        site.add_sink(bel, 'CE', 'CE')
-        site.add_sink(bel, 'CINVCTRL', 'CINVCTRL')
-        site.add_sink(bel, 'INC', 'INC')
-        site.add_sink(bel, 'LD', 'LD')
-        site.add_sink(bel, 'LDPIPEEN', 'LDPIPEEN')
-        site.add_sink(bel, 'REGRST', 'REGRST')
+        for wire in ('C', 'CE', 'CINVCTRL', 'INC', 'LD', 'LDPIPEEN', 'REGRST'):
+            site.add_sink(bel, wire, wire, bel.bel, wire)
 
         # Adding sources
-        site.add_source(bel, 'DATAOUT', 'DATAOUT')
+        site.add_source(bel, 'DATAOUT', 'DATAOUT', bel.bel, 'DATAOUT')
 
         site.add_bel(bel)
 
@@ -151,6 +166,8 @@ def process_iserdes(top, site, idelay_site=None):
 
     # ISERDES
     bel = Bel('ISERDESE2')
+    bel.set_bel('ISERDESE2')
+    site.override_site_type('ISERDESE2')
 
     # Data rate, data width and interface type
     config_features = {
@@ -186,18 +203,7 @@ def process_iserdes(top, site, idelay_site=None):
     bel.parameters['DATA_RATE'] = '"{}"'.format(parts[2])
     bel.parameters['DATA_WIDTH'] = int(parts[3][1:])
 
-    site.add_source(bel, 'O', 'O')
-
-    site.add_sink(bel, 'CLK', 'CLK')
-    site.add_sink(bel, 'CLKB', 'CLKB')
-    site.add_sink(bel, 'CLKDIV', 'CLKDIV')
-
-    site.add_sink(bel, 'RST', 'SR')
-
-    if site.has_feature('ZINV_D'):
-        bel.parameters['IS_D_INVERTED'] = 0
-    else:
-        bel.parameters['IS_D_INVERTED'] = 1
+    site.add_source(bel, 'O', 'O', bel.bel, 'O')
 
     if site.has_feature('IFF.ZINV_C'):
         bel.parameters['IS_CLK_INVERTED'] = 0
@@ -205,6 +211,30 @@ def process_iserdes(top, site, idelay_site=None):
     else:
         bel.parameters['IS_CLK_INVERTED'] = 1
         bel.parameters['IS_CLKB_INVERTED'] = 0
+
+    site.add_sink(
+        bel,
+        'CLK',
+        'CLK',
+        bel.bel,
+        'CLK',
+        site_pips=make_inverter_path('CLK', bel.parameters['IS_CLK_INVERTED']))
+    site.add_sink(
+        bel,
+        'CLKB',
+        'CLKB',
+        bel.bel,
+        'CLKB',
+        site_pips=make_inverter_path('CLKB',
+                                     bel.parameters['IS_CLKB_INVERTED']))
+    site.add_sink(bel, 'CLKDIV', 'CLKDIV', bel.bel, 'CLKINV')
+
+    site.add_sink(bel, 'RST', 'SR', bel.bel, 'RST', sink_site_type_pin='RST')
+
+    if site.has_feature('ZINV_D'):
+        bel.parameters['IS_D_INVERTED'] = 0
+    else:
+        bel.parameters['IS_D_INVERTED'] = 1
 
     num_ce = None
     if site.has_feature('ISERDES.NUM_CE.N2'):
@@ -221,20 +251,26 @@ def process_iserdes(top, site, idelay_site=None):
     elif site.has_feature('IDELMUXE3.P0'):
         bel.parameters['IOBDELAY'] = '"IBUF"'
 
-    site.add_sink(bel, 'CE1', 'CE1')
-    site.add_sink(bel, 'CE2', 'CE2')
-    site.add_sink(bel, 'BITSLIP', 'BITSLIP')
+    site.add_sink(bel, 'CE1', 'CE1', bel.bel, 'CE1')
+    site.add_sink(bel, 'CE2', 'CE2', bel.bel, 'CE2')
+    site.add_sink(bel, 'BITSLIP', 'BITSLIP', bel.bel, 'BITSLIP')
 
     if idelay_site and idelay_site.has_feature("IN_USE") and (
             idelay_site.has_feature("IDELAY_VALUE")
             or idelay_site.has_feature("ZIDELAY_VALUE")):
-        site.add_sink(bel, 'DDLY', 'DDLY')
+        site.add_sink(bel, 'DDLY', 'DDLY', bel.bel, 'DDLY')
     else:
-        site.add_sink(bel, 'D', 'D')
+        site.add_sink(
+            bel,
+            'D',
+            'D',
+            bel.bel,
+            'D',
+            site_pips=make_inverter_path('D', bel.parameters['IS_D_INVERTED']))
 
     for i in range(1, 9):
         port_q = 'Q{}'.format(i)
-        site.add_source(bel, port_q, port_q)
+        site.add_source(bel, port_q, port_q, bel.bel, port_q)
 
     site.add_bel(bel)
 
@@ -483,6 +519,8 @@ def process_oserdes(top, site):
 
     # OSERDES
     bel = Bel('OSERDESE2')
+    site.override_site_type('OSERDESE2')
+    bel.set_bel('OSERDESE2')
 
     data_rate_oq = None
     if site.has_feature("OSERDES.DATA_RATE_OQ.DDR"):
@@ -529,29 +567,43 @@ def process_oserdes(top, site):
     bel.parameters['SERDES_MODE'] = '"SLAVE"' if site.has_feature(
         "OSERES.SERDES_MODE.SLAVE") else '"MASTER"'
 
-    site.add_source(bel, 'OQ', 'OQ')
-    site.add_source(bel, 'TQ', 'TQ')
+    site.add_source(bel, 'OQ', 'OQ', bel.bel, 'OQ')
+    site.add_source(bel, 'TQ', 'TQ', bel.bel, 'TQ')
 
-    site.add_sink(bel, 'CLK', 'CLK')
-    site.add_sink(bel, 'CLKDIV', 'CLKDIV')
+    site.add_sink(bel, 'CLK', 'CLK', bel.bel, 'CLK')
+    site.add_sink(bel, 'CLKDIV', 'CLKDIV', bel.bel, 'CLKDIV')
 
     for i in range(1, 9):
-        site.add_sink(bel, 'D{}'.format(i), 'D{}'.format(i))
-
         inverted = ("IS_D{}_INVERTED".format(i))
         if site.has_feature(inverted):
             bel.parameters[inverted] = 1
+            site_pips = [('site_pip', 'D{}INV'.format(i), 'D{}_B'.format(i)),
+                         ('inverter', 'D{}INV'.format(i))]
+        else:
+            site_pips = [
+                ('site_pip', 'D{}INV'.format(i), 'D{}'.format(i)),
+            ]
+
+        wire = 'D{}'.format(i)
+        site.add_sink(bel, wire, wire, bel.bel, wire, site_pips=site_pips)
 
     for i in range(1, 5):
-        site.add_sink(bel, 'T{}'.format(i), 'T{}'.format(i))
-
         if not site.has_feature("ZINV_T{}".format(i)):
             bel.parameters["IS_T{}_INVERTED".format(i)] = 1
+            site_pips = [('site_pip', 'T{}INV'.format(i), 'T{}_B'.format(i)),
+                         ('inverter', 'T{}INV'.format(i))]
+        else:
+            site_pips = [
+                ('site_pip', 'D{}INV'.format(i), 'D{}'.format(i)),
+            ]
 
-    site.add_sink(bel, 'OCE', 'OCE')
-    site.add_sink(bel, 'TCE', 'TCE')
+        wire = 'T{}'.format(i)
+        site.add_sink(bel, wire, wire, bel.bel, wire)
 
-    site.add_sink(bel, 'RST', 'SR')
+    site.add_sink(bel, 'OCE', 'OCE', bel.bel, 'OCE')
+    site.add_sink(bel, 'TCE', 'TCE', bel.bel, 'TCE')
+
+    site.add_sink(bel, 'RST', 'SR', bel.bel, 'RST', sink_site_type_pin='RST')
 
     site.add_bel(bel)
 

@@ -504,7 +504,12 @@ def cleanup_dram(top, site):
 
 
 def cleanup_o6(top, site):
+    lut_modes = decode_dram(site)
+
     for lut in 'ABCD':
+        if lut not in lut_modes or lut_modes[lut] != 'LUT':
+            continue
+
         used = False
         for _ in top.find_sinks_from_source(site, lut):
             used = True
@@ -920,27 +925,41 @@ def process_slice(top, s):
         elif lut_modes['D'] == 'RAM128X1D':
             ram128 = Bel('RAM128X1D', priority=3)
 
-            site.add_sink(ram128, 'WE', WE)
-            site.add_sink(ram128, 'WCLK', "CLK")
-            site.add_sink(ram128, 'D', "DI")
+            site.add_sink(
+                ram128, 'WE', WE, 'A6LUT', "WE", site_pips=we_site_pips)
+            site.add_sink(
+                ram128, 'WCLK', "CLK", 'A6LUT', "CLK", site_pips=clk_site_pips)
+            site.add_sink(ram128, 'D', "DI", "D6LUT", "DI1")
 
             for idx in range(6):
                 site.add_sink(ram128, 'A[{}]'.format(idx),
-                              "D{}".format(idx + 1))
-                # Add fake sink to route through the C[N] pins
-                site.add_sink(ram128, 'ADDR_C[{}]'.format(idx),
-                              "C{}".format(idx + 1))
-                site.add_sink(ram128, 'DPRA[{}]'.format(idx),
-                              "B{}".format(idx + 1))
-                # Add fake sink to route through the A[N] pins
-                site.add_sink(ram128, 'DATA_A[{}]'.format(idx),
+                              "D{}".format(idx + 1), "D6LUT",
                               "A{}".format(idx + 1))
+                # Add fake sink to route through the C[N] pins
+                site.add_sink(
+                    ram128,
+                    'ADDR_C[{}]'.format(idx),
+                    "C{}".format(idx + 1),
+                    "C6LUT",
+                    "A{}".format(idx + 1),
+                    real_cell_pin='A[{}]'.format(idx))
+                site.add_sink(ram128, 'DPRA[{}]'.format(idx),
+                              "B{}".format(idx + 1), "B6LUT",
+                              "A{}".format(idx + 1))
+                # Add fake sink to route through the A[N] pins
+                site.add_sink(
+                    ram128,
+                    'DATA_A[{}]'.format(idx),
+                    "A{}".format(idx + 1),
+                    "A6LUT",
+                    "A{}".format(idx + 1),
+                    real_cell_pin='DPRA[{}]'.format(idx))
 
-            site.add_sink(ram128, 'A[6]', "CX")
-            site.add_sink(ram128, 'DPRA[6]', "AX")
+            site.add_sink(ram128, 'A[6]', "CX", "F7BMUX", "S")
+            site.add_sink(ram128, 'DPRA[6]', "AX", "F7AMUX", "S")
 
-            site.add_internal_source(ram128, 'SPO', 'F7BMUX_O')
-            site.add_internal_source(ram128, 'DPO', 'F7AMUX_O')
+            site.add_internal_source(ram128, 'SPO', 'F7BMUX_O', "F7BMUX", "O")
+            site.add_internal_source(ram128, 'DPO', 'F7AMUX_O', "F7AMUX", "O")
 
             ram128.parameters['INIT'] = make_binary_verilog_value(
                 128, (get_shifted_lut_init(site, 'D')

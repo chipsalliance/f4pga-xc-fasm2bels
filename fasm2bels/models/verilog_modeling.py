@@ -1169,7 +1169,8 @@ class Site(object):
                  bel_name,
                  bel_pin,
                  site_pips=[],
-                 sink_site_type_pin=None):
+                 sink_site_type_pin=None,
+                 real_cell_pin=None):
         """ Adds a sink.
 
         Attaches sink to the specified bel.
@@ -1192,14 +1193,16 @@ class Site(object):
 
         """
 
-        assert cell_pin not in bel.connections
+        assert cell_pin not in bel.connections, cell_pin
 
         if sink_site_pin not in self.sinks:
             self.sinks[sink_site_pin] = []
 
         bel.connections[cell_pin] = sink_site_pin
         bel.map_bel_pin_to_cell_pin(
-            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
+            bel_name=bel_name,
+            bel_pin=bel_pin,
+            cell_pin=cell_pin if real_cell_pin is None else real_cell_pin)
         self.sinks[sink_site_pin].append((bel, cell_pin))
 
         if sink_site_type_pin is not None:
@@ -2519,9 +2522,10 @@ set net [get_nets -of_object $pin]""".format(
     def output_extra_tcl(self):
         output = list(self.extra_tcl)
 
-        for (port, prop), value in self.port_property:
-            output.append('set_property {} {} [get_ports {}]'.format(
-                prop, value, port))
+        for port in self.port_property:
+            for prop, value in self.port_property[port].items():
+                output.append('set_property {} {} [get_ports {}]'.format(
+                    prop, value, port))
 
         return output
 
@@ -2530,3 +2534,12 @@ set net [get_nets -of_object $pin]""".format(
 
     def find_iobank(self, hclk_ioi3_tile):
         return self.iobank_lookup[hclk_ioi3_tile]
+
+
+def make_inverter_path(wire, inverted):
+    """ Create site pip path through an inverter. """
+    if inverted:
+        return [('site_pip', '{}INV'.format(wire), '{}_B'.format(wire)),
+                ('inverter', '{}INV'.format(wire))]
+    else:
+        return [('site_pip', '{}INV'.format(wire), wire)]

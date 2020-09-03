@@ -87,28 +87,58 @@ def process_pll(conn, top, tile_name, features):
 
     # Create the PLLE2_ADV bel and add its ports
     pll = Bel('PLLE2_ADV')
+    pll.set_bel('PLLE2_ADV')
 
     for i in range(7):
-        site.add_sink(pll, 'DADDR[{}]'.format(i), 'DADDR{}'.format(i))
+        site.add_sink(pll, 'DADDR[{}]'.format(i), 'DADDR{}'.format(i), pll.bel,
+                      'DADDR{}'.format(i))
 
     for i in range(16):
-        site.add_sink(pll, 'DI[{}]'.format(i), 'DI{}'.format(i))
+        site.add_sink(pll, 'DI[{}]'.format(i), 'DI{}'.format(i), pll.bel,
+                      'DI{}'.format(i))
 
-    site.add_sink(pll, 'DCLK', 'DCLK')
-    site.add_sink(pll, 'DEN', 'DEN')
-    site.add_sink(pll, 'DWE', 'DWE')
-    site.add_sink(pll, 'CLKIN1', 'CLKIN1')
-    site.add_sink(pll, 'CLKIN2', 'CLKIN2')
-    site.add_sink(pll, 'CLKINSEL', 'CLKINSEL')
-    site.add_sink(pll, 'CLKFBIN', 'CLKFBIN')
-    site.add_sink(pll, 'RST', 'RST')
-    site.add_sink(pll, 'PWRDWN', 'PWRDWN')
+    # Built-in inverters
+    pll.parameters['IS_CLKINSEL_INVERTED'] =\
+        "1'b1" if site.has_feature('INV_CLKINSEL') else "1'b0"
+    pll.parameters['IS_PWRDWN_INVERTED'] =\
+        "1'b1" if site.has_feature('ZINV_PWRDWN') else "1'b0"
+    pll.parameters['IS_RST_INVERTED'] =\
+        "1'b1" if site.has_feature('ZINV_RST') else "1'b0"
 
-    site.add_source(pll, 'DRDY', 'DRDY')
-    site.add_source(pll, 'LOCKED', 'LOCKED')
+    for wire in (
+            'CLKINSEL',
+            'PWRDWN',
+            'RST',
+    ):
+        if pll.parameters['IS_{}_INVERTED'.format(wire)] == "1'b1":
+            site_pips = [('site_pip', '{}INV'.format(wire),
+                          '{}_B'.format(wire)),
+                         ('inverter', '{}INV'.format(wire))]
+        else:
+            site_pips = [('site_pip', '{}INV'.format(wire), wire),
+                         ('inverter', '{}INV'.format(wire))]
+
+        site.add_sink(pll, wire, wire, pll.bel, wire, site_pips)
+
+    for wire in (
+            'DCLK',
+            'DEN',
+            'DWE',
+            'CLKIN1',
+            'CLKIN2',
+            'CLKFBIN',
+    ):
+        site.add_sink(pll, wire, wire, pll.bel, wire)
+
+    for wire in (
+            'DRDY',
+            'LOCKED',
+    ):
+        site.add_source(pll, wire, wire, pll.bel, wire)
 
     for i in range(15):
-        site.add_source(pll, 'DO[{}]'.format(i), 'DO{}'.format(i))
+        site.add_source(pll, 'DO[{}]'.format(i), 'DO{}'.format(i), pll.bel,
+                        'DO{}'.format(i))
 
     # Process clock outputs
     clkouts = ['FBOUT'] + ['OUT{}'.format(i) for i in range(6)]
@@ -117,7 +147,8 @@ def process_pll(conn, top, tile_name, features):
         if site.has_feature('CLK{}_CLKOUT1_OUTPUT_ENABLE'.format(clkout)):
 
             # Add output source
-            site.add_source(pll, 'CLK' + clkout, 'CLK' + clkout)
+            site.add_source(pll, 'CLK' + clkout, 'CLK' + clkout, pll.bel,
+                            'CLK' + clkout)
 
             # Calculate the divider and duty cycle
             high_time = site.decode_multi_bit_feature(
@@ -198,14 +229,6 @@ def process_pll(conn, top, tile_name, features):
     elif site.has_feature(
             'COMPENSATION.BUF_IN_OR_EXTERNAL_OR_ZHOLD_CLKIN_BUF'):
         pll.parameters['COMPENSATION'] = '"BUF_IN"'
-
-    # Built-in inverters
-    pll.parameters['IS_CLKINSEL_INVERTED'] =\
-        "1'b1" if site.has_feature('INV_CLKINSEL') else "1'b0"
-    pll.parameters['IS_PWRDWN_INVERTED'] =\
-        "1'b1" if site.has_feature('ZINV_PWRDWN') else "1'b0"
-    pll.parameters['IS_RST_INVERTED'] =\
-        "1'b1" if site.has_feature('ZINV_RST') else "1'b0"
 
     # Add the bel and site
     site.add_bel(pll)

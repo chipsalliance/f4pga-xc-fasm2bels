@@ -293,16 +293,22 @@ def add_site_routing_children(site, parent_obj, parent_key, site_routing,
     if parent_key in site_routing:
         for child in site_routing[parent_key]:
             if child[0] == 'inverter':
-                assert inverted_root is not None
+                if inverted_root is not None:
+                    for child2 in site_routing[child]:
+                        obj = convert_tuple_to_object(site, child2)
+                        inverted_root.append(obj)
 
-                for child2 in site_routing[child]:
-                    obj = convert_tuple_to_object(site, child2)
-                    inverted_root.append(obj)
-
-                    # Continue to descend, but no more inverted root.
-                    # There should be no double site inverters (hopefully?)
-                    add_site_routing_children(
-                        site, obj, child2, site_routing, inverted_root=None)
+                        # Continue to descend, but no more inverted root.
+                        # There should be no double site inverters (hopefully?)
+                        add_site_routing_children(
+                            site,
+                            obj,
+                            child2,
+                            site_routing,
+                            inverted_root=None)
+                else:
+                    add_site_routing_children(site, parent_obj, child,
+                                              site_routing, inverted_root)
             else:
                 obj = convert_tuple_to_object(site, child)
                 parent_obj.branches.append(obj)

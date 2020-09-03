@@ -425,16 +425,47 @@ def process_single_ended_iob(top, iob):
 
         # Note this looks weird, but the BEL pin is O, and the site wire is
         # called I, so it is in fact correct.
-        site.add_source(bel, bel_pin='O', source='I')
+        site.add_source(
+            bel,
+            cell_pin='O',
+            source_site_pin='I',
+            bel_name='INBUF_EN',
+            bel_pin='OUT',
+            site_pips=[('site_pip', 'IUSED', '0')])
 
-        site.add_sink(bel, 'T', 'T')
+        site.add_sink(
+            bel,
+            'T',
+            'T',
+            'OUTBUF',
+            'TRI',
+            site_pips=[('site_pip', 'TUSED', '0')])
 
         # Note this looks weird, but the BEL pin is I, and the site wire is
         # called O, so it is in fact correct.
-        site.add_sink(bel, bel_pin='I', sink='O')
+        site.add_sink(
+            bel,
+            cell_pin='I',
+            sink_site_pin='O',
+            bel_name='OUTBUF',
+            bel_pin='IN',
+            site_pips=[('site_pip', 'OUSED', '0')])
 
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
         append_obuf_iostandard_params(top, site, bel, iostd_out, slew, in_term)
+
+        obuft = Bel('OBUFT', 'OBUFT')
+        obuft.set_bel('OUTBUF')
+        obuft.map_bel_pin_to_cell_pin('OUTBUF', 'TRI', 'T')
+        obuft.map_bel_pin_to_cell_pin('OUTBUF', 'IN', 'I')
+
+        bel.add_physical_bel(obuft)
+
+        ibuf = Bel('IBUF', 'IBUF')
+        ibuf.set_bel('INBUF_EN')
+        ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'OUT', 'O')
+
+        bel.add_physical_bel(ibuf)
 
         site.add_bel(bel)
 
@@ -627,7 +658,12 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             bel.connections['IO'] = top_wire_p
 
             # For IOBUFDS add the O pin
-            site_m.add_source(bel, bel_pin='O', source='I')
+            site_m.add_source(
+                bel,
+                cell_pin='O',
+                source_site_pin='I',
+                bel_name='INBUF_EN',
+                bel_pin='OUT')
 
         else:
 
@@ -645,8 +681,18 @@ def process_differential_iob(top, iob, in_diff, out_diff):
 
         # Note this looks weird, but the BEL pin is I, and the site wire
         # is called O, so it is in fact correct.
-        site_m.add_sink(bel, bel_pin='I', sink='O')
-        site_m.add_sink(bel, bel_pin='T', sink='T')
+        site_m.add_sink(
+            bel,
+            cell_pin='I',
+            sink_site_pin='O',
+            bel_name='OUTBUF',
+            bel_pin='IN')
+        site_m.add_sink(
+            bel,
+            cell_pin='T',
+            sink_site_pin='T',
+            bel_name='OUTBUF',
+            bel_pin='TRI')
 
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
         append_obuf_iostandard_params(top, site_m, bel, iostd_out, slew,
