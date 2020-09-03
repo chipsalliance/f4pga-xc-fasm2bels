@@ -283,28 +283,29 @@ def process_iddr(top, site, idelay_site=None):
     # IDDR. At this point we can't tell if it is IDDR or IDDR_2CLK so the
     # more generic one is instanced.
     bel = Bel('IDDR_2CLK')
+    bel.set_bel('IFF')
 
-    site.add_sink(bel, 'C', 'CLK')
-    site.add_sink(bel, 'CB', 'CLKB')
-    site.add_sink(bel, 'CE', 'CE1')
-    site.add_source(bel, 'Q1', 'Q1')
-    site.add_source(bel, 'Q2', 'Q2')
+    site.add_sink(bel, 'C', 'CLK', bel.bel, 'CK')
+    site.add_sink(bel, 'CB', 'CLKB', bel.bel, 'CKB')
+    site.add_sink(bel, 'CE', 'CE1', bel.bel, 'CE')
+    site.add_source(bel, 'Q1', 'Q1', bel.bel, 'Q1')
+    site.add_source(bel, 'Q2', 'Q2', bel.bel, 'Q2')
 
     if idelay_site and idelay_site.has_feature("IN_USE") and (
             idelay_site.has_feature("IDELAY_VALUE")
             or idelay_site.has_feature("ZIDELAY_VALUE")):
-        site.add_sink(bel, 'D', 'DDLY')
+        site.add_sink(bel, 'D', 'DDLY', bel.bel, 'D')
     else:
-        site.add_sink(bel, 'D', 'D')
+        site.add_sink(bel, 'D', 'D', bel.bel, 'D')
 
     # Determine whether we have SET or RESET
     assert site.has_feature('IFF.ZSRVAL_Q1') == site.has_feature(
         'IFF.ZSRVAL_Q2'), (site.tile, site.site)
 
     if site.has_feature('IFF.ZSRVAL_Q1'):
-        site.add_sink(bel, 'R', 'SR')
+        site.add_sink(bel, 'R', 'SR', bel.bel, 'SR')
     else:
-        site.add_sink(bel, 'S', 'SR')
+        site.add_sink(bel, 'S', 'SR', bel.bel, 'SR')
 
     # DDR_CLK_EDGE
     assert site.has_feature('IFF.DDR_CLK_EDGE.SAME_EDGE') != site.has_feature(
@@ -399,19 +400,20 @@ def process_oddr_oq(top, site):
 
     # ODDR
     bel = Bel('ODDR', name='ODDR_OQ')
+    bel.set_bel('OUTFF')
 
-    site.add_sink(bel, 'C', 'CLK')
-    site.add_sink(bel, 'CE', 'OCE')
-    site.add_sink(bel, 'D1', 'D1')
-    site.add_sink(bel, 'D2', 'D2')
+    site.add_sink(bel, 'C', 'CLK', bel.bel, 'CK')
+    site.add_sink(bel, 'CE', 'OCE', bel.bel, 'CE')
+    site.add_sink(bel, 'D1', 'D1', bel.bel, 'D1')
+    site.add_sink(bel, 'D2', 'D2', bel.bel, 'D2')
 
-    site.add_source(bel, 'Q', 'OQ')
+    site.add_source(bel, 'Q', 'OQ', bel.bel, 'Q')
 
     # Determine whether we have SET or RESET
     if site.has_feature('ZSRVAL_OQ'):
-        site.add_sink(bel, 'R', 'SR')
+        site.add_sink(bel, 'R', 'SR', bel.bel, 'SR')
     else:
-        site.add_sink(bel, 'S', 'SR')
+        site.add_sink(bel, 'S', 'SR', bel.bel, 'SR')
 
     # DDR_CLK_EDGE
     if site.has_feature('ODDR.DDR_CLK_EDGE.SAME_EDGE'):
@@ -459,19 +461,20 @@ def process_oddr_tq(top, site):
 
     # ODDR
     bel = Bel('ODDR', name='ODDR_TQ')
+    bel.set_bel('TFF')
 
-    site.add_sink(bel, 'C', 'CLK')
-    site.add_sink(bel, 'CE', 'TCE')
-    site.add_sink(bel, 'D1', 'T1')
-    site.add_sink(bel, 'D2', 'T2')
+    site.add_sink(bel, 'C', 'CLK', bel.bel, 'CK')
+    site.add_sink(bel, 'CE', 'TCE', bel.bel, 'CE')
+    site.add_sink(bel, 'D1', 'T1', bel.bel, 'D1')
+    site.add_sink(bel, 'D2', 'T2', bel.bel, 'D2')
 
-    site.add_source(bel, 'Q', 'TQ')
+    site.add_source(bel, 'Q', 'TQ', bel.bel, 'Q')
 
     # Determine whether we have SET or RESET
     if site.has_feature('ZSRVAL_TQ'):
-        site.add_sink(bel, 'R', 'SR')
+        site.add_sink(bel, 'R', 'SR', bel.bel, 'SR')
     else:
-        site.add_sink(bel, 'S', 'SR')
+        site.add_sink(bel, 'S', 'SR', bel.bel, 'SR')
 
     # DDR_CLK_EDGE
     if site.has_feature('ODDR.DDR_CLK_EDGE.SAME_EDGE'):

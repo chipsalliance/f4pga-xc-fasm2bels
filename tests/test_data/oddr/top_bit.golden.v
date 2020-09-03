@@ -251,7 +251,7 @@ module top(
   wire [0:0] RIOI3_X43Y45_ILOGIC_X1Y46_O;
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "BUFGCTRL" *)
   BUFGCTRL #(
     .INIT_OUT(0),
     .IS_CE0_INVERTED(0),
@@ -275,7 +275,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "BUFHCE" *)
   BUFHCE #(
     .CE_TYPE("SYNC"),
     .INIT_OUT(0),
@@ -287,7 +287,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -298,7 +298,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -309,7 +309,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -320,7 +320,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -331,7 +331,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -342,7 +342,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -353,7 +353,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -364,7 +364,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -375,7 +375,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -386,7 +386,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -397,7 +397,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -408,7 +408,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -419,7 +419,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -430,7 +430,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -441,7 +441,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -452,7 +452,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -463,7 +463,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -474,7 +474,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -485,7 +485,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -496,7 +496,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -507,7 +507,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -518,7 +518,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -529,7 +529,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -540,7 +540,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -551,7 +551,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -569,7 +569,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -587,7 +587,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -605,7 +605,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -623,7 +623,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -641,7 +641,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -659,7 +659,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -677,7 +677,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -695,7 +695,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -713,7 +713,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -731,7 +731,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -749,7 +749,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -767,7 +767,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -785,7 +785,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -803,7 +803,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -821,7 +821,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -839,7 +839,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -857,7 +857,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -875,7 +875,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -893,7 +893,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -911,7 +911,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -929,7 +929,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -947,7 +947,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b1),
@@ -965,7 +965,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTFF" *)
   ODDR #(
     .DDR_CLK_EDGE("SAME_EDGE"),
     .INIT(1'b0),
@@ -983,7 +983,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "INBUF_EN" *)
   IBUF #(
     .IOSTANDARD("LVCMOS33")
   ) RIOB33_X43Y25_IOB_X1Y26_IBUF (
@@ -992,7 +992,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "INBUF_EN" *)
   IBUF #(
     .IOSTANDARD("LVCMOS33")
   ) RIOB33_X43Y43_IOB_X1Y43_IBUF (
@@ -1001,7 +1001,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "INBUF_EN" *)
   IBUF #(
     .IOSTANDARD("LVCMOS33")
   ) RIOB33_X43Y43_IOB_X1Y44_IBUF (
@@ -1010,7 +1010,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "INBUF_EN" *)
   IBUF #(
     .IOSTANDARD("LVCMOS33")
   ) RIOB33_X43Y45_IOB_X1Y45_IBUF (
@@ -1019,7 +1019,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "INBUF_EN" *)
   IBUF #(
     .IOSTANDARD("LVCMOS33")
   ) RIOB33_X43Y45_IOB_X1Y46_IBUF (

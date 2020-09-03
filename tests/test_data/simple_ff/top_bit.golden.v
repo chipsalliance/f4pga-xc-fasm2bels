@@ -224,7 +224,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "A6LUT" *)
   LUT6_2 #(
-    .INIT(64'b0000000000000000000000000000000000000000000000000000000000000000)
+    .INIT(64'h0000000000000000)
   ) CLBLL_R_X19Y8_SLICE_X28Y8_ALUT (
 .I0(1'b1),
 .I1(1'b1),
@@ -239,7 +239,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "B6LUT" *)
   LUT6_2 #(
-    .INIT(64'b0000000000000000000000000000000000000000000000000000000000000000)
+    .INIT(64'h0000000000000000)
   ) CLBLL_R_X19Y8_SLICE_X28Y8_BLUT (
 .I0(1'b1),
 .I1(1'b1),
@@ -254,7 +254,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "C6LUT" *)
   LUT6_2 #(
-    .INIT(64'b0000000000000000000000000000000000000000000000000000000000000000)
+    .INIT(64'h0000000000000000)
   ) CLBLL_R_X19Y8_SLICE_X28Y8_CLUT (
 .I0(1'b1),
 .I1(1'b1),
@@ -269,7 +269,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "D6LUT" *)
   LUT6_2 #(
-    .INIT(64'b0000000000000000000000000000000000000000000000000000000000000000)
+    .INIT(64'h0000000000000000)
   ) CLBLL_R_X19Y8_SLICE_X28Y8_DLUT (
 .I0(1'b1),
 .I1(1'b1),
@@ -284,7 +284,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "A6LUT" *)
   LUT6_2 #(
-    .INIT(64'b0000000000000000000000000000000000000000000000000000000000000000)
+    .INIT(64'h0000000000000000)
   ) CLBLL_R_X19Y8_SLICE_X29Y8_ALUT (
 .I0(1'b1),
 .I1(1'b1),
@@ -299,7 +299,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "B6LUT" *)
   LUT6_2 #(
-    .INIT(64'b0000000000000000000000000000000000000000000000000000000000000000)
+    .INIT(64'h0000000000000000)
   ) CLBLL_R_X19Y8_SLICE_X29Y8_BLUT (
 .I0(1'b1),
 .I1(1'b1),
@@ -314,7 +314,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "C6LUT" *)
   LUT6_2 #(
-    .INIT(64'b0000000000000000000000000000000000000000000000000000000000000000)
+    .INIT(64'h0000000000000000)
   ) CLBLL_R_X19Y8_SLICE_X29Y8_CLUT (
 .I0(1'b1),
 .I1(1'b1),
@@ -329,7 +329,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "D6LUT" *)
   LUT6_2 #(
-    .INIT(64'b0000000000000000000000000000000000000000000000000000000000000000)
+    .INIT(64'h0000000000000000)
   ) CLBLL_R_X19Y8_SLICE_X29Y8_DLUT (
 .I0(1'b1),
 .I1(1'b1),
@@ -342,7 +342,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "BUFGCTRL" *)
   BUFGCTRL #(
     .INIT_OUT(0),
     .IS_CE0_INVERTED(0),
@@ -366,7 +366,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "BUFHCE" *)
   BUFHCE #(
     .CE_TYPE("SYNC"),
     .INIT_OUT(0),
@@ -378,7 +378,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -389,7 +389,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -400,7 +400,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -411,7 +411,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -422,7 +422,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "INBUF_EN" *)
   IBUF #(
     .IOSTANDARD("LVCMOS33")
   ) LIOB33_X0Y9_IOB_X0Y10_IBUF (
@@ -431,7 +431,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "INBUF_EN" *)
   IBUF #(
     .IOSTANDARD("LVCMOS33")
   ) LIOB33_X0Y11_IOB_X0Y11_IBUF (
@@ -440,7 +440,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "INBUF_EN" *)
   IBUF #(
     .IOSTANDARD("LVCMOS33")
   ) LIOB33_X0Y11_IOB_X0Y12_IBUF (
@@ -449,7 +449,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -460,7 +460,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -471,7 +471,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -482,7 +482,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -493,7 +493,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -504,7 +504,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -515,7 +515,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "INBUF_EN" *)
   IBUF #(
     .IOSTANDARD("LVCMOS33")
   ) RIOB33_X43Y25_IOB_X1Y26_IBUF (
@@ -524,7 +524,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -535,7 +535,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -546,7 +546,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -557,7 +557,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -568,7 +568,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -579,7 +579,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
@@ -590,7 +590,7 @@ module top(
   );
 
 
-  (* KEEP, DONT_TOUCH *)
+  (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
     .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
