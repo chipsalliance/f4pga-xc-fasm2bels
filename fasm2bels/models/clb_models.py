@@ -1,8 +1,14 @@
 from .verilog_modeling import Bel, Site
+import math
 
 
 def make_binary_verilog_value(width, value):
     return "{width}'b{{:0{width}b}}".format(width=width).format(value)
+
+
+def make_hex_verilog_value(width, value):
+    return "{width}'h{{:0{format_width}b}}".format(
+        width=width, format_width=int(math.ceil(width / 4))).format(value)
 
 
 def get_clb_site(db, grid, tile, site):
@@ -955,17 +961,19 @@ def process_slice(top, s):
                     "A{}".format(idx + 1),
                     real_cell_pin='DPRA[{}]'.format(idx))
 
-            site.add_sink(ram128, 'A[6]', "CX", "F7BMUX", "S")
-            site.add_sink(ram128, 'DPRA[6]', "AX", "F7AMUX", "S")
+            site.add_sink(ram128, 'A[6]', "CX", "F7BMUX", "S0")
+            site.add_sink(ram128, 'DPRA[6]', "AX", "F7AMUX", "S0")
 
-            site.add_internal_source(ram128, 'SPO', 'F7BMUX_O', "F7BMUX", "O")
-            site.add_internal_source(ram128, 'DPO', 'F7AMUX_O', "F7AMUX", "O")
+            site.add_internal_source(ram128, 'SPO', 'F7BMUX_O', "F7BMUX",
+                                     "OUT")
+            site.add_internal_source(ram128, 'DPO', 'F7AMUX_O', "F7AMUX",
+                                     "OUT")
 
-            ram128.parameters['INIT'] = make_binary_verilog_value(
+            ram128.parameters['INIT'] = make_hex_verilog_value(
                 128, (get_shifted_lut_init(site, 'D')
                       | get_shifted_lut_init(site, 'C', 64)))
 
-            other_init = make_binary_verilog_value(
+            other_init = make_hex_verilog_value(
                 128, (get_shifted_lut_init(site, 'B')
                       | get_shifted_lut_init(site, 'A', 64)))
 

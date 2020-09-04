@@ -683,6 +683,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     # Convert sites and bels into placement directives and physical nets.
     net_stubs = {}
+    sub_cell_nets = {}
     for site in top.sites:
         physical_netlist_builder.add_site_instance(site.site.name,
                                                    site.site_type())
@@ -755,7 +756,8 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
             top=top,
             parent_cell=top_cell,
             net_map=top.wire_name_net_map,
-            constant_nets=constant_nets)
+            constant_nets=constant_nets,
+            sub_cell_nets=sub_cell_nets)
 
         # Extend net stubs with the site routing.
         for net_name in new_nets:
@@ -778,7 +780,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     for net_name in net_stubs:
         physical_netlist_builder.add_physical_net(
-            net_name=net_name,
+            net_name=sub_cell_nets.get(net_name, net_name),
             sources=[],
             stubs=net_stubs[net_name],
         )

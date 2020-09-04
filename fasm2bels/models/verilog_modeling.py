@@ -948,7 +948,8 @@ class Site(object):
 
         remove_drivers(key)
 
-    def output_site_routing(self, top, parent_cell, net_map, constant_nets):
+    def output_site_routing(self, top, parent_cell, net_map, constant_nets,
+                            sub_cell_nets):
         """ Convert site routing to Physical* nets.
 
         top : Module
@@ -1017,7 +1018,6 @@ class Site(object):
         #
         # This map converts the top-level net to the net from within the
         # transformed cell.
-        sub_cell_nets = {}
         bel_pin_to_net_root = {}
 
         # To ensure that all site routing roots are found, start from each
@@ -1054,6 +1054,7 @@ class Site(object):
             # been mapped to translate from net_name to physical net name.
             sub_net_name = bel.get_physical_net_name(instance_name, bel_name,
                                                      bel_pin)
+
             if sub_net_name is not None:
                 # Make sure mapping is unique.
                 if net_name in sub_cell_nets:
@@ -1076,18 +1077,6 @@ class Site(object):
                                                     net_name)
             else:
                 net_roots[key] = net_name
-
-        # Now that all BEL pins have net names, apply any physical net
-        # mappings afterwards
-        remapped_keys = set()
-        for k in net_roots.keys():
-            v = net_roots[k]
-            if v in sub_cell_nets:
-                # Make sure net names are not double mapped.
-                assert k not in remapped_keys
-                remapped_keys.add(k)
-
-                net_roots[k] = sub_cell_nets[v]
 
         # Now that final net names have been assigned to net roots, populate
         # final_net_names.

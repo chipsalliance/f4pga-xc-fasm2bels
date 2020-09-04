@@ -227,7 +227,7 @@ def process_iserdes(top, site, idelay_site=None):
         'CLKB',
         site_pips=make_inverter_path('CLKB',
                                      bel.parameters['IS_CLKB_INVERTED']))
-    site.add_sink(bel, 'CLKDIV', 'CLKDIV', bel.bel, 'CLKINV')
+    site.add_sink(bel, 'CLKDIV', 'CLKDIV', bel.bel, 'CLKDIV')
 
     site.add_sink(bel, 'RST', 'SR', bel.bel, 'RST', sink_site_type_pin='RST')
 
