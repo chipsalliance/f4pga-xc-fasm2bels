@@ -30,7 +30,7 @@ import functools
 import re
 import fasm
 from fasm2bels.make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
-from fasm2bels.database.connection_db_utils import get_wire_pkey
+from fasm2bels.database.connection_db_utils import get_wire_pkey, create_maybe_get_wire
 from fasm2bels.lib.physical_netlist import create_site_routing
 
 
@@ -1881,6 +1881,7 @@ class Module(object):
         self.db = db
         self.grid = grid
         self.conn = conn
+        self.maybe_get_wire = create_maybe_get_wire(conn)
         self.sites = []
         self.source_bels = {}
         self.disabled_drcs = set()
@@ -1932,6 +1933,24 @@ class Module(object):
 
         # Map of port -> (map of prop -> value).
         self.port_property = {}
+
+    def maybe_add_pip(self, feature):
+        parts = feature.split('.')
+        assert len(parts) == 3
+
+        sink_wire = self.maybe_get_wire(parts[0], parts[2])
+        if sink_wire is None:
+            return False
+
+        src_wire = self.maybe_get_wire(parts[0], parts[1])
+        if src_wire is None:
+            return False
+
+        self.active_pips.add((sink_wire, src_wire, feature))
+        return True
+
+    def add_active_pip(self, feature):
+        assert self.maybe_add_pip(feature)
 
     def set_default_iostandard(self, iostandard, drive):
         self.default_iostandard = iostandard

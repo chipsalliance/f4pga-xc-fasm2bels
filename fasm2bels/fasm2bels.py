@@ -46,7 +46,7 @@ from .models.hclk_ioi3_models import process_hclk_ioi3
 from .models.pss_models import get_ps7_site, insert_ps7
 
 from .database.create_channels import create_channels
-from .database.connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
+from .database.connection_db_utils import get_tile_type
 
 from .lib.parse_pcf import parse_simple_pcf
 from .lib import eblif
@@ -359,8 +359,6 @@ def main():
 
     tiles = {}
 
-    maybe_get_wire = create_maybe_get_wire(conn)
-
     top = Module(db, grid, conn, name=args.top)
     if args.eblif:
         with open(args.eblif) as f:
@@ -418,8 +416,8 @@ def main():
 
         tiles[tile].append(set_feature)
 
-        if len(parts) == 3:
-            maybe_add_pip(top, maybe_get_wire, set_feature)
+        if len(parts) == 3 and set_feature.value == 1:
+            top.maybe_add_pip(set_feature.feature)
 
     for tile, tile_features in tiles.items():
         process_tile(top, tile, tile_features)

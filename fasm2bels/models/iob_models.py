@@ -600,11 +600,13 @@ def process_differential_iob(top, iob, in_diff, out_diff):
 
     aparts = iob['S'][0].feature.split('.')
     tile_name = aparts[0]
+    s_tile_name = tile_name
     iob_site_s, iologic_tile, ilogic_site_s, ologic_site_s, _ = get_iob_site(
         top.db, top.grid, aparts[0], aparts[1])
 
     aparts = iob['M'][0].feature.split('.')
     tile_name = aparts[0]
+    m_tile_name = tile_name
     iob_site_m, iologic_tile, ilogic_site_m, ologic_site_m, _ = get_iob_site(
         top.db, top.grid, aparts[0], aparts[1])
 
@@ -665,6 +667,14 @@ def process_differential_iob(top, iob, in_diff, out_diff):
                 bel_name='INBUF_EN',
                 bel_pin='OUT')
 
+            site_m.add_source(
+                bel,
+                cell_pin='O',
+                source_site_pin='I',
+                bel_name='INBUF_EN',
+                bel_pin='OUT')
+
+            top.add_active_pip('{}.IOB_DIFFI_IN0.IOB_PADOUT1'.format(s_tile_name))
         else:
 
             top_wire_n = top.add_top_out_port(tile_name, iob_site_s.name,
@@ -693,6 +703,41 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             sink_site_pin='T',
             bel_name='OUTBUF',
             bel_pin='TRI')
+
+        site_s.add_sink(
+            bel,
+            cell_pin='O_IN',
+            sink_site_pin='O_IN',
+            bel_name='OUTBUF',
+            bel_pin='IN')
+        site_m.add_sink(
+            bel,
+            cell_pin='T_IN',
+            sink_site_pin='T_IN',
+            bel_name='OUTBUF',
+            bel_pin='TRI')
+
+        # Tell M site to output T and O to the S site.
+        site_m.link_site_routing(
+                [
+                    ('site_pin', 'T'),
+                    ('bel_pin', 'T', 'T'),
+                    ('site_pip', 'T_OUTUSED', '0'),
+                    ('bel_pin', 'T_OUT', 'T_OUT'),
+                    ('site_pin', 'T_OUT')
+                    ])
+        site_m.link_site_routing(
+                [
+                    ('site_pin', 'O'),
+                    ('bel_pin', 'O', 'O'),
+                    ('site_pip', 'O_OUTUSED', '0'),
+                    ('bel_pin', 'O_OUT', 'O_OUT'),
+                    ('site_pin', 'O_OUT')
+                    ])
+
+        top.add_active_pip('{}.IOB_O_IN1.IOB_O_OUT0'.format(m_tile_name))
+        top.add_active_pip('{}.IOB_T_IN1.IOB_T_OUT0'.format(m_tile_name))
+
 
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
         append_obuf_iostandard_params(top, site_m, bel, iostd_out, slew,

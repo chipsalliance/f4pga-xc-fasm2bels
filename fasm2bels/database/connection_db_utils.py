@@ -34,24 +34,6 @@ def create_maybe_get_wire(conn):
     return maybe_get_wire
 
 
-def maybe_add_pip(top, maybe_get_wire, feature):
-    if feature.value != 1:
-        return
-
-    parts = feature.feature.split('.')
-    assert len(parts) == 3
-
-    sink_wire = maybe_get_wire(parts[0], parts[2])
-    if sink_wire is None:
-        return
-
-    src_wire = maybe_get_wire(parts[0], parts[1])
-    if src_wire is None:
-        return
-
-    top.active_pips.add((sink_wire, src_wire, feature.feature))
-
-
 def get_node_pkey(conn, wire_pkey):
     c = conn.cursor()
 
