@@ -58,7 +58,17 @@ class Direction(enum.Enum):
 
 
 class Cell():
-    """ Utility class for creating a Cell within a logical netlist. """
+    """ Utility class for creating a Cell within a logical netlist.
+
+    A Cell consists of:
+     - One or more ports (e.g. connections to a high level of the netlist).
+     - Zero or more cell instances.  Cell instances are instances of a Cell
+       found in a library.  A cell instance definition is found by its name.
+       For example "LUT6" or "BUFG" are cell definitions.
+     - Zero of more cell nets.  Cell nets connect ports.  The ports can be
+       from this cell or ports from cell instances within the cell.
+
+    """
 
     def __init__(self, name, property_map={}):
         """ Create a new cell

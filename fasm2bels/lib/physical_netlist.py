@@ -189,6 +189,8 @@ class PhysicalPip():
 class PhysicalSitePip():
     """ Python class that represents a site pip in a physical net.
 
+    This models site routing muxes and site inverters.
+
     site (str) - Site containing site pip
     bel (str) - Name of BEL that contains site pip
     pin (str) - Name of BEL pin that is the active site pip
