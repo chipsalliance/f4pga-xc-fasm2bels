@@ -591,6 +591,16 @@ def cleanup_single_ended_iob(top, site):
             top.remove_sink(wire_pkey)
 
 
+def cleanup_iob33m(top, site_m):
+    bel = site_m.maybe_get_bel("IOB33M")
+    assert bel is not None
+
+    if bel.module.startswith('IOBUFDS'):
+        site_m.mask_sink(bel, 'DIFFI_IN')
+    else:
+        assert bel.module.startswith('OBUFTDS')
+
+
 def process_differential_iob(top, iob, in_diff, out_diff):
     """
     Processes a differential-ended IOB.
@@ -643,6 +653,7 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             # TODO: There are also IOBUFDS_DIFF_OUT* and variants with DCI
             if intermdisable_used or ibufdisable_used:
                 bel = Bel('IOBUFDS_INTERMDISABLE')
+                bel_s = Bel('IOBUFDS_INTERMDISABLE_S')
 
                 if intermdisable_used:
                     site_m.add_sink(bel, 'INTERMDISABLE', 'INTERMDISABLE')
@@ -655,6 +666,7 @@ def process_differential_iob(top, iob, in_diff, out_diff):
                     bel.connections['IBUFDISABLE'] = 0
             else:
                 bel = Bel('IOBUFDS')
+                bel_s = Bel('IOBUFDS_S')
 
             bel.connections['IOB'] = top_wire_n
             bel.connections['IO'] = top_wire_p
@@ -666,15 +678,32 @@ def process_differential_iob(top, iob, in_diff, out_diff):
                 source_site_pin='I',
                 bel_name='INBUF_EN',
                 bel_pin='OUT')
-
-            site_m.add_source(
+            site_m.add_sink(
                 bel,
-                cell_pin='O',
-                source_site_pin='I',
+                cell_pin='DIFFI_IN',
+                sink_site_pin='DIFFI_IN',
                 bel_name='INBUF_EN',
+                bel_pin='DIFFI_IN')
+            bel.physical_net_names['INBUF_EN', 'DIFFI_IN'] = 'OBUFTDS/OB'
+
+            site_s.add_source(
+                bel_s,
+                cell_pin='PADOUT',
+                source_site_pin='PADOUT',
+                bel_name='OUTBUF',
                 bel_pin='OUT')
+            bel_s.physical_net_names['OUTBUF', 'OUT'] = 'OBUFTDS/OB'
 
             top.add_active_pip('{}.IOB_DIFFI_IN0.IOB_PADOUT1'.format(s_tile_name))
+
+            ibuf = Bel('IBUFDS', 'IBUFDS')
+            ibuf.set_bel('INBUF_EN')
+            ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'OUT', 'O')
+            ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'DIFFI_IN', 'IB')
+
+            bel.add_physical_bel(ibuf)
+
+            obuf_prefix = 'OBUFTDS/'
         else:
 
             top_wire_n = top.add_top_out_port(tile_name, iob_site_s.name,
@@ -685,9 +714,32 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             # Since we cannot distinguish between OBUFDS and OBUFTDS we add the
             # "T" one. If it is the OBUFDS then the T input will be forced to 0.
             bel = Bel('OBUFTDS')
+            bel_s = Bel('OBUFTDS_S')
 
             bel.connections['OB'] = top_wire_n
             bel.connections['O'] = top_wire_p
+            obuf_prefix = ''
+
+        obuf_p = Bel('OBUFTDS', obuf_prefix + 'P')
+        obuf_p.set_bel('OUTBUF')
+        obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'TRI', 'T')
+        obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'IN', 'I')
+
+        bel.add_physical_bel(obuf_p)
+
+        obuf_s = Bel('OBUFTDS', obuf_prefix + 'N')
+        obuf_s.set_bel('OUTBUF')
+        obuf_s.map_bel_pin_to_cell_pin('OUTBUF', 'TRI', 'T')
+        obuf_s.map_bel_pin_to_cell_pin('OUTBUF', 'IN', 'I')
+
+        bel_s.add_physical_bel(obuf_s)
+
+        inv = Bel('INV', obuf_prefix + 'INV')
+        inv.set_bel('O_ININV')
+        inv.map_bel_pin_to_cell_pin('O_ININV', 'IN', 'I')
+        inv.map_bel_pin_to_cell_pin('O_ININV', 'OUT', 'O')
+
+        bel_s.add_physical_bel(inv)
 
         # Note this looks weird, but the BEL pin is I, and the site wire
         # is called O, so it is in fact correct.
@@ -696,44 +748,45 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             cell_pin='I',
             sink_site_pin='O',
             bel_name='OUTBUF',
-            bel_pin='IN')
+            bel_pin='IN',
+            site_pips=[
+                    ('site_pip', 'OUSED', '0'),
+                ])
         site_m.add_sink(
             bel,
             cell_pin='T',
             sink_site_pin='T',
             bel_name='OUTBUF',
-            bel_pin='TRI')
+            bel_pin='TRI',
+            site_pips=[
+                    ('site_pip', 'TUSED', '0'),
+                ])
 
         site_s.add_sink(
-            bel,
-            cell_pin='O_IN',
+            bel_s,
+            cell_pin='I',
             sink_site_pin='O_IN',
-            bel_name='OUTBUF',
+            bel_name='O_ININV',
             bel_pin='IN')
-        site_m.add_sink(
-            bel,
-            cell_pin='T_IN',
+        site_s.add_sink(
+            bel_s,
+            cell_pin='T',
             sink_site_pin='T_IN',
             bel_name='OUTBUF',
-            bel_pin='TRI')
+            bel_pin='TRI',
+            site_pips=[
+                    ('site_pip', 'TINMUX', '1'),
+                ])
 
         # Tell M site to output T and O to the S site.
-        site_m.link_site_routing(
-                [
-                    ('site_pin', 'T'),
-                    ('bel_pin', 'T', 'T'),
-                    ('site_pip', 'T_OUTUSED', '0'),
-                    ('bel_pin', 'T_OUT', 'T_OUT'),
-                    ('site_pin', 'T_OUT')
-                    ])
-        site_m.link_site_routing(
-                [
-                    ('site_pin', 'O'),
-                    ('bel_pin', 'O', 'O'),
-                    ('site_pip', 'O_OUTUSED', '0'),
-                    ('bel_pin', 'O_OUT', 'O_OUT'),
-                    ('site_pin', 'O_OUT')
-                    ])
+
+        # Connect O -> O_OUT
+        site_m.sources['O_OUT'] = None
+        site_m.outputs['O_OUT'] = 'O'
+
+        # Connect T -> T_OUT
+        site_m.sources['T_OUT'] = None
+        site_m.outputs['T_OUT'] = 'T'
 
         top.add_active_pip('{}.IOB_O_IN1.IOB_O_OUT0'.format(m_tile_name))
         top.add_active_pip('{}.IOB_T_IN1.IOB_T_OUT0'.format(m_tile_name))
@@ -743,13 +796,17 @@ def process_differential_iob(top, iob, in_diff, out_diff):
         append_obuf_iostandard_params(top, site_m, bel, iostd_out, slew,
                                       in_term)
 
-        site_m.add_bel(bel)
+        bel_s.set_parent_cell(bel)
+        site_m.add_bel(bel, 'IOB33M')
+        site_s.add_bel(bel_s, 'IOB33S')
 
     # Pulls
     if top_wire_n is not None:
         add_pull_bel(site_s, top_wire_n)
     if top_wire_p is not None:
         add_pull_bel(site_m, top_wire_p)
+
+    site_m.set_post_route_cleanup_function(cleanup_iob33m)
 
     top.add_site(site_m)
     top.add_site(site_s)

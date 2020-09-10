@@ -174,8 +174,8 @@ class Cell():
         """ Get the net name for an instance name and cell pin that was added
             via connect_net_to_instance.
         """
-        assert instance_name in self.cell_instances
-        return self.cell_pin_net_lookup[instance_name, cell_pin]
+        assert instance_name in self.cell_instances, (instance_name, cell_pin)
+        return self.cell_pin_net_lookup.get((instance_name, cell_pin), None)
 
     def connect_net_to_cell_port(self, net_name, port, idx=None):
         """ Connect an existing net to a port on the cell.

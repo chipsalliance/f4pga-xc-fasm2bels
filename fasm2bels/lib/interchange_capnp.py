@@ -108,6 +108,8 @@ class LogicalNetlistBuilder():
 
     def string_id(self, s):
         """ Intern string into file, and return its StringIdx. """
+        assert isinstance(s, str)
+
         if s not in self.string_map:
             self.string_map[s] = len(self.string_list)
             self.string_list.append(s)
@@ -386,6 +388,8 @@ class PhysicalNetlistBuilder():
 
     def string_id(self, s):
         """ Intern string into file, and return its StringIdx. """
+        assert isinstance(s, str)
+
         if s not in self.string_map:
             self.string_map[s] = len(self.string_list)
             self.string_list.append(s)
@@ -601,6 +605,9 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
                 net_map=top.wire_name_net_map,
                 constant_nets=constant_nets,
             )
+
+            if bel.parent_cell is not None:
+                continue
 
             if bel.module not in hdi_primitives_cells:
                 hdi_primitives_cells[bel.module] = []

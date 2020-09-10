@@ -368,6 +368,7 @@ def process_ilogic_idelay(top, features):
 
     # Get idelay site corresponding to this tile and check if it is used
     idelay_site = None
+    add_site = False
     if len(idelay_features):
         idelay_site = Site(idelay_features, ioi_idelay_site)
 
@@ -375,19 +376,23 @@ def process_ilogic_idelay(top, features):
     if site.has_feature("ISERDES.IN_USE") and site.has_feature(
             "IDDR_OR_ISERDES.IN_USE"):
         process_iserdes(top, site, idelay_site)
+        add_site = True
 
     # ILOGICE3 in IDDR mode
     elif site.has_feature("IDDR_OR_ISERDES.IN_USE"):
         process_iddr(top, site, idelay_site)
+        add_site = True
 
     # Passthrough
-    else:
+    elif site.has_feature("ZINV_D"):
         site.sources['O'] = None
         site.sinks['D'] = []
         site.outputs['O'] = 'D'
+        add_site = True
 
-    site.set_post_route_cleanup_function(cleanup_ilogic)
-    top.add_site(site)
+    if add_site:
+        site.set_post_route_cleanup_function(cleanup_ilogic)
+        top.add_site(site)
 
 
 # =============================================================================

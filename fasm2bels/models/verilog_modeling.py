@@ -454,6 +454,7 @@ class Bel(object):
         self.nets = None
         self.net_names = {}
         self.priority = priority
+        self.parent_cell = None
 
         # Map of (bel_name, bel_pin) -> cell_pin name
         self.bel_pins_to_cell_pins = {}
@@ -482,6 +483,9 @@ class Bel(object):
 
         # Port widths for connections that are sometimes narrower.
         self.port_width = {}
+
+    def set_parent_cell(self, parent_cell):
+        self.parent_cell = parent_cell
 
     def set_port_width(self, port, width):
         """ Explicitly set the width of a port, in the event that not all bits will be connected. """
@@ -524,6 +528,9 @@ class Bel(object):
 
         Should only be called after set_prefix has been invoked (if set_prefix
         will be called)."""
+
+        if self.parent_cell is not None:
+            return self.parent_cell.get_cell(top)
 
         # The .cname property will be associated with some pin/net combinations
         # Use this name if present.
@@ -659,6 +666,10 @@ class Bel(object):
 
     def output_verilog(self, top, net_map, indent='  '):
         """ Output the Verilog to represent this BEL. """
+
+        if self.parent_cell is not None:
+            return
+
         dead_wires, connections, _ = self.create_connections(top)
 
         for dead_wire in dead_wires:
@@ -717,6 +728,9 @@ class Bel(object):
             {0: "<const0>", 1: "<const1>"}).
 
         """
+        if self.parent_cell is not None:
+            return
+
         dead_wires, connections, _ = self.create_connections(top)
 
         for wire in dead_wires:
@@ -768,7 +782,7 @@ class Bel(object):
         """ Map a BEL pin to a Cell pin contained within this object. """
         key = bel_name, bel_pin
         if key in self.bel_pins_to_cell_pins:
-            assert self.bel_pins_to_cell_pins[key] == cell_pin
+            assert self.bel_pins_to_cell_pins[key] == cell_pin, (key, cell_pin)
         else:
             self.bel_pins_to_cell_pins[key] = cell_pin
 
@@ -1054,6 +1068,11 @@ class Site(object):
             # been mapped to translate from net_name to physical net name.
             sub_net_name = bel.get_physical_net_name(instance_name, bel_name,
                                                      bel_pin)
+
+            if net_name is None:
+                assert sub_net_name is not None, (instance_name, bel_name, bel_pin, cell_pin, bel.physical_net_names)
+                net_name = sub_net_name
+                sub_net_name = None
 
             if sub_net_name is not None:
                 # Make sure mapping is unique.
@@ -1572,6 +1591,7 @@ class Site(object):
                                            site_pin_map[sink_wire])
             source_wire_pkey = get_wire_pkey(conn, self.tile,
                                              site_pin_map[source_wire])
+
             if sink_wire_pkey in unrouted_sinks:
                 pip = '{}.{}.{}'.format(self.tile, site_pin_map[source_wire],
                                         site_pin_map[sink_wire])
@@ -1580,7 +1600,6 @@ class Site(object):
                 # Because this is being treated as a short, remove the
                 # source and sink.
                 unrouted_sources.remove(source_wire_pkey)
-                unrouted_sinks.remove(sink_wire_pkey)
 
         return dict(
             wires=wires,
