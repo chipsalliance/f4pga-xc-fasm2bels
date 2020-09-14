@@ -102,6 +102,19 @@ CREATE TABLE site(
   FOREIGN KEY(tile_type_pkey) REFERENCES tile_type(pkey)
 );
 
+-- Table recording each site instance in the grid, useful for lookups.
+CREATE TABLE site_instance(
+    pkey INTEGER PRIMARY KEY,
+    name TEXT,
+    x_coord INT,
+    y_coord INT,
+    site_pkey INT,
+    phy_tile_pkey INT,
+    prohibited BOOLEAN,
+    FOREIGN KEY(site_pkey) REFERENCES site(pkey),
+    FOREIGN KEY(phy_tile_pkey) REFERENCES phy_tile(pkey)
+);
+
 -- Table of tile type wires. This table is the of uninstanced tile type
 -- wires. Site pins wires will reference their site and site pin rows in
 -- the site and site_pin tables.
