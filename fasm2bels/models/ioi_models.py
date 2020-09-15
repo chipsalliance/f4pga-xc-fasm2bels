@@ -114,12 +114,7 @@ def process_idelay(top, features):
             site_pips = make_inverter_path('DATAIN', 0)
 
         site.add_sink(
-            bel,
-            'DATAIN',
-            'DATAIN',
-            bel.bel,
-            'DATAIN',
-            site_pips=site_pips)
+            bel, 'DATAIN', 'DATAIN', bel.bel, 'DATAIN', site_pips=site_pips)
 
         if site.has_feature("IS_IDATAIN_INVERTED"):
             bel.parameters['IS_IDATAIN_INVERTED'] = 1
@@ -128,12 +123,7 @@ def process_idelay(top, features):
             site_pips = make_inverter_path('IDATAIN', 0)
 
         site.add_sink(
-            bel,
-            'IDATAIN',
-            'IDATAIN',
-            bel.bel,
-            'IDATAIN',
-            site_pips=site_pips)
+            bel, 'IDATAIN', 'IDATAIN', bel.bel, 'IDATAIN', site_pips=site_pips)
 
         if site.has_feature("IDELAY_VALUE"):
             idelay_value = site.decode_multi_bit_feature('IDELAY_VALUE')
@@ -158,13 +148,13 @@ def process_idelay(top, features):
 
         for i in range(5):
             bel.map_bel_pin_to_cell_pin(
-                    bel_name=bel.bel,
-                    bel_pin='CNTVALUEIN{}'.format(i),
-                    cell_pin='CNTVALUEIN[{}]'.format(i))
+                bel_name=bel.bel,
+                bel_pin='CNTVALUEIN{}'.format(i),
+                cell_pin='CNTVALUEIN[{}]'.format(i))
             bel.map_bel_pin_to_cell_pin(
-                    bel_name=bel.bel,
-                    bel_pin='CNTVALUEOUT{}'.format(i),
-                    cell_pin='CNTVALUEOUT[{}]'.format(i))
+                bel_name=bel.bel,
+                bel_pin='CNTVALUEOUT{}'.format(i),
+                cell_pin='CNTVALUEOUT[{}]'.format(i))
 
         site.add_bel(bel)
 
@@ -294,8 +284,9 @@ def process_iserdes(top, site, idelay_site=None):
         port_q = 'Q{}'.format(i)
         site.add_source(bel, port_q, port_q, bel.bel, port_q)
 
-    for unused_in in ['SHIFTIN1', 'SHIFTIN2', 'OFB', 'OCLK', 'OCLKB',
-            'CLKDIVP']:
+    for unused_in in [
+            'SHIFTIN1', 'SHIFTIN2', 'OFB', 'OCLK', 'OCLKB', 'CLKDIVP'
+    ]:
         bel.add_unconnected_port(unused_in, None, output=False)
         bel.map_bel_pin_to_cell_pin(bel.bel, unused_in, unused_in)
 

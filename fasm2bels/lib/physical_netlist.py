@@ -137,10 +137,11 @@ class PhysicalBelPin():
 
     def __str__(self):
         return 'PhysicalBelPin({}, {}, {})'.format(
-                repr(self.site),
-                repr(self.bel),
-                repr(self.pin),
-                )
+            repr(self.site),
+            repr(self.bel),
+            repr(self.pin),
+        )
+
 
 class PhysicalSitePin():
     """ Python class that represents a site pin in a physical net.
@@ -172,7 +173,8 @@ class PhysicalSitePin():
         descend_branch(obj, self, string_id)
 
     def nodes(self, cursor, site_type_pins):
-        cursor.execute("""
+        cursor.execute(
+            """
 WITH a_site_instance(site_pkey, phy_tile_pkey) AS (
     SELECT site_pkey, phy_tile_pkey
     FROM site_instance
@@ -190,7 +192,8 @@ AND
         """, (self.site, site_type_pins[self.site, self.pin]))
 
         results = cursor.fetchall()
-        assert len(results) == 1, (results, self.site, self.pin, site_type_pins[self.site, self.pin])
+        assert len(results) == 1, (results, self.site, self.pin,
+                                   site_type_pins[self.site, self.pin])
         return [results[0][0]]
 
     def is_root(self):
@@ -198,9 +201,9 @@ AND
 
     def __str__(self):
         return 'PhysicalSitePin({}, {})'.format(
-                repr(self.site),
-                repr(self.pin),
-                )
+            repr(self.site),
+            repr(self.pin),
+        )
 
 
 class PhysicalPip():
@@ -241,25 +244,27 @@ class PhysicalPip():
         descend_branch(obj, self, string_id)
 
     def nodes(self, cursor, site_type_pins):
-        cursor.execute("""SELECT pkey FROM phy_tile WHERE name = ?;""", (
-            self.tile,))
-        (phy_tile_pkey,) = cursor.fetchone()
+        cursor.execute("""SELECT pkey FROM phy_tile WHERE name = ?;""",
+                       (self.tile, ))
+        (phy_tile_pkey, ) = cursor.fetchone()
 
-        cursor.execute("""
+        cursor.execute(
+            """
 SELECT node_pkey FROM wire WHERE
     phy_tile_pkey = ?
 AND
-    wire_in_tile_pkey IN (SELECT pkey FROM wire_in_tile WHERE name = ?);""", (
-            phy_tile_pkey, self.wire0))
-        (node0_pkey,) = cursor.fetchone()
+    wire_in_tile_pkey IN (SELECT pkey FROM wire_in_tile WHERE name = ?);""",
+            (phy_tile_pkey, self.wire0))
+        (node0_pkey, ) = cursor.fetchone()
 
-        cursor.execute("""
+        cursor.execute(
+            """
 SELECT node_pkey FROM wire WHERE
     phy_tile_pkey = ?
 AND
-    wire_in_tile_pkey IN (SELECT pkey FROM wire_in_tile WHERE name = ?);""", (
-            phy_tile_pkey, self.wire1))
-        (node1_pkey,) = cursor.fetchone()
+    wire_in_tile_pkey IN (SELECT pkey FROM wire_in_tile WHERE name = ?);""",
+            (phy_tile_pkey, self.wire1))
+        (node1_pkey, ) = cursor.fetchone()
 
         return [node0_pkey, node1_pkey]
 
@@ -268,11 +273,11 @@ AND
 
     def __str__(self):
         return 'PhysicalPip({}, {}, {}, {})'.format(
-                repr(self.tile),
-                repr(self.wire0),
-                repr(self.wire1),
-                repr(self.forward),
-                )
+            repr(self.tile),
+            repr(self.wire0),
+            repr(self.wire1),
+            repr(self.forward),
+        )
 
 
 class PhysicalSitePip():
@@ -317,10 +322,10 @@ class PhysicalSitePip():
 
     def __str__(self):
         return 'PhysicalSitePip({}, {}, {})'.format(
-                repr(self.site),
-                repr(self.bel),
-                repr(self.pin),
-                )
+            repr(self.site),
+            repr(self.bel),
+            repr(self.pin),
+        )
 
 
 def convert_tuple_to_object(site, tup):
@@ -537,7 +542,8 @@ def duplicate_check(sources, stubs):
     return len(objs)
 
 
-def attach_candidates(node_cache, id_to_idx, stitched_stubs, objs_to_attach, route_branch, visited):
+def attach_candidates(node_cache, id_to_idx, stitched_stubs, objs_to_attach,
+                      route_branch, visited):
     root_obj_id = id(route_branch)
     assert root_obj_id not in id_to_idx
 
@@ -567,13 +573,12 @@ def attach_from_parents(node_cache, id_to_idx, parents, visited):
     stitched_stubs = set()
     for parent in parents:
         attach_candidates(
-                node_cache=node_cache,
-                id_to_idx=id_to_idx,
-                stitched_stubs=stitched_stubs,
-                objs_to_attach=objs_to_attach,
-                route_branch=parent,
-                visited=visited)
-
+            node_cache=node_cache,
+            id_to_idx=id_to_idx,
+            stitched_stubs=stitched_stubs,
+            objs_to_attach=objs_to_attach,
+            route_branch=parent,
+            visited=visited)
 
     for branch_id, child_id in objs_to_attach:
         # The branch_id should not be in the id_to_idx map, because it should
@@ -591,6 +596,7 @@ def attach_from_parents(node_cache, id_to_idx, parents, visited):
 
     # Return the newly stitched stubs, so that they form the new parent list.
     return stitched_stubs
+
 
 def stitch_stubs(stubs, cursor, site_type_pins):
     sources = []
@@ -638,7 +644,8 @@ def stitch_stubs(stubs, cursor, site_type_pins):
         # Starting from the parents of the current tree, add stubs the
         # descend from this set, and create a new set of parents from those
         # stubs.
-        newly_stitched_stubs = attach_from_parents(node_cache, id_to_idx, parents, visited)
+        newly_stitched_stubs = attach_from_parents(node_cache, id_to_idx,
+                                                   parents, visited)
 
         # Mark the newly stitched stubs to be removed.
         stitched_stubs |= newly_stitched_stubs

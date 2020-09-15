@@ -1176,11 +1176,13 @@ def process_bram36_site(top, features, set_features):
 
     bel.add_unconnected_port('ECCPARITY', 8, output=True)
     for idx in range(8):
-        bel.map_bel_pin_to_cell_pin(bel.bel, 'ECCPARITY{}'.format(idx), 'ECCPARITY[{}]'.format(idx))
+        bel.map_bel_pin_to_cell_pin(bel.bel, 'ECCPARITY{}'.format(idx),
+                                    'ECCPARITY[{}]'.format(idx))
 
     bel.add_unconnected_port('RDADDRECC', 9, output=True)
     for idx in range(9):
-        bel.map_bel_pin_to_cell_pin(bel.bel, 'RDADDRECC{}'.format(idx), 'RDADDRECC[{}]'.format(idx))
+        bel.map_bel_pin_to_cell_pin(bel.bel, 'RDADDRECC{}'.format(idx),
+                                    'RDADDRECC[{}]'.format(idx))
 
     top.add_site(site)
 

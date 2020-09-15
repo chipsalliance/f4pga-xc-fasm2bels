@@ -808,7 +808,8 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
     for net_name in net_stubs:
         sources = []
         stubs = net_stubs[net_name]
-        sources, stubs = stitch_stubs(net_stubs[net_name], cursor, site_type_pins)
+        sources, stubs = stitch_stubs(net_stubs[net_name], cursor,
+                                      site_type_pins)
 
         physical_netlist_builder.add_physical_net(
             net_name=sub_cell_nets.get(net_name, net_name),

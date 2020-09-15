@@ -694,7 +694,8 @@ def process_differential_iob(top, iob, in_diff, out_diff):
                 bel_pin='OUT')
             bel_s.physical_net_names['OUTBUF', 'OUT'] = 'OBUFTDS/OB'
 
-            top.add_active_pip('{}.IOB_DIFFI_IN0.IOB_PADOUT1'.format(s_tile_name))
+            top.add_active_pip(
+                '{}.IOB_DIFFI_IN0.IOB_PADOUT1'.format(s_tile_name))
 
             ibuf = Bel('IBUFDS', 'IBUFDS')
             ibuf.set_bel('INBUF_EN')
@@ -754,8 +755,8 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             bel_name='OUTBUF',
             bel_pin='IN',
             site_pips=[
-                    ('site_pip', 'OUSED', '0'),
-                ])
+                ('site_pip', 'OUSED', '0'),
+            ])
 
         site_m.add_sink(
             bel,
@@ -764,8 +765,8 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             bel_name='OUTBUF',
             bel_pin='TRI',
             site_pips=[
-                    ('site_pip', 'TUSED', '0'),
-                ])
+                ('site_pip', 'TUSED', '0'),
+            ])
 
         site_s.add_sink(
             bel_s,
@@ -780,8 +781,8 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             bel_name='OUTBUF',
             bel_pin='TRI',
             site_pips=[
-                    ('site_pip', 'TINMUX', '1'),
-                ])
+                ('site_pip', 'TINMUX', '1'),
+            ])
 
         # Tell M site to output T and O to the S site.
 
@@ -795,7 +796,6 @@ def process_differential_iob(top, iob, in_diff, out_diff):
 
         top.add_active_pip('{}.IOB_O_IN1.IOB_O_OUT0'.format(m_tile_name))
         top.add_active_pip('{}.IOB_T_IN1.IOB_T_OUT0'.format(m_tile_name))
-
 
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
         append_obuf_iostandard_params(top, site_m, bel, iostd_out, slew,

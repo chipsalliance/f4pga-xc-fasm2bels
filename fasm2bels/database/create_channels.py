@@ -181,8 +181,7 @@ def build_other_indicies(write_cur):
     write_cur.execute(
         "CREATE INDEX phy_tile_location_index ON phy_tile(grid_x, grid_y);")
     write_cur.execute(
-        "CREATE INDEX site_instance_index on site_instance(name);"
-    )
+        "CREATE INDEX site_instance_index on site_instance(name);")
 
 
 def import_phy_grid(db, grid, conn):
@@ -256,8 +255,7 @@ AND
                     site.y,
                     site.type,
                     tile_types[gridinfo.tile_type],
-                )
-            )
+                ))
 
     build_other_indicies(write_cur)
     write_cur.connection.commit()

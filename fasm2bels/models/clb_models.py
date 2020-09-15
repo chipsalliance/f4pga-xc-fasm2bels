@@ -660,14 +660,11 @@ def create_ramd64e(bel_name, cell_name):
             bel_pin="WA{}".format(idx + 1),
             cell_pin="WADR{}".format(idx))
 
-    bel.map_bel_pin_to_cell_pin(
-        bel_name=bel_name, bel_pin="O6", cell_pin="O")
-    bel.map_bel_pin_to_cell_pin(
-        bel_name=bel_name, bel_pin="DI1", cell_pin="I")
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin="O6", cell_pin="O")
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin="DI1", cell_pin="I")
     bel.map_bel_pin_to_cell_pin(
         bel_name=bel_name, bel_pin="CLK", cell_pin="CLK")
-    bel.map_bel_pin_to_cell_pin(
-        bel_name=bel_name, bel_pin="WE", cell_pin="WE")
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin="WE", cell_pin="WE")
 
     return bel
 
@@ -676,14 +673,10 @@ def create_f7mux(bel_name, cell_name):
     bel = Bel('MUXF7', cell_name)
     bel.set_bel(bel_name)
 
-    bel.map_bel_pin_to_cell_pin(
-            bel_name=bel_name, bel_pin='0', cell_pin='I0')
-    bel.map_bel_pin_to_cell_pin(
-            bel_name=bel_name, bel_pin='1', cell_pin='I1')
-    bel.map_bel_pin_to_cell_pin(
-            bel_name=bel_name, bel_pin='S0', cell_pin='S')
-    bel.map_bel_pin_to_cell_pin(
-            bel_name=bel_name, bel_pin='OUT', cell_pin='O')
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin='0', cell_pin='I0')
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin='1', cell_pin='I1')
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin='S0', cell_pin='S')
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin='OUT', cell_pin='O')
 
     return bel
 
@@ -979,17 +972,22 @@ def process_slice(top, s):
                 ram128, 'WE', WE, 'A6LUT', "WE", site_pips=we_site_pips)
             site.add_sink(
                 ram128, 'WCLK', "CLK", 'A6LUT', "CLK", site_pips=clk_site_pips)
-            site.add_sink(ram128, 'D', "DI", "A6LUT", "DI1",
-                    site_pips=[
-                        ('site_pip', 'BDI1MUX', 'DI'),
-                        ('site_pip', 'ADI1MUX', 'BDI1'),
-                        ])
+            site.add_sink(
+                ram128,
+                'D',
+                "DI",
+                "A6LUT",
+                "DI1",
+                site_pips=[
+                    ('site_pip', 'BDI1MUX', 'DI'),
+                    ('site_pip', 'ADI1MUX', 'BDI1'),
+                ])
 
             site.link_site_routing([
                 ('bel_pin', 'DI', 'DI', 'site_source'),
                 ('site_pip', 'CDI1MUX', 'DI'),
                 ('bel_pin', 'C6LUT', 'DI1', 'input'),
-                ])
+            ])
 
             for idx in range(6):
                 site.add_sink(ram128, 'A[{}]'.format(idx),
@@ -1016,11 +1014,9 @@ def process_slice(top, s):
                     real_cell_pin='DPRA[{}]'.format(idx))
 
             site.add_sink(ram128, 'A[6]', "CX", "F7BMUX", "S0")
-            site.link_site_routing([
-                ('bel_pin', 'CX', 'CX', 'site_source'),
-                ('site_pip', 'WA7USED', '0'),
-                ('bel_pin', 'A6LUT', 'WA7', 'input')
-                ])
+            site.link_site_routing([('bel_pin', 'CX', 'CX', 'site_source'),
+                                    ('site_pip', 'WA7USED', '0'),
+                                    ('bel_pin', 'A6LUT', 'WA7', 'input')])
             site.add_sink(ram128, 'DPRA[6]', "AX", "F7AMUX", "S0")
 
             site.add_internal_source(ram128, 'SPO', 'F7BMUX_O', "F7BMUX",
@@ -1028,22 +1024,14 @@ def process_slice(top, s):
             site.add_internal_source(ram128, 'DPO', 'F7AMUX_O', "F7AMUX",
                                      "OUT")
 
-            site.link_site_routing([
-                ('bel_pin', 'D6LUT', 'O6', 'output'),
-                ('bel_pin', 'F7BMUX', '0', 'input')
-                ])
-            site.link_site_routing([
-                ('bel_pin', 'C6LUT', 'O6', 'output'),
-                ('bel_pin', 'F7BMUX', '1', 'input')
-                ])
-            site.link_site_routing([
-                ('bel_pin', 'B6LUT', 'O6', 'output'),
-                ('bel_pin', 'F7AMUX', '0', 'input')
-                ])
-            site.link_site_routing([
-                ('bel_pin', 'A6LUT', 'O6', 'output'),
-                ('bel_pin', 'F7AMUX', '1', 'input')
-                ])
+            site.link_site_routing([('bel_pin', 'D6LUT', 'O6', 'output'),
+                                    ('bel_pin', 'F7BMUX', '0', 'input')])
+            site.link_site_routing([('bel_pin', 'C6LUT', 'O6', 'output'),
+                                    ('bel_pin', 'F7BMUX', '1', 'input')])
+            site.link_site_routing([('bel_pin', 'B6LUT', 'O6', 'output'),
+                                    ('bel_pin', 'F7AMUX', '0', 'input')])
+            site.link_site_routing([('bel_pin', 'A6LUT', 'O6', 'output'),
+                                    ('bel_pin', 'F7AMUX', '1', 'input')])
 
             ram128.physical_net_names['D6LUT', 'O6'] = 'SPO0'
             ram128.physical_net_names['C6LUT', 'O6'] = 'SPO1'
@@ -1100,9 +1088,9 @@ def process_slice(top, s):
                                          bel_name, "O6")
 
                 for idx in range(6):
-                    site.add_sink(ram64m, 'ADDR{}[{}]'.format(lut, idx),
-                                  "{}{}".format(lut, idx + 1),
-                                  bel_name, "A{}".format(idx + 1))
+                    site.add_sink(
+                        ram64m, 'ADDR{}[{}]'.format(lut, idx), "{}{}".format(
+                            lut, idx + 1), bel_name, "A{}".format(idx + 1))
 
                 ram64m.add_physical_bel(phys_bel)
 
