@@ -104,35 +104,36 @@ def process_idelay(top, features):
 
         if site.has_feature("DELAY_SRC_DATAIN"):
             bel.parameters['DELAY_SRC'] = '"DATAIN"'
-            if site.has_feature("IS_DATAIN_INVERTED"):
-                bel.parameters['IS_DATAIN_INVERTED'] = 1
-                site_pips = make_inverter_path('DATAIN', 1)
-            else:
-                site_pips = make_inverter_path('DATAIN', 0)
-
-            site.add_sink(
-                bel,
-                'DATAIN',
-                'DATAIN',
-                bel.bel,
-                'DATAIN',
-                site_pips=site_pips)
-        elif site.has_feature("DELAY_SRC_IDATAIN"):
+        else:
             bel.parameters['DELAY_SRC'] = '"IDATAIN"'
 
-            if site.has_feature("IS_IDATAIN_INVERTED"):
-                bel.parameters['IS_IDATAIN_INVERTED'] = 1
-                site_pips = make_inverter_path('IDATAIN', 1)
-            else:
-                site_pips = make_inverter_path('IDATAIN', 0)
+        if site.has_feature("IS_DATAIN_INVERTED"):
+            bel.parameters['IS_DATAIN_INVERTED'] = 1
+            site_pips = make_inverter_path('DATAIN', 1)
+        else:
+            site_pips = make_inverter_path('DATAIN', 0)
 
-            site.add_sink(
-                bel,
-                'IDATAIN',
-                'IDATAIN',
-                bel.bel,
-                'IDATAIN',
-                site_pips=site_pips)
+        site.add_sink(
+            bel,
+            'DATAIN',
+            'DATAIN',
+            bel.bel,
+            'DATAIN',
+            site_pips=site_pips)
+
+        if site.has_feature("IS_IDATAIN_INVERTED"):
+            bel.parameters['IS_IDATAIN_INVERTED'] = 1
+            site_pips = make_inverter_path('IDATAIN', 1)
+        else:
+            site_pips = make_inverter_path('IDATAIN', 0)
+
+        site.add_sink(
+            bel,
+            'IDATAIN',
+            'IDATAIN',
+            bel.bel,
+            'IDATAIN',
+            site_pips=site_pips)
 
         if site.has_feature("IDELAY_VALUE"):
             idelay_value = site.decode_multi_bit_feature('IDELAY_VALUE')
@@ -151,6 +152,19 @@ def process_idelay(top, features):
 
         # Adding sources
         site.add_source(bel, 'DATAOUT', 'DATAOUT', bel.bel, 'DATAOUT')
+
+        bel.add_unconnected_port('CNTVALUEIN', 5, output=False)
+        bel.add_unconnected_port('CNTVALUEOUT', 5, output=True)
+
+        for i in range(5):
+            bel.map_bel_pin_to_cell_pin(
+                    bel_name=bel.bel,
+                    bel_pin='CNTVALUEIN{}'.format(i),
+                    cell_pin='CNTVALUEIN[{}]'.format(i))
+            bel.map_bel_pin_to_cell_pin(
+                    bel_name=bel.bel,
+                    bel_pin='CNTVALUEOUT{}'.format(i),
+                    cell_pin='CNTVALUEOUT[{}]'.format(i))
 
         site.add_bel(bel)
 
@@ -254,11 +268,16 @@ def process_iserdes(top, site, idelay_site=None):
     site.add_sink(bel, 'CE1', 'CE1', bel.bel, 'CE1')
     site.add_sink(bel, 'CE2', 'CE2', bel.bel, 'CE2')
     site.add_sink(bel, 'BITSLIP', 'BITSLIP', bel.bel, 'BITSLIP')
+    site.add_sink(bel, 'DYNCLKDIVSEL', 'DYNCLKDIVSEL', bel.bel, 'DYNCLKDIVSEL')
+    site.add_sink(bel, 'DYNCLKSEL', 'DYNCLKSEL', bel.bel, 'DYNCLKSEL')
 
     if idelay_site and idelay_site.has_feature("IN_USE") and (
             idelay_site.has_feature("IDELAY_VALUE")
             or idelay_site.has_feature("ZIDELAY_VALUE")):
         site.add_sink(bel, 'DDLY', 'DDLY', bel.bel, 'DDLY')
+
+        bel.add_unconnected_port('D', None, output=False)
+        bel.map_bel_pin_to_cell_pin(bel.bel, 'D', 'D')
     else:
         site.add_sink(
             bel,
@@ -268,9 +287,21 @@ def process_iserdes(top, site, idelay_site=None):
             'D',
             site_pips=make_inverter_path('D', bel.parameters['IS_D_INVERTED']))
 
+        bel.add_unconnected_port('DDLY', None, output=False)
+        bel.map_bel_pin_to_cell_pin(bel.bel, 'DDLY', 'DDLY')
+
     for i in range(1, 9):
         port_q = 'Q{}'.format(i)
         site.add_source(bel, port_q, port_q, bel.bel, port_q)
+
+    for unused_in in ['SHIFTIN1', 'SHIFTIN2', 'OFB', 'OCLK', 'OCLKB',
+            'CLKDIVP']:
+        bel.add_unconnected_port(unused_in, None, output=False)
+        bel.map_bel_pin_to_cell_pin(bel.bel, unused_in, unused_in)
+
+    for unused_out in ['SHIFTOUT1', 'SHIFTOUT2']:
+        bel.add_unconnected_port(unused_out, None, output=True)
+        bel.map_bel_pin_to_cell_pin(bel.bel, unused_out, unused_out)
 
     site.add_bel(bel)
 
@@ -612,6 +643,14 @@ def process_oserdes(top, site):
     site.add_sink(bel, 'TCE', 'TCE', bel.bel, 'TCE')
 
     site.add_sink(bel, 'RST', 'SR', bel.bel, 'RST', sink_site_type_pin='RST')
+
+    for unused_in in ['SHIFTIN1', 'SHIFTIN2', 'TBYTEIN']:
+        bel.add_unconnected_port(unused_in, None, output=False)
+        bel.map_bel_pin_to_cell_pin(bel.bel, unused_in, unused_in)
+
+    for unused_out in ['SHIFTOUT1', 'SHIFTOUT2', 'TBYTEOUT', 'OFB', 'TFB']:
+        bel.add_unconnected_port(unused_out, None, output=True)
+        bel.map_bel_pin_to_cell_pin(bel.bel, unused_out, unused_out)
 
     site.add_bel(bel)
 

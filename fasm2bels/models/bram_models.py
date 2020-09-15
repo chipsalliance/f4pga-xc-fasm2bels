@@ -1154,6 +1154,34 @@ def process_bram36_site(top, features, set_features):
             pin_name = '{}[{}]'.format(output_wire, idx)
             site.add_source(bel, pin_name, wire_name, bel.bel, wire_name)
 
+    bel.add_unconnected_port('INJECTSBITERR', None, output=False)
+    bel.map_bel_pin_to_cell_pin(bel.bel, 'INJECTSBITERR', 'INJECTSBITERR')
+    bel.add_unconnected_port('INJECTDBITERR', None, output=False)
+    bel.map_bel_pin_to_cell_pin(bel.bel, 'INJECTDBITERR', 'INJECTDBITERR')
+
+    bel.add_unconnected_port('SBITERR', None, output=True)
+    bel.map_bel_pin_to_cell_pin(bel.bel, 'SBITERR', 'SBITERR')
+    bel.add_unconnected_port('DBITERR', None, output=True)
+    bel.map_bel_pin_to_cell_pin(bel.bel, 'DBITERR', 'DBITERR')
+
+    bel.add_unconnected_port('CASCADEINA', None, output=False)
+    bel.map_bel_pin_to_cell_pin(bel.bel, 'CASCADEINA', 'CASCADEINA')
+    bel.add_unconnected_port('CASCADEINB', None, output=False)
+    bel.map_bel_pin_to_cell_pin(bel.bel, 'CASCADEINB', 'CASCADEINB')
+
+    bel.add_unconnected_port('CASCADEOUTA', None, output=True)
+    bel.map_bel_pin_to_cell_pin(bel.bel, 'CASCADEOUTA', 'CASCADEOUTA')
+    bel.add_unconnected_port('CASCADEOUTB', None, output=True)
+    bel.map_bel_pin_to_cell_pin(bel.bel, 'CASCADEOUTB', 'CASCADEOUTB')
+
+    bel.add_unconnected_port('ECCPARITY', 8, output=True)
+    for idx in range(8):
+        bel.map_bel_pin_to_cell_pin(bel.bel, 'ECCPARITY{}'.format(idx), 'ECCPARITY[{}]'.format(idx))
+
+    bel.add_unconnected_port('RDADDRECC', 9, output=True)
+    for idx in range(9):
+        bel.map_bel_pin_to_cell_pin(bel.bel, 'RDADDRECC{}'.format(idx), 'RDADDRECC[{}]'.format(idx))
+
     top.add_site(site)
 
     return site

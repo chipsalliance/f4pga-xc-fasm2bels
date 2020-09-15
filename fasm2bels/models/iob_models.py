@@ -700,6 +700,7 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             ibuf.set_bel('INBUF_EN')
             ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'OUT', 'O')
             ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'DIFFI_IN', 'IB')
+            ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'PAD', 'I')
 
             bel.add_physical_bel(ibuf)
 
@@ -724,6 +725,8 @@ def process_differential_iob(top, iob, in_diff, out_diff):
         obuf_p.set_bel('OUTBUF')
         obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'TRI', 'T')
         obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'IN', 'I')
+        obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'OUT', 'O')
+        obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'OUTN', 'OB')
 
         bel.add_physical_bel(obuf_p)
 
@@ -731,6 +734,7 @@ def process_differential_iob(top, iob, in_diff, out_diff):
         obuf_s.set_bel('OUTBUF')
         obuf_s.map_bel_pin_to_cell_pin('OUTBUF', 'TRI', 'T')
         obuf_s.map_bel_pin_to_cell_pin('OUTBUF', 'IN', 'I')
+        obuf_s.map_bel_pin_to_cell_pin('OUTBUF', 'OUT', 'O')
 
         bel_s.add_physical_bel(obuf_s)
 
@@ -752,6 +756,7 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             site_pips=[
                     ('site_pip', 'OUSED', '0'),
                 ])
+
         site_m.add_sink(
             bel,
             cell_pin='T',

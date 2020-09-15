@@ -644,6 +644,50 @@ def di_mux(site, bel, di_port, lut, bel_name):
         assert False, lut
 
 
+def create_ramd64e(bel_name, cell_name):
+    bel = Bel('RAMD64E', cell_name)
+    bel.set_bel(bel_name)
+
+    for idx in range(6):
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin="A{}".format(idx + 1),
+            cell_pin="RADR{}".format(idx))
+
+    for idx in range(8):
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin="WA{}".format(idx + 1),
+            cell_pin="WADR{}".format(idx))
+
+    bel.map_bel_pin_to_cell_pin(
+        bel_name=bel_name, bel_pin="O6", cell_pin="O")
+    bel.map_bel_pin_to_cell_pin(
+        bel_name=bel_name, bel_pin="DI1", cell_pin="I")
+    bel.map_bel_pin_to_cell_pin(
+        bel_name=bel_name, bel_pin="CLK", cell_pin="CLK")
+    bel.map_bel_pin_to_cell_pin(
+        bel_name=bel_name, bel_pin="WE", cell_pin="WE")
+
+    return bel
+
+
+def create_f7mux(bel_name, cell_name):
+    bel = Bel('MUXF7', cell_name)
+    bel.set_bel(bel_name)
+
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name, bel_pin='0', cell_pin='I0')
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name, bel_pin='1', cell_pin='I1')
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name, bel_pin='S0', cell_pin='S')
+    bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name, bel_pin='OUT', cell_pin='O')
+
+    return bel
+
+
 def process_slice(top, s):
     """ Convert SLICE features in Bel and Site objects.
 
@@ -935,7 +979,17 @@ def process_slice(top, s):
                 ram128, 'WE', WE, 'A6LUT', "WE", site_pips=we_site_pips)
             site.add_sink(
                 ram128, 'WCLK', "CLK", 'A6LUT', "CLK", site_pips=clk_site_pips)
-            site.add_sink(ram128, 'D', "DI", "D6LUT", "DI1")
+            site.add_sink(ram128, 'D', "DI", "A6LUT", "DI1",
+                    site_pips=[
+                        ('site_pip', 'BDI1MUX', 'DI'),
+                        ('site_pip', 'ADI1MUX', 'BDI1'),
+                        ])
+
+            site.link_site_routing([
+                ('bel_pin', 'DI', 'DI', 'site_source'),
+                ('site_pip', 'CDI1MUX', 'DI'),
+                ('bel_pin', 'C6LUT', 'DI1', 'input'),
+                ])
 
             for idx in range(6):
                 site.add_sink(ram128, 'A[{}]'.format(idx),
@@ -962,12 +1016,47 @@ def process_slice(top, s):
                     real_cell_pin='DPRA[{}]'.format(idx))
 
             site.add_sink(ram128, 'A[6]', "CX", "F7BMUX", "S0")
+            site.link_site_routing([
+                ('bel_pin', 'CX', 'CX', 'site_source'),
+                ('site_pip', 'WA7USED', '0'),
+                ('bel_pin', 'A6LUT', 'WA7', 'input')
+                ])
             site.add_sink(ram128, 'DPRA[6]', "AX", "F7AMUX", "S0")
 
             site.add_internal_source(ram128, 'SPO', 'F7BMUX_O', "F7BMUX",
                                      "OUT")
             site.add_internal_source(ram128, 'DPO', 'F7AMUX_O', "F7AMUX",
                                      "OUT")
+
+            site.link_site_routing([
+                ('bel_pin', 'D6LUT', 'O6', 'output'),
+                ('bel_pin', 'F7BMUX', '0', 'input')
+                ])
+            site.link_site_routing([
+                ('bel_pin', 'C6LUT', 'O6', 'output'),
+                ('bel_pin', 'F7BMUX', '1', 'input')
+                ])
+            site.link_site_routing([
+                ('bel_pin', 'B6LUT', 'O6', 'output'),
+                ('bel_pin', 'F7AMUX', '0', 'input')
+                ])
+            site.link_site_routing([
+                ('bel_pin', 'A6LUT', 'O6', 'output'),
+                ('bel_pin', 'F7AMUX', '1', 'input')
+                ])
+
+            ram128.physical_net_names['D6LUT', 'O6'] = 'SPO0'
+            ram128.physical_net_names['C6LUT', 'O6'] = 'SPO1'
+            ram128.physical_net_names['B6LUT', 'O6'] = 'DPO0'
+            ram128.physical_net_names['A6LUT', 'O6'] = 'DPO1'
+
+            ram128.add_physical_bel(create_ramd64e('D6LUT', 'SP.LOW'))
+            ram128.add_physical_bel(create_ramd64e('C6LUT', 'SP.HIGH'))
+            ram128.add_physical_bel(create_ramd64e('B6LUT', 'DP.LOW'))
+            ram128.add_physical_bel(create_ramd64e('A6LUT', 'DP.HIGH'))
+
+            ram128.add_physical_bel(create_f7mux('F7BMUX', 'F7.SP'))
+            ram128.add_physical_bel(create_f7mux('F7AMUX', 'F7.DP'))
 
             ram128.parameters['INIT'] = make_hex_verilog_value(
                 128, (get_shifted_lut_init(site, 'D')
@@ -1004,30 +1093,17 @@ def process_slice(top, s):
             di_mux(site, ram64m, 'DID', 'D', 'D6LUT')
 
             for lut in 'ABCD':
-                phys_bel = Bel('RAMD64E', 'RAM{}'.format(lut))
-                phys_bel.set_bel('{}6LUT'.format(lut))
+                bel_name = '{}6LUT'.format(lut)
+                phys_bel = create_ramd64e(bel_name, 'RAM{}'.format(lut))
+
+                site.add_internal_source(ram64m, 'DO' + lut, lut + "O6",
+                                         bel_name, "O6")
 
                 for idx in range(6):
                     site.add_sink(ram64m, 'ADDR{}[{}]'.format(lut, idx),
                                   "{}{}".format(lut, idx + 1),
-                                  "{}6LUT".format(lut), "A{}".format(idx + 1))
+                                  bel_name, "A{}".format(idx + 1))
 
-                    phys_bel.map_bel_pin_to_cell_pin(
-                        bel_name='{}6LUT'.format(lut),
-                        bel_pin='WA{}'.format(idx + 1),
-                        cell_pin="WADR{}".format(idx))
-                    phys_bel.map_bel_pin_to_cell_pin(
-                        bel_name='{}6LUT'.format(lut),
-                        bel_pin='A{}'.format(idx + 1),
-                        cell_pin="RADR{}".format(idx))
-
-                site.add_internal_source(ram64m, 'DO' + lut, lut + "O6",
-                                         "{}6LUT".format(lut), "O6")
-
-                phys_bel.map_bel_pin_to_cell_pin(
-                    bel_name='{}6LUT'.format(lut),
-                    bel_pin='O6',
-                    cell_pin="O".format(lut))
                 ram64m.add_physical_bel(phys_bel)
 
                 ram64m.parameters['INIT_' + lut] = get_lut_init(site, lut)
@@ -1091,11 +1167,8 @@ def process_slice(top, s):
                     site_pips=clk_site_pips)
                 di_mux(site, ram64, 'D', lut, '{}6LUT'.format(lut))
 
-                upper_bel = Bel('RAMD64E', 'SP')
-                upper_bel.set_bel(upper_lut)
-
-                lower_bel = Bel('RAMD64E', 'DP')
-                lower_bel.set_bel(lower_lut)
+                upper_bel = create_ramd64e(lower_lut, 'SP')
+                lower_bel = create_ramd64e(lower_lut, 'DP')
 
                 ram64.add_physical_bel(upper_bel)
                 ram64.add_physical_bel(lower_bel)
@@ -1103,18 +1176,6 @@ def process_slice(top, s):
                 for idx in range(6):
                     site.add_sink(ram64, 'A{}'.format(idx), "{}{}".format(
                         lut, idx + 1), lower_lut, "A{}".format(idx + 1))
-
-                    for phys_bel, bel_name in zip([upper_bel, lower_bel],
-                                                  [upper_lut, lower_lut]):
-                        phys_bel.map_bel_pin_to_cell_pin(
-                            bel_name=bel_name,
-                            bel_pin="A{}".format(idx + 1),
-                            cell_pin="RADR{}".format(idx))
-                        phys_bel.map_bel_pin_to_cell_pin(
-                            bel_name=bel_name,
-                            bel_pin="WA{}".format(idx + 1),
-                            cell_pin="WADR{}".format(idx))
-
                     site.add_sink(ram64, 'DPRA{}'.format(idx), "{}{}".format(
                         minus_one, idx + 1), upper_lut, "A{}".format(idx + 1))
 
@@ -1122,11 +1183,6 @@ def process_slice(top, s):
                                          "O6")
                 site.add_internal_source(ram64, 'DPO', minus_one + "O6",
                                          lower_lut, "O6")
-
-                upper_bel.map_bel_pin_to_cell_pin(
-                    bel_name=upper_lut, bel_pin="O6", cell_pin="O")
-                lower_bel.map_bel_pin_to_cell_pin(
-                    bel_name=lower_lut, bel_pin="O6", cell_pin="O")
 
                 ram64.parameters['INIT'] = get_lut_hex_init(site, lut)
                 other_init = get_lut_hex_init(site, minus_one)
@@ -1618,12 +1674,6 @@ def process_slice(top, s):
             # Note: There is a dedicated O6 output.  Fixed routing requires
             # treating xMUX.O6 as a routing connection.
             site.add_output_from_output(output_wire, lut)
-            site.link_site_routing([
-                site.internal_source_bel_pins[lut + 'O6'],
-                ('site_pip', '{}OUTMUX'.format(lut), 'O6'),
-                ('bel_pin', output_wire, output_wire), ('site_pin',
-                                                        output_wire)
-            ])
 
         elif site.has_feature('{}OUTMUX.CY'.format(lut)):
             assert can_have_carry4

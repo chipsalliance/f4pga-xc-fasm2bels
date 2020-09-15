@@ -136,7 +136,7 @@ def process_pll(conn, top, tile_name, features):
     ):
         site.add_source(pll, wire, wire, pll.bel, wire)
 
-    for i in range(15):
+    for i in range(16):
         site.add_source(pll, 'DO[{}]'.format(i), 'DO{}'.format(i), pll.bel,
                         'DO{}'.format(i))
 
@@ -190,6 +190,9 @@ def process_pll(conn, top, tile_name, features):
             else:
                 pll.parameters['CLK{}_PHASE'.format(
                     clkout)] = "{0:.3f}".format(phase)
+        else:
+            site.add_source(pll, 'CLK' + clkout, 'CLK' + clkout, pll.bel,
+                            'CLK' + clkout)
 
     # Input clock divider
     high_time = site.decode_multi_bit_feature('DIVCLK_DIVCLK_HIGH_TIME')
