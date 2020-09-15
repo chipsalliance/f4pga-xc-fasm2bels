@@ -26,7 +26,7 @@ import capnp.lib.capnp
 capnp.remove_import_hook()
 import os.path
 from .logical_netlist import check_logical_netlist, Library, Cell, Direction
-from .physical_netlist import Placement, PhysicalPip
+from .physical_netlist import Placement, PhysicalPip, stitch_stubs
 from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_name
 
 
@@ -658,6 +658,20 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
                 else:
                     ports[port] = (direction, width)
 
+            # Add instances of unconnected ports (as needed).
+            for port, is_output in instance.port_direction.items():
+                width = instance.port_width[port]
+
+                if is_output:
+                    direction = Direction.Output
+                else:
+                    direction = Direction.Input
+
+                if port in ports:
+                    assert (direction, width) == ports[port]
+                else:
+                    ports[port] = (direction, width)
+
         for port, (direction, width) in ports.items():
 
             if width is not None:
@@ -687,6 +701,8 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     physical_netlist_builder = interchange.new_physical_netlist_builder(
         part=part)
+
+    site_type_pins = {}
 
     # Convert sites and bels into placement directives and physical nets.
     net_stubs = {}
@@ -766,6 +782,9 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
             constant_nets=constant_nets,
             sub_cell_nets=sub_cell_nets)
 
+        for site_pin, site_type_pin in site.site_type_pins.items():
+            site_type_pins[site.site.name, site_pin] = site_type_pin
+
         # Extend net stubs with the site routing.
         for net_name in new_nets:
             if net_name not in net_stubs:
@@ -785,11 +804,16 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
                 PhysicalPip(
                     tile=tile, wire0=wire0, wire1=wire1, forward=False))
 
+    cursor = top.conn.cursor()
     for net_name in net_stubs:
+        sources = []
+        stubs = net_stubs[net_name]
+        sources, stubs = stitch_stubs(net_stubs[net_name], cursor, site_type_pins)
+
         physical_netlist_builder.add_physical_net(
             net_name=sub_cell_nets.get(net_name, net_name),
-            sources=[],
-            stubs=net_stubs[net_name],
+            sources=sources,
+            stubs=stubs,
         )
 
     physical_netlist = physical_netlist_builder.finish_encode()
