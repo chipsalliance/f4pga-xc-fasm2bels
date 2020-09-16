@@ -2575,8 +2575,9 @@ set net [get_nets -of_object $pin]""".format(
     def output_extra_tcl(self):
         output = list(self.extra_tcl)
 
-        for port in self.port_property:
-            for prop, value in self.port_property[port].items():
+        for port in sorted(self.port_property):
+            for prop in sorted(self.port_property[port]):
+                value = self.port_property[port][prop]
                 output.append('set_property {} {} [get_ports {}]'.format(
                     prop, value, port))
 

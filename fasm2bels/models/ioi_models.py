@@ -604,31 +604,23 @@ def process_oserdes(top, site):
     site.add_sink(bel, 'CLKDIV', 'CLKDIV', bel.bel, 'CLKDIV')
 
     for i in range(1, 9):
-        inverted = ("IS_D{}_INVERTED".format(i))
-        if site.has_feature(inverted):
+        inverted = "IS_D{}_INVERTED".format(i)
+        d_inverted = site.has_feature(inverted)
+        if d_inverted:
             bel.parameters[inverted] = 1
-            site_pips = [('site_pip', 'D{}INV'.format(i), 'D{}_B'.format(i)),
-                         ('inverter', 'D{}INV'.format(i))]
-        else:
-            site_pips = [
-                ('site_pip', 'D{}INV'.format(i), 'D{}'.format(i)),
-            ]
 
         wire = 'D{}'.format(i)
+        site_pips = make_inverter_path(wire, d_inverted)
         site.add_sink(bel, wire, wire, bel.bel, wire, site_pips=site_pips)
 
     for i in range(1, 5):
-        if not site.has_feature("ZINV_T{}".format(i)):
+        t_inverted = not site.has_feature("ZINV_T{}".format(i))
+        if t_inverted:
             bel.parameters["IS_T{}_INVERTED".format(i)] = 1
-            site_pips = [('site_pip', 'T{}INV'.format(i), 'T{}_B'.format(i)),
-                         ('inverter', 'T{}INV'.format(i))]
-        else:
-            site_pips = [
-                ('site_pip', 'D{}INV'.format(i), 'D{}'.format(i)),
-            ]
 
         wire = 'T{}'.format(i)
-        site.add_sink(bel, wire, wire, bel.bel, wire)
+        site_pips = make_inverter_path(wire, t_inverted)
+        site.add_sink(bel, wire, wire, bel.bel, wire, site_pips=site_pips)
 
     site.add_sink(bel, 'OCE', 'OCE', bel.bel, 'OCE')
     site.add_sink(bel, 'TCE', 'TCE', bel.bel, 'TCE')

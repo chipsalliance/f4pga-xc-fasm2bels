@@ -1,4 +1,4 @@
-from .verilog_modeling import Bel, Site
+from .verilog_modeling import Bel, Site, make_inverter_path
 
 # =============================================================================
 
@@ -110,14 +110,8 @@ def process_pll(conn, top, tile_name, features):
             'PWRDWN',
             'RST',
     ):
-        if pll.parameters['IS_{}_INVERTED'.format(wire)] == "1'b1":
-            site_pips = [('site_pip', '{}INV'.format(wire),
-                          '{}_B'.format(wire)),
-                         ('inverter', '{}INV'.format(wire))]
-        else:
-            site_pips = [('site_pip', '{}INV'.format(wire), wire),
-                         ('inverter', '{}INV'.format(wire))]
-
+        site_pips = make_inverter_path(
+            wire, pll.parameters['IS_{}_INVERTED'.format(wire)] == "1'b1")
         site.add_sink(pll, wire, wire, pll.bel, wire, site_pips)
 
     for wire in (
@@ -191,8 +185,12 @@ def process_pll(conn, top, tile_name, features):
                 pll.parameters['CLK{}_PHASE'.format(
                     clkout)] = "{0:.3f}".format(phase)
         else:
-            site.add_source(pll, 'CLK' + clkout, 'CLK' + clkout, pll.bel,
-                            'CLK' + clkout)
+            pll.add_unconnected_port('CLK' + clkout, None, output=True)
+            pll.map_bel_pin_to_cell_pin(
+                bel_name=pll.bel,
+                bel_pin='CLK' + clkout,
+                cell_pin='CLK' + clkout,
+            )
 
     # Input clock divider
     high_time = site.decode_multi_bit_feature('DIVCLK_DIVCLK_HIGH_TIME')
@@ -232,6 +230,12 @@ def process_pll(conn, top, tile_name, features):
     elif site.has_feature(
             'COMPENSATION.BUF_IN_OR_EXTERNAL_OR_ZHOLD_CLKIN_BUF'):
         pll.parameters['COMPENSATION'] = '"BUF_IN"'
+    elif site.has_feature('COMPENSATION.Z_ZHOLD_OR_CLKIN_BUF'):
+        pll.parameters['COMPENSATION'] = '"ZHOLD"'
+    else:
+        # FIXME: This is probably wrong?
+        # No path is COMPENSATION = "EXTERNAL" ???
+        pll.parameters['COMPENSATION'] = '"INTERNAL"'
 
     # Add the bel and site
     site.add_bel(pll)

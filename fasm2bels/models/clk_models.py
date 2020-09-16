@@ -1,6 +1,6 @@
 import re
 
-from .verilog_modeling import Bel, Site
+from .verilog_modeling import Bel, Site, make_inverter_path
 
 BUFHCE_RE = re.compile('BUFHCE_X([0-9]+)Y([0-9]+)')
 
@@ -94,15 +94,8 @@ def process_bufg(conn, top, tile, features):
         bel.parameters['INIT_OUT'] = int('INIT_OUT' in set_features)
 
         for sink in ('S0', 'S1', 'CE0', 'CE1', 'IGNORE0', 'IGNORE1'):
-            if bel.parameters['IS_{}_INVERTED'.format(sink)]:
-                site_pips = [
-                    ('site_pip', '{}INV'.format(sink), '{}_B'.format(sink)),
-                    ('inverter', '{}INV'.format(sink)),
-                ]
-            else:
-                site_pips = [('site_pip', '{}INV'.format(sink),
-                              '{}'.format(sink))]
-
+            site_pips = make_inverter_path(
+                sink, bel.parameters['IS_{}_INVERTED'.format(sink)])
             site.add_sink(bel, sink, sink, bel.bel, sink, site_pips=site_pips)
 
         for sink in ('I0', 'I1'):

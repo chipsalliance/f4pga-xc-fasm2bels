@@ -337,6 +337,8 @@ def main():
         '--physical_netlist',
         help="Filename of output interchange physical netlist capnp.")
     parser.add_argument(
+        '--interchange_xdc', help="Filename of output interchange XDC.")
+    parser.add_argument(
         '--interchange_capnp_schema_dir',
         help="Folder containing interchange capnp definitions.")
 
@@ -468,9 +470,10 @@ def main():
         assert args.part
 
         with open(args.logical_netlist, 'wb') as f_log, open(
-                args.physical_netlist, 'wb') as f_phys:
+                args.physical_netlist, 'wb') as f_phys, open(
+                    args.interchange_xdc, 'w') as f_xdc:
             output_interchange(top, args.interchange_capnp_schema_dir,
-                               args.part, f_log, f_phys)
+                               args.part, f_log, f_phys, f_xdc)
 
 
 if __name__ == "__main__":

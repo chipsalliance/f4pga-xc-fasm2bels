@@ -1,6 +1,6 @@
 import fasm
 import re
-from .verilog_modeling import Bel, Site
+from .verilog_modeling import Bel, Site, make_inverter_path
 import math
 
 
@@ -551,12 +551,8 @@ def process_bram_site(top, features, set_features):
         bel.parameters['IS_{}_INVERTED'.format(wire)] = int(
             not 'ZINV_{}'.format(wire) in set_features)
 
-        if bel.parameters['IS_{}_INVERTED'.format(wire)]:
-            site_pips = [('site_pip', '{}INV'.format(wire),
-                          '{}_B'.format(wire)),
-                         ('inverter', '{}INV'.format(wire))]
-        else:
-            site_pips = [('site_pip', '{}INV'.format(wire), wire)]
+        site_pips = make_inverter_path(
+            wire, bel.parameters['IS_{}_INVERTED'.format(wire)])
 
         wire_name = make_wire(wire)
         site.add_sink(
@@ -574,13 +570,8 @@ def process_bram_site(top, features, set_features):
             "REGCLKB",
     ):
 
-        if (not 'ZINV_{}'.format(wire) in set_features):
-            site_pips = [
-                ('site_pip', '{}INV'.format(wire), '{}_B'.format(wire)),
-                ('inverter', '{}INV'.format(wire)),
-            ]
-        else:
-            site_pips = [('site_pip', '{}INV'.format(wire), wire)]
+        wire_inverted = (not 'ZINV_{}'.format(wire) in set_features)
+        site_pips = make_inverter_path(wire, wire_inverted)
 
         wire_name = make_wire(wire)
         site.add_sink(
@@ -1029,13 +1020,8 @@ def process_bram36_site(top, features, set_features):
             not 'RAMB18_Y0.ZINV_{}'.format(wire) in set_features)
 
         for ul in 'UL':
-            if bel.parameters['IS_{}_INVERTED'.format(wire)]:
-                site_pips = [('site_pip', '{}{}INV'.format(wire, ul),
-                              '{}{}_B'.format(wire, ul)),
-                             ('inverter', '{}{}INV'.format(wire, ul))]
-            else:
-                site_pips = [('site_pip', '{}{}INV'.format(wire, ul),
-                              wire + ul)]
+            site_pips = make_inverter_path(
+                wire + ul, bel.parameters['IS_{}_INVERTED'.format(wire)])
 
             extra = ''
             if ul == 'U':
@@ -1063,13 +1049,8 @@ def process_bram36_site(top, features, set_features):
     ):
 
         for ul in 'UL':
-            if (not 'ZINV_{}'.format(wire) in set_features):
-                site_pips = [('site_pip', '{}{}INV'.format(wire, ul),
-                              '{}{}_B'.format(wire, ul)),
-                             ('inverter', '{}{}INV'.format(wire, ul))]
-            else:
-                site_pips = [('site_pip', '{}{}INV'.format(wire, ul),
-                              wire + ul)]
+            wire_inverted = (not 'ZINV_{}'.format(wire) in set_features)
+            site_pips = make_inverter_path(wire + ul, wire_inverted)
 
             if ul == 'U':
                 cell_pin = wire + 'U'
@@ -1084,6 +1065,7 @@ def process_bram36_site(top, features, set_features):
                 bel_pin=wire + ul,
                 site_pips=site_pips,
             )
+
     for input_wire in [
             "REGCEAREGCE",
             "REGCEB",

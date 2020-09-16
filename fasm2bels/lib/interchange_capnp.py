@@ -528,7 +528,7 @@ def create_top_level_ports(top_cell, top, port_list, direction):
                 top_cell.connect_net_to_cell_port(net_name, wire, idx=idx)
 
 
-def output_interchange(top, capnp_folder, part, f_logical, f_physical):
+def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
     """ Output FPGA interchange from top level Module class object.
 
     top (Module) - Top level module.
@@ -819,3 +819,6 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical):
 
     physical_netlist = physical_netlist_builder.finish_encode()
     physical_netlist.write_packed(f_physical)
+
+    for l in top.output_extra_tcl():
+        print(l, file=f_xdc)
