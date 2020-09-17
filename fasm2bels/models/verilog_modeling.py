@@ -486,6 +486,12 @@ class Bel(object):
         self.port_direction = {}
 
     def set_parent_cell(self, parent_cell):
+        """ Set parent cell for this object.
+
+        This only modifies what cell name this object returns.  If a parent
+        is set, this object returns the name of the parent cell.
+
+        """
         self.parent_cell = parent_cell
 
     def set_port_width(self, port, width):
@@ -493,6 +499,20 @@ class Bel(object):
         self.port_width[port] = width
 
     def add_unconnected_port(self, port, width, output):
+        """ Add a port to this cell that is unconnected.
+
+        port : str
+            Port that is unconnected
+
+        width : int or None
+            For bussed ports, the width of the port, otherwise None for bitty
+            ports.
+
+        output : bool
+            Set output to True if this port is an output, otherwise this port
+            is an input.
+
+        """
         assert port not in self.connections
         self.port_direction[port] = output
         self.set_port_width(port, width)
@@ -925,7 +945,6 @@ class Site(object):
 
         site_type : str
             Site type to use instead of self.site.type
-
 
         """
         self.site_type_override = site_type
@@ -2109,6 +2128,7 @@ class Module(object):
         return self.net_to_iosettings[signal]
 
     def add_port_property(self, port, prop, value):
+        """ Add property to port. """
         if port not in self.port_property:
             self.port_property[port] = {}
         self.port_property[port][prop] = value

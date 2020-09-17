@@ -464,12 +464,34 @@ def create_site_routing(site, net_roots, site_routing, constant_nets):
 
 
 class NodeCache():
+    """ Cache of route segment to node_pkey and node_pkey to route segments. """
+
     def __init__(self):
         self.id_to_obj = {}
         self.id_to_nodes = {}
         self.node_to_ids = {}
 
-    def add_route_segment(self, obj, cursor, site_type_pins):
+    def add_route_branch(self, obj, cursor, site_type_pins):
+        """ Add route branch to cache.
+
+        obj : PhysicalBelPin/PhysicalSitePin/PhysicalSitePip/PhysicalPip
+            Add route segment to node cache.
+
+        cursor : sqlite3.Cursor
+            Cursor to connection database.
+
+        site_type_pins
+            Map of used site pin to the site pin default name.
+
+            The interchange uses the site pin name for the particular type in
+            use, e.g. RAMB36E1.  The connection database has the site pin
+            names for the default site type (e.g. RAMBFIFO36E1).
+            site_type_pins maps the site specific type back to the default
+            type found in the connection database.
+
+            FIXME: If the connection database had the site pins for each
+            alternative site type, this map would no longer be required.
+        """
         obj_id = id(obj)
         assert obj_id not in self.id_to_obj
 
@@ -482,9 +504,16 @@ class NodeCache():
             self.node_to_ids[node].add(obj_id)
 
         for child_branch in obj.branches:
-            self.add_route_segment(child_branch, cursor, site_type_pins)
+            self.add_route_branch(child_branch, cursor, site_type_pins)
 
     def check_tree(self, obj, parent=None):
+        """ Check that the routing tree at and below obj is valid.
+
+        This method should be called after all route segments have been added
+        to the node cache.
+
+        """
+
         if parent is not None:
             nodes = self.id_to_nodes[id(obj)]
             parent_nodes = self.id_to_nodes[id(parent)]
@@ -496,13 +525,20 @@ class NodeCache():
             self.check_tree(child, parent=obj)
 
     def attach(self, parent_id, child_id):
+        """ Attach a child routing tree to the routing tree for parent. """
         self.id_to_obj[parent_id].branches.append(self.id_to_obj[child_id])
 
     def nodes_for_branch(self, obj):
+        """ Return the node pkey's attached to the routing branch in obj. """
         return self.id_to_nodes[id(obj)]
 
 
-def yield_branches(route_segment):
+def yield_branches(routing_branch):
+    """ Yield all routing branches starting from the given route segment.
+
+    This will yield the input route branch in addition to its children.
+
+    """
     objs = set()
 
     def descend(obj):
@@ -516,12 +552,16 @@ def yield_branches(route_segment):
             for s in descend(seg):
                 yield s
 
-    for s in descend(route_segment):
+    for s in descend(routing_branch):
         yield s
 
 
 def duplicate_check(sources, stubs):
-    """ Check routing sources and stubs for duplicate objects. """
+    """ Check routing sources and stubs for duplicate objects.
+
+    Returns the total number of routing branches in the sources and stubs list.
+
+    """
     objs = set()
 
     def descend(obj):
@@ -544,14 +584,43 @@ def duplicate_check(sources, stubs):
 
 def attach_candidates(node_cache, id_to_idx, stitched_stubs, objs_to_attach,
                       route_branch, visited):
+    """ Attach children of branches in the routing tree route_branch.
+
+    node_cache : NodeCache
+        A node cache that contains all routing branches in the net.
+
+    id_to_idx : dict object id to int
+        Map of object id to idx in a list of unstitched routing branches.
+
+    stitched_stubs : set of int
+        Set of indicies of stubs that have been stitched.  Used to track which
+        stubs have been stitched into the tree, and verify stubs are not
+        stitched twice into the tree.
+
+    objs_to_attach : list of parent object id to child object id
+        When attach_candidates finds a stub that should be stitched into the 
+        routing tree, rather than stitch it immediately, it adds a parent of 
+        (id(parent), id(child)) to objs_to_attach.  This deferal enables the 
+        traversal of the input routing tree without modification.
+
+        After attach_candidates returns, elements of objs_to_attach should be
+        passed to node_cache.attach to join the trees.
+
+    obj : PhysicalBelPin/PhysicalSitePin/PhysicalSitePip/PhysicalPip
+        Root of routing tree to iterate over to identify candidates to attach 
+        to routing tree..
+
+    visited : set of ids to routing branches.
+
+    """
     root_obj_id = id(route_branch)
     assert root_obj_id not in id_to_idx
 
-    # Make sure each route branch is only visited once.
-    assert root_obj_id not in visited
-    visited.add(root_obj_id)
-
     for branch in yield_branches(route_branch):
+        # Make sure each route branch is only visited once.
+        assert id(branch) not in visited
+        visited.add(id(branch))
+
         for node in node_cache.nodes_for_branch(branch):
             for obj_id in node_cache.node_to_ids[node]:
                 if obj_id not in id_to_idx:
@@ -568,6 +637,22 @@ def attach_candidates(node_cache, id_to_idx, stitched_stubs, objs_to_attach,
 
 
 def attach_from_parents(node_cache, id_to_idx, parents, visited):
+    """ Attach children routing tree starting from list of parent routing trees.
+
+    node_cache : NodeCache
+        A node cache that contains all routing branches in the net.
+
+    id_to_idx : dict object id to int
+        Map of object id to idx in a list of unstitched routing branches.
+
+    parents : list of PhysicalBelPin/PhysicalSitePin/PhysicalSitePip/PhysicalPip
+        Roots of routing tree to search for children trees.
+
+    visited : set of ids to routing branches.
+
+    Returns set of indicies to stitched stubs.
+
+    """
     objs_to_attach = []
 
     stitched_stubs = set()
@@ -599,6 +684,7 @@ def attach_from_parents(node_cache, id_to_idx, parents, visited):
 
 
 def stitch_stubs(stubs, cursor, site_type_pins):
+    """ Stitch stubs of the routing tree into trees routed from net sources. """
     sources = []
 
     # Verify input stubs have no loops.
@@ -614,7 +700,7 @@ def stitch_stubs(stubs, cursor, site_type_pins):
             stitched_stubs.add(idx)
             sources.append(stub)
 
-        node_cache.add_route_segment(stub, cursor, site_type_pins)
+        node_cache.add_route_branch(stub, cursor, site_type_pins)
 
     # Make sure all stubs appear valid before stitching.
     for stub in stubs:
