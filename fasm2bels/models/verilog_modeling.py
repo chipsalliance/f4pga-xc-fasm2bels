@@ -998,15 +998,16 @@ class Site(object):
         instance_names = {}
 
         for bel in self.bels:
-            assert bel.bel not in bel_map
-            bel_map[bel.bel] = bel
+            instance_name = unescape_verilog_name(bel.get_cell(top))
+            if bel.bel is not None:
+                assert bel.bel not in bel_map, (bel.module, bel.bel)
+                bel_map[bel.bel] = bel
+                instance_names[bel.bel] = instance_name
+
             for other_bel in bel.other_bels:
                 assert other_bel not in bel_map
                 bel_map[other_bel] = bel
-
-            instance_names[bel.bel] = unescape_verilog_name(bel.get_cell(top))
-            for other_bel in bel.other_bels:
-                instance_names[other_bel] = instance_names[bel.bel]
+                instance_names[other_bel] = instance_name
 
         # Gather all BEL pins in this site.
         bel_pins = set()

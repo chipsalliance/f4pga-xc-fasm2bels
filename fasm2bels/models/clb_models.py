@@ -2,12 +2,8 @@ from .verilog_modeling import Bel, Site
 import math
 
 
-def make_binary_verilog_value(width, value):
-    return "{width}'b{{:0{width}b}}".format(width=width).format(value)
-
-
 def make_hex_verilog_value(width, value):
-    return "{width}'h{{:0{format_width}b}}".format(
+    return "{width}'h{{:0{format_width}X}}".format(
         width=width, format_width=int(math.ceil(width / 4))).format(value)
 
 
@@ -35,9 +31,7 @@ def get_lut_hex_init(site, lut):
 
 def get_shifted_lut_init(site, lut, shift=0):
     """ Return the shifted INIT value as integer. The init input is a string."""
-    init = get_lut_init(site, lut)
-    int_init = int(init.split('b')[-1], 2)
-
+    int_init = site.decode_multi_bit_feature('{}LUT.INIT'.format(lut))
     return int_init << shift
 
 
@@ -475,38 +469,67 @@ def cleanup_dram(top, site):
     if 'RAM32X1D' in lut_modes.values():
         for lut in 'BD':
             if lut_modes[lut] == 'RAM32X1D':
-                for idx in range(2):
+                for idx, sub_bel in zip(range(2), ['6', '5']):
                     name = 'RAM32X1D_{}_{}'.format(lut, idx)
                     ram32 = site.maybe_get_bel(name)
                     assert ram32 is not None, name
                     site.mask_sink(ram32, "D0")
 
+                    minus_one = chr(ord(lut) - 1)
+                    bel_name = '{}{}LUT'.format(minus_one, sub_bel)
+
+                    if sub_bel == '6':
+                        bel_pin = 'DI2'
+                    else:
+                        bel_pin = 'DI1'
+
+                    ram32.remap_bel_pin_to_cell_pin(bel_name, bel_pin, "D")
+
     if 'RAM128X1D' in lut_modes.values():
         ram128 = site.maybe_get_bel('RAM128X1D')
         for idx in range(6):
             site.mask_sink(ram128, 'ADDR_C[{}]'.format(idx))
+            ram128.remap_bel_pin_to_cell_pin('C6LUT', 'A{}'.format(idx + 1),
+                                             'A[{}]'.format(idx))
+
             site.mask_sink(ram128, 'DATA_A[{}]'.format(idx))
+            ram128.remap_bel_pin_to_cell_pin('A6LUT', 'A{}'.format(idx + 1),
+                                             'DPRA[{}]'.format(idx))
 
     if 'RAM128X1S' in lut_modes.values():
         if lut_modes['D'] == 'RAM128X1S' and lut_modes['C'] == 'RAM128X1S':
             ram128 = site.maybe_get_bel('RAM128X1S_CD')
             for idx in range(6):
                 site.mask_sink(ram128, 'ADDR_C{}'.format(idx))
+                ram128.remap_bel_pin_to_cell_pin(
+                    'C6LUT', 'A{}'.format(idx + 1), 'A{}'.format(idx))
 
         if 'B' in lut_modes.keys():
             if lut_modes['B'] == 'RAM128X1S' and lut_modes['A'] == 'RAM128X1S':
                 ram128 = site.maybe_get_bel('RAM128X1S_AB')
                 for idx in range(6):
                     site.mask_sink(ram128, 'ADDR_A{}'.format(idx))
+                    ram128.remap_bel_pin_to_cell_pin(
+                        'A6LUT', 'A{}'.format(idx + 1), 'A{}'.format(idx))
 
     if 'RAM256X1S' in lut_modes.values():
         ram256 = site.maybe_get_bel('RAM256X1S')
 
         site.mask_sink(ram256, 'AX')
+        ram256.remap_bel_pin_to_cell_pin('F7AMUX', 'S0', 'A[6]')
+
         for idx in range(6):
             site.mask_sink(ram256, 'ADDR_C[{}]'.format(idx))
+            ram256.remap_bel_pin_to_cell_pin('C6LUT', 'A{}'.format(idx + 1),
+                                             'A[{}]'.format(idx))
+
             site.mask_sink(ram256, 'ADDR_B[{}]'.format(idx))
+            ram256.remap_bel_pin_to_cell_pin('B6LUT', 'A{}'.format(idx + 1),
+                                             'A[{}]'.format(idx))
+
             site.mask_sink(ram256, 'ADDR_A[{}]'.format(idx))
+            ram256.remap_bel_pin_to_cell_pin('A6LUT', 'A{}'.format(idx + 1),
+                                             'A[{}]'.format(idx))
 
 
 def cleanup_o6(top, site):
@@ -669,6 +692,35 @@ def create_ramd64e(bel_name, cell_name):
     return bel
 
 
+def create_rams64e(bel_name, cell_name):
+    bel = Bel('RAMS64E', cell_name)
+    bel.set_bel(bel_name)
+
+    for idx in range(6):
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin="A{}".format(idx + 1),
+            cell_pin="ADR{}".format(idx))
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin="WA{}".format(idx + 1),
+            cell_pin="ADR{}".format(idx))
+
+    for idx in [6, 7]:
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin="WA{}".format(idx + 1),
+            cell_pin="WADR{}".format(idx))
+
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin="O6", cell_pin="O")
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin="DI1", cell_pin="I")
+    bel.map_bel_pin_to_cell_pin(
+        bel_name=bel_name, bel_pin="CLK", cell_pin="CLK")
+    bel.map_bel_pin_to_cell_pin(bel_name=bel_name, bel_pin="WE", cell_pin="WE")
+
+    return bel
+
+
 def create_f7mux(bel_name, cell_name):
     bel = Bel('MUXF7', cell_name)
     bel.set_bel(bel_name)
@@ -800,17 +852,14 @@ def process_slice(top, s):
                     srl = create_srl32(site, row)
                     srl.parameters['INIT'] = get_srl32_init(site, row)
 
-                    site.add_sink(srl, 'CE', WE)
-                    srl.map_bel_pin_to_cell_pin(
-                        bel_name=srl.bel,
-                        bel_pin='WE',
-                        cell_pin='CE',
-                    )
+                    site.add_sink(srl, 'CE', WE, srl.bel, 'WE')
 
                     if row == 'A' and site.has_feature('DOUTMUX.MC31'):
-                        site.add_internal_source(srl, 'Q31', 'AMC31')
+                        site.add_internal_source(srl, 'Q31', 'AMC31', srl.bel,
+                                                 'MC31')
                     if row == 'A' and site.has_feature('DFFMUX.MC31'):
-                        site.add_internal_source(srl, 'Q31', 'AMC31')
+                        site.add_internal_source(srl, 'Q31', 'AMC31', srl.bel,
+                                                 'MC31')
 
                     site.add_bel(srl)
                     srls[row] = (srl, )
@@ -850,15 +899,11 @@ def process_slice(top, s):
                         srl = create_srl16(site, row, srl_type, part)
                         srl.parameters['INIT'] = init[i]
 
-                        site.add_sink(srl, 'CE', WE)
-                        srl.map_bel_pin_to_cell_pin(
-                            bel_name=srl.bel,
-                            bel_pin='WE',
-                            cell_pin='CE',
-                        )
+                        site.add_sink(srl, 'CE', WE, srl.bel, 'WE')
 
                         if use_mc31 and srl_type == 'SRLC16E':
-                            site.add_internal_source(srl, 'Q15', 'AMC31')
+                            site.add_internal_source(srl, 'Q15', 'AMC31',
+                                                     srl.bel, 'MC31')
 
                         site.add_bel(srl, name="{}{}SRL".format(row, part))
                         srls[row].append(srl)
@@ -874,30 +919,45 @@ def process_slice(top, s):
 
         if lut_modes['D'] == 'RAM256X1S':
             ram256 = Bel('RAM256X1S', priority=3)
-            site.add_sink(ram256, 'WE', WE)
-            site.add_sink(ram256, 'WCLK', 'CLK')
-            site.add_sink(ram256, 'D', 'DI')
+            site.add_sink(
+                ram256, 'WE', WE, 'A6LUT', "WE", site_pips=we_site_pips)
+            site.add_sink(
+                ram256, 'WCLK', 'CLK', 'A6LUT', "CLK", site_pips=clk_site_pips)
+            site.add_sink(
+                ram256,
+                'D',
+                'DI',
+                "A6LUT",
+                "DI1",
+                site_pips=[
+                    ('site_pip', 'BDI1MUX', 'DI'),
+                    ('site_pip', 'ADI1MUX', 'BDI1'),
+                ])
 
             for idx in range(6):
                 site.add_sink(ram256, 'A[{}]'.format(idx),
-                              "D{}".format(idx + 1))
+                              "D{}".format(idx + 1), "D6LUT",
+                              "A{}".format(idx + 1))
                 # Add fake sinks as they need to be routed to
                 site.add_sink(ram256, 'ADDR_C[{}]'.format(idx),
-                              "C{}".format(idx + 1))
+                              "C{}".format(idx + 1), "C6LUT",
+                              "A{}".format(idx + 1))
                 site.add_sink(ram256, 'ADDR_B[{}]'.format(idx),
-                              "B{}".format(idx + 1))
+                              "B{}".format(idx + 1), "B6LUT",
+                              "A{}".format(idx + 1))
                 site.add_sink(ram256, 'ADDR_A[{}]'.format(idx),
+                              "A{}".format(idx + 1), "A6LUT",
                               "A{}".format(idx + 1))
 
-            site.add_sink(ram256, 'A[6]', "CX")
-            site.add_sink(ram256, 'A[7]', "BX")
-            site.add_internal_source(ram256, 'O', 'F8MUX_O')
+            site.add_sink(ram256, 'A[6]', "CX", "F7BMUX", "S0")
+            site.add_sink(ram256, 'A[7]', "BX", "F8MUX", "S0")
+            site.add_internal_source(ram256, 'O', 'F8MUX_O', "F8MUX", "OUT")
 
             # Add fake sink to preserve routing thorugh AX pin.
             # The AX pin is used in the same net as for the CX pin.
-            site.add_sink(ram256, 'AX', "AX")
+            site.add_sink(ram256, 'AX', "AX", "F7AMUX", "S0")
 
-            ram256.parameters['INIT'] = (make_binary_verilog_value(
+            ram256.parameters['INIT'] = (make_hex_verilog_value(
                 256,
                 get_shifted_lut_init(site, 'D')
                 | get_shifted_lut_init(site, 'C', 64)
@@ -914,22 +974,44 @@ def process_slice(top, s):
             del lut_modes['D']
         elif lut_modes['D'] == 'RAM128X1S':
             ram128 = Bel('RAM128X1S', name='RAM128X1S_CD', priority=3)
-            site.add_sink(ram128, 'WE', WE)
-            site.add_sink(ram128, 'WCLK', "CLK")
-            site.add_sink(ram128, 'D', "DI")
+            bel_name = 'D6LUT'
+            site.add_sink(
+                ram128, 'WE', WE, bel_name, 'WE', site_pips=we_site_pips)
+            site.add_sink(
+                ram128,
+                'WCLK',
+                "CLK",
+                bel_name,
+                'CLK',
+                site_pips=clk_site_pips)
+            site.add_sink(
+                ram128,
+                'D',
+                "DI",
+                'C6LUT',
+                'DI1',
+                site_pips=[
+                    ('site_pip', 'CDI1MUX', 'DI'),
+                ])
 
             for idx in range(6):
-                site.add_sink(ram128, 'A{}'.format(idx), "D{}".format(idx + 1))
+                site.add_sink(ram128, 'A{}'.format(idx), "D{}".format(idx + 1),
+                              'D6LUT', 'A{}'.format(idx + 1))
                 # Add fake sink to route through the C[N] pins
                 site.add_sink(ram128, 'ADDR_C{}'.format(idx),
-                              "C{}".format(idx + 1))
+                              "C{}".format(idx + 1), 'C6LUT',
+                              'A{}'.format(idx + 1))
 
-            site.add_sink(ram128, 'A6', "CX")
-            site.add_internal_source(ram128, 'O', 'F7BMUX_O')
+            site.add_sink(ram128, 'A6', "CX", 'F7BMUX', 'S0')
+            site.add_internal_source(ram128, 'O', 'F7BMUX_O', 'F7BMUX', 'OUT')
 
-            ram128.parameters['INIT'] = make_binary_verilog_value(
+            ram128.parameters['INIT'] = make_hex_verilog_value(
                 128, (get_shifted_lut_init(site, 'D')
                       | get_shifted_lut_init(site, 'C', 64)))
+
+            ram128.add_physical_bel(create_rams64e('D6LUT', 'LOW'))
+            ram128.add_physical_bel(create_rams64e('C6LUT', 'HIGH'))
+            ram128.add_physical_bel(create_f7mux('F7BMUX', 'F7'))
 
             site.add_bel(ram128, name='RAM128X1S_CD')
             muxes.remove('F7BMUX')
@@ -938,27 +1020,50 @@ def process_slice(top, s):
             del lut_modes['D']
 
             if lut_modes['B'] == 'RAM128X1S':
+                bel_name = 'B6LUT'
                 ram128 = Bel('RAM128X1S', name='RAM128X1S_AB', priority=4)
-                site.add_sink(ram128, 'WE', WE)
-                site.add_sink(ram128, 'WCLK', "CLK")
-                site.add_sink(ram128, 'D', "BI")
+                site.add_sink(
+                    ram128, 'WE', WE, bel_name, 'WE', site_pips=we_site_pips)
+                site.add_sink(
+                    ram128,
+                    'WCLK',
+                    "CLK",
+                    bel_name,
+                    'CLK',
+                    site_pips=clk_site_pips)
+                site.add_sink(
+                    ram128,
+                    'D',
+                    "BI",
+                    'A6LUT',
+                    'DI1',
+                    site_pips=[
+                        ('site_pip', 'ADI1MUX', 'BDI1'),
+                    ])
 
                 for idx in range(6):
                     site.add_sink(ram128, 'A{}'.format(idx),
-                                  "B{}".format(idx + 1))
+                                  "B{}".format(idx + 1), 'B6LUT',
+                                  'A{}'.format(idx + 1))
                     # Add fake sink to route through the A[N] pins
                     site.add_sink(ram128, 'ADDR_A{}'.format(idx),
-                                  "A{}".format(idx + 1))
+                                  "A{}".format(idx + 1), 'A6LUT',
+                                  'A{}'.format(idx + 1))
 
-                site.add_sink(ram128, 'A6', "AX")
+                site.add_sink(ram128, 'A6', "AX", 'F7AMUX', 'S0')
 
-                site.add_internal_source(ram128, 'O', 'F7AMUX_O')
+                site.add_internal_source(ram128, 'O', 'F7AMUX_O', 'F7AMUX',
+                                         'OUT')
 
-                ram128.parameters['INIT'] = make_binary_verilog_value(
+                ram128.parameters['INIT'] = make_hex_verilog_value(
                     128, (get_shifted_lut_init(site, 'B')
                           | get_shifted_lut_init(site, 'A', 64)))
 
                 site.add_bel(ram128, name='RAM128X1S_AB')
+
+                ram128.add_physical_bel(create_rams64e('B6LUT', 'LOW'))
+                ram128.add_physical_bel(create_rams64e('A6LUT', 'HIGH'))
+                ram128.add_physical_bel(create_f7mux('F7AMUX', 'F7'))
 
                 muxes.remove('F7AMUX')
 
@@ -1102,8 +1207,10 @@ def process_slice(top, s):
 
             ram32m = Bel('RAM32M', name='RAM32M', priority=3)
 
-            site.add_sink(ram32m, 'WE', WE)
-            site.add_sink(ram32m, 'WCLK', "CLK")
+            site.add_sink(
+                ram32m, 'WE', WE, 'A6LUT', "WE", site_pips=we_site_pips)
+            site.add_sink(
+                ram32m, 'WCLK', "CLK", 'A6LUT', "CLK", site_pips=clk_site_pips)
 
             di_mux(site, ram32m, 'DIA[0]', 'A', 'A6LUT')
             di_mux(site, ram32m, 'DIB[0]', 'B', 'B6LUT')
@@ -1111,16 +1218,19 @@ def process_slice(top, s):
             di_mux(site, ram32m, 'DID[0]', 'D', 'D6LUT')
 
             for lut in 'ABCD':
-                site.add_sink(ram32m, 'DI{}[1]'.format(lut), lut + "X")
+                bel_name = '{}6LUT'.format(lut)
+                site.add_sink(ram32m, 'DI{}[1]'.format(lut), lut + "X",
+                              bel_name, 'DI2')
                 site.add_internal_source(ram32m, 'DO{}[1]'.format(lut),
-                                         lut + "O6")
+                                         lut + "O6", bel_name, "O6")
 
                 site.add_internal_source(ram32m, 'DO{}[0]'.format(lut),
-                                         lut + "O5")
+                                         lut + "O5", bel_name, "O5")
 
                 for idx in range(5):
-                    site.add_sink(ram32m, 'ADDR{}[{}]'.format(lut, idx),
-                                  "{}{}".format(lut, idx + 1))
+                    site.add_sink(
+                        ram32m, 'ADDR{}[{}]'.format(lut, idx), "{}{}".format(
+                            lut, idx + 1), bel_name, "A{}".format(idx + 1))
 
                 ram32m.parameters['INIT_' + lut] = munge_ram32m_init(
                     get_lut_init(site, lut))
@@ -1188,27 +1298,51 @@ def process_slice(top, s):
                         priority=priority) for idx in range(2)
                 ]
 
-                for idx in range(2):
-                    site.add_sink(ram32[idx], 'WE', WE)
-                    site.add_sink(ram32[idx], 'WCLK', "CLK")
+                ram32[0].set_bel('{}6LUT'.format(lut))
+                ram32[1].set_bel('{}5LUT'.format(lut))
+
+                for idx, sub_bel in zip(range(2), ['6', '5']):
+                    bel_name = '{}{}LUT'.format(lut, sub_bel)
+                    minus_bel_name = '{}{}LUT'.format(minus_one, sub_bel)
+
+                    site.add_sink(
+                        ram32[idx],
+                        'WE',
+                        WE,
+                        bel_name,
+                        'WE',
+                        site_pips=we_site_pips)
+                    site.add_sink(
+                        ram32[idx],
+                        'WCLK',
+                        "CLK",
+                        bel_name,
+                        'CLK',
+                        site_pips=clk_site_pips)
                     for aidx in range(5):
                         site.add_sink(ram32[idx], 'A{}'.format(aidx),
-                                      "{}{}".format(lut, aidx + 1))
+                                      "{}{}".format(lut, aidx + 1), bel_name,
+                                      'A{}'.format(aidx + 1))
                         site.add_sink(ram32[idx], 'DPRA{}'.format(aidx),
-                                      "{}{}".format(minus_one, aidx + 1))
+                                      "{}{}".format(minus_one, aidx + 1),
+                                      minus_bel_name, 'A{}'.format(aidx + 1))
 
-                site.add_sink(ram32[0], 'D', lut + "X")
-                site.add_sink(ram32[0], 'D0', minus_one + "X")
+                site.add_sink(ram32[0], 'D', lut + "X", ram32[0].bel, 'DI2')
+                site.add_sink(ram32[0], 'D0', minus_one + "X",
+                              '{}6LUT'.format(minus_one), 'DI2')
 
-                site.add_internal_source(ram32[0], 'SPO', lut + "O6")
-                site.add_internal_source(ram32[0], 'DPO', minus_one + "O6")
-                ram32[0].set_bel('{}6LUT'.format(lut))
+                site.add_internal_source(ram32[0], 'SPO', lut + "O6",
+                                         ram32[0].bel, 'O6')
+                site.add_internal_source(ram32[0], 'DPO', minus_one + "O6",
+                                         '{}6LUT'.format(minus_one), 'O6')
 
-                di_mux(site, ram32[1], 'D', lut)
-                di_mux(site, ram32[1], 'D0', minus_one)
-                site.add_internal_source(ram32[1], 'SPO', lut + "O5")
-                site.add_internal_source(ram32[1], 'DPO', minus_one + "O5")
-                ram32[1].set_bel('{}5LUT'.format(lut))
+                di_mux(site, ram32[1], 'D', lut, ram32[1].bel)
+                di_mux(site, ram32[1], 'D0', minus_one,
+                       '{}5LUT'.format(minus_one))
+                site.add_internal_source(ram32[1], 'SPO', lut + "O5",
+                                         ram32[1].bel, 'O5')
+                site.add_internal_source(ram32[1], 'DPO', minus_one + "O5",
+                                         '{}5LUT'.format(minus_one), 'O5')
 
                 lut_init = get_lut_init(site, lut)
                 other_init = get_lut_init(site, minus_one)
@@ -1234,16 +1368,25 @@ def process_slice(top, s):
             elif lut_modes[lut] == 'RAM64X1S':
                 ram64 = Bel(
                     'RAM64X1S', name='RAM64X1S_' + lut, priority=priority)
+                ram64.set_bel('{}6LUT'.format(lut))
 
-                site.add_sink(ram64, 'WE', WE)
-                site.add_sink(ram64, 'WCLK', "CLK")
-                di_mux(site, ram64, 'D', lut)
+                site.add_sink(
+                    ram64, 'WE', WE, ram64.bel, "WE", site_pips=we_site_pips)
+                site.add_sink(
+                    ram64,
+                    'WCLK',
+                    "CLK",
+                    ram64.bel,
+                    "CLK",
+                    site_pips=clk_site_pips)
+                di_mux(site, ram64, 'D', lut, ram64.bel)
 
                 for idx in range(6):
                     site.add_sink(ram64, 'A{}'.format(idx), "{}{}".format(
-                        lut, idx + 1))
+                        lut, idx + 1), ram64.bel, "A{}".format(idx + 1))
 
-                site.add_internal_source(ram64, 'O', lut + "O6")
+                site.add_internal_source(ram64, 'O', lut + "O6", ram64.bel,
+                                         "O6")
 
                 ram64.parameters['INIT'] = get_lut_init(site, lut)
 
@@ -1255,20 +1398,25 @@ def process_slice(top, s):
                         priority=priority) for idx in range(2)
                 ]
 
+                ram32[0].set_bel('{}6LUT'.format(lut))
+                ram32[1].set_bel('{}5LUT'.format(lut))
+
                 for idx in range(2):
-                    site.add_sink(ram32[idx], 'WE', WE)
-                    site.add_sink(ram32[idx], 'WCLK', "CLK")
+                    site.add_sink(ram32[idx], 'WE', WE, ram32[idx].bel, 'WE')
+                    site.add_sink(ram32[idx], 'WCLK', "CLK", ram32[idx].bel,
+                                  'CLK')
                     for aidx in range(5):
                         site.add_sink(ram32[idx], 'A{}'.format(aidx),
-                                      "{}{}".format(lut, aidx + 1))
+                                      "{}{}".format(lut, aidx + 1),
+                                      ram32[idx].bel, 'A{}'.format(aidx + 1))
 
-                site.add_sink(ram32[0], 'D', lut + "X")
-                site.add_internal_source(ram32[0], 'O', lut + "O6")
-                ram32[0].set_bel('{}6LUT'.format(lut))
+                site.add_sink(ram32[0], 'D', lut + "X", ram32[0].bel, 'DI2')
+                site.add_internal_source(ram32[0], 'O', lut + "O6",
+                                         ram32[0].bel, 'O6')
 
-                di_mux(site, ram32[1], 'D', lut)
-                site.add_internal_source(ram32[1], 'O', lut + "O5")
-                ram32[1].set_bel('{}5LUT'.format(lut))
+                di_mux(site, ram32[1], 'D', lut, ram32[1].bel)
+                site.add_internal_source(ram32[1], 'O', lut + "O5",
+                                         ram32[0].bel, 'O5')
 
                 lut_init = get_lut_init(site, lut)
 
@@ -1304,10 +1452,13 @@ def process_slice(top, s):
 
         if site.has_feature("{}LUT.SMALL".format(src)):
             q = "Q15"
+            bel_pin = None
         else:
             q = "Q31"
+            bel_pin = "MC31"
 
-        site.add_internal_source(srls[src][-1], q, '{}MC31'.format(src))
+        site.add_internal_source(srls[src][-1], q, '{}MC31'.format(src),
+                                 srls[src][-1].bel, bel_pin)
         srls[dst][0].connections['D'] = '{}MC31'.format(src)
 
     need_f8 = site.has_feature('BFFMUX.F8') or site.has_feature('BOUTMUX.F8')
@@ -1329,11 +1480,12 @@ def process_slice(top, s):
             f7amux = Bel(bel_type, 'MUXF7A', priority=7)
             f7amux.set_bel('F7AMUX')
 
-            site.connect_internal(f7amux, 'I0', 'BO6')
-            site.connect_internal(f7amux, 'I1', 'AO6')
-            site.add_sink(f7amux, 'S', 'AX')
+            site.connect_internal(f7amux, 'I0', 'BO6', f7amux.bel, '0')
+            site.connect_internal(f7amux, 'I1', 'AO6', f7amux.bel, '1')
+            site.add_sink(f7amux, 'S', 'AX', f7amux.bel, 'S0')
 
-            site.add_internal_source(f7amux, opin, 'F7AMUX_O')
+            site.add_internal_source(f7amux, opin, 'F7AMUX_O', f7amux.bel,
+                                     'OUT')
 
             site.add_bel(f7amux)
         elif mux == 'F7BMUX':
@@ -1346,11 +1498,12 @@ def process_slice(top, s):
             f7bmux = Bel(bel_type, 'MUXF7B', priority=7)
             f7bmux.set_bel('F7BMUX')
 
-            site.connect_internal(f7bmux, 'I0', 'DO6')
-            site.connect_internal(f7bmux, 'I1', 'CO6')
-            site.add_sink(f7bmux, 'S', 'CX')
+            site.connect_internal(f7bmux, 'I0', 'DO6', f7bmux.bel, '0')
+            site.connect_internal(f7bmux, 'I1', 'CO6', f7bmux.bel, '1')
+            site.add_sink(f7bmux, 'S', 'CX', f7bmux.bel, 'S0')
 
-            site.add_internal_source(f7bmux, opin, 'F7BMUX_O')
+            site.add_internal_source(f7bmux, opin, 'F7BMUX_O', f7bmux.bel,
+                                     'OUT')
 
             site.add_bel(f7bmux)
         elif mux == 'F8MUX':
@@ -1362,11 +1515,11 @@ def process_slice(top, s):
 
             f8mux = Bel(bel_type, priority=7)
 
-            site.connect_internal(f8mux, 'I0', 'F7BMUX_O')
-            site.connect_internal(f8mux, 'I1', 'F7AMUX_O')
-            site.add_sink(f8mux, 'S', 'BX')
+            site.connect_internal(f8mux, 'I0', 'F7BMUX_O', f8mux.bel, '0')
+            site.connect_internal(f8mux, 'I1', 'F7AMUX_O', f8mux.bel, '1')
+            site.add_sink(f8mux, 'S', 'BX', f8mux.bel, 'S0')
 
-            site.add_internal_source(f8mux, opin, 'F8MUX_O')
+            site.add_internal_source(f8mux, opin, 'F8MUX_O', f8mux.bel, 'OUT')
 
             site.add_bel(f8mux)
         else:
