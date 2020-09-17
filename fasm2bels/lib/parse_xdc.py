@@ -10,12 +10,17 @@ def parse_simple_xdc(fp):
     """ Parse a simple XDC file object and yield XdcIoConstraint objects. """
 
     for line_number, line in enumerate(fp):
-        m = re.match(r"^\s*set_property\s+(.*)\[get_ports\s+{(.*)}", line,
+        m = re.match(r"^\s*set_property\s+(.*)\[\s*get_ports\s+(.*)\]", line,
                      re.I)
         if not m:
             continue
         properties = m.group(1).strip()
         port = m.group(2).strip()
+
+        # Check if port is surrounded by {} braces
+        m = re.match(r"{\s*(\S+)\s*}", port)
+        if m:
+            port = m.group(1).strip()
 
         # Check for pin property as part of a dictionary, ie:
         # -dict { PACKAGE_PIN N15   IOSTANDARD LVCMOS33 }

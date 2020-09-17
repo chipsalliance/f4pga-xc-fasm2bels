@@ -327,7 +327,7 @@ def main():
     parser.add_argument(
         '--pcf', help="Mapping of top-level pins to pads, PCF format.")
     parser.add_argument(
-        '--xdc', help="Mapping of top-level pints to pads, XDC format.")
+        '--input_xdc', help="Mapping of top-level pints to pads, XDC format.")
     parser.add_argument('--route_file', help="VPR route output file.")
     parser.add_argument('--rr_graph', help="Real or virt xc7 graph")
     parser.add_argument(
@@ -367,9 +367,9 @@ def main():
     else:
         parsed_eblif = None
 
-    if args.eblif or args.pcf or args.xdc:
+    if args.eblif or args.pcf or args.input_xdc:
         top.set_site_to_signal(
-            load_io_sites(args.db_root, args.part, args.pcf, args.xdc,
+            load_io_sites(args.db_root, args.part, args.pcf, args.input_xdc,
                           parsed_eblif))
 
     if args.route_file:
