@@ -127,7 +127,9 @@ def process_idelay(top, features):
 
         if site.has_feature("IDELAY_VALUE"):
             idelay_value = site.decode_multi_bit_feature('IDELAY_VALUE')
-            bel.parameters['IDELAY_VALUE'] = idelay_value
+            bel.parameters['IDELAY_VALUE'] = str(idelay_value)
+        else:
+            bel.parameters['IDELAY_VALUE'] = '0'
 
         if site.has_feature("IDELAY_TYPE_VARIABLE"):
             bel.parameters['IDELAY_TYPE'] = '"VARIABLE"'
@@ -283,6 +285,12 @@ def process_iserdes(top, site, idelay_site=None):
     for i in range(1, 9):
         port_q = 'Q{}'.format(i)
         site.add_source(bel, port_q, port_q, bel.bel, port_q)
+
+    for idx in range(1, 5):
+        bel.parameters['SRVAL_Q{}'.format(idx)] = "0" if site.has_feature(
+            'IFF.ZSRVAL_Q{}'.format(idx)) else "1"
+        bel.parameters['INIT_Q{}'.format(idx)] = "0" if site.has_feature(
+            'IFF.ZINIT_Q{}'.format(idx)) else "1"
 
     for unused_in in [
             'SHIFTIN1', 'SHIFTIN2', 'OFB', 'OCLK', 'OCLKB', 'CLKDIVP'
@@ -626,6 +634,11 @@ def process_oserdes(top, site):
     site.add_sink(bel, 'TCE', 'TCE', bel.bel, 'TCE')
 
     site.add_sink(bel, 'RST', 'SR', bel.bel, 'RST', sink_site_type_pin='RST')
+
+    bel.parameters["INIT_OQ"] = "0" if site.has_feature('ZINIT_OQ') else "1"
+    bel.parameters["INIT_TQ"] = "0" if site.has_feature('ZINIT_TQ') else "1"
+    bel.parameters["SRVAL_OQ"] = "0" if site.has_feature('ZSRVAL_OQ') else "1"
+    bel.parameters["SRVAL_TQ"] = "0" if site.has_feature('ZSRVAL_TQ') else "1"
 
     for unused_in in ['SHIFTIN1', 'SHIFTIN2', 'TBYTEIN']:
         bel.add_unconnected_port(unused_in, None, output=False)

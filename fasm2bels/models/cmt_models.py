@@ -164,9 +164,9 @@ def process_pll(conn, top, tile_name, features):
 
             if clkout == 'FBOUT':
                 vco_m = float(divider)
-                pll.parameters['CLKFBOUT_MULT'] = divider
+                pll.parameters['CLKFBOUT_MULT'] = str(divider)
             else:
-                pll.parameters['CLK{}_DIVIDE'.format(clkout)] = divider
+                pll.parameters['CLK{}_DIVIDE'.format(clkout)] = str(divider)
                 pll.parameters['CLK{}_DUTY_CYCLE'.format(
                     clkout)] = "{0:.3f}".format(duty)
 
@@ -191,6 +191,11 @@ def process_pll(conn, top, tile_name, features):
                 bel_pin='CLK' + clkout,
                 cell_pin='CLK' + clkout,
             )
+
+            if clkout != 'FBOUT':
+                pll.parameters['CLK{}_DIVIDE'.format(clkout)] = "1"
+                pll.parameters['CLK{}_DUTY_CYCLE'.format(clkout)] = "0.500"
+                pll.parameters['CLK{}_PHASE'.format(clkout)] = "0.000"
 
     # Input clock divider
     high_time = site.decode_multi_bit_feature('DIVCLK_DIVCLK_HIGH_TIME')
