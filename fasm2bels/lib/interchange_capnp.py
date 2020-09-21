@@ -552,8 +552,8 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
     # TODO: Iterate net names on this?  This feels wrong/weird.  Need to
     # handle net name collisions?
     constant_nets = {
-        0: "<const0>",
-        1: "<const1>",
+        0: "GLOBAL_LOGIC0",
+        1: "GLOBAL_LOGIC1",
     }
 
     top_cell.add_cell_instance(name='VCC', cell_name="VCC")
