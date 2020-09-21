@@ -647,7 +647,8 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
 
                 if port in ports:
                     port_dir, port_width = ports[port]
-                    assert port_dir == direction, (port, direction, port_dir, port_width)
+                    assert port_dir == direction, (port, direction, port_dir,
+                                                   port_width)
                     if width is not None:
                         assert port_width <= width
 

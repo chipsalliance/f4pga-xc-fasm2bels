@@ -2426,7 +2426,9 @@ set net [get_nets -of_object $pin]""".format(
                     continue
 
                 bel, cell_pin = self.source_bels[net_wire_pkey]
-                assert cell_pin in bel.final_net_names, (bel.get_cell(self), bel.module, bel.name, cell_pin, bel.final_net_names.keys())
+                assert cell_pin in bel.final_net_names, (
+                    bel.get_cell(self), bel.module, bel.name, cell_pin,
+                    bel.final_net_names.keys())
                 net_name = bel.final_net_names[cell_pin]
 
             out = []

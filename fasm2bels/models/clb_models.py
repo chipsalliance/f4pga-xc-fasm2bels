@@ -124,21 +124,20 @@ def create_srl32(site, srl, up_chain):
         bel_pin='CLK')
 
     if up_chain:
-        srl_plus_1 = chr(ord(srl)+1)
+        srl_plus_1 = chr(ord(srl) + 1)
         site.connect_internal(
-                bel=bel,
-                cell_pin='D',
-                source='{}MC31'.format(srl_plus_1),
-                bel_name=bel_name,
-                bel_pin='DI1',
-                site_pips=[
-                    ('site_pip', '{}DI1MUX'.format(srl), '{}MC31'.format(srl_plus_1))
-                    ])
+            bel=bel,
+            cell_pin='D',
+            source='{}MC31'.format(srl_plus_1),
+            bel_name=bel_name,
+            bel_pin='DI1',
+            site_pips=[('site_pip', '{}DI1MUX'.format(srl),
+                        '{}MC31'.format(srl_plus_1))])
     else:
         if srl in 'ABC':
             assert site.has_feature('{srl}LUT.DI1MUX.{srl}I'.format(srl=srl))
-            site_pips = [
-                    ('site_pip', '{}DI1MUX'.format(srl), '{}I'.format(srl))]
+            site_pips = [('site_pip', '{}DI1MUX'.format(srl),
+                          '{}I'.format(srl))]
         else:
             site_pips = []
 
@@ -211,20 +210,29 @@ def create_srl16(site, srl, srl_type, part, up_chain):
         if up_chain:
             srl_plus_1 = chr(ord(srl) + 1)
             site.connect_internal(
-                bel, 'D', '{}MC31'.format(srl_plus_1), bel_name=bel_name, bel_pin='DI1',
-                site_pips=[
-                    ('site_pip', '{}DI1MUX'.format(srl), '{}MC31'.format(srl_plus_1))
-                    ])
+                bel,
+                'D',
+                '{}MC31'.format(srl_plus_1),
+                bel_name=bel_name,
+                bel_pin='DI1',
+                site_pips=[('site_pip', '{}DI1MUX'.format(srl),
+                            '{}MC31'.format(srl_plus_1))])
         else:
             if srl in 'ABC':
-                assert site.has_feature('{srl}LUT.DI1MUX.{srl}I'.format(srl=srl))
-                site_pips = [
-                        ('site_pip', '{}DI1MUX'.format(srl), '{}I'.format(srl))]
+                assert site.has_feature(
+                    '{srl}LUT.DI1MUX.{srl}I'.format(srl=srl))
+                site_pips = [('site_pip', '{}DI1MUX'.format(srl),
+                              '{}I'.format(srl))]
             else:
                 site_pips = []
 
             site.add_sink(
-                bel, 'D', '{}I'.format(srl), bel_name=bel_name, bel_pin='DI1', site_pips=site_pips)
+                bel,
+                'D',
+                '{}I'.format(srl),
+                bel_name=bel_name,
+                bel_pin='DI1',
+                site_pips=site_pips)
 
         bel_pin = 'O5'
     else:
@@ -540,7 +548,8 @@ def cleanup_dram(top, site):
                             continue
 
                         bel.unmap_bel_pin('{}{}LUT'.format(lut, sub_bel), 'A6')
-                        bel.unmap_bel_pin('{}{}LUT'.format(minus_one, sub_bel), 'A6')
+                        bel.unmap_bel_pin('{}{}LUT'.format(minus_one, sub_bel),
+                                          'A6')
 
                 for idx, sub_bel in zip(range(2), ['6', '5']):
                     name = 'RAM32X1D_{}_{}'.format(lut, idx)
@@ -1001,7 +1010,8 @@ def process_slice(top, s):
 
     # Add BELs for LUTs/RAMs
     if not site.has_feature('DLUT.RAM'):
-        chain_features = (None, 'CLUT.DI1MUX.DI_DMC31', 'BLUT.DI1MUX.DI_CMC31', 'ALUT.DI1MUX.BDI1_BMC31', None)
+        chain_features = (None, 'CLUT.DI1MUX.DI_DMC31', 'BLUT.DI1MUX.DI_CMC31',
+                          'ALUT.DI1MUX.BDI1_BMC31', None)
         chain_feature_values = []
         for feat in chain_features:
             if feat is not None:
@@ -1009,7 +1019,8 @@ def process_slice(top, s):
             else:
                 chain_feature_values.append(None)
 
-        for row, up_chain, down_chain in zip('DCBA', chain_feature_values[:4], chain_feature_values[1:]):
+        for row, up_chain, down_chain in zip('DCBA', chain_feature_values[:4],
+                                             chain_feature_values[1:]):
             # SRL
             if site.has_feature('{}LUT.SRL'.format(row)):
                 # Cannot have both SRL and DRAM
@@ -1020,7 +1031,8 @@ def process_slice(top, s):
                     srl = create_srl32(site, row, up_chain)
                     srl.parameters['INIT'] = get_srl32_init(site, row)
 
-                    site.add_sink(srl, 'CE', WE, srl.bel, 'WE', site_pips=we_site_pips)
+                    site.add_sink(
+                        srl, 'CE', WE, srl.bel, 'WE', site_pips=we_site_pips)
 
                     if row == 'A' and site.has_feature('DOUTMUX.MC31'):
                         down_chain = True
@@ -1029,8 +1041,8 @@ def process_slice(top, s):
                         down_chain = True
 
                     if down_chain:
-                        site.add_internal_source(srl, 'Q31', '{}MC31'.format(row),
-                                                srl.bel, 'MC31')
+                        site.add_internal_source(
+                            srl, 'Q31', '{}MC31'.format(row), srl.bel, 'MC31')
                     else:
                         srl.add_unconnected_port('Q31', None, output=True)
 
@@ -1045,8 +1057,9 @@ def process_slice(top, s):
                             # Check if SRL in previous row exists.  If it
                             # doesn't exist, this SRL is impossible and should
                             # not be emitted.
-                            row_plus_1 = chr(ord(row)+1)
-                            up_srl = site.maybe_get_bel('{}6SRL'.format(row_plus_1))
+                            row_plus_1 = chr(ord(row) + 1)
+                            up_srl = site.maybe_get_bel(
+                                '{}6SRL'.format(row_plus_1))
                             if not up_srl:
                                 continue
 
@@ -1067,13 +1080,21 @@ def process_slice(top, s):
                                 use_mc31 = True
 
                         # Create the SRL
-                        srl = create_srl16(site, row, srl_type, part, up_chain and part == '5')
+                        srl = create_srl16(site, row, srl_type, part, up_chain
+                                           and part == '5')
                         srl.parameters['INIT'] = init[i]
 
-                        site.add_sink(srl, 'CE', WE, srl.bel, 'WE', site_pips=we_site_pips)
+                        site.add_sink(
+                            srl,
+                            'CE',
+                            WE,
+                            srl.bel,
+                            'WE',
+                            site_pips=we_site_pips)
 
                         if use_mc31:
-                            site.add_internal_source(srl, 'Q15', '{}MC31'.format(row),
+                            site.add_internal_source(srl, 'Q15',
+                                                     '{}MC31'.format(row),
                                                      srl.bel, 'MC31')
 
                         site.add_bel(srl, name="{}{}SRL".format(row, part))
@@ -1122,7 +1143,8 @@ def process_slice(top, s):
             site.add_internal_source(ram256, 'O', 'F8MUX_O', "F8MUX", "OUT")
 
             for row in 'ABCD':
-                ram256.add_physical_bel(create_rams64e(row + '6LUT', 'RAMS64E_' + row))
+                ram256.add_physical_bel(
+                    create_rams64e(row + '6LUT', 'RAMS64E_' + row))
 
             ram256.add_physical_bel(create_f7mux('F7AMUX', 'F7.A'))
             ram256.add_physical_bel(create_f7mux('F7BMUX', 'F7.B'))
@@ -1529,7 +1551,8 @@ def process_slice(top, s):
                                       minus_bel_name, 'A{}'.format(aidx + 1))
 
                     ram32[idx].add_physical_bel(create_ramd32(bel_name, 'SP'))
-                    ram32[idx].add_physical_bel(create_ramd32(minus_bel_name, 'DP'))
+                    ram32[idx].add_physical_bel(
+                        create_ramd32(minus_bel_name, 'DP'))
 
                     #if sub_bel == '5':
                     #    ram32[idx].physical_net_names[bel_name, 'O5'] = 'SPO'
@@ -1538,8 +1561,8 @@ def process_slice(top, s):
                     #    ram32[idx].physical_net_names[bel_name, 'O6'] = 'SPO'
                     #    ram32[idx].physical_net_names[minus_bel_name, 'O6'] = 'DPO'
 
-
-                site.add_sink(ram32[0], 'D', lut + "X", '{}6LUT'.format(lut), 'DI2')
+                site.add_sink(ram32[0], 'D', lut + "X", '{}6LUT'.format(lut),
+                              'DI2')
                 site.add_sink(ram32[0], 'D0', minus_one + "X",
                               '{}6LUT'.format(minus_one), 'DI2')
 
@@ -2025,8 +2048,8 @@ def process_slice(top, s):
             continue
 
     if site.has_feature('DOUTMUX.MC31'):
-        site.add_output_from_internal('DMUX', 'AMC31',
-                site_pips=[('site_pip', 'DOUTMUX', 'MC31')])
+        site.add_output_from_internal(
+            'DMUX', 'AMC31', site_pips=[('site_pip', 'DOUTMUX', 'MC31')])
 
     site.set_post_route_cleanup_function(cleanup_slice)
     top.add_site(site)
