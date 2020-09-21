@@ -108,10 +108,10 @@ def get_srl32_init(site, srl):
 
     assert bits[1::2] == bits[::2]
 
-    return make_hex_verilog_value(32, int(bits[::2], 0))
+    return make_hex_verilog_value(32, int(bits[::2], 2))
 
 
-def create_srl32(site, srl):
+def create_srl32(site, srl, up_chain):
     bel = Bel('SRLC32E', srl + 'SRL', priority=2)
     bel_name = srl + '6LUT'
     bel.set_bel(bel_name)
@@ -123,13 +123,33 @@ def create_srl32(site, srl):
         bel_name=bel_name,
         bel_pin='CLK')
 
-    site.add_sink(
-        bel=bel,
-        cell_pin='D',
-        sink_site_pin='{}I'.format(srl),
-        bel_name=bel_name,
-        bel_pin='DI1',
-    )
+    if up_chain:
+        srl_plus_1 = chr(ord(srl)+1)
+        site.connect_internal(
+                bel=bel,
+                cell_pin='D',
+                source='{}MC31'.format(srl_plus_1),
+                bel_name=bel_name,
+                bel_pin='DI1',
+                site_pips=[
+                    ('site_pip', '{}DI1MUX'.format(srl), '{}MC31'.format(srl_plus_1))
+                    ])
+    else:
+        if srl in 'ABC':
+            assert site.has_feature('{srl}LUT.DI1MUX.{srl}I'.format(srl=srl))
+            site_pips = [
+                    ('site_pip', '{}DI1MUX'.format(srl), '{}I'.format(srl))]
+        else:
+            site_pips = []
+
+        site.add_sink(
+            bel=bel,
+            cell_pin='D',
+            sink_site_pin='{}I'.format(srl),
+            bel_name=bel_name,
+            bel_pin='DI1',
+            site_pips=site_pips,
+        )
 
     for idx in range(5):
         site.add_sink(
@@ -138,6 +158,13 @@ def create_srl32(site, srl):
             sink_site_pin='{}{}'.format(srl, idx + 2),
             bel_name=bel_name,
             bel_pin='A{}'.format(idx + 2))
+
+    site.add_sink(
+        bel=bel,
+        cell_pin='A1'.format(idx),
+        sink_site_pin='{}1'.format(srl),
+        bel_name=bel_name,
+        bel_pin='A1')
 
     site.add_internal_source(
         bel=bel,
@@ -166,7 +193,7 @@ def get_srl16_init(site, srl):
                                               16, int(srl_init[16:], 2))
 
 
-def create_srl16(site, srl, srl_type, part):
+def create_srl16(site, srl, srl_type, part, up_chain):
     """
     Create an instance of SRL16 bel. Either for "x6LUT" or for "x5LUT"
     depending on the part parameter.
@@ -181,10 +208,28 @@ def create_srl16(site, srl, srl_type, part):
     site.add_sink(bel, 'CLK', 'CLK', bel_name=bel_name, bel_pin='CLK')
 
     if part == '5':
-        site.add_sink(
-            bel, 'D', '{}I'.format(srl), bel_name=bel_name, bel_pin='DI1')
+        if up_chain:
+            srl_plus_1 = chr(ord(srl) + 1)
+            site.connect_internal(
+                bel, 'D', '{}MC31'.format(srl_plus_1), bel_name=bel_name, bel_pin='DI1',
+                site_pips=[
+                    ('site_pip', '{}DI1MUX'.format(srl), '{}MC31'.format(srl_plus_1))
+                    ])
+        else:
+            if srl in 'ABC':
+                assert site.has_feature('{srl}LUT.DI1MUX.{srl}I'.format(srl=srl))
+                site_pips = [
+                        ('site_pip', '{}DI1MUX'.format(srl), '{}I'.format(srl))]
+            else:
+                site_pips = []
+
+            site.add_sink(
+                bel, 'D', '{}I'.format(srl), bel_name=bel_name, bel_pin='DI1', site_pips=site_pips)
+
         bel_pin = 'O5'
-    if part == '6':
+    else:
+        assert part == '6'
+        assert not up_chain
         site.add_sink(
             bel, 'D', '{}X'.format(srl), bel_name=bel_name, bel_pin='DI2')
         bel_pin = 'O6'
@@ -196,6 +241,19 @@ def create_srl16(site, srl, srl_type, part):
             '{}{}'.format(srl, idx + 2),
             bel_name=bel_name,
             bel_pin='A{}'.format(idx + 2))
+
+    site.add_sink(
+        bel=bel,
+        cell_pin='dummyA1',
+        sink_site_pin='{}1'.format(srl),
+        bel_name=bel_name,
+        bel_pin='A1')
+    site.add_sink(
+        bel=bel,
+        cell_pin='A6',
+        sink_site_pin='{}6'.format(srl),
+        bel_name=bel_name,
+        bel_pin='A6')
 
     site.add_internal_source(
         bel, 'Q', srl + 'O' + part, bel_name=bel_name, bel_pin=bel_pin)
@@ -418,48 +476,35 @@ def cleanup_srl(top, site):
     # Remove unused SRL16
     for i, row in enumerate("ABCD"):
 
-        # n5SRL, check O5
-        srl = site.maybe_get_bel("{}5SRL".format(row))
-        if srl is not None:
+        srl6 = site.maybe_get_bel("{}6SRL".format(row))
+        srl5 = site.maybe_get_bel("{}5SRL".format(row))
 
-            if not site.has_feature("{}OUTMUX.O5".format(row)) and \
-               not site.has_feature("{}FFMUX.O5".format(row)):
-                top.remove_bel(site, srl)
+        if srl6 is not None or srl5 is not None:
+            # Mask A1 and A6 BEL pin and attached site pin.
+            if srl6 is not None:
+                site.mask_sink(srl6, 'dummyA1')
+                site.mask_sink(srl6, 'A6')
 
-        # n6SRL, check O6 and MC31
-        srl = site.maybe_get_bel("{}6SRL".format(row))
-        if srl is not None:
-
-            # nOUTMUX, nFFMUX
-            noutmux_o6_used = site.has_feature("{}OUTMUX.O6".format(row))
-            nffmux_o6_used = site.has_feature("{}FFMUX.O6".format(row))
-
-            # nUSED
-            nused_used = True
-            sinks = list(top.find_sinks_from_source(site, row))
-            if len(sinks) == 0:
-                nused_used = False
-
-            # n7MUX
-            f7nmux_used = True
-            if row in "AB" and site.maybe_get_bel("F7AMUX") is None:
-                f7nmux_used = False
-            if row in "CD" and site.maybe_get_bel("F7BMUX") is None:
-                f7nmux_used = False
-
-            # A6SRL MC31 output
-            if row == "A":
-                mc31_used = site.has_feature("DOUTMUX.MC31") or \
-                    site.has_feature("DFFMUX.MC31")
+                if srl5 is not None:
+                    del srl5.connections['dummyA1']
+                    del srl5.connections['A6']
             else:
-                mc31_used = False
+                site.mask_sink(srl5, 'dummyA1')
+                site.mask_sink(srl5, 'A6')
 
-            # Remove if necessary
-            anything_used = nused_used or noutmux_o6_used or nffmux_o6_used or\
-                f7nmux_used or mc31_used
+            # Remove BEL pin mappings.
+            if srl6 is not None:
+                srl6.unmap_bel_pin(srl6.bel, 'A1')
+                srl6.unmap_bel_pin(srl6.bel, 'A6')
 
-            if not anything_used:
-                top.remove_bel(site, srl)
+            if srl5 is not None:
+                srl5.unmap_bel_pin(srl5.bel, 'A1')
+                srl5.unmap_bel_pin(srl5.bel, 'A6')
+
+        srl = site.maybe_get_bel("{}6SRL_32".format(row))
+        if srl is not None:
+            site.mask_sink(srl, 'A1')
+            srl.unmap_bel_pin(srl.bel, 'A1')
 
 
 def cleanup_dram(top, site):
@@ -913,49 +958,68 @@ def process_slice(top, s):
     muxes = set(('F7AMUX', 'F7BMUX', 'F8MUX'))
 
     luts = {}
-    srls = {}
+    any_srls = False
+    for row in 'ABCD':
+        if site.has_feature('{}LUT.SRL'.format(row)):
+            any_srls = True
+            break
 
     # Add BELs for LUTs/RAMs
     if not site.has_feature('DLUT.RAM'):
-        for row in 'ABCD':
+        chain_features = (None, 'CLUT.DI1MUX.DI_DMC31', 'BLUT.DI1MUX.DI_CMC31', 'ALUT.DI1MUX.BDI1_BMC31', None)
+        chain_feature_values = []
+        for feat in chain_features:
+            if feat is not None:
+                chain_feature_values.append(site.has_feature(feat))
+            else:
+                chain_feature_values.append(None)
 
+        for row, up_chain, down_chain in zip('DCBA', chain_feature_values[:4], chain_feature_values[1:]):
             # SRL
             if site.has_feature('{}LUT.SRL'.format(row)):
-
                 # Cannot have both SRL and DRAM
                 assert not site.has_feature('{}LUT.RAM'.format(row))
 
                 # SRL32
                 if not site.has_feature('{}LUT.SMALL'.format(row)):
-                    srl = create_srl32(site, row)
+                    srl = create_srl32(site, row, up_chain)
                     srl.parameters['INIT'] = get_srl32_init(site, row)
 
-                    site.add_sink(srl, 'CE', WE, srl.bel, 'WE')
+                    site.add_sink(srl, 'CE', WE, srl.bel, 'WE', site_pips=we_site_pips)
 
                     if row == 'A' and site.has_feature('DOUTMUX.MC31'):
-                        site.add_internal_source(srl, 'Q31', 'AMC31', srl.bel,
-                                                 'MC31')
-                    if row == 'A' and site.has_feature('DFFMUX.MC31'):
-                        site.add_internal_source(srl, 'Q31', 'AMC31', srl.bel,
-                                                 'MC31')
+                        down_chain = True
 
-                    site.add_bel(srl)
-                    srls[row] = (srl, )
+                    if row == 'A' and site.has_feature('DFFMUX.MC31'):
+                        down_chain = True
+
+                    if down_chain:
+                        site.add_internal_source(srl, 'Q31', '{}MC31'.format(row),
+                                                srl.bel, 'MC31')
+                    else:
+                        srl.add_unconnected_port('Q31', None, output=True)
+
+                    site.add_bel(srl, name='{}6SRL_32'.format(row))
 
                 # 2x SRL16
                 else:
-
-                    srls[row] = []
                     init = get_srl16_init(site, row)
 
                     for i, part in enumerate(['5', '6']):
+                        if part == '5' and up_chain:
+                            # Check if SRL in previous row exists.  If it
+                            # doesn't exist, this SRL is impossible and should
+                            # not be emitted.
+                            row_plus_1 = chr(ord(row)+1)
+                            up_srl = site.maybe_get_bel('{}6SRL'.format(row_plus_1))
+                            if not up_srl:
+                                continue
 
                         # Determine whether to use SRL16E or SRLC16E
                         srl_type = 'SRL16E'
                         use_mc31 = False
 
                         if part == '6':
-
                             if row == 'A' and site.has_feature('DOUTMUX.MC31'):
                                 srl_type = 'SRLC16E'
                                 use_mc31 = True
@@ -963,30 +1027,21 @@ def process_slice(top, s):
                                 srl_type = 'SRLC16E'
                                 use_mc31 = True
 
-                            if row == 'D' and site.has_feature(
-                                    'CLUT.DI1MUX.DI_DMC31'):
+                            if down_chain:
                                 srl_type = 'SRLC16E'
-                            if row == 'C' and site.has_feature(
-                                    'BLUT.DI1MUX.DI_CMC31'):
-                                srl_type = 'SRLC16E'
-                            if row == 'B' and site.has_feature(
-                                    'ALUT.DI1MUX.DI_BMC31'):
-                                srl_type = 'SRLC16E'
+                                use_mc31 = True
 
                         # Create the SRL
-                        srl = create_srl16(site, row, srl_type, part)
+                        srl = create_srl16(site, row, srl_type, part, up_chain and part == '5')
                         srl.parameters['INIT'] = init[i]
 
-                        site.add_sink(srl, 'CE', WE, srl.bel, 'WE')
+                        site.add_sink(srl, 'CE', WE, srl.bel, 'WE', site_pips=we_site_pips)
 
-                        if use_mc31 and srl_type == 'SRLC16E':
-                            site.add_internal_source(srl, 'Q15', 'AMC31',
+                        if use_mc31:
+                            site.add_internal_source(srl, 'Q15', '{}MC31'.format(row),
                                                      srl.bel, 'MC31')
 
                         site.add_bel(srl, name="{}{}SRL".format(row, part))
-                        srls[row].append(srl)
-
-                    srls[row] = tuple(srls[row])
 
             # LUT
             else:
@@ -1539,34 +1594,6 @@ def process_slice(top, s):
     # Detect SRL chains
     srl_chains = set()
 
-    if "D" in srls and "C" in srls and site.has_feature(
-            'CLUT.DI1MUX.DI_DMC31'):
-        srl_chains.add("DC")
-
-    if "C" in srls and "B" in srls and site.has_feature(
-            'BLUT.DI1MUX.DI_CMC31'):
-        srl_chains.add("CB")
-
-    if "B" in srls and "A" in srls and site.has_feature(
-            'ALUT.DI1MUX.BDI1_BMC31'):
-        srl_chains.add("BA")
-
-    # SRL chain connections
-    for chain in srl_chains:
-        src = chain[0]
-        dst = chain[1]
-
-        if site.has_feature("{}LUT.SMALL".format(src)):
-            q = "Q15"
-            bel_pin = None
-        else:
-            q = "Q31"
-            bel_pin = "MC31"
-
-        site.add_internal_source(srls[src][-1], q, '{}MC31'.format(src),
-                                 srls[src][-1].bel, bel_pin)
-        srls[dst][0].connections['D'] = '{}MC31'.format(src)
-
     need_f8 = site.has_feature('BFFMUX.F8') or site.has_feature('BOUTMUX.F8')
     need_f7a = site.has_feature('AFFMUX.F7') or site.has_feature('AOUTMUX.F7')
     need_f7b = site.has_feature('CFFMUX.F7') or site.has_feature('COUTMUX.F7')
@@ -1620,6 +1647,7 @@ def process_slice(top, s):
                 opin = 'O'
 
             f8mux = Bel(bel_type, priority=7)
+            f8mux.set_bel('F8MUX')
 
             site.connect_internal(f8mux, 'I0', 'F7BMUX_O', f8mux.bel, '0')
             site.connect_internal(f8mux, 'I1', 'F7AMUX_O', f8mux.bel, '1')
@@ -1637,7 +1665,7 @@ def process_slice(top, s):
             can_have_carry4 = False
             break
 
-    if len(srls) != 0:
+    if any_srls:
         can_have_carry4 = False
 
     if can_have_carry4:
@@ -1939,7 +1967,8 @@ def process_slice(top, s):
             continue
 
     if site.has_feature('DOUTMUX.MC31'):
-        site.add_output_from_internal('DMUX', 'AMC31')
+        site.add_output_from_internal('DMUX', 'AMC31',
+                site_pips=[('site_pip', 'DOUTMUX', 'MC31')])
 
     site.set_post_route_cleanup_function(cleanup_slice)
     top.add_site(site)

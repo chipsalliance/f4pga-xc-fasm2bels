@@ -93,6 +93,8 @@ def process_idelay(top, features):
         bel = Bel('IDELAYE2')
         bel.set_bel('IDELAYE2')
 
+        bel.parameters['REFCLK_FREQUENCY'] = "200.0"
+
         if site.has_feature("CINVCTRL_SEL"):
             bel.parameters["CINVCTRL_SEL"] = '"TRUE"'
 

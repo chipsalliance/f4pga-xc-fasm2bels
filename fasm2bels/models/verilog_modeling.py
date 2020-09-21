@@ -1071,6 +1071,9 @@ class Site(object):
             site_routing_type, bel_name, bel_pin, direction = bel_pin_key
             assert site_routing_type == 'bel_pin'
 
+            if direction == 'site_source':
+                continue
+
             # If the bel_name isn't in the bel_map, this site routing is
             # likely dead, so ignore it.
             if bel_name not in bel_map:
@@ -2423,9 +2426,9 @@ set net [get_nets -of_object $pin]""".format(
                     continue
 
                 bel, cell_pin = self.source_bels[net_wire_pkey]
+                assert cell_pin in bel.final_net_names, (bel.get_cell(self), bel.module, bel.name, cell_pin, bel.final_net_names.keys())
                 net_name = bel.final_net_names[cell_pin]
 
-            # TODO: Output routing branch tree rather than flat pip list.
             out = []
             net.output_pips(out)
             yield net_name, out
