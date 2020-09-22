@@ -1181,15 +1181,7 @@ def process_slice(top, s):
                 bel_name,
                 'CLK',
                 site_pips=clk_site_pips)
-            site.add_sink(
-                ram128,
-                'D',
-                "DI",
-                'C6LUT',
-                'DI1',
-                site_pips=[
-                    ('site_pip', 'CDI1MUX', 'DI'),
-                ])
+            di_mux(site, ram128, 'D', 'C', 'C6LUT')
 
             for idx in range(6):
                 site.add_sink(ram128, 'A{}'.format(idx), "D{}".format(idx + 1),
@@ -1200,6 +1192,9 @@ def process_slice(top, s):
                               'A{}'.format(idx + 1))
 
             site.add_sink(ram128, 'A6', "CX", 'F7BMUX', 'S0')
+            site.link_site_routing([('bel_pin', 'CX', 'CX', 'site_source'),
+                                    ('site_pip', 'WA7USED', '0'),
+                                    ('bel_pin', 'A6LUT', 'WA7', 'input')])
             site.add_internal_source(ram128, 'O', 'F7BMUX_O', 'F7BMUX', 'OUT')
 
             ram128.parameters['INIT'] = make_hex_verilog_value(
@@ -1228,15 +1223,8 @@ def process_slice(top, s):
                     bel_name,
                     'CLK',
                     site_pips=clk_site_pips)
-                site.add_sink(
-                    ram128,
-                    'D',
-                    "BI",
-                    'A6LUT',
-                    'DI1',
-                    site_pips=[
-                        ('site_pip', 'ADI1MUX', 'BDI1'),
-                    ])
+
+                di_mux(site, ram128, 'D', 'A', 'A6LUT')
 
                 for idx in range(6):
                     site.add_sink(ram128, 'A{}'.format(idx),
