@@ -55,9 +55,6 @@ class Direction(enum.Enum):
     Input = 0
     Output = 1
     Inout = 2
-    # Site sources are Output's within sites, but are not part of cells,
-    # and should not be consider roots of nets.
-    SiteSource = 3
 
 
 class Cell():

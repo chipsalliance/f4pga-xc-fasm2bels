@@ -100,6 +100,7 @@ class PhysicalBelPin():
         self.site = site
         self.bel = bel
         self.pin = pin
+        self.site_source = False
 
         if direction == 'inout':
             self.direction = Direction.Inout
@@ -109,7 +110,8 @@ class PhysicalBelPin():
             self.direction = Direction.Output
         else:
             assert direction == 'site_source'
-            self.direction = Direction.SiteSource
+            self.direction = Direction.Output
+            self.site_source = True
 
         self.branches = []
 
@@ -133,13 +135,26 @@ class PhysicalBelPin():
         return []
 
     def is_root(self):
-        return self.direction in [Direction.Output, Direction.Inout]
+        return self.direction in [Direction.Output, Direction.Inout
+                                  ] and not self.site_source
 
     def __str__(self):
-        return 'PhysicalBelPin({}, {}, {})'.format(
+        if self.direction == Direction.Output:
+            if self.site_source:
+                direction = 'site_source'
+            else:
+                direction = 'output'
+        elif self.direction == Direction.Input:
+            direction = 'input'
+        else:
+            assert self.direction == Direction.Inout, self.direction
+            direction = 'inout'
+
+        return 'PhysicalBelPin({}, {}, {}, {})'.format(
             repr(self.site),
             repr(self.bel),
             repr(self.pin),
+            direction,
         )
 
 
