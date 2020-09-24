@@ -24,10 +24,75 @@ output_interchange - Function that converts completed top level Module into
 import capnp
 import capnp.lib.capnp
 capnp.remove_import_hook()
+import enum
+import gzip
 import os.path
 from .logical_netlist import check_logical_netlist, Library, Cell, Direction
 from .physical_netlist import Placement, PhysicalPip, stitch_stubs
 from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_name
+
+# Flag indicating use of Packed Cap'n Proto Serialization
+IS_PACKED = False
+
+
+class CompressionFormat(enum.Enum):
+    UNCOMPRESSED = 0
+    GZIP = 1
+
+
+# Flag indicating that files are gziped on output
+DEFAULT_COMPRESSION_TYPE = CompressionFormat.GZIP
+
+
+def read_capnp_file(capnp_schema,
+                    f_in,
+                    compression_format=DEFAULT_COMPRESSION_TYPE,
+                    is_packed=IS_PACKED):
+    """ Read file to a capnp object.
+
+    is_gzipped - bool
+        Is output GZIP'd?
+
+    is_packed - bool
+        Is capnp file in packed or unpacked in its encoding?
+
+    """
+    if compression_format == CompressionFormat.GZIP:
+        f_in = gzip.GzipFile(fileobj=f_in, mode='rb')
+    else:
+        assert compression_format == CompressionFormat.UNCOMPRESSED
+
+    if is_packed:
+        return capnp_schema.read_packed(f_in)
+    else:
+        return capnp_schema.read(f_in)
+
+
+def write_capnp_file(capnp_obj,
+                     f_out,
+                     compression_format=DEFAULT_COMPRESSION_TYPE,
+                     is_packed=IS_PACKED):
+    """ Write capnp object to file.
+
+    is_gzipped - bool
+        Is output GZIP'd?
+
+    is_packed - bool
+        Should output capnp file be packed or unpacked in its encoding?
+
+    """
+    if compression_format == CompressionFormat.GZIP:
+        with gzip.GzipFile(fileobj=f_out, mode='wb') as f:
+            if is_packed:
+                f.write(capnp_obj.to_bytes_packed())
+            else:
+                f.write(capnp_obj.to_bytes())
+    else:
+        assert compression_format == CompressionFormat.UNCOMPRESSED
+        if is_packed:
+            capnp_obj.write_packed(f_out)
+        else:
+            capnp_obj.write(f_out)
 
 
 class LogicalNetlistBuilder():
@@ -708,7 +773,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
     # Logical netlist is complete, output to file now!
     logical_netlist = interchange.output_logical_netlist(
         libraries=libraries, top_level_cell=top.name, top_level_name=top.name)
-    logical_netlist.write_packed(f_logical)
+    write_capnp_file(logical_netlist, f_logical)
 
     physical_netlist_builder = interchange.new_physical_netlist_builder(
         part=part)
@@ -829,7 +894,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
         )
 
     physical_netlist = physical_netlist_builder.finish_encode()
-    physical_netlist.write_packed(f_physical)
+    write_capnp_file(physical_netlist, f_physical)
 
     for l in top.output_extra_tcl():
         print(l, file=f_xdc)
