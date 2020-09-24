@@ -1149,6 +1149,7 @@ def process_slice(top, s):
             ram256.add_physical_bel(create_f7mux('F7AMUX', 'F7.A'))
             ram256.add_physical_bel(create_f7mux('F7BMUX', 'F7.B'))
             ram256.add_physical_bel(create_f7mux('F8MUX', 'F8'))
+            ram256.physical_net_names['F8MUX', 'OUT'] = 'O'
 
             # Add fake sink to preserve routing thorugh AX pin.
             # The AX pin is used in the same net as for the CX pin.
@@ -1204,6 +1205,7 @@ def process_slice(top, s):
             ram128.add_physical_bel(create_rams64e('D6LUT', 'LOW'))
             ram128.add_physical_bel(create_rams64e('C6LUT', 'HIGH'))
             ram128.add_physical_bel(create_f7mux('F7BMUX', 'F7'))
+            ram128.physical_net_names['F7BMUX', 'OUT'] = 'O'
 
             site.add_bel(ram128, name='RAM128X1S_CD')
             muxes.remove('F7BMUX')
@@ -1249,6 +1251,7 @@ def process_slice(top, s):
                 ram128.add_physical_bel(create_rams64e('B6LUT', 'LOW'))
                 ram128.add_physical_bel(create_rams64e('A6LUT', 'HIGH'))
                 ram128.add_physical_bel(create_f7mux('F7AMUX', 'F7'))
+                ram128.physical_net_names['F7AMUX', 'OUT'] = 'O'
 
                 muxes.remove('F7AMUX')
 
@@ -1542,12 +1545,14 @@ def process_slice(top, s):
                     ram32[idx].add_physical_bel(
                         create_ramd32(minus_bel_name, 'DP'))
 
-                    #if sub_bel == '5':
-                    #    ram32[idx].physical_net_names[bel_name, 'O5'] = 'SPO'
-                    #    ram32[idx].physical_net_names[minus_bel_name, 'O5'] = 'DPO'
-                    #else:
-                    #    ram32[idx].physical_net_names[bel_name, 'O6'] = 'SPO'
-                    #    ram32[idx].physical_net_names[minus_bel_name, 'O6'] = 'DPO'
+                    if sub_bel == '5':
+                        ram32[idx].physical_net_names[bel_name, 'O5'] = 'SPO'
+                        ram32[idx].physical_net_names[minus_bel_name,
+                                                      'O5'] = 'DPO'
+                    else:
+                        ram32[idx].physical_net_names[bel_name, 'O6'] = 'SPO'
+                        ram32[idx].physical_net_names[minus_bel_name,
+                                                      'O6'] = 'DPO'
 
                 site.add_sink(ram32[0], 'D', lut + "X", '{}6LUT'.format(lut),
                               'DI2')
@@ -1615,6 +1620,7 @@ def process_slice(top, s):
                                          "O6")
 
                 ram64.add_physical_bel(create_rams64e(bel_name, 'SP'))
+                ram64.physical_net_names[ram64.bel, 'O6'] = 'O'
 
                 ram64.parameters['INIT'] = get_lut_hex_init(site, lut)
 
