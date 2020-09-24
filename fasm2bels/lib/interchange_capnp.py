@@ -486,12 +486,22 @@ class PhysicalNetlistBuilder():
 
 class Interchange():
     def __init__(self, schema_directory):
+
+        search_path = [os.path.dirname(os.path.dirname(capnp.__file__))]
+        if 'CONDA_PREFIX' in os.environ:
+            search_path.append(
+                os.path.join(os.environ['CONDA_PREFIX'], 'include'))
+
+        for path in ['/usr/local/include', '/usr/include']:
+            if os.path.exists(path):
+                search_path.append(path)
+
         self.logical_netlist_schema = capnp.load(
             os.path.join(schema_directory, 'LogicalNetlist.capnp'),
-            imports=[os.path.dirname(os.path.dirname(capnp.__file__))])
+            imports=search_path)
         self.physical_netlist_schema = capnp.load(
             os.path.join(schema_directory, 'PhysicalNetlist.capnp'),
-            imports=[os.path.dirname(os.path.dirname(capnp.__file__))])
+            imports=search_path)
 
     def output_logical_netlist(self, *args, **kwargs):
         return output_logical_netlist(
