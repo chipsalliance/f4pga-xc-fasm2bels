@@ -1,6 +1,7 @@
 import enum
 from collections import namedtuple
 
+
 # Declares a port on a cell, which is bit or a bus.
 #
 # If the port is a bit, then bus should be None.
@@ -10,7 +11,30 @@ from collections import namedtuple
 #
 # property_map should be a dict with str keys, and the values can be str,
 # int or bool.
-Port = namedtuple('Port', 'direction property_map bus')
+class Port(namedtuple('Port', 'direction property_map bus')):
+    def encode_index(self, index):
+        """ Encode slice index into bus index.
+
+        A bus defined as [3:0] has a width of 4.  The bus index is the
+        distance from the start (e.g. 3) to the end (e.g. 0).
+
+        So ex[3] is bus index 0, ex[2] is bus index 1, etc.
+
+        A bus defined as [0:3] has a width of 4 too, However ex[3] is now bus 
+        index 3, etc.
+
+        """
+        assert self.bus is not None
+
+        if self.bus.start <= self.bus.end:
+            assert index >= self.bus.start
+            assert index <= self.bus.end
+            return index - self.bus.start
+        else:
+            assert index >= self.bus.end
+            assert index <= self.bus.start
+            return self.bus.start - index
+
 
 # Bus range for a port.
 #

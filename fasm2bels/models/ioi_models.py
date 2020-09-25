@@ -158,8 +158,8 @@ def process_idelay(top, features):
         # Adding sources
         site.add_source(bel, 'DATAOUT', 'DATAOUT', bel.bel, 'DATAOUT')
 
-        bel.add_unconnected_port('CNTVALUEIN', 5, output=False)
-        bel.add_unconnected_port('CNTVALUEOUT', 5, output=True)
+        bel.add_unconnected_port('CNTVALUEIN', 5, direction="input")
+        bel.add_unconnected_port('CNTVALUEOUT', 5, direction="output")
 
         for i in range(5):
             bel.map_bel_pin_to_cell_pin(
@@ -281,7 +281,7 @@ def process_iserdes(top, site, idelay_site=None):
             or idelay_site.has_feature("ZIDELAY_VALUE")):
         site.add_sink(bel, 'DDLY', 'DDLY', bel.bel, 'DDLY')
 
-        bel.add_unconnected_port('D', None, output=False)
+        bel.add_unconnected_port('D', None, direction="input")
         bel.map_bel_pin_to_cell_pin(bel.bel, 'D', 'D')
     else:
         site.add_sink(
@@ -292,7 +292,7 @@ def process_iserdes(top, site, idelay_site=None):
             'D',
             site_pips=make_inverter_path('D', bel.parameters['IS_D_INVERTED']))
 
-        bel.add_unconnected_port('DDLY', None, output=False)
+        bel.add_unconnected_port('DDLY', None, direction="input")
         bel.map_bel_pin_to_cell_pin(bel.bel, 'DDLY', 'DDLY')
 
     for i in range(1, 9):
@@ -308,11 +308,11 @@ def process_iserdes(top, site, idelay_site=None):
     for unused_in in [
             'SHIFTIN1', 'SHIFTIN2', 'OFB', 'OCLK', 'OCLKB', 'CLKDIVP'
     ]:
-        bel.add_unconnected_port(unused_in, None, output=False)
+        bel.add_unconnected_port(unused_in, None, direction="input")
         bel.map_bel_pin_to_cell_pin(bel.bel, unused_in, unused_in)
 
     for unused_out in ['SHIFTOUT1', 'SHIFTOUT2']:
-        bel.add_unconnected_port(unused_out, None, output=True)
+        bel.add_unconnected_port(unused_out, None, direction="output")
         bel.map_bel_pin_to_cell_pin(bel.bel, unused_out, unused_out)
 
     site.add_bel(bel)
@@ -474,10 +474,10 @@ def process_oddr_oq(top, site):
     # Determine whether we have SET or RESET
     if site.has_feature('ZSRVAL_OQ'):
         site.add_sink(bel, 'R', 'SR', bel.bel, 'SR')
-        bel.add_unconnected_port('S', None, output=False)
+        bel.add_unconnected_port('S', None, direction="input")
     else:
         site.add_sink(bel, 'S', 'SR', bel.bel, 'SR')
-        bel.add_unconnected_port('R', None, output=False)
+        bel.add_unconnected_port('R', None, direction="input")
 
     # DDR_CLK_EDGE
     if site.has_feature('ODDR.DDR_CLK_EDGE.SAME_EDGE'):
@@ -670,11 +670,11 @@ def process_oserdes(top, site):
     bel.parameters["SRVAL_TQ"] = "0" if site.has_feature('ZSRVAL_TQ') else "1"
 
     for unused_in in ['SHIFTIN1', 'SHIFTIN2', 'TBYTEIN']:
-        bel.add_unconnected_port(unused_in, None, output=False)
+        bel.add_unconnected_port(unused_in, None, direction="input")
         bel.map_bel_pin_to_cell_pin(bel.bel, unused_in, unused_in)
 
     for unused_out in ['SHIFTOUT1', 'SHIFTOUT2', 'TBYTEOUT', 'OFB', 'TFB']:
-        bel.add_unconnected_port(unused_out, None, output=True)
+        bel.add_unconnected_port(unused_out, None, direction="output")
         bel.map_bel_pin_to_cell_pin(bel.bel, unused_out, unused_out)
 
     site.add_bel(bel)

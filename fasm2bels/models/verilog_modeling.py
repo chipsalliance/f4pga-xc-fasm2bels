@@ -498,7 +498,7 @@ class Bel(object):
         """ Explicitly set the width of a port, in the event that not all bits will be connected. """
         self.port_width[port] = width
 
-    def add_unconnected_port(self, port, width, output):
+    def add_unconnected_port(self, port, width, direction):
         """ Add a port to this cell that is unconnected.
 
         port : str
@@ -508,13 +508,13 @@ class Bel(object):
             For bussed ports, the width of the port, otherwise None for bitty
             ports.
 
-        output : bool
-            Set output to True if this port is an output, otherwise this port
+        direction : str
+            Should be either "input", "output", or "inout".
             is an input.
 
         """
         assert port not in self.connections
-        self.port_direction[port] = output
+        self.port_direction[port] = direction
         self.set_port_width(port, width)
 
     def set_prefix(self, prefix):

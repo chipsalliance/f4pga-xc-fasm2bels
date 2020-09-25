@@ -1044,7 +1044,8 @@ def process_slice(top, s):
                         site.add_internal_source(
                             srl, 'Q31', '{}MC31'.format(row), srl.bel, 'MC31')
                     else:
-                        srl.add_unconnected_port('Q31', None, output=True)
+                        srl.add_unconnected_port(
+                            'Q31', None, direction="output")
 
                     site.add_bel(srl, name='{}6SRL_32'.format(row))
 
