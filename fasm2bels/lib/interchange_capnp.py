@@ -297,7 +297,7 @@ def output_logical_netlist(logical_netlist_schema,
             cell_obj.init('ports', len(cell.ports))
             for idx, (port_name, port) in enumerate(cell.ports.items()):
                 port_idx, port_obj = logical_netlist.next_port()
-                ports[cell.name, port_name] = port_idx
+                ports[cell.name, port_name] = (port_idx, port)
                 cell_obj.ports[idx] = port_idx
 
                 port_obj.dir = logical_netlist_schema.Netlist.Direction.__dict__[
@@ -357,16 +357,17 @@ def output_logical_netlist(logical_netlist_schema,
                         instance_cell_name = cell.cell_instances[
                             port.instance_name].cell_name
                         port_obj.inst = cell_instances[port.instance_name]
-                        port_obj.port = ports[instance_cell_name, port.name]
+                        port_obj.port, port_pyobj = ports[instance_cell_name,
+                                                          port.name]
                     else:
                         # If port.instance_name is None, then this is a cell
                         # port connection
                         port_obj.extPort = None
-                        port_obj.port = ports[cell.name, port.name]
+                        port_obj.port, port_pyobj = ports[cell.name, port.name]
 
                     # Handle bussed port annotations
                     if port.idx is not None:
-                        port_obj.busIdx.idx = port.idx
+                        port_obj.busIdx.idx = port_pyobj.encode_index(port.idx)
                     else:
                         port_obj.busIdx.singleBit = None
 
