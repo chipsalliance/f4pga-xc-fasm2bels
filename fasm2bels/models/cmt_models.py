@@ -185,7 +185,7 @@ def process_pll(conn, top, tile_name, features):
                 pll.parameters['CLK{}_PHASE'.format(
                     clkout)] = "{0:.3f}".format(phase)
         else:
-            pll.add_unconnected_port('CLK' + clkout, None, output=True)
+            pll.add_unconnected_port('CLK' + clkout, None, direction="output")
             pll.map_bel_pin_to_cell_pin(
                 bel_name=pll.bel,
                 bel_pin='CLK' + clkout,

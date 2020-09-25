@@ -736,12 +736,15 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
                     ports[port] = (direction, width)
 
             # Add instances of unconnected ports (as needed).
-            for port, is_output in instance.port_direction.items():
+            for port, direction in instance.port_direction.items():
                 width = instance.port_width[port]
 
-                if is_output:
+                if direction == "output":
                     direction = Direction.Output
+                elif direction == "inout":
+                    direction = Direction.Inout
                 else:
+                    assert direction == "input", direction
                     direction = Direction.Input
 
                 if port in ports:
