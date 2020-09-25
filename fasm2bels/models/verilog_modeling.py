@@ -29,8 +29,9 @@ location.
 import functools
 import re
 import fasm
-from ..make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
-from ..database.connection_db_utils import get_wire_pkey
+from fasm2bels.make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
+from fasm2bels.database.connection_db_utils import get_wire_pkey, create_maybe_get_wire
+from fasm2bels.lib.physical_netlist import create_site_routing
 
 
 def pin_to_wire_and_idx(pin):
@@ -147,6 +148,37 @@ def escape_verilog_name(name):
     return '\\' + name[:idx] + ' ' + name[idx:]
 
 
+def unescape_verilog_name(name):
+    """ Unescapes verilog names.
+
+    >>> s0 = '$abc$6513$auto$alumacc.cc:474:replace_alu$1259.B_buf[4]'
+    >>> s1 = escape_verilog_name(s0)
+    >>> s1
+    '\\\\$abc$6513$auto$alumacc.cc:474:replace_alu$1259.B_buf [4]'
+    >>> s2 = unescape_verilog_name(s1)
+    >>> assert s0 == s2
+    >>> s2
+    '$abc$6513$auto$alumacc.cc:474:replace_alu$1259.B_buf[4]'
+
+    >>> s0 = 'test'
+
+    >>> s1 = escape_verilog_name(
+    ...     'test')
+    >>> s1
+    '\\\\test '
+    >>> s2 = unescape_verilog_name(s1)
+    >>> assert s0 == s2
+    >>> s2
+    'test'
+
+    """
+    # TODO: This is pretty terrible. Maybe defer usage of verilog_modeling.escape_verilog_name?
+    if not name.startswith('\\'):
+        return name
+    else:
+        return name[1:].replace(' ', '')
+
+
 class ConnectionModel(object):
     """ Constant, Wire, Bus and NoConnect objects represent a small interface
     for Verilog module instance connection descriptions.
@@ -182,6 +214,37 @@ class ConnectionModel(object):
         """
         pass
 
+    def output_interchange(self, parent_cell, instance_name, port,
+                           constant_nets, net_map):
+        """ Output interchange format for connection.
+
+        parent_cell : Cell python object
+            Cell that contains this connection.
+
+        instance_name : str
+            Name of cell instance that this connection belongs too.
+
+        port : str
+            Name of port on cell instance this connection is connected too.
+
+        constant_nets : dict
+            Map of 0/1 to net names for constants nets (e.g.
+            {0: "<const0>", 1: "<const1>"}).
+
+        net_map : map of str to str
+            Optional wire renaming map.  If present, leaf wires should be
+            renamed through the map.
+
+        idx : int, optional
+            Bus index for bussed ports, should be None otherwise.
+
+        """
+        pass
+
+    def bus_width(self):
+        """ Returns the width of the bus if a bussed port, otherwise None. """
+        pass
+
 
 class Constant(ConnectionModel):
     """ Represents a boolean constant, e.g. 1'b0 or 1'b1. """
@@ -198,6 +261,22 @@ class Constant(ConnectionModel):
 
     def iter_wires(self):
         return iter([])
+
+    def output_interchange(self,
+                           parent_cell,
+                           instance_name,
+                           port,
+                           constant_nets,
+                           net_map,
+                           idx=None):
+        parent_cell.connect_net_to_instance(
+            net_name=constant_nets[self.value],
+            instance_name=instance_name,
+            port=port,
+            idx=idx)
+
+    def bus_width(self):
+        return None
 
 
 class Wire(ConnectionModel):
@@ -220,6 +299,26 @@ class Wire(ConnectionModel):
 
     def iter_wires(self):
         yield (None, self.wire)
+
+    def output_interchange(self,
+                           parent_cell,
+                           instance_name,
+                           port,
+                           constant_nets,
+                           net_map,
+                           idx=None):
+        net_name = unescape_verilog_name(self.to_string(net_map))
+
+        if net_name == "1'b1":
+            net_name = constant_nets[1]
+        elif net_name == "1'b0":
+            net_name = constant_nets[0]
+
+        parent_cell.connect_net_to_instance(
+            net_name=net_name, instance_name=instance_name, port=port, idx=idx)
+
+    def bus_width(self):
+        return None
 
 
 class Bus(ConnectionModel):
@@ -246,6 +345,15 @@ class Bus(ConnectionModel):
             for _, real_wire in wire.iter_wires():
                 yield (idx, real_wire)
 
+    def output_interchange(self, parent_cell, instance_name, port,
+                           constant_nets, net_map):
+        for idx, wire in enumerate(self.wires):
+            wire.output_interchange(parent_cell, instance_name, port,
+                                    constant_nets, net_map, idx)
+
+    def bus_width(self):
+        return len(self.wires)
+
 
 class NoConnect(ConnectionModel):
     """ Represents an unconnected port. """
@@ -261,6 +369,18 @@ class NoConnect(ConnectionModel):
 
     def iter_wires(self):
         return iter([])
+
+    def output_interchange(self,
+                           parent_cell,
+                           instance_name,
+                           port,
+                           constant_nets,
+                           net_map,
+                           idx=None):
+        pass
+
+    def bus_width(self):
+        return None
 
 
 def flatten_wires(wire, wire_assigns, wire_name_net_map):
@@ -334,6 +454,68 @@ class Bel(object):
         self.nets = None
         self.net_names = {}
         self.priority = priority
+        self.parent_cell = None
+
+        # Map of (bel_name, bel_pin) -> cell_pin name
+        self.bel_pins_to_cell_pins = {}
+
+        # List of other bels named in bel_pins_to_cell_pins map.
+        # This list is used to populate some bel_name -> Bel object maps, so
+        # this set does need to be correct.
+        self.other_bels = set()
+
+        # A list of BELs to be used when placing this Bel object within a
+        # design.  This is generally used to model cell mapping at load
+        # (e.g. LUT6_2 -> (LUT6, LUT5)).
+        self.physical_bels = []
+
+        # When using a cell mapping, any nets that source from the mapping
+        # cell will be renamed.  This map should be populated with any remaps.
+        # Map of (bel_name, bel_pin) -> net name.
+        self.physical_net_names = {}
+
+        # Map of cell pins -> net_names, as determined during
+        # output_site_routing.
+        #
+        # This map properly accounts for any physical_bels and
+        # physical_net_names present in the Bel object.
+        self.final_net_names = {}
+
+        # Port widths for connections that are sometimes narrower.
+        self.port_width = {}
+        self.port_direction = {}
+
+    def set_parent_cell(self, parent_cell):
+        """ Set parent cell for this object.
+
+        This only modifies what cell name this object returns.  If a parent
+        is set, this object returns the name of the parent cell.
+
+        """
+        self.parent_cell = parent_cell
+
+    def set_port_width(self, port, width):
+        """ Explicitly set the width of a port, in the event that not all bits will be connected. """
+        self.port_width[port] = width
+
+    def add_unconnected_port(self, port, width, direction):
+        """ Add a port to this cell that is unconnected.
+
+        port : str
+            Port that is unconnected
+
+        width : int or None
+            For bussed ports, the width of the port, otherwise None for bitty
+            ports.
+
+        direction : str
+            Should be either "input", "output", or "inout".
+            is an input.
+
+        """
+        assert port not in self.connections
+        self.port_direction[port] = direction
+        self.set_port_width(port, width)
 
     def set_prefix(self, prefix):
         """ Set the prefix used for wire and BEL naming.
@@ -373,6 +555,9 @@ class Bel(object):
         Should only be called after set_prefix has been invoked (if set_prefix
         will be called)."""
 
+        if self.parent_cell is not None:
+            return self.parent_cell.get_cell(top)
+
         # The .cname property will be associated with some pin/net combinations
         # Use this name if present.
 
@@ -399,6 +584,7 @@ class Bel(object):
             List of wires that represents unconnected input or output wires
             in vectors on this BEL.
         connections : map of str to ConnectionModel
+        bus_is_output : map of wire or bus name to whether it is an output.
 
         """
         connections = {}
@@ -440,6 +626,7 @@ class Bel(object):
                 if connection_wire is None:
                     connection_wire = NoConnect()
                 connections[wire] = connection_wire
+                bus_is_output[wire] = wire in self.outputs
 
         dead_wires = []
 
@@ -461,7 +648,7 @@ class Bel(object):
         for unused_connection in self.unused_connections:
             connections[unused_connection] = NoConnect()
 
-        return dead_wires, connections
+        return dead_wires, connections, bus_is_output
 
     def make_net_map(self, top, net_map):
         """ Create a mapping of programatic net names to VPR net names.
@@ -490,7 +677,7 @@ class Bel(object):
         place and route.
 
         """
-        _, connections = self.create_connections(top)
+        _, connections, _ = self.create_connections(top)
 
         for pin, connection in connections.items():
             for idx, wire in connection.iter_wires():
@@ -505,7 +692,11 @@ class Bel(object):
 
     def output_verilog(self, top, net_map, indent='  '):
         """ Output the Verilog to represent this BEL. """
-        dead_wires, connections = self.create_connections(top)
+
+        if self.parent_cell is not None:
+            return
+
+        dead_wires, connections, _ = self.create_connections(top)
 
         for dead_wire in dead_wires:
             yield '{indent}wire [0:0] {wire};'.format(
@@ -546,11 +737,112 @@ class Bel(object):
 
         yield '{indent});'.format(indent=indent)
 
+    def output_interchange(self, top_cell, top, net_map, constant_nets):
+        """ Output this object into an interchange CellInstance.
+
+        top_cell : logical_netlist.Cell
+            Interchange logical netlist Cell that contains this object
+
+        top : Module
+
+        net_map : map of str to str
+            Optional wire renaming map.  If present, leaf wires should be
+            renamed through the map.
+
+        constant_nets : dict
+            Map of 0/1 to net names for constants nets (e.g.
+            {0: "<const0>", 1: "<const1>"}).
+
+        """
+        if self.parent_cell is not None:
+            return
+
+        dead_wires, connections, _ = self.create_connections(top)
+
+        for wire in dead_wires:
+            top_cell.add_net(unescape_verilog_name(wire))
+
+        cell_instance = unescape_verilog_name(self.get_cell(top))
+
+        top_cell.add_cell_instance(
+            name=cell_instance,
+            cell_name=self.module,
+            property_map=self.parameters)
+
+        if connections:
+            for port in connections:
+                connections[port].output_interchange(
+                    parent_cell=top_cell,
+                    instance_name=cell_instance,
+                    port=port,
+                    constant_nets=constant_nets,
+                    net_map=net_map)
+
     def add_net_name(self, pin, net_name):
         """ Add name of net attached to this pin ."""
         assert pin not in self.net_names
         key = pin_to_wire_and_idx(pin)
         self.net_names[key] = net_name
+
+    def unmap_bel_pin(self, bel_name, bel_pin):
+        """ Remove BEL pin to Cell pin mapping.
+
+        This is useful for connections that get cleaned up after make_routes
+        process.  For example RAMB18E1.WEBWE[4-7].
+
+        """
+        key = bel_name, bel_pin
+        del self.bel_pins_to_cell_pins[key]
+
+    def remap_bel_pin_to_cell_pin(self, bel_name, bel_pin, cell_pin):
+        """ Remap BEL pin to Cell pin.
+
+        Unlike map_bel_pin_to_cell_pin, this will allow renaming of BEL pin to
+        Cell pin mapping.
+
+        """
+        key = bel_name, bel_pin
+        self.bel_pins_to_cell_pins[key] = cell_pin
+
+    def map_bel_pin_to_cell_pin(self, bel_name, bel_pin, cell_pin):
+        """ Map a BEL pin to a Cell pin contained within this object. """
+        key = bel_name, bel_pin
+        if key in self.bel_pins_to_cell_pins:
+            assert self.bel_pins_to_cell_pins[key] == cell_pin, (key, cell_pin)
+        else:
+            self.bel_pins_to_cell_pins[key] = cell_pin
+
+        if bel_name != self.bel:
+            self.other_bels.add(bel_name)
+
+    def add_physical_bel(self, physical_bel):
+        """ Add a Bel object to be used to place this object in the design.
+
+        physical_bel : Bel object
+
+        """
+        self.physical_bels.append(physical_bel)
+
+    def get_physical_net_name(self, instance_name, bel_name, bel_pin):
+        """ Maps a BEL pin to a net name if a physical net rename is required.
+
+        instance_name : str
+            Instance name for this Bel object
+
+        bel_name : str
+            Which BEL does the BEL pin being queried belong too?
+
+        bel_pin : str
+            Which BEL pin is being queried?
+
+        Returns a str with the physical net name or None if no mapping exists.
+
+        """
+        key = (bel_name, bel_pin)
+        physical_net_name = self.physical_net_names.get(key, None)
+
+        if physical_net_name:
+            return instance_name + '/' + physical_net_name
 
 
 class Site(object):
@@ -585,12 +877,16 @@ class Site(object):
         self.outputs = {}
         self.internal_sources = {}
 
+        # Map of internal source name to site routing tuple.
+        self.internal_source_bel_pins = {}
+
         self.set_features = set()
         self.features = set()
         self.post_route_cleanup = None
         self.bel_map = {}
 
         self.site_wire_to_wire_pkey = {}
+        self.site_type_pins = {}
 
         if features:
             aparts = features[0].feature.split('.')
@@ -632,6 +928,238 @@ class Site(object):
             self.tile = tile
 
         self.site = site
+
+        # When site_type_override is not None, this site type will be used
+        # instead of self.site.type.
+        #
+        # This is typically used when the default site type is too generic,
+        # e.g. IOB33M -> IOB33.
+        self.site_type_override = None
+
+        # Map of source site routing tuple to set of site routing tuples that
+        # are downstream from the source.
+        self.site_routing = {}
+
+    def override_site_type(self, site_type):
+        """ Set the site type override for this site.
+
+        site_type : str
+            Site type to use instead of self.site.type
+
+        """
+        self.site_type_override = site_type
+
+    def site_type(self):
+        """ Get the site type for this object. """
+        if self.site_type_override is None:
+            return self.site.type
+        else:
+            return self.site_type_override
+
+    def link_site_routing(self, site_routing):
+        """ Add a site routing path.
+
+        site_routing : list of site routing tuples
+            This list should directly path in the site routing graph.
+            site_routing[0] should lead to site_routing[1], site_routing[1]
+            should lead to site_routing[2].  This **is** directed, so the
+            order matters.
+
+        """
+        for src, dest in zip(site_routing, site_routing[1:]):
+            if src not in self.site_routing:
+                self.site_routing[src] = set()
+
+            self.site_routing[src].add(dest)
+
+    def prune_site_routing(self, key):
+        """ Remove a site routing tuple from the site routing graph. """
+        for sinks in self.site_routing.values():
+            if key in sinks:
+                sinks.remove(key)
+
+        def remove_drivers(key):
+            if key in self.site_routing:
+                children = self.site_routing[key]
+                del self.site_routing[key]
+
+                for child in children:
+                    remove_drivers(child)
+
+        remove_drivers(key)
+
+    def output_site_routing(self, top, parent_cell, net_map, constant_nets,
+                            sub_cell_nets):
+        """ Convert site routing to Physical* nets.
+
+        top : Module
+
+        parent_cell : logical_netlist.Cell
+            Cell that contains this Bel.
+
+        net_map : map of str to str
+            Optional wire renaming map.  If present, leaf wires should be
+            renamed through the map.
+
+        constant_nets : dict
+            Map of 0/1 to net names for constants nets (e.g.
+            {0: "<const0>", 1: "<const1>"}).
+
+        Returns dict of nets to Physical* objects that represent the site
+        local sources for that net.
+
+        """
+
+        # Map of bel_name in this site -> Bel objects.
+        bel_map = {}
+
+        # Map of bel_name in this site -> instance name.
+        instance_names = {}
+
+        for bel in self.bels:
+            instance_name = unescape_verilog_name(bel.get_cell(top))
+            if bel.bel is not None:
+                assert bel.bel not in bel_map, (bel.module, bel.bel)
+                bel_map[bel.bel] = bel
+                instance_names[bel.bel] = instance_name
+
+            for other_bel in bel.other_bels:
+                assert other_bel not in bel_map
+                bel_map[other_bel] = bel
+                instance_names[other_bel] = instance_name
+
+        # Gather all BEL pins in this site.
+        bel_pins = set()
+        # Also create a map from destination site routing tuple to source
+        # site routing tuple.
+        dest_to_src = {}
+
+        for parent in self.site_routing:
+            if parent[0] == 'bel_pin':
+                bel_pins.add(parent)
+
+            for child in self.site_routing[parent]:
+                if child[0] == 'bel_pin':
+                    bel_pins.add(child)
+
+                if child in dest_to_src:
+                    assert dest_to_src[child] == parent, (child, parent,
+                                                          dest_to_src[child])
+
+                dest_to_src[child] = parent
+
+        # At this point, the root of each site routing net needs to be
+        # identied, and for each root the net name needs to be determined.
+        #
+        # net_roots is the map of root site routing tuple to net name.
+        net_roots = {}
+
+        # Some "primatives" actually get transformed upon loading, e.g. LUT6_2.
+        # This appear to Vivado as nets sourcing from a cell below the root
+        # cell.
+        #
+        # This map converts the top-level net to the net from within the
+        # transformed cell.
+        bel_pin_to_net_root = {}
+
+        # To ensure that all site routing roots are found, start from each
+        # bel pin, and walk to it's root.
+        #
+        # If the bel pin is a source, it will be it's own root.
+        # If the bel pin is a sink, it will source from another site routing
+        # tuple.
+        for bel_pin_key in bel_pins:
+            site_routing_type, bel_name, bel_pin, direction = bel_pin_key
+            assert site_routing_type == 'bel_pin'
+
+            if direction == 'site_source':
+                continue
+
+            # If the bel_name isn't in the bel_map, this site routing is
+            # likely dead, so ignore it.
+            if bel_name not in bel_map:
+                continue
+
+            bel = bel_map[bel_name]
+            instance_name = instance_names[bel_name]
+
+            # If no BEL pin -> Cell pin mapping has been made, this site
+            # routing is also likely dead, so ignore it.
+            key = bel_name, bel_pin
+            if key not in bel.bel_pins_to_cell_pins:
+                continue
+
+            # Map the BEL pin back to a net name.
+            cell_pin = bel.bel_pins_to_cell_pins[bel_name, bel_pin]
+            net_name = parent_cell.get_net_name(instance_name, cell_pin)
+
+            # In the event there is physical BELs in play, also get the
+            # physical net name to be used.
+            #
+            # To avoid mapping mismatches, wait until after all BEL pins have
+            # been mapped to translate from net_name to physical net name.
+            sub_net_name = bel.get_physical_net_name(instance_name, bel_name,
+                                                     bel_pin)
+
+            if net_name is None:
+                assert sub_net_name is not None, (instance_name, bel_name,
+                                                  bel_pin, cell_pin,
+                                                  bel.physical_net_names)
+                net_name = sub_net_name
+                sub_net_name = None
+
+            if sub_net_name is not None:
+                # Make sure mapping is unique.
+                if net_name in sub_cell_nets:
+                    assert sub_cell_nets[net_name] == sub_net_name
+                else:
+                    sub_cell_nets[net_name] = sub_net_name
+
+            # Walk back to the source in the site routing graph.
+            key = bel_pin_key
+            while key in dest_to_src:
+                key = dest_to_src[key]
+
+            # Create a map from BEL pin to net root within the site.
+            bel_pin_to_net_root[bel_pin_key] = key
+
+            # Check that the net name for this BEL pin matches the previous
+            # net name or store it.
+            if key in net_roots:
+                assert net_roots[key] == net_name, (key, net_roots[key],
+                                                    net_name)
+            else:
+                net_roots[key] = net_name
+
+        # Now that final net names have been assigned to net roots, populate
+        # final_net_names.
+        for bel_pin_key in bel_pins:
+            site_routing_type, bel_name, bel_pin, direction = bel_pin_key
+            assert site_routing_type == 'bel_pin'
+
+            if bel_pin_key not in bel_pin_to_net_root:
+                continue
+
+            root_key = bel_pin_to_net_root[bel_pin_key]
+            if root_key not in net_roots:
+                continue
+
+            net_name = net_roots[root_key]
+
+            if bel_name not in bel_map:
+                continue
+
+            bel = bel_map[bel_name]
+            cell_pin = bel.bel_pins_to_cell_pins[bel_name, bel_pin]
+
+            if cell_pin in bel.final_net_names:
+                assert bel.final_net_names[cell_pin] == net_name
+            else:
+                bel.final_net_names[cell_pin] = net_name
+
+        # Convert site_routing tree into Physical* object tree.
+        return create_site_routing(self.site, net_roots, self.site_routing,
+                                   constant_nets)
 
     def has_feature(self, feature):
         """ Does this set have the specified feature set? """
@@ -676,28 +1204,59 @@ class Site(object):
 
         return value
 
-    def add_sink(self, bel, bel_pin, sink):
+    def add_sink(self,
+                 bel,
+                 cell_pin,
+                 sink_site_pin,
+                 bel_name,
+                 bel_pin,
+                 site_pips=[],
+                 sink_site_type_pin=None,
+                 real_cell_pin=None):
         """ Adds a sink.
 
         Attaches sink to the specified bel.
 
         bel (Bel): Bel object
-        bel_pin (str): The exact tech library name for the relevant pin.  Can be
-            a bus (e.g. A[5]).  The name must identically match the library
-            name or an error will occur during synthesis.
-        sink (str): The exact site pin name for this sink.  The name must
-            identically match the site pin name, or an error will be generated
-            when Site.integrate_site is invoked.
+        cell_pin (str): The exact tech library name for the relevant pin.
+            Can be a bus (e.g. A[5]).  The name must identically match the
+            library name or an error will occur during synthesis.
+        sink_site_pin (str): The exact site pin name for this sink.  The name
+            must identically match the site pin name, or an error will be
+            generated when Site.integrate_site is invoked.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
+        site_pips (list): List of site routing tuples used to connect site pin
+            to BEL pin.
+        sink_site_type_pin (str): In cases where a site pin is renamed when
+            the site type is changed (e.g. FIFO18E1 -> RAMB18E1), this is the
+            site pin name in the override site type, rather than the default
+            site type.
 
         """
 
-        assert bel_pin not in bel.connections
+        assert cell_pin not in bel.connections, cell_pin
 
-        if sink not in self.sinks:
-            self.sinks[sink] = []
+        if sink_site_pin not in self.sinks:
+            self.sinks[sink_site_pin] = []
 
-        bel.connections[bel_pin] = sink
-        self.sinks[sink].append((bel, bel_pin))
+        bel.connections[cell_pin] = sink_site_pin
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name,
+            bel_pin=bel_pin,
+            cell_pin=cell_pin if real_cell_pin is None else real_cell_pin)
+        self.sinks[sink_site_pin].append((bel, cell_pin))
+
+        if sink_site_type_pin is not None:
+            self.site_type_pins[sink_site_type_pin] = sink_site_pin
+            sink_site_pin = sink_site_type_pin
+        else:
+            self.site_type_pins[sink_site_pin] = sink_site_pin
+
+        self.link_site_routing([('site_pin', sink_site_pin),
+                                ('bel_pin', sink_site_pin, sink_site_pin,
+                                 'site_source')] + site_pips +
+                               [('bel_pin', bel_name, bel_pin, 'input')])
 
     def mask_sink(self, bel, bel_pin):
         """ Mark a BEL pin as not visible in the Verilog.
@@ -749,26 +1308,54 @@ class Site(object):
         assert sink_idx is not None, (old_bel, old_bel_pin, sink)
         self.sinks[sink][sink_idx] = (new_bel, new_bel_pin)
 
-    def add_source(self, bel, bel_pin, source):
+    def add_source(self,
+                   bel,
+                   cell_pin,
+                   source_site_pin,
+                   bel_name,
+                   bel_pin,
+                   site_pips=[],
+                   source_site_type_pin=None):
         """ Adds a source.
 
         Attaches source to bel.
 
         bel (Bel): Bel object
-        bel_pin (str): The exact tech library name for the relevant pin.  Can be
+        cel_pin (str): The exact tech library name for the relevant pin.  Can be
             a bus (e.g. A[5]).  The name must identically match the library
             name or an error will occur during synthesis.
-        source (str): The exact site pin name for this source.  The name must
-            identically match the site pin name, or an error will be generated
-            when Site.integrate_site is invoked.
+        source_site_pin (str): The exact site pin name for this source.  The
+            name mustidentically match the site pin name, or an error will be
+            generated when Site.integrate_site is invoked.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
+        site_pips (list): List of site routing tuples used to connect the BEL
+            pin to the site pin.
+        source_site_type_pin (str): In cases where a site pin is renamed when
+            the site type is changed (e.g. FIFO18E1 -> RAMB18E1), this is the
+            site pin name in the override site type, rather than the default
+            site type.
 
         """
-        assert source not in self.sources
-        assert bel_pin not in bel.connections
+        assert source_site_pin not in self.sources
+        assert cell_pin not in bel.connections
 
-        bel.connections[bel_pin] = source
-        bel.outputs.add(bel_pin)
-        self.sources[source] = (bel, bel_pin)
+        bel.connections[cell_pin] = source_site_pin
+        bel.outputs.add(cell_pin)
+        self.sources[source_site_pin] = (bel, cell_pin)
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
+
+        if source_site_type_pin is not None:
+            self.site_type_pins[source_site_type_pin] = source_site_pin
+            source_site_pin = source_site_type_pin
+        else:
+            self.site_type_pins[source_site_pin] = source_site_pin
+
+        self.link_site_routing([('bel_pin', bel_name, bel_pin,
+                                 'output')] + site_pips +
+                               [('bel_pin', source_site_pin, source_site_pin,
+                                 'input'), ('site_pin', source_site_pin)])
 
     def rename_source(self, bel, old_bel_pin, new_bel_pin):
         """ Rename a BEL source from one pin name to another.
@@ -794,7 +1381,7 @@ class Site(object):
 
         self.sources[source] = (new_bel, new_bel_pin)
 
-    def add_output_from_internal(self, source, internal_source):
+    def add_output_from_internal(self, source, internal_source, site_pips=[]):
         """ Adds a source from a site internal source.
 
         This is used to convert an internal_source wire to a site source.
@@ -804,13 +1391,21 @@ class Site(object):
             when Site.integrate_site is invoked.
         internal_source (str): The internal_source must match the internal
             source name provided to Site.add_internal_source earlier.
+        site_pips (list): List of site routing tuples used to connect internal
+            source to site pin.
 
         """
         assert source not in self.sources, source
         assert internal_source in self.internal_sources, internal_source
+        assert internal_source in self.internal_source_bel_pins, internal_source
 
         self.outputs[source] = internal_source
         self.sources[source] = self.internal_sources[internal_source]
+        self.site_type_pins[source] = source
+
+        self.link_site_routing(
+            [self.internal_source_bel_pins[internal_source]] + site_pips +
+            [('bel_pin', source, source, 'input'), ('site_pin', source)])
 
     def add_output_from_output(self, source, other_source):
         """ Adds an output wire from an existing source wire.
@@ -828,40 +1423,97 @@ class Site(object):
         assert other_source in self.sources
         self.outputs[source] = other_source
 
-    def add_internal_source(self, bel, bel_pin, wire_name):
+    def add_internal_source(self, bel, cell_pin, wire_name, bel_name, bel_pin):
         """ Adds a site internal source.
 
         Adds an internal source to the site.  This wire will not be used during
         routing formation, but can be connected to other BELs within the site.
 
         bel (Bel): Bel object
-        bel_pin (str): The exact tech library name for the relevant pin.  Can be
-            a bus (e.g. A[5]).  The name must identically match the library
+        cell_pin (str): The exact tech library name for the relevant pin.  Can
+            be a bus (e.g. A[5]).  The name must identically match the library
             name or an error will occur during synthesis.
-        wire_name (str): The name of the site wire.  This wire_name must be
+        wire_name (str): The name of the site wire.  This wire_name must not
             overlap with a source or sink site pin name.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
 
         """
-        bel.connections[bel_pin] = wire_name
-        bel.outputs.add(bel_pin)
+        bel.connections[cell_pin] = wire_name
+        bel.outputs.add(cell_pin)
 
         assert wire_name not in self.internal_sources, wire_name
-        self.internal_sources[wire_name] = (bel, bel_pin)
+        self.internal_sources[wire_name] = (bel, cell_pin)
+        self.internal_source_bel_pins[wire_name] = ('bel_pin', bel_name,
+                                                    bel_pin, 'output')
 
-    def connect_internal(self, bel, bel_pin, source):
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
+
+    def connect_internal(self,
+                         bel,
+                         cell_pin,
+                         source,
+                         bel_name,
+                         bel_pin,
+                         site_pips=[]):
         """ Connect a BEL pin to an existing internal source.
 
         bel (Bel): Bel object
-        bel_pin (str): The exact tech library name for the relevant pin.  Can be
-            a bus (e.g. A[5]).  The name must identically match the library
+        cell_pin (str): The exact tech library name for the relevant pin.  Can
+            be a bus (e.g. A[5]).  The name must identically match the library
             name or an error will occur during synthesis.
         source (str): Existing internal source wire added via
             add_internal_source.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
+        site_pips (list): List of site routing tuples used to connect source
+            BEL pin to this BEL pin.
 
         """
         assert source in self.internal_sources, source
-        assert bel_pin not in bel.connections
-        bel.connections[bel_pin] = source
+        assert source in self.internal_source_bel_pins, source
+        assert cell_pin not in bel.connections
+        bel.connections[cell_pin] = source
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
+
+        self.link_site_routing([self.internal_source_bel_pins[source]] +
+                               site_pips + [('bel_pin', bel_name, bel_pin,
+                                             'input')])
+
+    def connect_constant(self,
+                         bel,
+                         cell_pin,
+                         bel_name,
+                         bel_pin,
+                         value,
+                         source_bel,
+                         source_bel_pin,
+                         site_pips=[]):
+        """ Connect a BEL pin to an existing internal constant source.
+
+        bel (Bel): Bel object
+        cell_pin (str): The exact tech library name for the relevant pin.  Can
+            be a bus (e.g. A[5]).  The name must identically match the library
+            name or an error will occur during synthesis.
+        bel_name (str): Name of the BEL this cell pin is mapped too.
+        bel_pin (str): Name of the BEL pin this cell pin is mapped too.
+        value (int): Value of constant net being connected.
+        source_bel (str): Name of BEL that is supplying the constant.
+        source_bel_pin (str): Name of BEL pin that is supplying the constant.
+        site_pips (list): List of site routing tuples used to connect source
+            BEL pin to this BEL pin.
+        """
+        assert value in [0, 1]
+        assert cell_pin not in bel.connections
+        bel.connections[cell_pin] = value
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel_name, bel_pin=bel_pin, cell_pin=cell_pin)
+
+        self.link_site_routing([('bel_pin', source_bel, source_bel_pin,
+                                 'site_source')] + site_pips +
+                               [('bel_pin', bel_name, bel_pin, 'input')])
 
     def add_bel(self, bel, name=None):
         """ Adds a BEL to the site.
@@ -984,13 +1636,20 @@ class Site(object):
                                            site_pin_map[sink_wire])
             source_wire_pkey = get_wire_pkey(conn, self.tile,
                                              site_pin_map[source_wire])
+
             if sink_wire_pkey in unrouted_sinks:
-                shorted_nets[source_wire_pkey] = sink_wire_pkey
+                pip = '{}.{}.{}'.format(self.tile, site_pin_map[source_wire],
+                                        site_pin_map[sink_wire])
+                shorted_nets[source_wire_pkey] = sink_wire_pkey, pip
 
                 # Because this is being treated as a short, remove the
                 # source and sink.
                 unrouted_sources.remove(source_wire_pkey)
-                unrouted_sinks.remove(sink_wire_pkey)
+
+            if sink_wire_pkey in unrouted_sources:
+                pip = '{}.{}.{}'.format(self.tile, site_pin_map[source_wire],
+                                        site_pin_map[sink_wire])
+                shorted_nets[source_wire_pkey] = sink_wire_pkey, pip
 
         return dict(
             wires=wires,
@@ -1291,6 +1950,7 @@ class Module(object):
         self.db = db
         self.grid = grid
         self.conn = conn
+        self.maybe_get_wire = create_maybe_get_wire(conn)
         self.sites = []
         self.source_bels = {}
         self.disabled_drcs = set()
@@ -1339,6 +1999,27 @@ class Module(object):
 
         # IO bank lookup (if part was provided).
         self.iobank_lookup = {}
+
+        # Map of port -> (map of prop -> value).
+        self.port_property = {}
+
+    def maybe_add_pip(self, feature):
+        parts = feature.split('.')
+        assert len(parts) == 3
+
+        sink_wire = self.maybe_get_wire(parts[0], parts[2])
+        if sink_wire is None:
+            return False
+
+        src_wire = self.maybe_get_wire(parts[0], parts[1])
+        if src_wire is None:
+            return False
+
+        self.active_pips.add((sink_wire, src_wire, feature))
+        return True
+
+    def add_active_pip(self, feature):
+        assert self.maybe_add_pip(feature)
 
     def set_default_iostandard(self, iostandard, drive):
         self.default_iostandard = iostandard
@@ -1449,6 +2130,12 @@ class Module(object):
             return None
 
         return self.net_to_iosettings[signal]
+
+    def add_port_property(self, port, prop, value):
+        """ Add property to port. """
+        if port not in self.port_property:
+            self.port_property[port] = {}
+        self.port_property[port][prop] = value
 
     def add_extra_tcl_line(self, tcl_line):
         self.extra_tcl.append(tcl_line)
@@ -1715,6 +2402,40 @@ set net [get_nets -of_object $pin]""".format(
             # Remove extra {} elements required to construct 1-length lists.
             yield """set_property FIXED_ROUTE $route $net"""
 
+    def output_interchange_nets(self, constant_nets):
+        """ Output nets in format suitable for interchange.
+
+        constant_nets : dict
+            Map of 0/1 to net names for constants nets (e.g.
+            {0: "<const0>", 1: "<const1>"}).
+
+        Yields net_name (str), list of pips
+
+        """
+        assert len(self.nets) > 0
+
+        for net_wire_pkey, net in self.nets.items():
+            if net_wire_pkey == ZERO_NET:
+                net_name = constant_nets[0]
+            elif net_wire_pkey == ONE_NET:
+                net_name = constant_nets[1]
+            else:
+                if net_wire_pkey not in self.source_bels:
+                    continue
+
+                if not net.is_net_alive():
+                    continue
+
+                bel, cell_pin = self.source_bels[net_wire_pkey]
+                assert cell_pin in bel.final_net_names, (
+                    bel.get_cell(self), bel.module, bel.name, cell_pin,
+                    bel.final_net_names.keys())
+                net_name = bel.final_net_names[cell_pin]
+
+            out = []
+            net.output_pips(out)
+            yield net_name, out
+
     def output_disabled_drcs(self):
         for drc in self.disabled_drcs:
             yield "set_property SEVERITY {{Warning}} [get_drc_checks {}]".format(
@@ -1879,10 +2600,27 @@ set net [get_nets -of_object $pin]""".format(
         return self.cname_map.get((pin, idx, net))
 
     def output_extra_tcl(self):
-        return self.extra_tcl
+        output = list(self.extra_tcl)
+
+        for port in sorted(self.port_property):
+            for prop in sorted(self.port_property[port]):
+                value = self.port_property[port][prop]
+                output.append('set_property {} {} [get_ports {}]'.format(
+                    prop, value, port))
+
+        return output
 
     def set_io_banks(self, iobanks):
         self.iobank_lookup = dict((v, int(k)) for k, v in iobanks.items())
 
     def find_iobank(self, hclk_ioi3_tile):
         return self.iobank_lookup[hclk_ioi3_tile]
+
+
+def make_inverter_path(wire, inverted):
+    """ Create site pip path through an inverter. """
+    if inverted:
+        return [('site_pip', '{}INV'.format(wire), '{}_B'.format(wire)),
+                ('inverter', '{}INV'.format(wire))]
+    else:
+        return [('site_pip', '{}INV'.format(wire), wire)]

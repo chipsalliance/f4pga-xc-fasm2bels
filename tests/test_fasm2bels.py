@@ -1,6 +1,5 @@
 import unittest
 from parameterized import parameterized
-from unittest.mock import patch
 import os
 import sys
 import tempfile
@@ -57,7 +56,7 @@ class TestFasm2Bels(unittest.TestCase):
             bitread, '--bit_file', bit_file, '--fasm_file', fasm_file,
             '--eblif', eblif, '--top', top, '--iostandard', iostandard,
             '--drive', drive, '--connection_database', channels_file,
-            generated_top_v, generated_top_xdc
+            '--verilog_file', generated_top_v, '--xdc_file', generated_top_xdc
         ]
         if pin_constraint_type == PinConstraintType.XDC:
             sys.argv.extend(('--input_xdc', xdc_input))

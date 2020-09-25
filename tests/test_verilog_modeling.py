@@ -1,5 +1,7 @@
 import unittest
+import fasm2bels.models.verilog_modeling
 from fasm2bels.models.verilog_modeling import Wire, Constant, Bus, NoConnect
+import doctest
 
 
 class TestVerilogModeling(unittest.TestCase):
@@ -29,3 +31,6 @@ class TestVerilogModeling(unittest.TestCase):
                                                              (1, "a")])
         self.assertEqual(list(Constant(0).iter_wires()), [])
         self.assertEqual(list(NoConnect().iter_wires()), [])
+
+    def test_doctest(self):
+        doctest.testmod(fasm2bels.models.verilog_modeling)

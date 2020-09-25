@@ -1,6 +1,6 @@
 import re
 
-from .verilog_modeling import Bel, Site
+from .verilog_modeling import Bel, Site, make_inverter_path
 
 BUFHCE_RE = re.compile('BUFHCE_X([0-9]+)Y([0-9]+)')
 
@@ -78,6 +78,7 @@ def process_bufg(conn, top, tile, features):
         site = Site(features, site=bufg_site)
 
         bel = Bel('BUFGCTRL')
+        bel.set_bel('BUFGCTRL')
         bel.parameters['IS_IGNORE0_INVERTED'] = int(
             'IS_IGNORE0_INVERTED' not in set_features)
         bel.parameters['IS_IGNORE1_INVERTED'] = int(
@@ -92,11 +93,15 @@ def process_bufg(conn, top, tile, features):
             'PRESELECT_I1' in set_features) else '"FALSE"'
         bel.parameters['INIT_OUT'] = int('INIT_OUT' in set_features)
 
-        for sink in ('I0', 'I1', 'S0', 'S1', 'CE0', 'CE1', 'IGNORE0',
-                     'IGNORE1'):
-            site.add_sink(bel, sink, sink)
+        for sink in ('S0', 'S1', 'CE0', 'CE1', 'IGNORE0', 'IGNORE1'):
+            site_pips = make_inverter_path(
+                sink, bel.parameters['IS_{}_INVERTED'.format(sink)])
+            site.add_sink(bel, sink, sink, bel.bel, sink, site_pips=site_pips)
 
-        site.add_source(bel, 'O', 'O')
+        for sink in ('I0', 'I1'):
+            site.add_sink(bel, sink, sink, bel.bel, sink)
+
+        site.add_source(bel, 'O', 'O', bel.bel, 'O')
 
         site.add_bel(bel)
 
@@ -135,6 +140,7 @@ def process_hrow(conn, top, tile, features):
         site = Site(features, site=bufhce_site)
 
         bel = Bel('BUFHCE')
+        bel.set_bel('BUFHCE')
         if 'CE_TYPE.ASYNC' in set_features:
             bel.parameters['CE_TYPE'] = '"ASYNC"'
         else:
@@ -143,9 +149,9 @@ def process_hrow(conn, top, tile, features):
         bel.parameters['INIT_OUT'] = int('INIT_OUT' in set_features)
 
         for sink in ('I', 'CE'):
-            site.add_sink(bel, sink, sink)
+            site.add_sink(bel, sink, sink, bel.bel, sink)
 
-        site.add_source(bel, 'O', 'O')
+        site.add_source(bel, 'O', 'O', bel.bel, 'O')
 
         site.add_bel(bel)
 

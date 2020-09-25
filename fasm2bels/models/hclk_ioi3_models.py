@@ -41,9 +41,10 @@ def process_hclk_ioi3(conn, top, tile, features):
     site = Site([], tile=tile, site=idelayctrl_sites[0])
 
     idelayctrl = Bel('IDELAYCTRL')
-    site.add_source(idelayctrl, 'RDY', 'RDY')
-    site.add_sink(idelayctrl, 'RST', 'RST')
-    site.add_sink(idelayctrl, 'REFCLK', 'REFCLK')
+    idelayctrl.set_bel('IDELAYCTRL')
+    site.add_source(idelayctrl, 'RDY', 'RDY', idelayctrl.bel, 'RDY')
+    site.add_sink(idelayctrl, 'RST', 'RST', idelayctrl.bel, 'RST')
+    site.add_sink(idelayctrl, 'REFCLK', 'REFCLK', idelayctrl.bel, 'REFCLK')
     site.add_bel(idelayctrl)
 
     top.add_site(site)

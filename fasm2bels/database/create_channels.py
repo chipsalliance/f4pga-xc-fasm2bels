@@ -2,8 +2,6 @@ import os
 import datetime
 
 import prjxray
-from prjxray import db
-from prjxray import tile
 
 from fasm2bels.lib import progressbar_utils
 from fasm2bels.database.connection_database_cache import DatabaseCache
@@ -92,7 +90,6 @@ def import_tile_type(db, write_cur, tile_types, site_types, tile_type_name):
     else:
         masked_sites = []
         masked_wires = []
-        masked_pips = []
 
     write_cur.execute("INSERT INTO tile_type(name) VALUES (?)",
                       (tile_type_name, ))
@@ -183,6 +180,8 @@ def build_other_indicies(write_cur):
     write_cur.execute("CREATE INDEX phy_tile_name_index ON phy_tile(name);")
     write_cur.execute(
         "CREATE INDEX phy_tile_location_index ON phy_tile(grid_x, grid_y);")
+    write_cur.execute(
+        "CREATE INDEX site_instance_index on site_instance(name);")
 
 
 def import_phy_grid(db, grid, conn):
@@ -213,8 +212,6 @@ def import_phy_grid(db, grid, conn):
     for tile in grid.tiles():
         gridinfo = grid.gridinfo_at_tilename(tile)
 
-        clock_region_pkey = None
-
         loc = grid.loc_of_tilename(tile)
         # tile: pkey name tile_type_pkey grid_x grid_y
         write_cur.execute(
@@ -229,112 +226,38 @@ VALUES
             ))
         phy_tile_pkey = write_cur.lastrowid
 
-    build_other_indicies(write_cur)
-    write_cur.connection.commit()
-
-
-def import_nodes(db, grid, conn):
-    # Some nodes are just 1 wire, so start by enumerating all wires.
-
-    cur = conn.cursor()
-    write_cur = conn.cursor()
-    write_cur.execute("""BEGIN EXCLUSIVE TRANSACTION;""")
-
-    tile_wire_map = {}
-    wires = {}
-    for tile in progressbar_utils.progressbar(grid.tiles()):
-        gridinfo = grid.gridinfo_at_tilename(tile)
         tile_type = db.get_tile_type(gridinfo.tile_type)
-
-        cur.execute(
-            """SELECT pkey, tile_type_pkey FROM phy_tile WHERE name = ?;""",
-            (tile, ))
-        phy_tile_pkey, tile_type_pkey = cur.fetchone()
-
-        for wire in tile_type.get_wires():
-            # pkey node_pkey tile_pkey wire_in_tile_pkey
-            cur.execute(
-                """
-SELECT pkey FROM wire_in_tile WHERE name = ? and tile_type_pkey = ?;""",
-                (wire, tile_type_pkey))
-
-            wire_in_tile_pkey = cur.fetchone()
-            if wire_in_tile_pkey is None:
-                continue
-            wire_in_tile_pkey = wire_in_tile_pkey[0]
-
+        for site, instance_site in zip(tile_type.sites,
+                                       tile_type.get_instance_sites(gridinfo)):
             write_cur.execute(
                 """
-INSERT INTO wire(phy_tile_pkey, wire_in_tile_pkey)
-VALUES
-  (?, ?);""", (phy_tile_pkey, wire_in_tile_pkey))
+INSERT INTO site_instance(name, x_coord, y_coord, site_pkey, phy_tile_pkey, prohibited)
+SELECT ?, ?, ?, site.pkey, ?, ?
+FROM site
+WHERE
+    site.name = ?
+AND
+    site.x_coord = ?
+AND
+    site.y_coord = ?
+AND
+    site.site_type_pkey = (SELECT pkey FROM site_type WHERE name = ?)
+AND
+    tile_type_pkey = ?;
+                """, (
+                    instance_site.name,
+                    instance_site.x,
+                    instance_site.y,
+                    phy_tile_pkey,
+                    instance_site.name in gridinfo.prohibited_sites,
+                    site.name,
+                    site.x,
+                    site.y,
+                    site.type,
+                    tile_types[gridinfo.tile_type],
+                ))
 
-            assert (tile, wire) not in tile_wire_map
-            wire_pkey = write_cur.lastrowid
-            tile_wire_map[(tile, wire)] = wire_pkey
-            wires[wire_pkey] = None
-
-    write_cur.execute("""COMMIT TRANSACTION;""")
-
-    connections = db.connections()
-
-    for connection in progressbar_utils.progressbar(
-            connections.get_connections()):
-        a_pkey = tile_wire_map[(connection.wire_a.tile,
-                                connection.wire_a.wire)]
-        b_pkey = tile_wire_map[(connection.wire_b.tile,
-                                connection.wire_b.wire)]
-
-        a_node = wires[a_pkey]
-        b_node = wires[b_pkey]
-
-        if a_node is None:
-            a_node = set((a_pkey, ))
-
-        if b_node is None:
-            b_node = set((b_pkey, ))
-
-        if a_node is not b_node:
-            a_node |= b_node
-
-            for wire in a_node:
-                wires[wire] = a_node
-
-    nodes = {}
-    for wire_pkey, node in wires.items():
-        if node is None:
-            node = set((wire_pkey, ))
-
-        assert wire_pkey in node
-
-        nodes[id(node)] = node
-
-    wires_assigned = set()
-    for node in progressbar_utils.progressbar(nodes.values()):
-        write_cur.execute("""INSERT INTO node(number_pips) VALUES (0);""")
-        node_pkey = write_cur.lastrowid
-
-        for wire_pkey in node:
-            wires_assigned.add(wire_pkey)
-            write_cur.execute(
-                """
-            UPDATE wire
-                SET node_pkey = ?
-                WHERE pkey = ?
-            ;""", (node_pkey, wire_pkey))
-
-    assert len(set(wires.keys()) ^ wires_assigned) == 0
-
-    del tile_wire_map
-    del nodes
-    del wires
-
-    write_cur.execute(
-        "CREATE INDEX wire_in_tile_index ON wire(wire_in_tile_pkey);")
-    write_cur.execute(
-        "CREATE INDEX wire_index ON wire(phy_tile_pkey, wire_in_tile_pkey);")
-    write_cur.execute("CREATE INDEX wire_node_index ON wire(node_pkey);")
-
+    build_other_indicies(write_cur)
     write_cur.connection.commit()
 
 
