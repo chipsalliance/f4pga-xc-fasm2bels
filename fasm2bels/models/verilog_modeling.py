@@ -1043,7 +1043,8 @@ class Site(object):
                     bel_pins.add(child)
 
                 if child in dest_to_src:
-                    assert dest_to_src[child] == parent
+                    assert dest_to_src[child] == parent, (child, parent,
+                                                          dest_to_src[child])
 
                 dest_to_src[child] = parent
 

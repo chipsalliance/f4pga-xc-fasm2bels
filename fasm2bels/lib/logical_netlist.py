@@ -267,8 +267,22 @@ def check_logical_netlist(libraries):
                 if port.idx is not None:
                     assert instance_port.bus is not None
 
-                    assert port.idx >= instance_port.bus.start
-                    assert port.idx <= instance_port.bus.end
+                    if instance_port.bus.start <= instance_port.bus.end:
+                        # Little-endian
+                        assert port.idx >= instance_port.bus.start, (
+                            instance_cell_name, port.idx,
+                            instance_port.bus.start, instance_port.bus.end)
+                        assert port.idx <= instance_port.bus.end, (
+                            instance_cell_name, port.idx,
+                            instance_port.bus.start, instance_port.bus.end)
+                    else:
+                        # Big-endian
+                        assert port.idx <= instance_port.bus.start, (
+                            instance_cell_name, port.idx,
+                            instance_port.bus.start, instance_port.bus.end)
+                        assert port.idx >= instance_port.bus.end, (
+                            instance_cell_name, port.idx,
+                            instance_port.bus.start, instance_port.bus.end)
                 else:
                     assert instance_port.bus is None, (netname, port)
 
