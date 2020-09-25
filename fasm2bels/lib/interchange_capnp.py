@@ -596,7 +596,7 @@ def create_top_level_ports(top_cell, top, port_list, direction):
             top_cell.connect_net_to_cell_port(wire, wire)
         else:
             top_cell.add_bus_port(
-                wire, direction, start=0, end=width, property_map=prop)
+                wire, direction, start=width, end=0, property_map=prop)
             for idx in range(width + 1):
                 net_name = '{}[{}]'.format(wire, idx)
                 top_cell.add_net(net_name)
@@ -751,7 +751,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
         for port, (direction, width) in ports.items():
 
             if width is not None:
-                cell.add_bus_port(port, direction, start=0, end=width - 1)
+                cell.add_bus_port(port, direction, start=width - 1, end=0)
             else:
                 cell.add_port(port, direction)
 

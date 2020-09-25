@@ -58,7 +58,18 @@ def cleanup_ilogic(top, site):
         if ck_source is not None and ckb_source is not None and ck_source == ckb_source:
             is_cb_inverted = bool(
                 int(bel.parameters.get("IS_CB_INVERTED", "0")))
-            bel.parameters["IS_CB_INVERTED"] = str(int(not is_cb_inverted))
+            bel.parameters["IS_CB_INVERTED"] = "1'b{:d}".format(
+                not is_cb_inverted)
+
+            if bel.parameters["IS_CB_INVERTED"] == "1'b1":
+                # Remove non-inverting path
+                site.prune_site_routing(('site_pip', 'CLKBINV', 'CLKB'))
+
+                # Add inverting path to site routing
+                site.link_site_routing([('bel_pin', 'CLKB', 'CLKB',
+                                         'site_source')] +
+                                       make_inverter_path('CLKB', True) +
+                                       [('bel_pin', 'IFF', 'CKB', 'input')])
 
     # Check if we have an ODDR for OQ/TQ
     for oddr in ["ODDR_OQ", "ODDR_TQ"]:
@@ -317,8 +328,6 @@ def process_iddr(top, site, idelay_site=None):
     bel = Bel('IDDR_2CLK')
     bel.set_bel('IFF')
 
-    site.add_sink(bel, 'C', 'CLK', bel.bel, 'CK')
-    site.add_sink(bel, 'CB', 'CLKB', bel.bel, 'CKB')
     site.add_sink(bel, 'CE', 'CE1', bel.bel, 'CE')
     site.add_source(bel, 'Q1', 'Q1', bel.bel, 'Q1')
     site.add_source(bel, 'Q2', 'Q2', bel.bel, 'Q2')
@@ -362,10 +371,26 @@ def process_iddr(top, site, idelay_site=None):
         bel.parameters['SRTYPE'] = '"ASYNC"'
 
     # IS_C_INVERTED
+    c_inverted = site.has_feature('IFF.ZINV_C')
     if site.has_feature('IFF.ZINV_C'):
         bel.parameters['IS_C_INVERTED'] = "1'b0"
     else:
         bel.parameters['IS_C_INVERTED'] = "1'b1"
+
+    site.add_sink(
+        bel,
+        'C',
+        'CLK',
+        bel.bel,
+        'CK',
+        site_pips=make_inverter_path('CLK', c_inverted))
+    site.add_sink(
+        bel,
+        'CB',
+        'CLKB',
+        bel.bel,
+        'CKB',
+        site_pips=make_inverter_path('CLKB', False))
 
     # IS_CB_INVERTED
     # There seem not to be any bits for this one...
@@ -449,8 +474,10 @@ def process_oddr_oq(top, site):
     # Determine whether we have SET or RESET
     if site.has_feature('ZSRVAL_OQ'):
         site.add_sink(bel, 'R', 'SR', bel.bel, 'SR')
+        bel.add_unconnected_port('S', None, output=False)
     else:
         site.add_sink(bel, 'S', 'SR', bel.bel, 'SR')
+        bel.add_unconnected_port('R', None, output=False)
 
     # DDR_CLK_EDGE
     if site.has_feature('ODDR.DDR_CLK_EDGE.SAME_EDGE'):
