@@ -3,11 +3,15 @@
 from collections import namedtuple
 import re
 
-XdcIoConstraint = namedtuple("XdcIoConstraint", "net pad line_str line_num")
+XdcIoConstraint = namedtuple("XdcIoConstraint", "net pad line_str line_num params")
 
 
 def parse_simple_xdc(fp):
     """ Parse a simple XDC file object and yield XdcIoConstraint objects. """
+
+    port_to_params = {}
+
+    port_to_results = {}
 
     for line_number, line in enumerate(fp):
         m = re.match(r"^\s*set_property\s+(.*)\[\s*get_ports\s+(.*)\]", line,
@@ -22,6 +26,10 @@ def parse_simple_xdc(fp):
         if m:
             port = m.group(1).strip()
 
+        if port not in port_to_params:
+            # Default DRIVE value is 12.
+            port_to_params[port] = {'DRIVE': 12}
+
         # Check for pin property as part of a dictionary, ie:
         # -dict { PACKAGE_PIN N15   IOSTANDARD LVCMOS33 }
         m = re.match(r"-dict\s+{(.*)}", properties)
@@ -31,23 +39,30 @@ def parse_simple_xdc(fp):
             properties = dict(zip(dict_list[::2], dict_list[1::2]))
 
             if "PACKAGE_PIN" in properties:
-                yield XdcIoConstraint(
+                port_to_results[port] = XdcIoConstraint(
                     net=port,
                     pad=properties["PACKAGE_PIN"],
                     line_str=line.strip(),
                     line_num=line_number,
+                    params=port_to_params[port],
                 )
-            continue
 
-        # Otherwise, must be a direct set_property, ie:
-        # PACKAGE_PIN N15
-        property_pair = properties.split()
-        assert len(property_pair) == 2, property_pair
+            port_to_params[port].update(properties)
+        else:
+            # Otherwise, must be a direct set_property, ie:
+            # PACKAGE_PIN N15
+            property_pair = properties.split()
+            assert len(property_pair) == 2, property_pair
 
-        if property_pair[0] == "PACKAGE_PIN":
-            yield XdcIoConstraint(
-                net=port,
-                pad=property_pair[1],
-                line_str=line.strip(),
-                line_num=line_number,
-            )
+            port_to_params[port][property_pair[0]] = property_pair[1]
+
+            if property_pair[0] == "PACKAGE_PIN":
+                port_to_results[port] = XdcIoConstraint(
+                    net=port,
+                    pad=property_pair[1],
+                    line_str=line.strip(),
+                    line_num=line_number,
+                    params=port_to_params[port],
+                )
+
+    return [port_to_results[port] for port in port_to_results]

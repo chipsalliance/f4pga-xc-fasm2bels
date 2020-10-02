@@ -2112,6 +2112,9 @@ class Module(object):
             for net in nets:
                 self.net_to_iosettings[net] = params
 
+    def add_iosettings_from_xdc(self, constraint):
+        self.net_to_iosettings[constraint.net] = constraint.params
+
     def get_site_iosettings(self, site):
         """
         Returns a dict with IO settings for the given site name. The

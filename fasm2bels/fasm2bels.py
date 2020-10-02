@@ -207,7 +207,7 @@ def bit2fasm(db_root, db, grid, bit_file, fasm_file, bitread, part):
             fasm.fasm_tuple_to_string(model, canonical=False), end='', file=f)
 
 
-def load_io_sites(db_root, part, pcf, xdc, eblif):
+def load_io_sites(db_root, part, pcf, xdc, eblif, top):
     """ Load map of sites to signal names from pcf or eblif and part pin definitions.
 
     Args:
@@ -227,11 +227,14 @@ def load_io_sites(db_root, part, pcf, xdc, eblif):
             for pcf_constraint in parse_simple_pcf(f):
                 assert pcf_constraint.pad not in pin_to_signal, pcf_constraint.pad
                 pin_to_signal[pcf_constraint.pad] = pcf_constraint.net
+
     if xdc:
         with open(xdc) as f:
             for xdc_constraint in parse_simple_xdc(f):
                 assert xdc_constraint.pad not in pin_to_signal, xdc_constraint.pad
                 pin_to_signal[xdc_constraint.pad] = xdc_constraint.net
+                top.add_iosettings_from_xdc(xdc_constraint)
+
     if eblif:
         io_place = vpr_io_place.IoPlace()
         io_place.read_io_loc_pairs(eblif)
@@ -381,7 +384,7 @@ def main():
     if args.eblif or args.pcf or args.input_xdc:
         top.set_site_to_signal(
             load_io_sites(args.db_root, args.part, args.pcf, args.input_xdc,
-                          parsed_eblif))
+                          parsed_eblif, top))
 
     if args.route_file:
         assert args.rr_graph, "RR graph file required."
