@@ -3,14 +3,17 @@
 from collections import namedtuple
 import re
 
-XdcIoConstraint = namedtuple("XdcIoConstraint", "net pad line_str line_num params")
+XdcIoConstraint = namedtuple("XdcIoConstraint",
+                             "net pad line_str line_num params")
 
 
 def parse_simple_xdc(fp):
-    """ Parse a simple XDC file object and yield XdcIoConstraint objects. """
+    """ Parse a simple XDC file object and return list of XdcIoConstraint objects. """
 
+    # For each port, maintain a dictionary of PROPERTIES
     port_to_params = {}
 
+    # For each port, maintain XdcIoConstraint object to return
     port_to_results = {}
 
     for line_number, line in enumerate(fp):
@@ -65,4 +68,5 @@ def parse_simple_xdc(fp):
                     params=port_to_params[port],
                 )
 
+    # Return list of XdcIoConstraint objects
     return [port_to_results[port] for port in port_to_results]
