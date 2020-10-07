@@ -462,7 +462,7 @@ class PhysicalNetlistBuilder():
 
         return self.string_map[s]
 
-    def finish_encode(self):
+    def finish_encode(self, constant_nets):
         """ Completes the encoding of the physical netlist and returns root pycapnp object.
 
         Invoke after all placements, physical cells and physical nets have
@@ -508,6 +508,15 @@ class PhysicalNetlistBuilder():
                     pin.otherCell.multiType = self.string_id(
                         pin.other_cell_type)
 
+        net_to_type = {}
+        for val, net_name in constant_nets.items():
+            assert net_name not in net_to_type, net_name
+            if val == 0:
+                net_to_type[net_name] = 'gnd'
+            else:
+                assert val == 1
+                net_to_type[net_name] = 'vcc'
+
         self.physical_netlist.init('physNets', len(self.nets))
         nets = self.physical_netlist.physNets
         for idx, (net_name, roots, stubs) in enumerate(self.nets):
@@ -521,6 +530,8 @@ class PhysicalNetlistBuilder():
             net.init('stubs', len(stubs))
             for stub_obj, stub in zip(net.stubs, stubs):
                 stub.output_interchange(stub_obj, self.string_id)
+
+            net.type = net_to_type.get(net_name, 'signal')
 
         self.physical_netlist.init('physCells', len(self.physical_cells))
         physical_cells = self.physical_netlist.physCells
@@ -897,7 +908,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
             stubs=stubs,
         )
 
-    physical_netlist = physical_netlist_builder.finish_encode()
+    physical_netlist = physical_netlist_builder.finish_encode(constant_nets)
     write_capnp_file(physical_netlist, f_physical)
 
     for l in top.output_extra_tcl():
