@@ -1,0 +1,50 @@
+sig1:
+    DRIVE: 12
+    PACKAGE_PIN : A1
+
+sig2:
+    DRIVE: 12
+    PACKAGE_PIN : A2
+
+sig3:
+    DRIVE: 12
+    PACKAGE_PIN: A3
+
+sig4:
+    DRIVE: 12
+    PACKAGE_PIN: A4
+
+sig5:
+    DRIVE: 12
+    PACKAGE_PIN: A5
+
+sig6:
+    DRIVE: 12
+    PACKAGE_PIN: A6
+    PROP1: PROP_VAL
+
+sig7:
+    DRIVE: 12
+    PACKAGE_PIN: A7
+    PROP_2 : property123
+
+sig8:
+    DRIVE: 12
+    PACKAGE_PIN: A8
+    PROP_3_3 : property_abc_123
+
+sig[9]:
+    DRIVE: 12
+    PACKAGE_PIN: A9
+
+sig[10]:
+    DRIVE: 12
+    PACKAGE_PIN: A10
+
+sig_name[11]:
+    DRIVE: 12
+    PACKAGE_PIN: A11
+
+sig12:
+    DRIVE: 99
+    PACKAGE_PIN: A12
