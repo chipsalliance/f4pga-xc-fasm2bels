@@ -7,13 +7,32 @@ XdcIoConstraint = namedtuple("XdcIoConstraint",
                              "net pad line_str line_num params")
 
 
-def to_int_float(s):
-    """ Return the string 's' converted to an int or float if possible, otherwise 
-    just return s """
+def to_int_float_or_string(s):
+    """ Convert string to int or float if possible 
+    
+    If s is an integer, return int(s)
+    >>> to_int_float_or_string("3")
+    3
+    >>> to_int_float_or_string("-7")
+    -7
+
+    If s is a float, return float(2)
+    >>> to_int_float_or_string("3.52")
+    3.52
+    >>> to_int_float_or_string("-10.0")
+    -10.0
+    >>> to_int_float_or_string("1.4e7")
+    14000000.0
+
+    Otherwise, just return the string s
+    >>> to_int_float_or_string("A3")
+    'A3'
+
+    """
 
     try:
-        s_int = int(s)        
-        
+        s_int = int(s)
+
         # int(s) will truncate.  If user specified a '.', return a float instead
         if "." not in s:
             return s_int
@@ -22,8 +41,9 @@ def to_int_float(s):
 
     try:
         return float(s)
-    except(TypeError, ValueError):
+    except (TypeError, ValueError):
         return s
+
 
 def parse_simple_xdc(fp):
     """ Parse a simple XDC file object and return list of XdcIoConstraint objects. """
@@ -89,7 +109,7 @@ def parse_simple_xdc(fp):
     # Convert all property values to int/float when possible
     for port in port_to_results:
         for k, v in port_to_results[port].params.items():
-            port_to_results[port].params[k] = to_int_float(v)
+            port_to_results[port].params[k] = to_int_float_or_string(v)
 
     # Return list of XdcIoConstraint objects
     return [port_to_results[port] for port in port_to_results]

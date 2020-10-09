@@ -19,6 +19,7 @@ build:
 
 test-py:
 	$(IN_ENV) cd tests; PYTHONPATH=../ python -m unittest
+	$(IN_ENV) python -m doctest ./fasm2bels/lib/parse_xdc.py
 
 clean:
 	rm -rf env
