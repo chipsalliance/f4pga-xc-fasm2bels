@@ -49,6 +49,7 @@ from .database.create_channels import create_channels
 from .database.connection_db_utils import get_tile_type
 
 from .lib.parse_pcf import parse_simple_pcf
+from .lib.parse_xdc import parse_simple_xdc
 from .lib import eblif
 from .lib import vpr_io_place
 from .lib.interchange_capnp import output_interchange
@@ -206,13 +207,14 @@ def bit2fasm(db_root, db, grid, bit_file, fasm_file, bitread, part):
             fasm.fasm_tuple_to_string(model, canonical=False), end='', file=f)
 
 
-def load_io_sites(db_root, part, pcf, eblif):
+def load_io_sites(db_root, part, pcf, xdc, eblif, top):
     """ Load map of sites to signal names from pcf or eblif and part pin definitions.
 
     Args:
         db_root (str): Path to database root folder
         part (str): Part name being targeted.
         pcf (str): Full path to pcf file for this bitstream.
+        xdc (str): Full path to xdc file for this bitstream.
         eblif (str): Parsed contents of EBLIF file.
 
     Returns:
@@ -225,6 +227,14 @@ def load_io_sites(db_root, part, pcf, eblif):
             for pcf_constraint in parse_simple_pcf(f):
                 assert pcf_constraint.pad not in pin_to_signal, pcf_constraint.pad
                 pin_to_signal[pcf_constraint.pad] = pcf_constraint.net
+
+    if xdc:
+        with open(xdc) as f:
+            for xdc_constraint in parse_simple_xdc(f):
+                assert xdc_constraint.pad not in pin_to_signal, xdc_constraint.pad
+                pin_to_signal[xdc_constraint.pad] = xdc_constraint.net
+                top.add_iosettings_from_xdc(xdc_constraint)
+
     if eblif:
         io_place = vpr_io_place.IoPlace()
         io_place.read_io_loc_pairs(eblif)
@@ -318,7 +328,10 @@ def main():
         default=None,
         help="Default DRIVE to use for IO buffers.")
     parser.add_argument('--top', default="top", help="Root level module name.")
-    parser.add_argument('--pcf', help="Mapping of top-level pins to pads.")
+    parser.add_argument(
+        '--pcf', help="Mapping of top-level pins to pads, PCF format.")
+    parser.add_argument(
+        '--input_xdc', help="Mapping of top-level pints to pads, XDC format.")
     parser.add_argument('--route_file', help="VPR route output file.")
     parser.add_argument('--rr_graph', help="Real or virt xc7 graph")
     parser.add_argument(
@@ -365,10 +378,13 @@ def main():
     if args.eblif:
         with open(args.eblif) as f:
             parsed_eblif = eblif.parse_blif(f)
+    else:
+        parsed_eblif = None
 
-    if args.eblif or args.pcf:
+    if args.eblif or args.pcf or args.input_xdc:
         top.set_site_to_signal(
-            load_io_sites(args.db_root, args.part, args.pcf, parsed_eblif))
+            load_io_sites(args.db_root, args.part, args.pcf, args.input_xdc,
+                          parsed_eblif, top))
 
     if args.route_file:
         assert args.rr_graph, "RR graph file required."
