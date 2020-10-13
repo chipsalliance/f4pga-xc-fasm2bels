@@ -154,9 +154,7 @@ def append_obuf_iostandard_params(top,
     # Input termination (here for inouts)
     if in_term is not None:
         for port in IOB_PORTS[bel.module]:
-            top.add_extra_tcl_line(
-                "set_property IN_TERM {} [get_ports {}]".format(
-                    in_term, bel.connections[port]))
+            top.add_port_property(bel.connections[port], 'IN_TERM', in_term)
 
     # Slew rate
     bel.parameters["SLEW"] = '"{}"'.format(slew)
@@ -214,9 +212,7 @@ def append_ibuf_iostandard_params(top,
     # Input termination
     if in_term is not None:
         for port in IOB_PORTS[bel.module]:
-            top.add_extra_tcl_line(
-                "set_property IN_TERM {} [get_ports {}]".format(
-                    in_term, bel.connections[port]))
+            top.add_port_property(bel.connections[port], 'IN_TERM', in_term)
 
 
 def decode_iostandard_params(site, diff=False):
@@ -333,6 +329,9 @@ def process_single_ended_iob(top, iob):
 
     site = Site(iob, iob_site)
 
+    # Change site type from IOB33M/S to IOB33
+    site.override_site_type('IOB33')
+
     intermdisable_used = site.has_feature('INTERMDISABLE.I')
     ibufdisable_used = site.has_feature('IBUFDISABLE.I')
 
@@ -380,12 +379,22 @@ def process_single_ended_iob(top, iob):
         else:
             bel = Bel('IBUF')
 
+        bel.set_bel('INBUF_EN')
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel, bel_pin='PAD', cell_pin='I')
+
         top_wire = top.add_top_in_port(tile_name, iob_site.name, 'IPAD')
         bel.connections['I'] = top_wire
 
         # Note this looks weird, but the BEL pin is O, and the site wire is
         # called I, so it is in fact correct.
-        site.add_source(bel, bel_pin='O', source='I')
+        site.add_source(
+            bel,
+            cell_pin='O',
+            source_site_pin='I',
+            bel_name=bel.bel,
+            bel_pin='OUT',
+            site_pips=[('site_pip', 'IUSED', '0')])
 
         append_ibuf_iostandard_params(top, site, bel, iostd_in, in_term)
 
@@ -416,16 +425,47 @@ def process_single_ended_iob(top, iob):
 
         # Note this looks weird, but the BEL pin is O, and the site wire is
         # called I, so it is in fact correct.
-        site.add_source(bel, bel_pin='O', source='I')
+        site.add_source(
+            bel,
+            cell_pin='O',
+            source_site_pin='I',
+            bel_name='INBUF_EN',
+            bel_pin='OUT',
+            site_pips=[('site_pip', 'IUSED', '0')])
 
-        site.add_sink(bel, 'T', 'T')
+        site.add_sink(
+            bel,
+            'T',
+            'T',
+            'OUTBUF',
+            'TRI',
+            site_pips=[('site_pip', 'TUSED', '0')])
 
         # Note this looks weird, but the BEL pin is I, and the site wire is
         # called O, so it is in fact correct.
-        site.add_sink(bel, bel_pin='I', sink='O')
+        site.add_sink(
+            bel,
+            cell_pin='I',
+            sink_site_pin='O',
+            bel_name='OUTBUF',
+            bel_pin='IN',
+            site_pips=[('site_pip', 'OUSED', '0')])
 
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
         append_obuf_iostandard_params(top, site, bel, iostd_out, slew, in_term)
+
+        obuft = Bel('OBUFT', 'OBUFT')
+        obuft.set_bel('OUTBUF')
+        obuft.map_bel_pin_to_cell_pin('OUTBUF', 'TRI', 'T')
+        obuft.map_bel_pin_to_cell_pin('OUTBUF', 'IN', 'I')
+
+        bel.add_physical_bel(obuft)
+
+        ibuf = Bel('IBUF', 'IBUF')
+        ibuf.set_bel('INBUF_EN')
+        ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'OUT', 'O')
+
+        bel.add_physical_bel(ibuf)
 
         site.add_bel(bel)
 
@@ -435,14 +475,30 @@ def process_single_ended_iob(top, iob):
         # OBUF or OBUFT. They cannot be distinguished so we insert OBUFT. If it
         # originally was an OBUF then the T will be routed to 1'b0.
         bel = Bel('OBUFT')
+        bel.set_bel('OUTBUF')
+        bel.map_bel_pin_to_cell_pin(
+            bel_name=bel.bel, bel_pin='OUT', cell_pin='O')
+
         top_wire = top.add_top_out_port(tile_name, iob_site.name, 'OPAD')
         bel.connections['O'] = top_wire
 
         # Note this looks weird, but the BEL pin is I, and the site wire
         # is called O, so it is in fact correct.
-        site.add_sink(bel, bel_pin='I', sink='O')
+        site.add_sink(
+            bel,
+            cell_pin='I',
+            sink_site_pin='O',
+            bel_name=bel.bel,
+            bel_pin='IN',
+            site_pips=[('site_pip', 'OUSED', '0')])
 
-        site.add_sink(bel, 'T', 'T')
+        site.add_sink(
+            bel,
+            'T',
+            'T',
+            bel.bel,
+            'TRI',
+            site_pips=[('site_pip', 'TUSED', '0')])
 
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
         append_obuf_iostandard_params(top, site, bel, iostd_out, slew, in_term)
@@ -527,10 +583,22 @@ def cleanup_single_ended_iob(top, site):
             bel.module = "OBUF"
             bel.name = "OBUF"
             del bel.connections["T"]
+            del bel.bel_pins_to_cell_pins["OUTBUF", "TRI"]
+            site.prune_site_routing(('site_pin', 'T'))
 
             # Remove the sink for "T". That connection is now implicit
             wire_pkey = site.site_wire_to_wire_pkey["T"]
             top.remove_sink(wire_pkey)
+
+
+def cleanup_iob33m(top, site_m):
+    bel = site_m.maybe_get_bel("IOB33M")
+    assert bel is not None
+
+    if bel.module.startswith('IOBUFDS'):
+        site_m.mask_sink(bel, 'DIFFI_IN')
+    else:
+        assert bel.module.startswith('OBUFTDS')
 
 
 def process_differential_iob(top, iob, in_diff, out_diff):
@@ -542,11 +610,13 @@ def process_differential_iob(top, iob, in_diff, out_diff):
 
     aparts = iob['S'][0].feature.split('.')
     tile_name = aparts[0]
+    s_tile_name = tile_name
     iob_site_s, iologic_tile, ilogic_site_s, ologic_site_s, _ = get_iob_site(
         top.db, top.grid, aparts[0], aparts[1])
 
     aparts = iob['M'][0].feature.split('.')
     tile_name = aparts[0]
+    m_tile_name = tile_name
     iob_site_m, iologic_tile, ilogic_site_m, ologic_site_m, _ = get_iob_site(
         top.db, top.grid, aparts[0], aparts[1])
 
@@ -583,6 +653,7 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             # TODO: There are also IOBUFDS_DIFF_OUT* and variants with DCI
             if intermdisable_used or ibufdisable_used:
                 bel = Bel('IOBUFDS_INTERMDISABLE')
+                bel_s = Bel('IOBUFDS_INTERMDISABLE_S')
 
                 if intermdisable_used:
                     site_m.add_sink(bel, 'INTERMDISABLE', 'INTERMDISABLE')
@@ -595,13 +666,46 @@ def process_differential_iob(top, iob, in_diff, out_diff):
                     bel.connections['IBUFDISABLE'] = 0
             else:
                 bel = Bel('IOBUFDS')
+                bel_s = Bel('IOBUFDS_S')
 
             bel.connections['IOB'] = top_wire_n
             bel.connections['IO'] = top_wire_p
 
             # For IOBUFDS add the O pin
-            site_m.add_source(bel, bel_pin='O', source='I')
+            site_m.add_source(
+                bel,
+                cell_pin='O',
+                source_site_pin='I',
+                bel_name='INBUF_EN',
+                bel_pin='OUT')
+            site_m.add_sink(
+                bel,
+                cell_pin='DIFFI_IN',
+                sink_site_pin='DIFFI_IN',
+                bel_name='INBUF_EN',
+                bel_pin='DIFFI_IN')
+            bel.physical_net_names['INBUF_EN', 'DIFFI_IN'] = 'OBUFTDS/OB'
 
+            site_s.add_source(
+                bel_s,
+                cell_pin='PADOUT',
+                source_site_pin='PADOUT',
+                bel_name='OUTBUF',
+                bel_pin='OUT')
+            bel_s.physical_net_names['OUTBUF', 'OUT'] = 'OBUFTDS/OB'
+
+            top.add_active_pip(
+                '{}.IOB_DIFFI_IN0.IOB_PADOUT1'.format(s_tile_name))
+
+            ibuf = Bel('IBUFDS', 'IBUFDS')
+            ibuf.set_bel('INBUF_EN')
+            ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'OUT', 'O')
+            ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'DIFFI_IN', 'IB')
+            ibuf.map_bel_pin_to_cell_pin('INBUF_EN', 'PAD', 'I')
+
+            bel.add_physical_bel(ibuf)
+
+            obuf_prefix = 'OBUFTDS/'
         else:
 
             top_wire_n = top.add_top_out_port(tile_name, iob_site_s.name,
@@ -612,26 +716,102 @@ def process_differential_iob(top, iob, in_diff, out_diff):
             # Since we cannot distinguish between OBUFDS and OBUFTDS we add the
             # "T" one. If it is the OBUFDS then the T input will be forced to 0.
             bel = Bel('OBUFTDS')
+            bel_s = Bel('OBUFTDS_S')
 
             bel.connections['OB'] = top_wire_n
             bel.connections['O'] = top_wire_p
+            obuf_prefix = ''
+
+        obuf_p = Bel('OBUFTDS', obuf_prefix + 'P')
+        obuf_p.set_bel('OUTBUF')
+        obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'TRI', 'T')
+        obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'IN', 'I')
+        obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'OUT', 'O')
+        obuf_p.map_bel_pin_to_cell_pin('OUTBUF', 'OUTN', 'OB')
+
+        bel.add_physical_bel(obuf_p)
+
+        obuf_s = Bel('OBUFTDS', obuf_prefix + 'N')
+        obuf_s.set_bel('OUTBUF')
+        obuf_s.map_bel_pin_to_cell_pin('OUTBUF', 'TRI', 'T')
+        obuf_s.map_bel_pin_to_cell_pin('OUTBUF', 'IN', 'I')
+        obuf_s.map_bel_pin_to_cell_pin('OUTBUF', 'OUT', 'O')
+
+        bel_s.add_physical_bel(obuf_s)
+
+        inv = Bel('INV', obuf_prefix + 'INV')
+        inv.set_bel('O_ININV')
+        inv.map_bel_pin_to_cell_pin('O_ININV', 'IN', 'I')
+        inv.map_bel_pin_to_cell_pin('O_ININV', 'OUT', 'O')
+
+        bel_s.add_physical_bel(inv)
 
         # Note this looks weird, but the BEL pin is I, and the site wire
         # is called O, so it is in fact correct.
-        site_m.add_sink(bel, bel_pin='I', sink='O')
-        site_m.add_sink(bel, bel_pin='T', sink='T')
+        site_m.add_sink(
+            bel,
+            cell_pin='I',
+            sink_site_pin='O',
+            bel_name='OUTBUF',
+            bel_pin='IN',
+            site_pips=[
+                ('site_pip', 'OUSED', '0'),
+            ])
+
+        site_m.add_sink(
+            bel,
+            cell_pin='T',
+            sink_site_pin='T',
+            bel_name='OUTBUF',
+            bel_pin='TRI',
+            site_pips=[
+                ('site_pip', 'TUSED', '0'),
+            ])
+
+        site_s.add_sink(
+            bel_s,
+            cell_pin='I',
+            sink_site_pin='O_IN',
+            bel_name='O_ININV',
+            bel_pin='IN')
+        site_s.add_sink(
+            bel_s,
+            cell_pin='T',
+            sink_site_pin='T_IN',
+            bel_name='OUTBUF',
+            bel_pin='TRI',
+            site_pips=[
+                ('site_pip', 'TINMUX', '1'),
+            ])
+
+        # Tell M site to output T and O to the S site.
+
+        # Connect O -> O_OUT
+        site_m.sources['O_OUT'] = None
+        site_m.outputs['O_OUT'] = 'O'
+
+        # Connect T -> T_OUT
+        site_m.sources['T_OUT'] = None
+        site_m.outputs['T_OUT'] = 'T'
+
+        top.add_active_pip('{}.IOB_O_IN1.IOB_O_OUT0'.format(m_tile_name))
+        top.add_active_pip('{}.IOB_T_IN1.IOB_T_OUT0'.format(m_tile_name))
 
         slew = "FAST" if site.has_feature_containing("SLEW.FAST") else "SLOW"
         append_obuf_iostandard_params(top, site_m, bel, iostd_out, slew,
                                       in_term)
 
-        site_m.add_bel(bel)
+        bel_s.set_parent_cell(bel)
+        site_m.add_bel(bel, 'IOB33M')
+        site_s.add_bel(bel_s, 'IOB33S')
 
     # Pulls
     if top_wire_n is not None:
         add_pull_bel(site_s, top_wire_n)
     if top_wire_p is not None:
         add_pull_bel(site_m, top_wire_p)
+
+    site_m.set_post_route_cleanup_function(cleanup_iob33m)
 
     top.add_site(site_m)
     top.add_site(site_s)

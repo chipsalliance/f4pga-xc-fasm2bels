@@ -46,11 +46,13 @@ from .models.hclk_ioi3_models import process_hclk_ioi3
 from .models.pss_models import get_ps7_site, insert_ps7
 
 from .database.create_channels import create_channels
-from .database.connection_db_utils import create_maybe_get_wire, maybe_add_pip, get_tile_type
+from .database.connection_db_utils import get_tile_type
 
 from .lib.parse_pcf import parse_simple_pcf
+from .lib.parse_xdc import parse_simple_xdc
 from .lib import eblif
 from .lib import vpr_io_place
+from .lib.interchange_capnp import output_interchange
 
 
 def null_process(conn, top, tile, tiles):
@@ -205,13 +207,14 @@ def bit2fasm(db_root, db, grid, bit_file, fasm_file, bitread, part):
             fasm.fasm_tuple_to_string(model, canonical=False), end='', file=f)
 
 
-def load_io_sites(db_root, part, pcf, eblif):
+def load_io_sites(db_root, part, pcf, xdc, eblif, top):
     """ Load map of sites to signal names from pcf or eblif and part pin definitions.
 
     Args:
         db_root (str): Path to database root folder
         part (str): Part name being targeted.
         pcf (str): Full path to pcf file for this bitstream.
+        xdc (str): Full path to xdc file for this bitstream.
         eblif (str): Parsed contents of EBLIF file.
 
     Returns:
@@ -224,6 +227,14 @@ def load_io_sites(db_root, part, pcf, eblif):
             for pcf_constraint in parse_simple_pcf(f):
                 assert pcf_constraint.pad not in pin_to_signal, pcf_constraint.pad
                 pin_to_signal[pcf_constraint.pad] = pcf_constraint.net
+
+    if xdc:
+        with open(xdc) as f:
+            for xdc_constraint in parse_simple_xdc(f):
+                assert xdc_constraint.pad not in pin_to_signal, xdc_constraint.pad
+                pin_to_signal[xdc_constraint.pad] = xdc_constraint.net
+                top.add_iosettings_from_xdc(xdc_constraint)
+
     if eblif:
         io_place = vpr_io_place.IoPlace()
         io_place.read_io_loc_pairs(eblif)
@@ -317,7 +328,10 @@ def main():
         default=None,
         help="Default DRIVE to use for IO buffers.")
     parser.add_argument('--top', default="top", help="Root level module name.")
-    parser.add_argument('--pcf', help="Mapping of top-level pins to pads.")
+    parser.add_argument(
+        '--pcf', help="Mapping of top-level pins to pads, PCF format.")
+    parser.add_argument(
+        '--input_xdc', help="Mapping of top-level pints to pads, XDC format.")
     parser.add_argument('--route_file', help="VPR route output file.")
     parser.add_argument('--rr_graph', help="Real or virt xc7 graph")
     parser.add_argument(
@@ -325,9 +339,21 @@ def main():
     parser.add_argument('--eblif', help="EBLIF file used to generate design")
     parser.add_argument(
         '--vpr_grid_map', help="VPR grid to Canonical grid map")
-    parser.add_argument('verilog_file', help="Filename of output verilog file")
     parser.add_argument(
-        'xdc_file', help="Filename of output xdc constraints file.")
+        '--verilog_file', help="Filename of output verilog file")
+    parser.add_argument(
+        '--xdc_file', help="Filename of output xdc constraints file.")
+    parser.add_argument(
+        '--logical_netlist',
+        help="Filename of output interchange logical netlist capnp.")
+    parser.add_argument(
+        '--physical_netlist',
+        help="Filename of output interchange physical netlist capnp.")
+    parser.add_argument(
+        '--interchange_xdc', help="Filename of output interchange XDC.")
+    parser.add_argument(
+        '--interchange_capnp_schema_dir',
+        help="Folder containing interchange capnp definitions.")
 
     args = parser.parse_args()
 
@@ -348,16 +374,17 @@ def main():
 
     tiles = {}
 
-    maybe_get_wire = create_maybe_get_wire(conn)
-
     top = Module(db, grid, conn, name=args.top)
     if args.eblif:
         with open(args.eblif) as f:
             parsed_eblif = eblif.parse_blif(f)
+    else:
+        parsed_eblif = None
 
-    if args.eblif or args.pcf:
+    if args.eblif or args.pcf or args.input_xdc:
         top.set_site_to_signal(
-            load_io_sites(args.db_root, args.part, args.pcf, parsed_eblif))
+            load_io_sites(args.db_root, args.part, args.pcf, args.input_xdc,
+                          parsed_eblif, top))
 
     if args.route_file:
         assert args.rr_graph, "RR graph file required."
@@ -377,8 +404,6 @@ def main():
                     grid_map[(vpr_x, vpr_y)].append((can_x, can_y))
                 else:
                     grid_map[(vpr_x, vpr_y)] = [(can_x, can_y)]
-
-        cur_dir = os.path.dirname(__file__)
 
         net_map = load_net_list(conn, args.vpr_capnp_schema_dir, args.rr_graph,
                                 args.route_file, grid_map)
@@ -409,8 +434,8 @@ def main():
 
         tiles[tile].append(set_feature)
 
-        if len(parts) == 3:
-            maybe_add_pip(top, maybe_get_wire, set_feature)
+        if len(parts) == 3 and set_feature.value == 1:
+            top.maybe_add_pip(set_feature.feature)
 
     for tile, tile_features in tiles.items():
         process_tile(top, tile, tile_features)
@@ -436,22 +461,35 @@ def main():
         top.add_extra_tcl_line(
             "set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets]")
 
-    with open(args.verilog_file, 'w') as f:
-        for line in top.output_verilog():
-            print(line, file=f)
+    if args.verilog_file:
+        assert args.xdc_file
+        with open(args.verilog_file, 'w') as f:
+            for line in top.output_verilog():
+                print(line, file=f)
 
-    with open(args.xdc_file, 'w') as f:
-        for line in top.output_bel_locations():
-            print(line, file=f)
+        with open(args.xdc_file, 'w') as f:
+            for line in top.output_bel_locations():
+                print(line, file=f)
 
-        for line in top.output_nets():
-            print(line, file=f)
+            for line in top.output_nets():
+                print(line, file=f)
 
-        for line in top.output_disabled_drcs():
-            print(line, file=f)
+            for line in top.output_disabled_drcs():
+                print(line, file=f)
 
-        for line in top.output_extra_tcl():
-            print(line, file=f)
+            for line in top.output_extra_tcl():
+                print(line, file=f)
+
+    if args.logical_netlist:
+        assert args.physical_netlist
+        assert args.interchange_capnp_schema_dir
+        assert args.part
+
+        with open(args.logical_netlist, 'wb') as f_log, open(
+                args.physical_netlist, 'wb') as f_phys, open(
+                    args.interchange_xdc, 'w') as f_xdc:
+            output_interchange(top, args.interchange_capnp_schema_dir,
+                               args.part, f_log, f_phys, f_xdc)
 
 
 if __name__ == "__main__":

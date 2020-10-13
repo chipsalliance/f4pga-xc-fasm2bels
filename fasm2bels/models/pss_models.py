@@ -38,12 +38,21 @@ def insert_ps7(top, pss_tile, ps7_site, ps7_ports):
     # Add the site+bel
     site = Site(None, ps7_site, pss_tile)
     bel = Bel("PS7")
+    bel.set_bel("PS7")
 
     # Add sources and sinks
     for name, port in ps7_ports.items():
 
         # Add only "normal" ports that go to the PL.
         if port["class"] != "normal":
+            if port["class"] in ["mio"]:
+                if port["width"] == 1:
+                    bel.add_unconnected_port(
+                        name, width=None, direction=port["direction"])
+                else:
+                    bel.add_unconnected_port(
+                        name, width=port["width"], direction=port["direction"])
+
             continue
 
         # Choose adder func.
@@ -59,10 +68,12 @@ def insert_ps7(top, pss_tile, ps7_site, ps7_ports):
 
         # Add
         if port["width"] == 1:
-            add(bel, name, name)
+            add(bel, name, name, bel.bel, name)
         else:
             for i in range(port["min"], port["max"] + 1):
-                add(bel, "{}[{}]".format(name, i), "{}{}".format(name, i))
+                wire = "{}{}".format(name, i)
+                array = "{}[{}]".format(name, i)
+                add(bel, array, wire, bel.bel, wire)
 
     # Add everything
     site.add_bel(bel, bel.name)
