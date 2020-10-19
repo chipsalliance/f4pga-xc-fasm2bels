@@ -21,7 +21,8 @@ pin_constraint_types = [PinConstraintType.XDC, PinConstraintType.PCF]
 class TestFasm2Bels(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.channels_file = tempfile.NamedTemporaryFile(suffix='channels.db', delete=False)
+        cls.channels_file = tempfile.NamedTemporaryFile(
+            suffix='channels.db', delete=False)
         cls.channels_file.close()
         os.unlink(cls.channels_file.name)
 

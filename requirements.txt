@@ -8,5 +8,5 @@ pyyaml
 -e git://github.com/SymbiFlow/prjxray.git#egg=prjxray
 -e git://github.com/SymbiFlow/fasm.git#egg=fasm
 -e git://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=rr-graph
--e third_party/python-fpga-interchange/
+-e git://github.com/SymbiFlow/python-fpga-interchange.git#egg=python-fpga-interchange
 yapf==0.24.0
