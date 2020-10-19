@@ -60,13 +60,44 @@ class TestFasm2Bels(unittest.TestCase):
 
         generated_top_v = os.path.join(temp_dir, 'top_bit.v')
         generated_top_xdc = os.path.join(temp_dir, 'top_bit.xdc')
+        interchange_netlist = os.path.join(temp_dir, 'top_bit.netlist')
+        interchange_phys = os.path.join(temp_dir, 'top_bit.phys')
+        interchange_xdc = os.path.join(temp_dir, 'top_bit.inter.xdc')
 
         sys.argv = [
-            'fasm2bels', '--db_root', db_root, '--part', part, '--bitread',
-            bitread, '--bit_file', bit_file, '--fasm_file', fasm_file,
-            '--eblif', eblif, '--top', top, '--iostandard', iostandard,
-            '--drive', drive, '--connection_database', self.channels_file.name,
-            '--verilog_file', generated_top_v, '--xdc_file', generated_top_xdc
+            'fasm2bels',
+            '--db_root',
+            db_root,
+            '--part',
+            part,
+            '--bitread',
+            bitread,
+            '--bit_file',
+            bit_file,
+            '--fasm_file',
+            fasm_file,
+            '--eblif',
+            eblif,
+            '--top',
+            top,
+            '--iostandard',
+            iostandard,
+            '--drive',
+            drive,
+            '--connection_database',
+            self.channels_file.name,
+            '--verilog_file',
+            generated_top_v,
+            '--xdc_file',
+            generated_top_xdc,
+            '--logical_netlist',
+            interchange_netlist,
+            '--physical_netlist',
+            interchange_phys,
+            '--interchange_xdc',
+            interchange_xdc,
+            '--interchange_capnp_schema_dir',
+            os.environ['INTERCHANGE_SCHEMA_PATH'],
         ]
         if pin_constraint_type == PinConstraintType.XDC:
             sys.argv.extend(('--input_xdc', xdc_input))

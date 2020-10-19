@@ -23,8 +23,10 @@ install:
   - make build
   - python -m pip install -r requirements.txt
   - python -m pip install -e .
+  - git clone -b interchange https://github.com/Xilinx/RapidWright.git $HOME/RapidWright
+  - git clone https://github.com/capnproto/capnproto-java.git $HOME/capnproto-java
 
 script:
-  - make test-py
+  - CAPNP_PATH=$HOME/capnproto-java/compiler/src/main/schema/ INTERCHANGE_SCHEMA_PATH=$HOME/RapidWright/interchange make test-py
   - make format
-  - test $(git status --porcelain | wc -l) -eq 0 || { git diff; false; }
+  - test $(git status --porcelain | wc -l) -eq 0 || { git diff; git status --porcelain; false; }

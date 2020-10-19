@@ -1,6 +1,9 @@
 from fpga_interchange.interchange_capnp import Interchange, write_capnp_file
-from fpga_interchange.logical_netlist import Library, Cell, Direction
-from fpga_interchange.physical_netlist import Placement, PhysicalPip, PhysicalBelPin, PhysicalSitePin, PhysicalSitePip
+from fpga_interchange.logical_netlist import LogicalNetlist, Library, Cell, \
+        Direction, CellInstance
+from fpga_interchange.physical_netlist import Placement, PhysicalPip, \
+        PhysicalBelPin, PhysicalSitePin, PhysicalSitePip, PhysicalNetlist, \
+        PhysicalNetType
 from ..models.utils import make_bus, flatten_wires, unescape_verilog_name
 
 
@@ -294,16 +297,16 @@ def attach_candidates(node_cache, id_to_idx, stitched_stubs, objs_to_attach,
         stitched twice into the tree.
 
     objs_to_attach : list of parent object id to child object id
-        When attach_candidates finds a stub that should be stitched into the 
-        routing tree, rather than stitch it immediately, it adds a parent of 
-        (id(parent), id(child)) to objs_to_attach.  This deferal enables the 
+        When attach_candidates finds a stub that should be stitched into the
+        routing tree, rather than stitch it immediately, it adds a parent of
+        (id(parent), id(child)) to objs_to_attach.  This deferal enables the
         traversal of the input routing tree without modification.
 
         After attach_candidates returns, elements of objs_to_attach should be
         passed to node_cache.attach to join the trees.
 
     obj : PhysicalBelPin/PhysicalSitePin/PhysicalSitePip/PhysicalPip
-        Root of routing tree to iterate over to identify candidates to attach 
+        Root of routing tree to iterate over to identify candidates to attach
         to routing tree..
 
     visited : set of ids to routing branches.
@@ -642,12 +645,17 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
         hdi_primitives.add_cell(cell)
 
     # Logical netlist is complete, output to file now!
-    logical_netlist = interchange.output_logical_netlist(
-        libraries=libraries, top_level_cell=top.name, top_level_name=top.name)
+    logical_netlist = LogicalNetlist(
+        name=top.name,
+        property_map={},
+        top_instance_name=top.name,
+        top_instance=CellInstance(
+            cell_name=top.name, view='netlist', property_map={}),
+        libraries=libraries,
+    ).convert_to_capnp(interchange)
     write_capnp_file(logical_netlist, f_logical)
 
-    physical_netlist_builder = interchange.new_physical_netlist_builder(
-        part=part)
+    physical_netlist = PhysicalNetlist(part=part)
 
     site_type_pins = {}
 
@@ -655,8 +663,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
     net_stubs = {}
     sub_cell_nets = {}
     for site in top.sites:
-        physical_netlist_builder.add_site_instance(site.site.name,
-                                                   site.site_type())
+        physical_netlist.add_site_instance(site.site.name, site.site_type())
 
         for bel in site.bels:
             if bel.site is None or (bel.bel is None
@@ -691,7 +698,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
                         bel=bel_name,
                     )
 
-                physical_netlist_builder.placements.append(placement)
+                physical_netlist.placements.append(placement)
             else:
                 # Transformation cases, create a placement constraint for
                 # each bel in the physical_bels list.
@@ -714,7 +721,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
                             bel=bel_name,
                         )
 
-                    physical_netlist_builder.placements.append(placement)
+                    physical_netlist.placements.append(placement)
 
         # Convert site routing to PhysicalNetlist objects (PhysicalBelPin,
         # PhysicalSitePin, PhysicalSitePip).
@@ -754,10 +761,10 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
     net_to_type = {}
     for val, net_name in constant_nets.items():
         if val == 0:
-            net_to_type[net_name] = 'gnd'
+            net_to_type[net_name] = PhysicalNetType.Gnd
         else:
             assert val == 1
-            net_to_type[net_name] = 'vcc'
+            net_to_type[net_name] = PhysicalNetType.Vcc
 
     cursor = top.conn.cursor()
     for net_name in net_stubs:
@@ -766,14 +773,14 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
         sources, stubs = stitch_stubs(net_stubs[net_name], cursor,
                                       site_type_pins)
 
-        physical_netlist_builder.add_physical_net(
+        physical_netlist.add_physical_net(
             net_name=sub_cell_nets.get(net_name, net_name),
             sources=sources,
             stubs=stubs,
-            net_type=net_to_type.get(net_name, 'signal'))
+            net_type=net_to_type.get(net_name, PhysicalNetType.Signal))
 
-    physical_netlist = physical_netlist_builder.finish_encode()
-    write_capnp_file(physical_netlist, f_physical)
+    phys_netlist_capnp = physical_netlist.convert_to_capnp(interchange)
+    write_capnp_file(phys_netlist_capnp, f_physical)
 
     for l in top.output_extra_tcl():
         print(l, file=f_xdc)
