@@ -1,7 +1,7 @@
 from fpga_interchange.interchange_capnp import Interchange, write_capnp_file
 from fpga_interchange.logical_netlist import Library, Cell, Direction
 from fpga_interchange.physical_netlist import Placement, PhysicalPip, PhysicalBelPin, PhysicalSitePin, PhysicalSitePip
-from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_name
+from ..models.utils import make_bus, flatten_wires, unescape_verilog_name
 
 
 class PhysicalBelPinWithDirection(PhysicalBelPin):
