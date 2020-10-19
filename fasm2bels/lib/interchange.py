@@ -1,105 +1,13 @@
-import enum
-from collections import namedtuple
-from .logical_netlist import Direction
+from fpga_interchange.interchange_capnp import Interchange, write_capnp_file
+from fpga_interchange.logical_netlist import Library, Cell, Direction
+from fpga_interchange.physical_netlist import Placement, PhysicalPip, PhysicalBelPin, PhysicalSitePin, PhysicalSitePip
+from ..models.verilog_modeling import make_bus, flatten_wires, unescape_verilog_name
 
 
-# Physical cell type enum.
-class PhysicalCellType(enum.Enum):
-    Locked = 0
-    Port = 1
-    Gnd = 2
-    Vcc = 3
-
-
-# Represents an active pip between two tile wires.
-#
-# tile (str) - Name of tile
-# wire0 (str) - Name of upstream wire to pip
-# wire1 (str) - Name of downstream wire from pip
-# forward (bool) - For bidirectional pips, is the connection from wire0 to
-#                  wire1 (forward=True) or wire1 to wire0 (forward=False).
-Pip = namedtuple('Pip', 'tile wire0 wire1 forward')
-
-# Pin placement directive
-#
-# Associates a BEL pin with a Cell pin
-#
-# bel_pin (str) - Name of BEL pin being associated
-# cell_pin (str) - Name of Cell pin being associated
-# bel (str) - Name of BEL that contains BEL pin. If None is BEL from Placement
-#             class.
-# other_cell_type (str) - Used to define multi cell mappings.
-# other_cell_name (str) - Used to define multi cell mappings.
-Pin = namedtuple('Pin', 'bel_pin cell_pin bel other_cell_type other_cell_name')
-
-
-class Placement():
-    """ Class for defining a Cell placement within a design.
-
-    cell_type (str) - Type of cell being placed
-    cell_name (str) - Name of cell instance being placed.
-    site (str) - Site Cell is being placed within.
-    bel (str) - Name of primary BEL being placed.
-
-    """
-
-    def __init__(self, cell_type, cell_name, site, bel):
-        self.cell_type = cell_type
-        self.cell_name = cell_name
-
-        self.site = site
-        self.bel = bel
-
-        self.pins = []
-        self.other_bels = set()
-
-    def add_bel_pin_to_cell_pin(self,
-                                bel_pin,
-                                cell_pin,
-                                bel=None,
-                                other_cell_type=None,
-                                other_cell_name=None):
-        """ Add a BEL pin -> Cell pin association.
-
-        bel_pin (str) - Name of BEL pin being associated.
-        cell_pin (str) - NAme of Cell pin being associated.
-
-        """
-        if bel != self.bel:
-            self.other_bels.add(bel)
-
-        self.pins.append(
-            Pin(
-                bel_pin=bel_pin,
-                cell_pin=cell_pin,
-                bel=bel,
-                other_cell_type=other_cell_type,
-                other_cell_name=other_cell_name,
-            ))
-
-
-def descend_branch(obj, node, string_id):
-    """ Descend a branch to continue outputting the interchange to capnp object. """
-    obj.init('branches', len(node.branches))
-
-    for branch_obj, branch in zip(obj.branches, node.branches):
-        branch.output_interchange(branch_obj, string_id)
-
-
-class PhysicalBelPin():
-    """ Python class that represents a BEL pin in a physical net.
-
-    site (str) - Site containing BEL pin
-    bel (str) - BEL containing BEL pin
-    pin (str) - BEL pin in physical net.
-    direction (Direction) - Direction of BEL pin.
-
-    """
-
+class PhysicalBelPinWithDirection(PhysicalBelPin):
     def __init__(self, site, bel, pin, direction):
-        self.site = site
-        self.bel = bel
-        self.pin = pin
+        super().__init__(site, bel, pin)
+
         self.site_source = False
 
         if direction == 'inout':
@@ -112,235 +20,6 @@ class PhysicalBelPin():
             assert direction == 'site_source'
             self.direction = Direction.Output
             self.site_source = True
-
-        self.branches = []
-
-    def output_interchange(self, obj, string_id):
-        """ Output this route segment and all branches beneth it.
-
-        obj (physical_netlist.RouteBranch pycapnp object) -
-            Object to write PhysicalBelPin into
-        string_id (str -> int) - Function to intern strings into PhysNetlist
-                                 string list.
-
-        """
-        obj.routeSegment.init('belPin')
-        obj.routeSegment.belPin.site = string_id(self.site)
-        obj.routeSegment.belPin.bel = string_id(self.bel)
-        obj.routeSegment.belPin.pin = string_id(self.pin)
-
-        descend_branch(obj, self, string_id)
-
-    def nodes(self, cursor, site_type_pins):
-        return []
-
-    def is_root(self):
-        return self.direction in [Direction.Output, Direction.Inout
-                                  ] and not self.site_source
-
-    def __str__(self):
-        if self.direction == Direction.Output:
-            if self.site_source:
-                direction = 'site_source'
-            else:
-                direction = 'output'
-        elif self.direction == Direction.Input:
-            direction = 'input'
-        else:
-            assert self.direction == Direction.Inout, self.direction
-            direction = 'inout'
-
-        return 'PhysicalBelPin({}, {}, {}, {})'.format(
-            repr(self.site),
-            repr(self.bel),
-            repr(self.pin),
-            direction,
-        )
-
-
-class PhysicalSitePin():
-    """ Python class that represents a site pin in a physical net.
-
-    site (str) - Site containing site pin
-    pin (str) - Site pin in physical net.
-
-    """
-
-    def __init__(self, site, pin):
-        self.site = site
-        self.pin = pin
-
-        self.branches = []
-
-    def output_interchange(self, obj, string_id):
-        """ Output this route segment and all branches beneth it.
-
-        obj (physical_netlist.RouteBranch pycapnp object) -
-            Object to write PhysicalBelPin into
-        string_id (str -> int) - Function to intern strings into PhysNetlist
-                                 string list.
-
-        """
-        obj.routeSegment.init('sitePin')
-        obj.routeSegment.sitePin.site = string_id(self.site)
-        obj.routeSegment.sitePin.pin = string_id(self.pin)
-
-        descend_branch(obj, self, string_id)
-
-    def nodes(self, cursor, site_type_pins):
-        cursor.execute(
-            """
-WITH a_site_instance(site_pkey, phy_tile_pkey) AS (
-    SELECT site_pkey, phy_tile_pkey
-    FROM site_instance
-    WHERE name = ?
-)
-SELECT node_pkey FROM wire WHERE
-    phy_tile_pkey = (SELECT phy_tile_pkey FROM a_site_instance)
-AND
-    wire_in_tile_pkey = (
-        SELECT pkey FROM wire_in_tile WHERE
-            site_pkey = (SELECT site_pkey FROM a_site_instance)
-        AND
-            site_pin_pkey IN (SELECT pkey FROM site_pin WHERE name = ?)
-    );
-        """, (self.site, site_type_pins[self.site, self.pin]))
-
-        results = cursor.fetchall()
-        assert len(results) == 1, (results, self.site, self.pin,
-                                   site_type_pins[self.site, self.pin])
-        return [results[0][0]]
-
-    def is_root(self):
-        return False
-
-    def __str__(self):
-        return 'PhysicalSitePin({}, {})'.format(
-            repr(self.site),
-            repr(self.pin),
-        )
-
-
-class PhysicalPip():
-    """ Python class that represents a active pip in a physical net.
-
-    tile (str) - Tile containing pip
-    wire0 (str) - Name of upstream wire to pip
-    wire1 (str) - Name of downstream wire from pip
-    forward (bool) - For bidirectional pips, is the connection from wire0 to
-                     wire1 (forward=True) or wire1 to wire0 (forward=False).
-
-    """
-
-    def __init__(self, tile, wire0, wire1, forward):
-        self.tile = tile
-        self.wire0 = wire0
-        self.wire1 = wire1
-        self.forward = forward
-
-        self.branches = []
-
-    def output_interchange(self, obj, string_id):
-        """ Output this route segment and all branches beneth it.
-
-        obj (physical_netlist.RouteBranch pycapnp object) -
-            Object to write PhysicalBelPin into
-        string_id (str -> int) - Function to intern strings into PhysNetlist
-                                 string list.
-
-        """
-        obj.routeSegment.init('pip')
-        obj.routeSegment.pip.tile = string_id(self.tile)
-        obj.routeSegment.pip.wire0 = string_id(self.wire0)
-        obj.routeSegment.pip.wire1 = string_id(self.wire1)
-        obj.routeSegment.pip.forward = self.forward
-        obj.routeSegment.pip.isFixed = True
-
-        descend_branch(obj, self, string_id)
-
-    def nodes(self, cursor, site_type_pins):
-        cursor.execute("""SELECT pkey FROM phy_tile WHERE name = ?;""",
-                       (self.tile, ))
-        (phy_tile_pkey, ) = cursor.fetchone()
-
-        cursor.execute(
-            """
-SELECT node_pkey FROM wire WHERE
-    phy_tile_pkey = ?
-AND
-    wire_in_tile_pkey IN (SELECT pkey FROM wire_in_tile WHERE name = ?);""",
-            (phy_tile_pkey, self.wire0))
-        (node0_pkey, ) = cursor.fetchone()
-
-        cursor.execute(
-            """
-SELECT node_pkey FROM wire WHERE
-    phy_tile_pkey = ?
-AND
-    wire_in_tile_pkey IN (SELECT pkey FROM wire_in_tile WHERE name = ?);""",
-            (phy_tile_pkey, self.wire1))
-        (node1_pkey, ) = cursor.fetchone()
-
-        return [node0_pkey, node1_pkey]
-
-    def is_root(self):
-        return False
-
-    def __str__(self):
-        return 'PhysicalPip({}, {}, {}, {})'.format(
-            repr(self.tile),
-            repr(self.wire0),
-            repr(self.wire1),
-            repr(self.forward),
-        )
-
-
-class PhysicalSitePip():
-    """ Python class that represents a site pip in a physical net.
-
-    This models site routing muxes and site inverters.
-
-    site (str) - Site containing site pip
-    bel (str) - Name of BEL that contains site pip
-    pin (str) - Name of BEL pin that is the active site pip
-
-    """
-
-    def __init__(self, site, bel, pin):
-        self.site = site
-        self.bel = bel
-        self.pin = pin
-
-        self.branches = []
-
-    def output_interchange(self, obj, string_id):
-        """ Output this route segment and all branches beneth it.
-
-        obj (physical_netlist.RouteBranch pycapnp object) -
-            Object to write PhysicalBelPin into
-        string_id (str -> int) - Function to intern strings into PhysNetlist
-                                 string list.
-
-        """
-        obj.routeSegment.init('sitePIP')
-        obj.routeSegment.sitePIP.site = string_id(self.site)
-        obj.routeSegment.sitePIP.bel = string_id(self.bel)
-        obj.routeSegment.sitePIP.pin = string_id(self.pin)
-
-        descend_branch(obj, self, string_id)
-
-    def nodes(self, cursor, site_type_pins):
-        return []
-
-    def is_root(self):
-        return False
-
-    def __str__(self):
-        return 'PhysicalSitePip({}, {}, {})'.format(
-            repr(self.site),
-            repr(self.bel),
-            repr(self.pin),
-        )
 
 
 def convert_tuple_to_object(site, tup):
@@ -367,7 +46,7 @@ def convert_tuple_to_object(site, tup):
     >>> site_pin.branches
     []
 
-    >>> bel_pin = convert_tuple_to_object(site, ('bel_pin', 'ABEL', 'APIN'))
+    >>> bel_pin = convert_tuple_to_object(site, ('bel_pin', 'ABEL', 'APIN', 'input'))
     >>> assert isinstance(bel_pin, PhysicalBelPin)
     >>> bel_pin.site
     'TEST_SITE'
@@ -375,6 +54,8 @@ def convert_tuple_to_object(site, tup):
     'ABEL'
     >>> bel_pin.pin
     'APIN'
+    >>> bel_pin.direction
+    Direction.Input
 
     >>> site_pip = convert_tuple_to_object(site, ('site_pip', 'BBEL', 'BPIN'))
     >>> assert isinstance(site_pip, PhysicalSitePip)
@@ -766,3 +447,325 @@ def stitch_stubs(stubs, cursor, site_type_pins):
     assert count == duplicate_check(sources, stubs)
 
     return sources, stubs
+
+
+def create_top_level_ports(top_cell, top, port_list, direction):
+    """ Add top level ports to logical netlist. """
+    for wire, width in make_bus(port_list):
+        wire = unescape_verilog_name(wire)
+        if wire in top.port_property:
+            prop = top.port_property[wire]
+        else:
+            prop = {}
+
+        if width is None:
+            top_cell.add_port(wire, direction, property_map=prop)
+            top_cell.add_net(wire)
+            top_cell.connect_net_to_cell_port(wire, wire)
+        else:
+            top_cell.add_bus_port(
+                wire, direction, start=width, end=0, property_map=prop)
+            for idx in range(width + 1):
+                net_name = '{}[{}]'.format(wire, idx)
+                top_cell.add_net(net_name)
+                top_cell.connect_net_to_cell_port(net_name, wire, idx=idx)
+
+
+def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
+    """ Output FPGA interchange from top level Module class object.
+
+    top (Module) - Top level module.
+    capnp_folder (str) - Path to the interchange capnp folder
+    part (str) - Part for physical netlist.
+    f_logical (file-like) - File to output logical_netlist.Netlist.
+    f_physical (file-like) - File to output physical_netlist.PhysNetlist.
+
+    """
+    interchange = Interchange(capnp_folder)
+
+    hdi_primitives = Library('hdi_primitives')
+    work = Library('work')
+    libraries = {hdi_primitives.name: hdi_primitives, work.name: work}
+
+    top_cell = Cell(top.name)
+
+    # Create source cells for constant nets.  They are required to have some
+    # name, so give them one.
+    #
+    # TODO: Iterate net names on this?  This feels wrong/weird.  Need to
+    # handle net name collisions?
+    constant_nets = {
+        0: "GLOBAL_LOGIC0",
+        1: "GLOBAL_LOGIC1",
+    }
+
+    top_cell.add_cell_instance(name='VCC', cell_name="VCC")
+    top_cell.add_net(constant_nets[1])
+    top_cell.connect_net_to_instance(
+        net_name=constant_nets[1], instance_name='VCC', port="P")
+
+    top_cell.add_cell_instance(name='GND', cell_name="GND")
+    top_cell.add_net(constant_nets[0])
+    top_cell.connect_net_to_instance(
+        net_name=constant_nets[0], instance_name='GND', port="G")
+
+    # Parse top level port names, and convert to bussed ports as needed.
+    create_top_level_ports(top_cell, top, top.root_in, Direction.Input)
+    create_top_level_ports(top_cell, top, top.root_out, Direction.Output)
+    create_top_level_ports(top_cell, top, top.root_inout, Direction.Inout)
+
+    for wire, width in make_bus(top.wires):
+        wire = unescape_verilog_name(wire)
+        if width is None:
+            top_cell.add_net(name=wire)
+        else:
+            for idx in range(width + 1):
+                top_cell.add_net(name='{}[{}]'.format(wire, idx))
+
+    # Update/create wire_name_net_map from the BELs.
+    for site in top.sites:
+        for bel in site.bels:
+            bel.make_net_map(top=top, net_map=top.wire_name_net_map)
+
+    for sink_wire, source_wire in top.wire_assigns.yield_wires():
+        net_name = flatten_wires(source_wire, top.wire_assigns,
+                                 top.wire_name_net_map)
+        if sink_wire in top.wire_name_net_map:
+            assert top.wire_name_net_map[sink_wire] == net_name
+        else:
+            top.wire_name_net_map[sink_wire] = net_name
+
+    # Create a list of each primative instances to later build up a primative
+    # model library.
+    hdi_primitives_cells = {}
+
+    # Create cells instances from each bel in the design.
+    for site in top.sites:
+        for bel in sorted(site.bels, key=lambda bel: bel.priority):
+            bel.output_interchange(
+                top_cell=top_cell,
+                top=top,
+                net_map=top.wire_name_net_map,
+                constant_nets=constant_nets,
+            )
+
+            if bel.parent_cell is not None:
+                continue
+
+            if bel.module not in hdi_primitives_cells:
+                hdi_primitives_cells[bel.module] = []
+
+            hdi_primitives_cells[bel.module].append(bel)
+
+    # Add top level cell to the work cell library.
+    work.add_cell(top_cell)
+
+    # Construct library cells based on data from top module.
+    for cellname in hdi_primitives_cells:
+        instances = hdi_primitives_cells[cellname]
+
+        cell = Cell(cellname)
+
+        ports = {}
+        for instance in instances:
+            _, connections, port_is_output = instance.create_connections(top)
+
+            for port in connections:
+                if port_is_output[port]:
+                    # The current model doesn't handle IO at all, so add
+                    # special cases for IO ports in the library.
+                    if cellname.startswith('IOBUF') and port == "IO":
+                        direction = Direction.Inout
+                    else:
+                        direction = Direction.Output
+                else:
+                    direction = Direction.Input
+
+                width = connections[port].bus_width()
+                if port in instance.port_width:
+                    if width is not None:
+                        assert width <= instance.port_width[port], port
+
+                    width = instance.port_width[port]
+
+                if port in ports:
+                    port_dir, port_width = ports[port]
+                    assert port_dir == direction, (port, direction, port_dir,
+                                                   port_width)
+                    if width is not None:
+                        assert port_width <= width
+
+                        if width > port_width:
+                            ports[port] = (direction, width)
+                    else:
+                        assert port_width is None
+                else:
+                    ports[port] = (direction, width)
+
+            # Add instances of unconnected ports (as needed).
+            for port, direction in instance.port_direction.items():
+                width = instance.port_width[port]
+
+                if direction == "output":
+                    direction = Direction.Output
+                elif direction == "inout":
+                    direction = Direction.Inout
+                else:
+                    assert direction == "input", direction
+                    direction = Direction.Input
+
+                if port in ports:
+                    assert (direction, width) == ports[port]
+                else:
+                    ports[port] = (direction, width)
+
+        for port, (direction, width) in ports.items():
+
+            if width is not None:
+                cell.add_bus_port(port, direction, start=width - 1, end=0)
+            else:
+                cell.add_port(port, direction)
+
+        hdi_primitives.add_cell(cell)
+
+    # Make sure VCC and GND primatives are in the library.
+    if "VCC" not in hdi_primitives.cells:
+        cell = Cell("VCC")
+        cell.add_port("P", Direction.Output)
+
+        hdi_primitives.add_cell(cell)
+
+    if "GND" not in hdi_primitives.cells:
+        cell = Cell("GND")
+        cell.add_port("G", Direction.Output)
+
+        hdi_primitives.add_cell(cell)
+
+    # Logical netlist is complete, output to file now!
+    logical_netlist = interchange.output_logical_netlist(
+        libraries=libraries, top_level_cell=top.name, top_level_name=top.name)
+    write_capnp_file(logical_netlist, f_logical)
+
+    physical_netlist_builder = interchange.new_physical_netlist_builder(
+        part=part)
+
+    site_type_pins = {}
+
+    # Convert sites and bels into placement directives and physical nets.
+    net_stubs = {}
+    sub_cell_nets = {}
+    for site in top.sites:
+        physical_netlist_builder.add_site_instance(site.site.name,
+                                                   site.site_type())
+
+        for bel in site.bels:
+            if bel.site is None or (bel.bel is None
+                                    and len(bel.physical_bels) == 0):
+                continue
+
+            cell_instance = unescape_verilog_name(bel.get_cell(top))
+
+            # bel.physical_bels is used to represent a transformation that
+            # happens from the library cell (e.g. LUT6_2) into lower
+            # primatives (LUT6_2 -> (LUT6, LUT5)).
+            #
+            # Rather than implement generic transformation support, for now
+            # models implement the transformation by adding physical bels to
+            # generate the correct placement constraints.
+            #
+            # TODO: Revisit this in the future?
+            if len(bel.physical_bels) == 0:
+                # Straight forward case, 1 logical Cell -> 1 physical Bel
+                placement = Placement(
+                    cell_type=bel.module,
+                    cell_name=cell_instance,
+                    site=bel.site,
+                    bel=bel.bel,
+                )
+
+                for (bel_name,
+                     bel_pin), cell_pin in bel.bel_pins_to_cell_pins.items():
+                    placement.add_bel_pin_to_cell_pin(
+                        bel_pin=bel_pin,
+                        cell_pin=cell_pin,
+                        bel=bel_name,
+                    )
+
+                physical_netlist_builder.placements.append(placement)
+            else:
+                # Transformation cases, create a placement constraint for
+                # each bel in the physical_bels list.
+                #
+                # These represent a cell within the primative, hence the "/"
+                # when constructing the cell name.
+                for phys_bel in bel.physical_bels:
+                    placement = Placement(
+                        cell_type=phys_bel.module,
+                        cell_name=cell_instance + '/' + phys_bel.name,
+                        site=bel.site,
+                        bel=phys_bel.bel,
+                    )
+
+                    for (bel_name, bel_pin
+                         ), cell_pin in phys_bel.bel_pins_to_cell_pins.items():
+                        placement.add_bel_pin_to_cell_pin(
+                            bel_pin=bel_pin,
+                            cell_pin=cell_pin,
+                            bel=bel_name,
+                        )
+
+                    physical_netlist_builder.placements.append(placement)
+
+        # Convert site routing to PhysicalNetlist objects (PhysicalBelPin,
+        # PhysicalSitePin, PhysicalSitePip).
+        #
+        # Note: Calling output_site_routing must be done before
+        # output_interchange_nets to ensure that Bel.final_net_names gets
+        # populated, as that is computed during Site.output_site_routing.
+        new_nets = site.output_site_routing(
+            top=top,
+            parent_cell=top_cell,
+            net_map=top.wire_name_net_map,
+            constant_nets=constant_nets,
+            sub_cell_nets=sub_cell_nets)
+
+        for site_pin, site_type_pin in site.site_type_pins.items():
+            site_type_pins[site.site.name, site_pin] = site_type_pin
+
+        # Extend net stubs with the site routing.
+        for net_name in new_nets:
+            if net_name not in net_stubs:
+                net_stubs[net_name] = []
+
+            net_stubs[net_name].extend(new_nets[net_name])
+
+    # Convert top level routing nets to pip lists and to relevant nets
+    for net_name, pips in top.output_interchange_nets(
+            constant_nets=constant_nets):
+        if net_name not in net_stubs:
+            net_stubs[net_name] = []
+
+        for tile, wire0, wire1 in pips:
+            # TODO: Better handling of bipips?
+            net_stubs[net_name].append(
+                PhysicalPip(
+                    tile=tile, wire0=wire0, wire1=wire1, forward=False))
+
+    cursor = top.conn.cursor()
+    for net_name in net_stubs:
+        sources = []
+        stubs = net_stubs[net_name]
+        sources, stubs = stitch_stubs(net_stubs[net_name], cursor,
+                                      site_type_pins)
+
+        physical_netlist_builder.add_physical_net(
+            net_name=sub_cell_nets.get(net_name, net_name),
+            sources=sources,
+            stubs=stubs,
+        )
+
+    physical_netlist = physical_netlist_builder.finish_encode(constant_nets)
+    write_capnp_file(physical_netlist, f_physical)
+
+    for l in top.output_extra_tcl():
+        print(l, file=f_xdc)
