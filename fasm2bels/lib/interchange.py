@@ -751,6 +751,14 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
                 PhysicalPip(
                     tile=tile, wire0=wire0, wire1=wire1, forward=False))
 
+    net_to_type = {}
+    for val, net_name in constant_nets.items():
+        if val == 0:
+            net_to_type[net_name] = 'gnd'
+        else:
+            assert val == 1
+            net_to_type[net_name] = 'vcc'
+
     cursor = top.conn.cursor()
     for net_name in net_stubs:
         sources = []
@@ -762,9 +770,9 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
             net_name=sub_cell_nets.get(net_name, net_name),
             sources=sources,
             stubs=stubs,
-        )
+            net_type=net_to_type.get(net_name, 'signal'))
 
-    physical_netlist = physical_netlist_builder.finish_encode(constant_nets)
+    physical_netlist = physical_netlist_builder.finish_encode()
     write_capnp_file(physical_netlist, f_physical)
 
     for l in top.output_extra_tcl():
