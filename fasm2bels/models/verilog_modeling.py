@@ -32,7 +32,7 @@ import fasm
 from .utils import make_bus, flatten_wires, unescape_verilog_name, escape_verilog_name
 from fasm2bels.make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
 from fasm2bels.database.connection_db_utils import get_wire_pkey, create_maybe_get_wire
-from fasm2bels.lib.interchange import create_site_routing
+from ..lib.interchange import create_site_routing
 
 
 def pin_to_wire_and_idx(pin):

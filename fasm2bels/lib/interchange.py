@@ -24,6 +24,80 @@ class PhysicalBelPinWithDirection(PhysicalBelPin):
             self.direction = Direction.Output
             self.site_source = True
 
+    def nodes(self, cursor, site_type_pins):
+        return []
+
+    def is_root(self):
+        return self.direction in [Direction.Output, Direction.Inout
+                                  ] and not self.site_source
+
+
+class PhysicalPipForStitching(PhysicalPip):
+    def nodes(self, cursor, site_type_pins):
+        cursor.execute("""SELECT pkey FROM phy_tile WHERE name = ?;""",
+                       (self.tile, ))
+        (phy_tile_pkey, ) = cursor.fetchone()
+
+        cursor.execute(
+            """
+SELECT node_pkey FROM wire WHERE
+    phy_tile_pkey = ?
+AND
+    wire_in_tile_pkey IN (SELECT pkey FROM wire_in_tile WHERE name = ?);""",
+            (phy_tile_pkey, self.wire0))
+        (node0_pkey, ) = cursor.fetchone()
+
+        cursor.execute(
+            """
+SELECT node_pkey FROM wire WHERE
+    phy_tile_pkey = ?
+AND
+    wire_in_tile_pkey IN (SELECT pkey FROM wire_in_tile WHERE name = ?);""",
+            (phy_tile_pkey, self.wire1))
+        (node1_pkey, ) = cursor.fetchone()
+
+        return [node0_pkey, node1_pkey]
+
+    def is_root(self):
+        return False
+
+
+class PhysicalSitePipForStitching(PhysicalSitePip):
+    def nodes(self, cursor, site_type_pins):
+        return []
+
+    def is_root(self):
+        return False
+
+
+class PhysicalSitePinForStitching(PhysicalSitePin):
+    def nodes(self, cursor, site_type_pins):
+        cursor.execute(
+            """
+WITH a_site_instance(site_pkey, phy_tile_pkey) AS (
+    SELECT site_pkey, phy_tile_pkey
+    FROM site_instance
+    WHERE name = ?
+)
+SELECT node_pkey FROM wire WHERE
+    phy_tile_pkey = (SELECT phy_tile_pkey FROM a_site_instance)
+AND
+    wire_in_tile_pkey = (
+        SELECT pkey FROM wire_in_tile WHERE
+            site_pkey = (SELECT site_pkey FROM a_site_instance)
+        AND
+            site_pin_pkey IN (SELECT pkey FROM site_pin WHERE name = ?)
+    );
+        """, (self.site, site_type_pins[self.site, self.pin]))
+
+        results = cursor.fetchall()
+        assert len(results) == 1, (results, self.site, self.pin,
+                                   site_type_pins[self.site, self.pin])
+        return [results[0][0]]
+
+    def is_root(self):
+        return False
+
 
 def convert_tuple_to_object(site, tup):
     """ Convert physical netlist tuple to object.
@@ -72,14 +146,14 @@ def convert_tuple_to_object(site, tup):
     """
     if tup[0] == 'site_pin':
         _, pin = tup
-        return PhysicalSitePin(site.name, pin)
+        return PhysicalSitePinForStitching(site.name, pin)
     elif tup[0] == 'bel_pin':
         assert len(tup) == 4, tup
         _, bel, pin, direction = tup
-        return PhysicalBelPin(site.name, bel, pin, direction)
+        return PhysicalBelPinWithDirection(site.name, bel, pin, direction)
     elif tup[0] == 'site_pip':
         _, bel, pin = tup
-        return PhysicalSitePip(site.name, bel, pin)
+        return PhysicalSitePipForStitching(site.name, bel, pin)
     else:
         assert False, tup
 
@@ -755,7 +829,7 @@ def output_interchange(top, capnp_folder, part, f_logical, f_physical, f_xdc):
         for tile, wire0, wire1 in pips:
             # TODO: Better handling of bipips?
             net_stubs[net_name].append(
-                PhysicalPip(
+                PhysicalPipForStitching(
                     tile=tile, wire0=wire0, wire1=wire1, forward=False))
 
     net_to_type = {}
