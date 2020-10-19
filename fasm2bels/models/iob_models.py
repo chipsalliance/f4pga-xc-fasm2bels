@@ -632,7 +632,7 @@ def process_differential_iob(top, iob, in_diff, out_diff):
 
     # Decode IOSTANDARD parameters
     iostd_in, iostd_out = decode_iostandard_params(site, diff=True)
-    in_term = decode_in_term(site)
+    in_term = decode_in_term(site_s)
 
     # Differential input
     if in_diff and not out_diff:
