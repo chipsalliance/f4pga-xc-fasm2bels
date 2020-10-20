@@ -52,7 +52,7 @@ from .lib.parse_pcf import parse_simple_pcf
 from .lib.parse_xdc import parse_simple_xdc
 from .lib import eblif
 from .lib import vpr_io_place
-from .lib.interchange_capnp import output_interchange
+from .lib.interchange import output_interchange
 
 
 def null_process(conn, top, tile, tiles):

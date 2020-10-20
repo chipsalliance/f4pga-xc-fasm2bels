@@ -19,6 +19,17 @@ pin_constraint_types = [PinConstraintType.XDC, PinConstraintType.PCF]
 
 
 class TestFasm2Bels(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.channels_file = tempfile.NamedTemporaryFile(
+            suffix='channels.db', delete=False)
+        cls.channels_file.close()
+        os.unlink(cls.channels_file.name)
+
+    @classmethod
+    def tearDownClass(cls):
+        os.unlink(cls.channels_file.name)
+
     @parameterized.expand(itertools.product(test_names, pin_constraint_types))
     def test_simple_ff(self, test_name, pin_constraint_type):
         cur_dir = os.path.dirname(__file__)
@@ -41,7 +52,6 @@ class TestFasm2Bels(unittest.TestCase):
             dir='/tmp')
 
         fasm_file = os.path.join(temp_dir, '{}.fasm'.format(test_name))
-        channels_file = os.path.join(temp_dir, 'channels.db')
 
         iostandard = 'LVCMOS33'
         drive = '12'
@@ -50,13 +60,44 @@ class TestFasm2Bels(unittest.TestCase):
 
         generated_top_v = os.path.join(temp_dir, 'top_bit.v')
         generated_top_xdc = os.path.join(temp_dir, 'top_bit.xdc')
+        interchange_netlist = os.path.join(temp_dir, 'top_bit.netlist')
+        interchange_phys = os.path.join(temp_dir, 'top_bit.phys')
+        interchange_xdc = os.path.join(temp_dir, 'top_bit.inter.xdc')
 
         sys.argv = [
-            'fasm2bels', '--db_root', db_root, '--part', part, '--bitread',
-            bitread, '--bit_file', bit_file, '--fasm_file', fasm_file,
-            '--eblif', eblif, '--top', top, '--iostandard', iostandard,
-            '--drive', drive, '--connection_database', channels_file,
-            '--verilog_file', generated_top_v, '--xdc_file', generated_top_xdc
+            'fasm2bels',
+            '--db_root',
+            db_root,
+            '--part',
+            part,
+            '--bitread',
+            bitread,
+            '--bit_file',
+            bit_file,
+            '--fasm_file',
+            fasm_file,
+            '--eblif',
+            eblif,
+            '--top',
+            top,
+            '--iostandard',
+            iostandard,
+            '--drive',
+            drive,
+            '--connection_database',
+            self.channels_file.name,
+            '--verilog_file',
+            generated_top_v,
+            '--xdc_file',
+            generated_top_xdc,
+            '--logical_netlist',
+            interchange_netlist,
+            '--physical_netlist',
+            interchange_phys,
+            '--interchange_xdc',
+            interchange_xdc,
+            '--interchange_capnp_schema_dir',
+            os.environ['INTERCHANGE_SCHEMA_PATH'],
         ]
         if pin_constraint_type == PinConstraintType.XDC:
             sys.argv.extend(('--input_xdc', xdc_input))

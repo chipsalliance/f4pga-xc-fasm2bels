@@ -24,7 +24,8 @@ setuptools.setup(
         "lxml",
         "prjxray@git+git://github.com/SymbiFlow/prjxray.git#egg=prjxray",
         "fasm@git+git://github.com/SymbiFlow/fasm.git#egg=fasm",
-        "rr-graph@git+git://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=symbiflow-rr-graph",
+        "rr-graph@git+git://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=rr-graph",
+        "python-fpga-interchange@git+git://github.com/SymbiFlow/python-fpga-interchange.git#egg=python-fpga-interchange",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

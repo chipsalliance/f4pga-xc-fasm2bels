@@ -7,6 +7,7 @@ PYTHON_SRCS=$(shell find . -name "*py" $(FORMAT_EXCLUDE))
 
 IN_ENV = if [ -e env/bin/activate ]; then . env/bin/activate; fi;
 env:
+	git submodule update --init --recursive
 	virtualenv --python=python3 env
 	$(IN_ENV) pip install --upgrade -r requirements.txt
 
