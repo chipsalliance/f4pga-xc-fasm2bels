@@ -610,20 +610,43 @@ def process_oserdes(top, site):
     bel.parameters['DATA_RATE_TQ'] = data_rate_tq
 
     data_width = None
-    if site.has_feature("OSERDES.DATA_WIDTH.W2"):
+    if site.has_feature("OSERDES.DATA_WIDTH.SDR.W2"):
+        expect_data_rate = 'SDR'
         data_width = 2
-    elif site.has_feature("OSERDES.DATA_WIDTH.W3"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W3"):
+        expect_data_rate = 'SDR'
         data_width = 3
-    elif site.has_feature("OSERDES.DATA_WIDTH.W4"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W4"):
+        expect_data_rate = 'SDR'
         data_width = 4
-    elif site.has_feature("OSERDES.DATA_WIDTH.W5"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W5"):
+        expect_data_rate = 'SDR'
         data_width = 5
-    elif site.has_feature("OSERDES.DATA_WIDTH.W6"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W6"):
+        expect_data_rate = 'SDR'
         data_width = 6
-    elif site.has_feature("OSERDES.DATA_WIDTH.W7"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W7"):
+        expect_data_rate = 'SDR'
         data_width = 7
-    elif site.has_feature("OSERDES.DATA_WIDTH.W8"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W8"):
+        expect_data_rate = 'SDR'
         data_width = 8
+    elif site.has_feature("OSERDES.DATA_WIDTH.DDR.W4"):
+        expect_data_rate = 'DDR'
+        data_width = 4
+    elif site.has_feature("OSERDES.DATA_WIDTH.DDR.W6"):
+        expect_data_rate = 'DDR'
+        data_width = 6
+    elif site.has_feature("OSERDES.DATA_WIDTH.DDR.W8"):
+        expect_data_rate = 'DDR'
+        data_width = 8
+    else:
+        assert False
+
+    if expect_data_rate == 'SDR':
+        assert site.has_feature("OSERDES.DATA_RATE_OQ.SDR")
+    elif expect_data_rate == 'DDR':
+        assert site.has_feature("OSERDES.DATA_RATE_OQ.DDR")
     else:
         assert False
 
