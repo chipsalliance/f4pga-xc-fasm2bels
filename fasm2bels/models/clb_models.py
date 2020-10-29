@@ -160,7 +160,7 @@ def create_srl32(site, srl, up_chain):
 
     site.add_sink(
         bel=bel,
-        cell_pin='A1'.format(idx),
+        cell_pin='A1',
         sink_site_pin='{}1'.format(srl),
         bel_name=bel_name,
         bel_pin='A1')
@@ -1666,9 +1666,6 @@ def process_slice(top, s):
                 site.add_bel(ram32[1])
             else:
                 assert False, lut_modes[lut]
-
-    # Detect SRL chains
-    srl_chains = set()
 
     need_f8 = site.has_feature('BFFMUX.F8') or site.has_feature('BOUTMUX.F8')
     need_f7a = site.has_feature('AFFMUX.F7') or site.has_feature('AOUTMUX.F7')

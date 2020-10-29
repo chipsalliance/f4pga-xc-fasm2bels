@@ -72,7 +72,7 @@ def get_bram36_site(db, grid, tile):
     assert False, sites
 
 
-def eligible_for_merge(top, bram_sites, verbose=False):
+def eligible_for_merge(top, bram_sites, tile_features, verbose=False):
     """ Returns True if the two BRAM18's in this tile can be merged into a BRAM36.
 
     Parameters
@@ -142,6 +142,20 @@ def eligible_for_merge(top, bram_sites, verbose=False):
                     param, bram_y0.parameters[param],
                     bram_y1.parameters[param]))
             return False
+
+    for rw in ['READ', 'WRITE']:
+        for ab in 'AB':
+            feature = '{}_WIDTH_{}'.format(rw, ab)
+            bram36_feature = 'RAMB36.BRAM36_{}_1'.format(feature)
+            if bram_y0.parameters[feature] == 4 and bram_y1.parameters[
+                    feature] == 4:
+                if bram36_feature not in tile_features:
+                    if verbose:
+                        print('Cannot merge {} and {} because {} is not set'.
+                              format(bram_sites[0].site.name,
+                                     bram_sites[1].site.name, bram36_feature))
+
+                    return False
 
     return True
 
@@ -278,25 +292,82 @@ def clean_up_to_bram36(top, site):
     bel.remap_bel_pin_to_cell_pin(bel.bel, 'ADDRARDADDRL15', 'ADDRARDADDR[15]')
     bel.remap_bel_pin_to_cell_pin(bel.bel, 'ADDRBWRADDRL15', 'ADDRBWRADDR[15]')
 
-    for idx in range(4):
-        assert top.find_source_from_sink(site, 'WEAL{}'.format(idx)) == \
-            top.find_source_from_sink(site, 'WEAU{}'.format(idx))
-        site.mask_sink(bel, "WEAU[{}]".format(idx))
-        bel.remap_bel_pin_to_cell_pin(
-            bel.bel,
-            'WEAU{}'.format(idx),
-            'WEA[{}]'.format(idx),
-        )
+    if bel.parameters['WRITE_WIDTH_A'] < 18:
+        for idx in range(4):
+            assert top.find_source_from_sink(site, 'WEAL{}'.format(idx)) == \
+                top.find_source_from_sink(site, 'WEAU{}'.format(idx))
+            site.mask_sink(bel, "WEAU[{}]".format(idx))
+            bel.remap_bel_pin_to_cell_pin(
+                bel.bel,
+                'WEAL{}'.format(idx),
+                'WEA[0]',
+            )
+            bel.remap_bel_pin_to_cell_pin(
+                bel.bel,
+                'WEAU{}'.format(idx),
+                'WEA[0]',
+            )
 
-    for idx in range(8):
-        assert top.find_source_from_sink(site, 'WEBWEL{}'.format(idx)) == \
-            top.find_source_from_sink(site, 'WEBWEU{}'.format(idx))
-        site.mask_sink(bel, "WEBWEU[{}]".format(idx))
-        bel.remap_bel_pin_to_cell_pin(
-            bel.bel,
-            'WEBWEU{}'.format(idx),
-            'WEBWE[{}]'.format(idx),
-        )
+    else:
+        for idx in range(4):
+            assert top.find_source_from_sink(site, 'WEAL{}'.format(idx)) == \
+                top.find_source_from_sink(site, 'WEAU{}'.format(idx))
+            site.mask_sink(bel, "WEAU[{}]".format(idx))
+            bel.remap_bel_pin_to_cell_pin(
+                bel.bel,
+                'WEAU{}'.format(idx),
+                'WEA[{}]'.format(idx),
+            )
+
+    if bel.parameters['WRITE_WIDTH_B'] < 18:
+        for idx in range(8):
+            assert top.find_source_from_sink(site, 'WEBWEL{}'.format(idx)) == \
+                top.find_source_from_sink(site, 'WEBWEU{}'.format(idx))
+            site.mask_sink(bel, "WEBWEU[{}]".format(idx))
+
+        for idx in range(4):
+            bel.remap_bel_pin_to_cell_pin(
+                bel.bel,
+                'WEBWEL{}'.format(idx),
+                'WEBWE[0]',
+            )
+            bel.remap_bel_pin_to_cell_pin(
+                bel.bel,
+                'WEBWEU{}'.format(idx),
+                'WEBWE[0]',
+            )
+
+            bel.unmap_bel_pin(bel.bel, 'WEBWEU{}'.format(idx + 4))
+            bel.unmap_bel_pin(bel.bel, 'WEBWEL{}'.format(idx + 4))
+
+    else:
+        for idx in range(8):
+            assert top.find_source_from_sink(site, 'WEBWEL{}'.format(idx)) == \
+                top.find_source_from_sink(site, 'WEBWEU{}'.format(idx))
+            site.mask_sink(bel, "WEBWEU[{}]".format(idx))
+            bel.remap_bel_pin_to_cell_pin(
+                bel.bel,
+                'WEBWEU{}'.format(idx),
+                'WEBWE[{}]'.format(idx),
+            )
+
+    if bel.parameters['WRITE_WIDTH_A'] == 9:
+        bel.remap_bel_pin_to_cell_pin(bel.bel, 'DIPADIP1', 'DIPADIP[0]')
+
+    if bel.parameters['WRITE_WIDTH_B'] == 9:
+        bel.remap_bel_pin_to_cell_pin(bel.bel, 'DIPBDIP1', 'DIPBDIP[0]')
+
+    if bel.parameters['WRITE_WIDTH_A'] == 1:
+        bel.unmap_bel_pin(bel.bel, 'DIPADIP1')
+        bel.unmap_bel_pin(bel.bel, 'DIPADIP0')
+
+        bel.remap_bel_pin_to_cell_pin(bel.bel, 'DIADI1', 'DIADI[0]')
+
+    if bel.parameters['WRITE_WIDTH_B'] == 1:
+        bel.unmap_bel_pin(bel.bel, 'DIPBDIP1')
+        bel.unmap_bel_pin(bel.bel, 'DIPBDIP0')
+
+        bel.remap_bel_pin_to_cell_pin(bel.bel, 'DIBDI1', 'DIBDI[0]')
 
     bel.unmap_bel_pin(bel.bel, 'REGCLKBU')
     bel.unmap_bel_pin(bel.bel, 'REGCLKBL')
@@ -340,9 +411,9 @@ def clean_up_to_bram36(top, site):
     bel.remap_bel_pin_to_cell_pin(bel.bel, 'RSTRAMARSTRAMU', 'RSTRAMARSTRAM')
 
 
-def clean_brams(top, bram_sites, bram36_site, verbose=False):
+def clean_brams(top, bram_sites, bram36_site, tile_features, verbose=False):
     """ Cleanup BRAM tile when BRAM18's might be merged into BRAM36. """
-    if not eligible_for_merge(top, bram_sites, verbose=verbose):
+    if not eligible_for_merge(top, bram_sites, tile_features, verbose=verbose):
         if verbose:
             print("Don't merge")
         for bram in bram_sites:
@@ -918,7 +989,10 @@ def process_bram36_site(top, features, set_features):
         RAM_MODE = '"SDP"'
     else:
         if 'RAMB18_Y0.READ_WIDTH_A_1' in set_features:
-            READ_WIDTH_A = 2
+            if 'RAMB36.BRAM36_READ_WIDTH_A_1' in set_features:
+                READ_WIDTH_A = 1
+            else:
+                READ_WIDTH_A = 2
         elif 'RAMB18_Y0.READ_WIDTH_A_2' in set_features:
             READ_WIDTH_A = 4
         elif 'RAMB18_Y0.READ_WIDTH_A_4' in set_features:
@@ -931,7 +1005,10 @@ def process_bram36_site(top, features, set_features):
             assert False
 
         if 'RAMB18_Y0.READ_WIDTH_B_1' in set_features:
-            READ_WIDTH_B = 2
+            if 'RAMB36.BRAM36_READ_WIDTH_B_1' in set_features:
+                READ_WIDTH_B = 1
+            else:
+                READ_WIDTH_B = 2
         elif 'RAMB18_Y0.READ_WIDTH_B_2' in set_features:
             READ_WIDTH_B = 4
         elif 'RAMB18_Y0.READ_WIDTH_B_4' in set_features:
@@ -964,7 +1041,10 @@ def process_bram36_site(top, features, set_features):
         RAM_MODE = '"SDP"'
     else:
         if 'RAMB18_Y0.WRITE_WIDTH_A_1' in set_features:
-            WRITE_WIDTH_A = 2
+            if 'RAMB36.BRAM36_WRITE_WIDTH_A_1' in set_features:
+                WRITE_WIDTH_A = 1
+            else:
+                WRITE_WIDTH_A = 2
         elif 'RAMB18_Y0.WRITE_WIDTH_A_2' in set_features:
             WRITE_WIDTH_A = 4
         elif 'RAMB18_Y0.WRITE_WIDTH_A_4' in set_features:
@@ -977,7 +1057,10 @@ def process_bram36_site(top, features, set_features):
             assert False
 
         if 'RAMB18_Y0.WRITE_WIDTH_B_1' in set_features:
-            WRITE_WIDTH_B = 2
+            if 'RAMB36.BRAM36_WRITE_WIDTH_B_1' in set_features:
+                WRITE_WIDTH_B = 1
+            else:
+                WRITE_WIDTH_B = 2
         elif 'RAMB18_Y0.WRITE_WIDTH_B_2' in set_features:
             WRITE_WIDTH_B = 4
         elif 'RAMB18_Y0.WRITE_WIDTH_B_4' in set_features:
@@ -1110,6 +1193,9 @@ def process_bram36_site(top, features, set_features):
             wire_name = '{}{}'.format(input_wire, idx)
             site.add_sink(bel, '{}[{}]'.format(input_wire, idx), wire_name,
                           bel.bel, wire_name)
+
+    bel.set_port_width('WEA', 4)
+    bel.set_port_width('WEBWE', 8)
 
     for idx in range(4):
         site_pin = "WEAL{}".format(idx)
@@ -1316,7 +1402,8 @@ def process_bram(conn, top, tile, features):
         bram36_site = process_bram36_site(top, features, tile_features)
 
         sites[0].set_post_route_cleanup_function(
-            lambda top, site: clean_brams(top, sites, bram36_site))
+            lambda top, site: clean_brams(top, sites, bram36_site, tile_features)
+        )
     else:
         for site in sites:
             if site is None:
