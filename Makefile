@@ -1,9 +1,6 @@
 SHELL=bash
 
-ALL_EXCLUDE = third_party .git env build
-FORMAT_EXCLUDE = $(foreach x,$(ALL_EXCLUDE),-and -not -path './$(x)/*')
-
-PYTHON_SRCS=$(shell find . -name "*py" $(FORMAT_EXCLUDE))
+FASM2BELS_PYTHON_SRCS=$(shell find fasm2bels -name "*py")
 
 IN_ENV = if [ -e env/bin/activate ]; then . env/bin/activate; fi;
 env:
@@ -12,10 +9,9 @@ env:
 	$(IN_ENV) pip install --upgrade -r requirements.txt
 
 format: ${PYTHON_SRCS}
-	$(IN_ENV) yapf -i ${PYTHON_SRCS}
+	$(IN_ENV) yapf -i ${FASM2BELS_PYTHON_SRCS} setup.py
 
 build:
-	git submodule update --init --recursive
 	cd third_party/prjxray; make build -j`nproc`
 
 test-py:
