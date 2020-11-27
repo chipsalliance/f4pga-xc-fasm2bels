@@ -348,14 +348,12 @@ def process_iddr(top, site, idelay_site=None):
     else:
         site.add_sink(bel, 'S', 'SR', bel.bel, 'SR')
 
-    # DDR_CLK_EDGE
-    assert site.has_feature('IFF.DDR_CLK_EDGE.SAME_EDGE') != site.has_feature(
-        'IFF.DDR_CLK_EDGE.OPPOSITE_EDGE'), (site.tile, site.site)
-
     if site.has_feature('IFF.DDR_CLK_EDGE.SAME_EDGE'):
         bel.parameters['DDR_CLK_EDGE'] = '"SAME_EDGE"'
-    if site.has_feature('IFF.DDR_CLK_EDGE.OPPOSITE_EDGE'):
+    elif site.has_feature('IFF.DDR_CLK_EDGE.OPPOSITE_EDGE'):
         bel.parameters['DDR_CLK_EDGE'] = '"OPPOSITE_EDGE"'
+    else:
+        bel.parameters['DDR_CLK_EDGE'] = '"SAME_EDGE_PIPELINED"'
 
     # INIT
     for q in ['Q1', 'Q2']:
