@@ -36,7 +36,7 @@ import prjxray.db
 from .net_map import create_net_list
 
 from .models.verilog_modeling import Module
-from .models.cmt_models import process_pll
+from .models.cmt_models import process_cmt_upper_t, process_cmt_lower_b
 from .models.bram_models import process_bram
 from .models.clb_models import process_clb
 from .models.clk_models import process_hrow, process_bufg
@@ -92,10 +92,10 @@ PROCESS_TILE = {
     'HCLK_IOI3': process_hclk_ioi3,
     'BRAM_L': process_bram,
     'BRAM_R': process_bram,
-    'CMT_TOP_R_UPPER_T': process_pll,
-    'CMT_TOP_L_UPPER_T': process_pll,
-    'CMT_TOP_R_LOWER_B': null_process,
-    'CMT_TOP_L_LOWER_B': null_process,
+    'CMT_TOP_R_UPPER_T': process_cmt_upper_t,
+    'CMT_TOP_L_UPPER_T': process_cmt_upper_t,
+    'CMT_TOP_R_LOWER_B': process_cmt_lower_b,
+    'CMT_TOP_L_LOWER_B': process_cmt_lower_b,
     'CFG_CENTER_MID': null_process,
 }
 
