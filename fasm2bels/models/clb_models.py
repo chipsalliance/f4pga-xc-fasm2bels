@@ -1867,7 +1867,7 @@ def process_slice(top, s):
             ff5.parameters['INIT'] = init
 
             if name in ['LDCE', 'LDPE']:
-                ff5.parameters['IS_G_INVERTED'] = IS_C_INVERTED
+                ff5.parameters['IS_G_INVERTED'] = int(not IS_C_INVERTED)
             else:
                 ff5.parameters['IS_C_INVERTED'] = IS_C_INVERTED
 
@@ -1972,7 +1972,7 @@ def process_slice(top, s):
         ff.parameters['INIT'] = init
 
         if name in ['LDCE', 'LDPE']:
-            ff.parameters['IS_G_INVERTED'] = IS_C_INVERTED
+            ff.parameters['IS_G_INVERTED'] = int(not IS_C_INVERTED)
         else:
             ff.parameters['IS_C_INVERTED'] = IS_C_INVERTED
 
