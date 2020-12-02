@@ -5,8 +5,9 @@ pycapnp
 intervaltree
 progressbar2
 pyyaml
--e git://github.com/SymbiFlow/prjxray.git#egg=prjxray
--e git://github.com/SymbiFlow/fasm.git#egg=fasm
--e git://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=rr-graph
--e git://github.com/SymbiFlow/python-fpga-interchange.git#egg=python-fpga-interchange
+-e third_party/prjxray
+git+https://github.com/SymbiFlow/fasm.git#egg=fasm
+git+https://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=rr-graph
+git+https://github.com/SymbiFlow/python-fpga-interchange.git#egg=python-fpga-interchange
+-e .
 yapf==0.24.0
