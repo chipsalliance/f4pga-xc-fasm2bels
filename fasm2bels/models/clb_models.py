@@ -1510,7 +1510,7 @@ def process_slice(top, s):
                 ram32 = [
                     Bel('RAM32X1D',
                         name='RAM32X1D_{}_{}'.format(lut, idx),
-                        priority=priority) for idx in range(2)
+                        priority=priority + 1 - idx) for idx in range(2)
                 ]
 
                 ram32[0].set_bel('{}6LUT'.format(lut))
