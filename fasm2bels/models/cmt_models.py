@@ -270,8 +270,8 @@ def process_pll_or_mmcm(top, site):
 
                 # Associated register with fractional divider data
                 alt_clkout = {
-                    "FBOUT": "OUT5",
-                    "OUT0": "OUT6",
+                    "OUT0": "OUT5",
+                    "FBOUT": "OUT6",
                 }[clkout]
 
                 # Get additional fractional parameters
