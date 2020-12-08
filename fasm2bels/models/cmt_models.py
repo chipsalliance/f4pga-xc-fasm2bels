@@ -99,8 +99,6 @@ def decode_mmcm_fractional_divider(frac, low_time, high_time, frac_wf_fall, frac
     fields.
     """
 
-    print(frac, low_time, high_time, frac_wf_fall, frac_wf_rise)
-
     # A special case of 1:2.125 division
     if (frac, low_time, high_time, frac_wf_fall, frac_wf_rise) == \
        (1, 0, 0, 1, 1):
@@ -294,13 +292,6 @@ def process_pll_or_mmcm(top, site):
                     # Fractional divider enforces 50% duty cycle
                     bel.parameters['CLK{}_DUTY_CYCLE'.format(clkout)] = "0.500"
 
-                # Phase shift
-                # FIXME:
-                phase = 0.0
-
-                bel.parameters['CLK{}_PHASE'.format(clkout)] = \
-                    "{0:.3f}".format(phase)
-
             # Calculate the divider and duty cycle for regular (integer)
             # divider
             else:
@@ -323,12 +314,13 @@ def process_pll_or_mmcm(top, site):
                     bel.parameters['CLK{}_DUTY_CYCLE'.format(
                         clkout)] = "{0:.4f}".format(duty)
 
-                # Phase shift
-                phase = float(delay) + phase / 8.0  # Delay in VCO cycles
-                phase = 360.0 * phase / divider  # Phase of CLK in degrees
+            # Phase shift
+            phase = float(delay) + phase / 8.0  # Delay in VCO cycles
+            phase = 360.0 * phase / divider  # Phase of CLK in degrees
 
-                bel.parameters['CLK{}_PHASE'.format(clkout)] = \
-                    "{0:.3f}".format(phase)
+            bel.parameters['CLK{}_PHASE'.format(clkout)] = \
+                "{0:.3f}".format(phase)
+
         else:
             bel.add_unconnected_port('CLK' + clkout, None, direction="output")
             bel.map_bel_pin_to_cell_pin(
