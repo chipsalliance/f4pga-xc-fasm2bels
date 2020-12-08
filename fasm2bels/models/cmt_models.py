@@ -93,6 +93,34 @@ BANDWIDTH_LOOKUP = {
     }
 }
 
+def decode_mmcm_fractional_divider(frac, low_time, high_time, frac_wf_fall, frac_wf_rise):
+    """
+    Decodes the value of a MMCM fractional divider given relevant register
+    fields.
+    """
+
+    print(frac, low_time, high_time, frac_wf_fall, frac_wf_rise)
+
+    # A special case of 1:2.125 division
+    if (frac, low_time, high_time, frac_wf_fall, frac_wf_rise) == \
+       (1, 0, 0, 1, 1):
+        return 2.125
+
+    # Base divider
+    divider = high_time + frac_wf_rise * 0.5 + \
+              low_time + frac_wf_fall * 0.5 + \
+              frac / 8.0
+
+    # Correct
+    if frac == 0:
+        divider += 2.0
+    elif frac == 1:
+        divider += 1.5
+    else:
+        divider += 1.0
+
+    return divider
+
 # =============================================================================
 
 
@@ -213,6 +241,19 @@ def process_pll_or_mmcm(top, site):
 
         if site.has_feature('CLK{}_CLKOUT1_OUTPUT_ENABLE'.format(clkout)):
 
+            # Get common parameters
+            high_time = site.decode_multi_bit_feature(
+                'CLK{}_CLKOUT1_HIGH_TIME'.format(clkout))
+            low_time = site.decode_multi_bit_feature(
+                'CLK{}_CLKOUT1_LOW_TIME'.format(clkout))
+
+            phase = site.decode_multi_bit_feature(
+                'CLK{}_CLKOUT1_PHASE_MUX'.format(clkout))
+            delay = site.decode_multi_bit_feature(
+                'CLK{}_CLKOUT2{}_DELAY_TIME'.format(clkout, prefix))
+            edge = site.decode_multi_bit_feature('CLK{}_CLKOUT2{}_EDGE'.format(clkout, prefix))
+            no_count = site.has_feature('CLK{}_CLKOUT2{}_NO_COUNT'.format(clkout, prefix))
+
             # Add output source
             site.add_source(bel, 'CLK' + clkout, 'CLK' + clkout, bel.bel,
                             'CLK' + clkout)
@@ -223,29 +264,55 @@ def process_pll_or_mmcm(top, site):
 
             # Calculate the divider and duty cycle for fractional divider
             if is_frac:
-                pass
+
+                # Associated register with fractional divider data
+                alt_clkout = {
+                    "FBOUT": "OUT5",
+                    "OUT0": "OUT6",
+                }[clkout]
+
+                # Get additional fractional parameters
+                frac = site.decode_multi_bit_feature('CLK{}_CLKOUT2_FRAC'.format(clkout))
+                frac_wf_rise = site.decode_multi_bit_feature('CLK{}_CLKOUT2_FRAC_WF_R'.format(clkout))
+                frac_wf_fall = site.decode_multi_bit_feature('CLK{}_CLKOUT2_FRACTIONAL_FRAC_WF_F'.format(alt_clkout))
+                pm_fall = site.decode_multi_bit_feature('CLK{}_CLKOUT2_FRACTIONAL_PHASE_MUX_F'.format(alt_clkout))
+
+                # Decode the divider
+                divider = decode_mmcm_fractional_divider(
+                    frac,
+                    low_time,
+                    high_time,
+                    frac_wf_fall,
+                    frac_wf_rise,
+                )
+
+                if clkout == 'FBOUT':
+                    vco_m = divider
+                    bel.parameters['CLKFBOUT_MULT_F'] = "{:.3f}".format(divider)
+                else:
+                    bel.parameters['CLK{}_DIVIDE_F'.format(clkout)] = "{:.3f}".format(divider)
+                    # Fractional divider enforces 50% duty cycle
+                    bel.parameters['CLK{}_DUTY_CYCLE'.format(clkout)] = "0.500"
+
+                # Phase shift
+                # FIXME:
+                phase = 0.0
+
+                bel.parameters['CLK{}_PHASE'.format(clkout)] = \
+                    "{0:.3f}".format(phase)
 
             # Calculate the divider and duty cycle for regular (integer)
             # divider
             else:
 
-                high_time = site.decode_multi_bit_feature(
-                    'CLK{}_CLKOUT1_HIGH_TIME'.format(clkout))
-                low_time = site.decode_multi_bit_feature(
-                    'CLK{}_CLKOUT1_LOW_TIME'.format(clkout))
-
-                if site.decode_multi_bit_feature('CLK{}_CLKOUT2{}_EDGE'.format(
-                        clkout, prefix)):
+                # Divider & duty
+                if edge:
                     high_time += 0.5
                     low_time = max(0, low_time - 0.5)
 
                 divider = int(high_time + low_time)
                 duty = high_time / (low_time + high_time)
 
-                if site.has_feature('CLK{}_CLKOUT2{}_NO_COUNT'.format(
-                        clkout, prefix)):
-                    divider = 1
-                    duty = 0.5
 
                 if clkout == 'FBOUT':
                     vco_m = float(divider)
@@ -257,11 +324,6 @@ def process_pll_or_mmcm(top, site):
                         clkout)] = "{0:.4f}".format(duty)
 
                 # Phase shift
-                delay = site.decode_multi_bit_feature(
-                    'CLK{}_CLKOUT2{}_DELAY_TIME'.format(clkout, prefix))
-                phase = site.decode_multi_bit_feature(
-                    'CLK{}_CLKOUT1_PHASE_MUX'.format(clkout))
-
                 phase = float(delay) + phase / 8.0  # Delay in VCO cycles
                 phase = 360.0 * phase / divider  # Phase of CLK in degrees
 
