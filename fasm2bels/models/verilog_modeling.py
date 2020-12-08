@@ -1043,17 +1043,18 @@ class Site(object):
         """
         Decodes a "multi-bit" fasm feature. If not present returns 0.
         """
-        value = 0
 
         for f in self.set_features:
-            if f.feature.startswith(feature):
+            if f.feature == feature:
+                value = 0
                 for canon_f in fasm.canonical_features(f):
                     if canon_f.start is None:
                         value |= 1
                     else:
                         value |= (1 << canon_f.start)
+                return value
 
-        return value
+        return 0
 
     def add_sink(self,
                  bel,
