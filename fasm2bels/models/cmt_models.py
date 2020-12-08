@@ -93,7 +93,9 @@ BANDWIDTH_LOOKUP = {
     }
 }
 
-def decode_mmcm_fractional_divider(frac, low_time, high_time, frac_wf_fall, frac_wf_rise):
+
+def decode_mmcm_fractional_divider(frac, low_time, high_time, frac_wf_fall,
+                                   frac_wf_rise):
     """
     Decodes the value of a MMCM fractional divider given relevant register
     fields.
@@ -118,6 +120,7 @@ def decode_mmcm_fractional_divider(frac, low_time, high_time, frac_wf_fall, frac
         divider += 1.0
 
     return divider
+
 
 # =============================================================================
 
@@ -249,8 +252,10 @@ def process_pll_or_mmcm(top, site):
                 'CLK{}_CLKOUT1_PHASE_MUX'.format(clkout))
             delay = site.decode_multi_bit_feature(
                 'CLK{}_CLKOUT2{}_DELAY_TIME'.format(clkout, prefix))
-            edge = site.decode_multi_bit_feature('CLK{}_CLKOUT2{}_EDGE'.format(clkout, prefix))
-            no_count = site.has_feature('CLK{}_CLKOUT2{}_NO_COUNT'.format(clkout, prefix))
+            edge = site.decode_multi_bit_feature('CLK{}_CLKOUT2{}_EDGE'.format(
+                clkout, prefix))
+            no_count = site.has_feature('CLK{}_CLKOUT2{}_NO_COUNT'.format(
+                clkout, prefix))
 
             # Add output source
             site.add_source(bel, 'CLK' + clkout, 'CLK' + clkout, bel.bel,
@@ -270,10 +275,14 @@ def process_pll_or_mmcm(top, site):
                 }[clkout]
 
                 # Get additional fractional parameters
-                frac = site.decode_multi_bit_feature('CLK{}_CLKOUT2_FRAC'.format(clkout))
-                frac_wf_rise = site.decode_multi_bit_feature('CLK{}_CLKOUT2_FRAC_WF_R'.format(clkout))
-                frac_wf_fall = site.decode_multi_bit_feature('CLK{}_CLKOUT2_FRACTIONAL_FRAC_WF_F'.format(alt_clkout))
-                pm_fall = site.decode_multi_bit_feature('CLK{}_CLKOUT2_FRACTIONAL_PHASE_MUX_F'.format(alt_clkout))
+                frac = site.decode_multi_bit_feature(
+                    'CLK{}_CLKOUT2_FRAC'.format(clkout))
+                frac_wf_rise = site.decode_multi_bit_feature(
+                    'CLK{}_CLKOUT2_FRAC_WF_R'.format(clkout))
+                frac_wf_fall = site.decode_multi_bit_feature(
+                    'CLK{}_CLKOUT2_FRACTIONAL_FRAC_WF_F'.format(alt_clkout))
+                pm_fall = site.decode_multi_bit_feature(
+                    'CLK{}_CLKOUT2_FRACTIONAL_PHASE_MUX_F'.format(alt_clkout))
 
                 # Decode the divider
                 divider = decode_mmcm_fractional_divider(
@@ -286,9 +295,11 @@ def process_pll_or_mmcm(top, site):
 
                 if clkout == 'FBOUT':
                     vco_m = divider
-                    bel.parameters['CLKFBOUT_MULT_F'] = "{:.3f}".format(divider)
+                    bel.parameters['CLKFBOUT_MULT_F'] = "{:.3f}".format(
+                        divider)
                 else:
-                    bel.parameters['CLK{}_DIVIDE_F'.format(clkout)] = "{:.3f}".format(divider)
+                    bel.parameters['CLK{}_DIVIDE_F'.format(
+                        clkout)] = "{:.3f}".format(divider)
                     # Fractional divider enforces 50% duty cycle
                     bel.parameters['CLK{}_DUTY_CYCLE'.format(clkout)] = "0.500"
 
@@ -303,7 +314,6 @@ def process_pll_or_mmcm(top, site):
 
                 divider = int(high_time + low_time)
                 duty = high_time / (low_time + high_time)
-
 
                 if clkout == 'FBOUT':
                     vco_m = float(divider)
