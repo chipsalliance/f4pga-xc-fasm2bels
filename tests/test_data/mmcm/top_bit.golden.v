@@ -4234,208 +4234,17 @@ module top(
   wire [0:0] RIOB33_X43Y25_IOB_X1Y26_I;
   wire [0:0] RIOI3_X43Y25_ILOGIC_X1Y26_D;
   wire [0:0] RIOI3_X43Y25_ILOGIC_X1Y26_O;
-  wire [0:0] \$abc$2918$iopadmap$jc2 ;
-  wire [0:0] \$abc$2918$iopadmap$led ;
-  wire [0:0] \$abc$2918$iopadmap$sw ;
-  wire [0:0] \$abc$4817$aiger4816$201 ;
-  wire [0:0] \$abc$4817$aiger4816$202 ;
-  wire [0:0] \$abc$4817$aiger4816$203 ;
-  wire [0:0] \$abc$4817$aiger4816$212 ;
-  wire [0:0] \$abc$4817$aiger4816$213 ;
-  wire [0:0] \$abc$4817$aiger4816$214 ;
-  wire [0:0] \$abc$4817$aiger4816$215 ;
-  wire [0:0] \$abc$4817$aiger4816$216 ;
-  wire [0:0] \$abc$4817$aiger4816$225 ;
-  wire [0:0] \$abc$4817$aiger4816$226 ;
-  wire [0:0] \$abc$4817$aiger4816$227 ;
-  wire [0:0] \$abc$4817$aiger4816$228 ;
-  wire [0:0] \$abc$4817$aiger4816$229 ;
-  wire [0:0] \$abc$4817$aiger4816$238 ;
-  wire [0:0] \$abc$4817$aiger4816$239 ;
-  wire [0:0] \$abc$4817$aiger4816$240 ;
-  wire [0:0] \$abc$4817$aiger4816$241 ;
-  wire [0:0] \$abc$4817$aiger4816$242 ;
-  wire [0:0] \$abc$4817$aiger4816$251 ;
-  wire [0:0] \$abc$4817$aiger4816$252 ;
-  wire [0:0] \$abc$4817$aiger4816$253 ;
-  wire [0:0] \$abc$4817$aiger4816$254 ;
-  wire [0:0] \$abc$4817$aiger4816$255 ;
-  wire [0:0] \$abc$4817$aiger4816$264 ;
-  wire [0:0] \$abc$4817$aiger4816$266 ;
-  wire [0:0] \$abc$4817$aiger4816$267 ;
-  wire [0:0] \$abc$4817$aiger4816$268 ;
-  wire [0:0] \$abc$4817$aiger4816$277 ;
-  wire [0:0] \$abc$4817$aiger4816$278 ;
-  wire [0:0] \$abc$4817$aiger4816$279 ;
-  wire [0:0] \$abc$4817$aiger4816$288 ;
-  wire [0:0] \$abc$4817$aiger4816$289 ;
-  wire [0:0] \$abc$4817$aiger4816$290 ;
-  wire [0:0] \$abc$4817$aiger4816$291 ;
-  wire [0:0] \$abc$4817$aiger4816$292 ;
-  wire [0:0] \$abc$4817$aiger4816$301 ;
-  wire [0:0] \$abc$4817$aiger4816$302 ;
-  wire [0:0] \$abc$4817$aiger4816$303 ;
-  wire [0:0] \$abc$4817$aiger4816$304 ;
-  wire [0:0] \$abc$4817$aiger4816$305 ;
-  wire [0:0] \$abc$4817$aiger4816$314 ;
-  wire [0:0] \$abc$4817$aiger4816$315 ;
-  wire [0:0] \$abc$4817$aiger4816$316 ;
-  wire [0:0] \$abc$4817$aiger4816$317 ;
-  wire [0:0] \$abc$4817$aiger4816$318 ;
-  wire [0:0] \$abc$4817$aiger4816$327 ;
-  wire [0:0] \$abc$4817$aiger4816$328 ;
-  wire [0:0] \$abc$4817$aiger4816$329 ;
-  wire [0:0] \$abc$4817$aiger4816$330 ;
-  wire [0:0] \$abc$4817$aiger4816$331 ;
-  wire [0:0] \$abc$4817$aiger4816$340 ;
-  wire [0:0] \$abc$4817$aiger4816$342 ;
-  wire [0:0] \$abc$4817$aiger4816$343 ;
-  wire [0:0] \$abc$4817$aiger4816$344 ;
-  wire [0:0] \$abc$4817$aiger4816$353 ;
-  wire [0:0] \$abc$4817$aiger4816$354 ;
-  wire [0:0] \$abc$4817$aiger4816$355 ;
-  wire [0:0] \$abc$4817$aiger4816$364 ;
-  wire [0:0] \$abc$4817$aiger4816$365 ;
-  wire [0:0] \$abc$4817$aiger4816$366 ;
-  wire [0:0] \$abc$4817$aiger4816$367 ;
-  wire [0:0] \$abc$4817$aiger4816$368 ;
-  wire [0:0] \$abc$4817$aiger4816$377 ;
-  wire [0:0] \$abc$4817$aiger4816$378 ;
-  wire [0:0] \$abc$4817$aiger4816$379 ;
-  wire [0:0] \$abc$4817$aiger4816$380 ;
-  wire [0:0] \$abc$4817$aiger4816$381 ;
-  wire [0:0] \$abc$4817$aiger4816$390 ;
-  wire [0:0] \$abc$4817$aiger4816$391 ;
-  wire [0:0] \$abc$4817$aiger4816$392 ;
-  wire [0:0] \$abc$4817$aiger4816$393 ;
-  wire [0:0] \$abc$4817$aiger4816$394 ;
-  wire [0:0] \$abc$4817$aiger4816$403 ;
-  wire [0:0] \$abc$4817$aiger4816$404 ;
-  wire [0:0] \$abc$4817$aiger4816$405 ;
-  wire [0:0] \$abc$4817$aiger4816$406 ;
-  wire [0:0] \$abc$4817$aiger4816$407 ;
-  wire [0:0] \$abc$4817$aiger4816$417 ;
-  wire [0:0] \$abc$4817$aiger4816$418 ;
-  wire [0:0] \$abc$4817$aiger4816$419 ;
-  wire [0:0] \$abc$4817$aiger4816$420 ;
-  wire [0:0] \$abc$4817$aiger4816$429 ;
-  wire [0:0] \$abc$4817$aiger4816$430 ;
-  wire [0:0] \$abc$4817$aiger4816$431 ;
-  wire [0:0] \$abc$4817$aiger4816$440 ;
-  wire [0:0] \$abc$4817$aiger4816$441 ;
-  wire [0:0] \$abc$4817$aiger4816$442 ;
-  wire [0:0] \$abc$4817$aiger4816$443 ;
-  wire [0:0] \$abc$4817$aiger4816$444 ;
-  wire [0:0] \$abc$4817$aiger4816$453 ;
-  wire [0:0] \$abc$4817$aiger4816$454 ;
-  wire [0:0] \$abc$4817$aiger4816$455 ;
-  wire [0:0] \$abc$4817$aiger4816$456 ;
-  wire [0:0] \$abc$4817$aiger4816$457 ;
-  wire [0:0] \$abc$4817$aiger4816$466 ;
-  wire [0:0] \$abc$4817$aiger4816$467 ;
-  wire [0:0] \$abc$4817$aiger4816$468 ;
-  wire [0:0] \$abc$4817$aiger4816$469 ;
-  wire [0:0] \$abc$4817$aiger4816$470 ;
-  wire [0:0] \$abc$4817$aiger4816$479 ;
-  wire [0:0] \$abc$4817$aiger4816$480 ;
-  wire [0:0] \$abc$4817$aiger4816$481 ;
-  wire [0:0] \$abc$4817$aiger4816$482 ;
-  wire [0:0] \$abc$4817$aiger4816$483 ;
-  wire [0:0] \$abc$4817$aiger4816$492 ;
-  wire [0:0] \$abc$4817$aiger4816$493 ;
-  wire [0:0] \$abc$4817$aiger4816$494 ;
-  wire [0:0] \$abc$4817$aiger4816$496 ;
-  wire [0:0] \$abc$4817$aiger4816$505 ;
-  wire [0:0] \$abc$4817$aiger4816$506 ;
-  wire [0:0] \$abc$4817$aiger4816$507 ;
-  wire [0:0] \$abc$4817$aiger4816$516 ;
-  wire [0:0] \$abc$4817$aiger4816$517 ;
-  wire [0:0] \$abc$4817$aiger4816$518 ;
-  wire [0:0] \$abc$4817$aiger4816$519 ;
-  wire [0:0] \$abc$4817$aiger4816$520 ;
-  wire [0:0] \$abc$4817$aiger4816$529 ;
-  wire [0:0] \$abc$4817$aiger4816$530 ;
-  wire [0:0] \$abc$4817$aiger4816$531 ;
-  wire [0:0] \$abc$4817$aiger4816$532 ;
-  wire [0:0] \$abc$4817$aiger4816$533 ;
-  wire [0:0] \$abc$4817$aiger4816$542 ;
-  wire [0:0] \$abc$4817$aiger4816$543 ;
-  wire [0:0] \$abc$4817$aiger4816$544 ;
-  wire [0:0] \$abc$4817$aiger4816$545 ;
-  wire [0:0] \$abc$4817$aiger4816$546 ;
-  wire [0:0] \$abc$4817$aiger4816$555 ;
-  wire [0:0] \$abc$4817$aiger4816$556 ;
-  wire [0:0] \$abc$4817$aiger4816$557 ;
-  wire [0:0] \$abc$4817$aiger4816$558 ;
-  wire [0:0] \$abc$4817$aiger4816$559 ;
-  wire [0:0] \$abc$4817$aiger4816$568 ;
-  wire [0:0] \$abc$4817$aiger4816$569 ;
-  wire [0:0] \$abc$4817$aiger4816$571 ;
-  wire [0:0] \$abc$4817$aiger4816$572 ;
-  wire [0:0] \$abc$4817$aiger4816$581 ;
-  wire [0:0] \$abc$4817$aiger4816$582 ;
-  wire [0:0] \$abc$4817$aiger4816$583 ;
-  wire [0:0] \$abc$4817$aiger4816$592 ;
-  wire [0:0] \$abc$4817$aiger4816$593 ;
-  wire [0:0] \$abc$4817$aiger4816$594 ;
-  wire [0:0] \$abc$4817$aiger4816$595 ;
-  wire [0:0] \$abc$4817$aiger4816$596 ;
-  wire [0:0] \$abc$4817$aiger4816$605 ;
-  wire [0:0] \$abc$4817$aiger4816$606 ;
-  wire [0:0] \$abc$4817$aiger4816$607 ;
-  wire [0:0] \$abc$4817$aiger4816$608 ;
-  wire [0:0] \$abc$4817$aiger4816$609 ;
-  wire [0:0] \$abc$4817$aiger4816$618 ;
-  wire [0:0] \$abc$4817$aiger4816$619 ;
-  wire [0:0] \$abc$4817$aiger4816$620 ;
-  wire [0:0] \$abc$4817$aiger4816$621 ;
-  wire [0:0] \$abc$4817$aiger4816$622 ;
-  wire [0:0] \$abc$4817$aiger4816$631 ;
-  wire [0:0] \$abc$4817$aiger4816$632 ;
-  wire [0:0] \$abc$4817$aiger4816$633 ;
-  wire [0:0] \$abc$4817$aiger4816$634 ;
-  wire [0:0] \$abc$4817$aiger4816$635 ;
-  wire [0:0] \$abc$4817$aiger4816$644 ;
-  wire [0:0] \$abc$4817$aiger4816$645 ;
-  wire [0:0] \$abc$4817$aiger4816$647 ;
-  wire [0:0] \$abc$4817$aiger4816$648 ;
-  wire [23:0] \$auto$alumacc.cc:485:replace_alu$1451.O ;
-  wire [23:0] \$auto$alumacc.cc:485:replace_alu$1454.O ;
-  wire [21:0] \$auto$alumacc.cc:485:replace_alu$1457.O ;
-  wire [21:0] \$auto$alumacc.cc:485:replace_alu$1460.O ;
-  wire [21:0] \$auto$alumacc.cc:485:replace_alu$1463.O ;
-  wire [21:0] \$auto$alumacc.cc:485:replace_alu$1466.O ;
-  wire [0:0] \$techmap3069$abc$2918$lut$not$aiger2917$553.A ;
-  wire [0:0] \$techmap3070$abc$2918$lut$not$aiger2917$481.A ;
-  wire [0:0] \$techmap3071$abc$2918$lut$not$aiger2917$409.A ;
-  wire [0:0] \$techmap3072$abc$2918$lut$not$aiger2917$337.A ;
-  wire [0:0] \$techmap3073$abc$2918$lut$not$aiger2917$265.A ;
-  wire [0:0] \$techmap3074$abc$2918$lut$not$aiger2917$193.A ;
-  wire [0:0] \CLK ;
-  wire [0:0] \RST ;
-  wire [0:0] \mmcme2_test.I_CLKINSEL ;
-  wire [0:0] \mmcme2_test.I_PWRDWN ;
-  wire [5:0] \mmcme2_test.O_CNT ;
-  wire [0:0] \mmcme2_test.O_LOCKED ;
-  wire [5:0] \mmcme2_test.clk ;
-  wire [0:0] \mmcme2_test.clk100 ;
-  wire [0:0] \mmcme2_test.clk50 ;
-  wire [0:0] \mmcme2_test.clk50_ce ;
-  wire [0:0] \mmcme2_test.clk_fb_o ;
-  wire [5:0] \mmcme2_test.gclk ;
-  wire [0:0] \mmcme2_test.rst ;
-  wire [3:0] \rst_sr ;
 
 
   (* KEEP, DONT_TOUCH, BEL = "DFF" *)
   FDRE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:420:simplemap_dff$1552CLBLL_L_X24Y46_SLICE_X36Y46_D_FDRE  (
+  ) CLBLL_L_X24Y46_SLICE_X36Y46_D_FDRE (
 .C(RIOB33_X43Y25_IOB_X1Y26_I),
 .CE(1'b1),
 .D(CLBLL_L_X24Y46_SLICE_X36Y46_AO6),
-.Q(\mmcme2_test.clk50_ce ),
+.Q(CLBLL_L_X24Y46_SLICE_X36Y46_DQ),
 .R(1'b0)
   );
 
@@ -4490,7 +4299,7 @@ module top(
     .INIT(64'h3333333300000000)
   ) CLBLL_L_X24Y46_SLICE_X36Y46_ALUT (
 .I0(1'b1),
-.I1(\mmcme2_test.clk50_ce ),
+.I1(CLBLL_L_X24Y46_SLICE_X36Y46_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -4564,11 +4373,11 @@ module top(
   FDRE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:420:simplemap_dff$1704CLBLL_L_X26Y9_SLICE_X40Y9_D_FDRE  (
+  ) CLBLL_L_X26Y9_SLICE_X40Y9_D_FDRE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y11_O),
 .CE(1'b1),
 .D(LIOB33_X0Y11_IOB_X0Y11_I),
-.Q(\rst_sr [3]),
+.Q(CLBLL_L_X26Y9_SLICE_X40Y9_DQ),
 .R(1'b0)
   );
 
@@ -4697,12 +4506,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1555CLBLM_R_X3Y5_SLICE_X2Y5_A_FDCE  (
+  ) CLBLM_R_X3Y5_SLICE_X2Y5_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y5_SLICE_X2Y5_AO5),
-.Q(\$abc$4817$aiger4816$201 )
+.Q(CLBLM_R_X3Y5_SLICE_X2Y5_AQ)
   );
 
 
@@ -4710,12 +4519,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1556CLBLM_R_X3Y5_SLICE_X2Y5_B_FDCE  (
+  ) CLBLM_R_X3Y5_SLICE_X2Y5_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y5_SLICE_X2Y5_BO5),
-.Q(\$abc$4817$aiger4816$202 )
+.Q(CLBLM_R_X3Y5_SLICE_X2Y5_BQ)
   );
 
 
@@ -4723,12 +4532,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1554CLBLM_R_X3Y5_SLICE_X2Y5_C_FDCE  (
+  ) CLBLM_R_X3Y5_SLICE_X2Y5_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y5_SLICE_X2Y5_CO5),
-.Q(\$abc$4817$aiger4816$203 )
+.Q(CLBLM_R_X3Y5_SLICE_X2Y5_CQ)
   );
 
 
@@ -4736,12 +4545,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1553CLBLM_R_X3Y5_SLICE_X2Y5_D_FDCE  (
+  ) CLBLM_R_X3Y5_SLICE_X2Y5_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y5_SLICE_X2Y5_DO5),
-.Q(\$techmap3074$abc$2918$lut$not$aiger2917$193.A )
+.Q(CLBLM_R_X3Y5_SLICE_X2Y5_DQ)
   );
 
 
@@ -4749,10 +4558,10 @@ module top(
   CARRY4 #(
   ) CLBLM_R_X3Y5_SLICE_X2Y5_CARRY4 (
 .CI(1'b0),
-.CO({\$abc$4817$aiger4816$216 , CLBLM_R_X3Y5_SLICE_X2Y5_C_CY, CLBLM_R_X3Y5_SLICE_X2Y5_B_CY, CLBLM_R_X3Y5_SLICE_X2Y5_A_CY}),
+.CO({CLBLM_R_X3Y5_SLICE_X2Y5_D_CY, CLBLM_R_X3Y5_SLICE_X2Y5_C_CY, CLBLM_R_X3Y5_SLICE_X2Y5_B_CY, CLBLM_R_X3Y5_SLICE_X2Y5_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b1}),
-.O({\$auto$alumacc.cc:485:replace_alu$1451.O [3], \$auto$alumacc.cc:485:replace_alu$1451.O [2], \$auto$alumacc.cc:485:replace_alu$1451.O [1], CLBLM_R_X3Y5_SLICE_X2Y5_A_XOR}),
+.O({CLBLM_R_X3Y5_SLICE_X2Y5_D_XOR, CLBLM_R_X3Y5_SLICE_X2Y5_C_XOR, CLBLM_R_X3Y5_SLICE_X2Y5_B_XOR, CLBLM_R_X3Y5_SLICE_X2Y5_A_XOR}),
 .S({CLBLM_R_X3Y5_SLICE_X2Y5_DO6, CLBLM_R_X3Y5_SLICE_X2Y5_CO6, CLBLM_R_X3Y5_SLICE_X2Y5_BO6, CLBLM_R_X3Y5_SLICE_X2Y5_AO6})
   );
 
@@ -4765,7 +4574,7 @@ module top(
 .I1(1'b1),
 .I2(CLBLM_R_X3Y5_SLICE_X2Y5_AO6),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$202 ),
+.I4(CLBLM_R_X3Y5_SLICE_X2Y5_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y5_SLICE_X2Y5_DO5),
 .O6(CLBLM_R_X3Y5_SLICE_X2Y5_DO6)
@@ -4776,8 +4585,8 @@ module top(
   LUT6_2 #(
     .INIT(64'haaaaaaaacccccccc)
   ) CLBLM_R_X3Y5_SLICE_X2Y5_CLUT (
-.I0(\$abc$4817$aiger4816$201 ),
-.I1(\$auto$alumacc.cc:485:replace_alu$1451.O [1]),
+.I0(CLBLM_R_X3Y5_SLICE_X2Y5_AQ),
+.I1(CLBLM_R_X3Y5_SLICE_X2Y5_B_XOR),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -4792,10 +4601,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X3Y5_SLICE_X2Y5_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$203 ),
+.I1(CLBLM_R_X3Y5_SLICE_X2Y5_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1451.O [3]),
+.I4(CLBLM_R_X3Y5_SLICE_X2Y5_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y5_SLICE_X2Y5_BO5),
 .O6(CLBLM_R_X3Y5_SLICE_X2Y5_BO6)
@@ -4808,9 +4617,9 @@ module top(
   ) CLBLM_R_X3Y5_SLICE_X2Y5_ALUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$techmap3074$abc$2918$lut$not$aiger2917$193.A ),
+.I2(CLBLM_R_X3Y5_SLICE_X2Y5_DQ),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1451.O [2]),
+.I4(CLBLM_R_X3Y5_SLICE_X2Y5_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y5_SLICE_X2Y5_AO5),
 .O6(CLBLM_R_X3Y5_SLICE_X2Y5_AO6)
@@ -4881,12 +4690,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1559CLBLM_R_X3Y6_SLICE_X2Y6_A_FDCE  (
+  ) CLBLM_R_X3Y6_SLICE_X2Y6_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y6_SLICE_X2Y6_AO5),
-.Q(\$abc$4817$aiger4816$215 )
+.Q(CLBLM_R_X3Y6_SLICE_X2Y6_AQ)
   );
 
 
@@ -4894,12 +4703,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1560CLBLM_R_X3Y6_SLICE_X2Y6_B_FDCE  (
+  ) CLBLM_R_X3Y6_SLICE_X2Y6_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y6_SLICE_X2Y6_BO5),
-.Q(\$abc$4817$aiger4816$213 )
+.Q(CLBLM_R_X3Y6_SLICE_X2Y6_BQ)
   );
 
 
@@ -4907,12 +4716,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1557CLBLM_R_X3Y6_SLICE_X2Y6_C_FDCE  (
+  ) CLBLM_R_X3Y6_SLICE_X2Y6_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y6_SLICE_X2Y6_CO5),
-.Q(\$abc$4817$aiger4816$214 )
+.Q(CLBLM_R_X3Y6_SLICE_X2Y6_CQ)
   );
 
 
@@ -4920,23 +4729,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1558CLBLM_R_X3Y6_SLICE_X2Y6_D_FDCE  (
+  ) CLBLM_R_X3Y6_SLICE_X2Y6_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y6_SLICE_X2Y6_DO5),
-.Q(\$abc$4817$aiger4816$212 )
+.Q(CLBLM_R_X3Y6_SLICE_X2Y6_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X3Y6_SLICE_X2Y6_CARRY4 (
-.CI(\$abc$4817$aiger4816$216 ),
-.CO({\$abc$4817$aiger4816$229 , CLBLM_R_X3Y6_SLICE_X2Y6_C_CY, CLBLM_R_X3Y6_SLICE_X2Y6_B_CY, CLBLM_R_X3Y6_SLICE_X2Y6_A_CY}),
+.CI(CLBLM_R_X3Y5_SLICE_X2Y5_COUT),
+.CO({CLBLM_R_X3Y6_SLICE_X2Y6_D_CY, CLBLM_R_X3Y6_SLICE_X2Y6_C_CY, CLBLM_R_X3Y6_SLICE_X2Y6_B_CY, CLBLM_R_X3Y6_SLICE_X2Y6_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1451.O [7], \$auto$alumacc.cc:485:replace_alu$1451.O [6], \$auto$alumacc.cc:485:replace_alu$1451.O [5], \$auto$alumacc.cc:485:replace_alu$1451.O [4]}),
+.O({CLBLM_R_X3Y6_SLICE_X2Y6_D_XOR, CLBLM_R_X3Y6_SLICE_X2Y6_C_XOR, CLBLM_R_X3Y6_SLICE_X2Y6_B_XOR, CLBLM_R_X3Y6_SLICE_X2Y6_A_XOR}),
 .S({CLBLM_R_X3Y6_SLICE_X2Y6_DO6, CLBLM_R_X3Y6_SLICE_X2Y6_CO6, CLBLM_R_X3Y6_SLICE_X2Y6_BO6, CLBLM_R_X3Y6_SLICE_X2Y6_AO6})
   );
 
@@ -4948,8 +4757,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1451.O [5]),
-.I4(\$abc$4817$aiger4816$213 ),
+.I3(CLBLM_R_X3Y6_SLICE_X2Y6_B_XOR),
+.I4(CLBLM_R_X3Y6_SLICE_X2Y6_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y6_SLICE_X2Y6_DO5),
 .O6(CLBLM_R_X3Y6_SLICE_X2Y6_DO6)
@@ -4961,8 +4770,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X3Y6_SLICE_X2Y6_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1451.O [4]),
-.I2(\$abc$4817$aiger4816$215 ),
+.I1(CLBLM_R_X3Y6_SLICE_X2Y6_A_XOR),
+.I2(CLBLM_R_X3Y6_SLICE_X2Y6_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -4976,10 +4785,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X3Y6_SLICE_X2Y6_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$212 ),
+.I1(CLBLM_R_X3Y6_SLICE_X2Y6_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1451.O [7]),
+.I4(CLBLM_R_X3Y6_SLICE_X2Y6_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y6_SLICE_X2Y6_BO5),
 .O6(CLBLM_R_X3Y6_SLICE_X2Y6_BO6)
@@ -4991,10 +4800,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X3Y6_SLICE_X2Y6_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$214 ),
+.I1(CLBLM_R_X3Y6_SLICE_X2Y6_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1451.O [6]),
+.I4(CLBLM_R_X3Y6_SLICE_X2Y6_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y6_SLICE_X2Y6_AO5),
 .O6(CLBLM_R_X3Y6_SLICE_X2Y6_AO6)
@@ -5065,12 +4874,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1563CLBLM_R_X3Y7_SLICE_X2Y7_A_FDCE  (
+  ) CLBLM_R_X3Y7_SLICE_X2Y7_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y7_SLICE_X2Y7_AO5),
-.Q(\$abc$4817$aiger4816$227 )
+.Q(CLBLM_R_X3Y7_SLICE_X2Y7_AQ)
   );
 
 
@@ -5078,12 +4887,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1564CLBLM_R_X3Y7_SLICE_X2Y7_B_FDCE  (
+  ) CLBLM_R_X3Y7_SLICE_X2Y7_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y7_SLICE_X2Y7_BO5),
-.Q(\$abc$4817$aiger4816$226 )
+.Q(CLBLM_R_X3Y7_SLICE_X2Y7_BQ)
   );
 
 
@@ -5091,12 +4900,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1561CLBLM_R_X3Y7_SLICE_X2Y7_C_FDCE  (
+  ) CLBLM_R_X3Y7_SLICE_X2Y7_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y7_SLICE_X2Y7_CO5),
-.Q(\$abc$4817$aiger4816$225 )
+.Q(CLBLM_R_X3Y7_SLICE_X2Y7_CQ)
   );
 
 
@@ -5104,23 +4913,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1562CLBLM_R_X3Y7_SLICE_X2Y7_D_FDCE  (
+  ) CLBLM_R_X3Y7_SLICE_X2Y7_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y7_SLICE_X2Y7_DO5),
-.Q(\$abc$4817$aiger4816$228 )
+.Q(CLBLM_R_X3Y7_SLICE_X2Y7_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X3Y7_SLICE_X2Y7_CARRY4 (
-.CI(\$abc$4817$aiger4816$229 ),
-.CO({\$abc$4817$aiger4816$242 , CLBLM_R_X3Y7_SLICE_X2Y7_C_CY, CLBLM_R_X3Y7_SLICE_X2Y7_B_CY, CLBLM_R_X3Y7_SLICE_X2Y7_A_CY}),
+.CI(CLBLM_R_X3Y6_SLICE_X2Y6_COUT),
+.CO({CLBLM_R_X3Y7_SLICE_X2Y7_D_CY, CLBLM_R_X3Y7_SLICE_X2Y7_C_CY, CLBLM_R_X3Y7_SLICE_X2Y7_B_CY, CLBLM_R_X3Y7_SLICE_X2Y7_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1451.O [11], \$auto$alumacc.cc:485:replace_alu$1451.O [10], \$auto$alumacc.cc:485:replace_alu$1451.O [9], \$auto$alumacc.cc:485:replace_alu$1451.O [8]}),
+.O({CLBLM_R_X3Y7_SLICE_X2Y7_D_XOR, CLBLM_R_X3Y7_SLICE_X2Y7_C_XOR, CLBLM_R_X3Y7_SLICE_X2Y7_B_XOR, CLBLM_R_X3Y7_SLICE_X2Y7_A_XOR}),
 .S({CLBLM_R_X3Y7_SLICE_X2Y7_DO6, CLBLM_R_X3Y7_SLICE_X2Y7_CO6, CLBLM_R_X3Y7_SLICE_X2Y7_BO6, CLBLM_R_X3Y7_SLICE_X2Y7_AO6})
   );
 
@@ -5132,8 +4941,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1451.O [9]),
-.I4(\$abc$4817$aiger4816$226 ),
+.I3(CLBLM_R_X3Y7_SLICE_X2Y7_B_XOR),
+.I4(CLBLM_R_X3Y7_SLICE_X2Y7_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y7_SLICE_X2Y7_DO5),
 .O6(CLBLM_R_X3Y7_SLICE_X2Y7_DO6)
@@ -5145,8 +4954,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X3Y7_SLICE_X2Y7_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1451.O [8]),
-.I2(\$abc$4817$aiger4816$227 ),
+.I1(CLBLM_R_X3Y7_SLICE_X2Y7_A_XOR),
+.I2(CLBLM_R_X3Y7_SLICE_X2Y7_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -5160,10 +4969,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X3Y7_SLICE_X2Y7_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$228 ),
+.I1(CLBLM_R_X3Y7_SLICE_X2Y7_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1451.O [11]),
+.I4(CLBLM_R_X3Y7_SLICE_X2Y7_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y7_SLICE_X2Y7_BO5),
 .O6(CLBLM_R_X3Y7_SLICE_X2Y7_BO6)
@@ -5175,10 +4984,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X3Y7_SLICE_X2Y7_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$225 ),
+.I1(CLBLM_R_X3Y7_SLICE_X2Y7_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1451.O [10]),
+.I4(CLBLM_R_X3Y7_SLICE_X2Y7_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y7_SLICE_X2Y7_AO5),
 .O6(CLBLM_R_X3Y7_SLICE_X2Y7_AO6)
@@ -5249,12 +5058,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1572CLBLM_R_X3Y8_SLICE_X2Y8_A5_FDCE  (
+  ) CLBLM_R_X3Y8_SLICE_X2Y8_A5_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y8_SLICE_X2Y8_AO5),
-.Q(\$abc$4817$aiger4816$254 )
+.Q(CLBLM_R_X3Y8_SLICE_X2Y8_A5Q)
   );
 
 
@@ -5262,12 +5071,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1565CLBLM_R_X3Y8_SLICE_X2Y8_A_FDCE  (
+  ) CLBLM_R_X3Y8_SLICE_X2Y8_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y8_SLICE_X2Y8_A_XOR),
-.Q(\$abc$4817$aiger4816$239 )
+.Q(CLBLM_R_X3Y8_SLICE_X2Y8_AQ)
   );
 
 
@@ -5275,12 +5084,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1567CLBLM_R_X3Y8_SLICE_X2Y8_B_FDCE  (
+  ) CLBLM_R_X3Y8_SLICE_X2Y8_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y8_SLICE_X2Y8_BO5),
-.Q(\$abc$4817$aiger4816$241 )
+.Q(CLBLM_R_X3Y8_SLICE_X2Y8_BQ)
   );
 
 
@@ -5288,12 +5097,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1568CLBLM_R_X3Y8_SLICE_X2Y8_C_FDCE  (
+  ) CLBLM_R_X3Y8_SLICE_X2Y8_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y8_SLICE_X2Y8_CO5),
-.Q(\$abc$4817$aiger4816$240 )
+.Q(CLBLM_R_X3Y8_SLICE_X2Y8_CQ)
   );
 
 
@@ -5301,23 +5110,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1566CLBLM_R_X3Y8_SLICE_X2Y8_D_FDCE  (
+  ) CLBLM_R_X3Y8_SLICE_X2Y8_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y8_SLICE_X2Y8_DO5),
-.Q(\$abc$4817$aiger4816$238 )
+.Q(CLBLM_R_X3Y8_SLICE_X2Y8_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X3Y8_SLICE_X2Y8_CARRY4 (
-.CI(\$abc$4817$aiger4816$242 ),
-.CO({\$abc$4817$aiger4816$255 , CLBLM_R_X3Y8_SLICE_X2Y8_C_CY, CLBLM_R_X3Y8_SLICE_X2Y8_B_CY, CLBLM_R_X3Y8_SLICE_X2Y8_A_CY}),
+.CI(CLBLM_R_X3Y7_SLICE_X2Y7_COUT),
+.CO({CLBLM_R_X3Y8_SLICE_X2Y8_D_CY, CLBLM_R_X3Y8_SLICE_X2Y8_C_CY, CLBLM_R_X3Y8_SLICE_X2Y8_B_CY, CLBLM_R_X3Y8_SLICE_X2Y8_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1451.O [15], \$auto$alumacc.cc:485:replace_alu$1451.O [14], \$auto$alumacc.cc:485:replace_alu$1451.O [13], CLBLM_R_X3Y8_SLICE_X2Y8_A_XOR}),
+.O({CLBLM_R_X3Y8_SLICE_X2Y8_D_XOR, CLBLM_R_X3Y8_SLICE_X2Y8_C_XOR, CLBLM_R_X3Y8_SLICE_X2Y8_B_XOR, CLBLM_R_X3Y8_SLICE_X2Y8_A_XOR}),
 .S({CLBLM_R_X3Y8_SLICE_X2Y8_DO6, CLBLM_R_X3Y8_SLICE_X2Y8_CO6, CLBLM_R_X3Y8_SLICE_X2Y8_BO6, CLBLM_R_X3Y8_SLICE_X2Y8_AO6})
   );
 
@@ -5326,11 +5135,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X3Y8_SLICE_X2Y8_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1451.O [13]),
+.I0(CLBLM_R_X3Y8_SLICE_X2Y8_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$240 ),
+.I4(CLBLM_R_X3Y8_SLICE_X2Y8_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y8_SLICE_X2Y8_DO5),
 .O6(CLBLM_R_X3Y8_SLICE_X2Y8_DO6)
@@ -5342,8 +5151,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X3Y8_SLICE_X2Y8_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1451.O [15]),
-.I2(\$abc$4817$aiger4816$241 ),
+.I1(CLBLM_R_X3Y8_SLICE_X2Y8_D_XOR),
+.I2(CLBLM_R_X3Y8_SLICE_X2Y8_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -5356,8 +5165,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X3Y8_SLICE_X2Y8_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1451.O [14]),
-.I1(\$abc$4817$aiger4816$238 ),
+.I0(CLBLM_R_X3Y8_SLICE_X2Y8_C_XOR),
+.I1(CLBLM_R_X3Y8_SLICE_X2Y8_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -5372,8 +5181,8 @@ module top(
     .INIT(64'hccccccccf0f0f0f0)
   ) CLBLM_R_X3Y8_SLICE_X2Y8_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$239 ),
-.I2(\$auto$alumacc.cc:485:replace_alu$1451.O [19]),
+.I1(CLBLM_R_X3Y8_SLICE_X2Y8_AQ),
+.I2(CLBLM_R_X3Y9_SLICE_X2Y9_D_XOR),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -5446,12 +5255,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1575CLBLM_R_X3Y9_SLICE_X2Y9_C5_FDCE  (
+  ) CLBLM_R_X3Y9_SLICE_X2Y9_C5_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y9_SLICE_X2Y9_CO5),
-.Q(\$abc$4817$aiger4816$266 )
+.Q(CLBLM_R_X3Y9_SLICE_X2Y9_C5Q)
   );
 
 
@@ -5459,12 +5268,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1576CLBLM_R_X3Y9_SLICE_X2Y9_A_FDCE  (
+  ) CLBLM_R_X3Y9_SLICE_X2Y9_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y9_SLICE_X2Y9_AO5),
-.Q(\$abc$4817$aiger4816$267 )
+.Q(CLBLM_R_X3Y9_SLICE_X2Y9_AQ)
   );
 
 
@@ -5472,12 +5281,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1569CLBLM_R_X3Y9_SLICE_X2Y9_B_FDCE  (
+  ) CLBLM_R_X3Y9_SLICE_X2Y9_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y9_SLICE_X2Y9_BO5),
-.Q(\$abc$4817$aiger4816$252 )
+.Q(CLBLM_R_X3Y9_SLICE_X2Y9_BQ)
   );
 
 
@@ -5485,12 +5294,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1571CLBLM_R_X3Y9_SLICE_X2Y9_C_FDCE  (
+  ) CLBLM_R_X3Y9_SLICE_X2Y9_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y9_SLICE_X2Y9_C_XOR),
-.Q(\$abc$4817$aiger4816$253 )
+.Q(CLBLM_R_X3Y9_SLICE_X2Y9_CQ)
   );
 
 
@@ -5498,23 +5307,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1570CLBLM_R_X3Y9_SLICE_X2Y9_D_FDCE  (
+  ) CLBLM_R_X3Y9_SLICE_X2Y9_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y9_SLICE_X2Y9_DO5),
-.Q(\$abc$4817$aiger4816$251 )
+.Q(CLBLM_R_X3Y9_SLICE_X2Y9_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X3Y9_SLICE_X2Y9_CARRY4 (
-.CI(\$abc$4817$aiger4816$255 ),
-.CO({\$abc$4817$aiger4816$268 , CLBLM_R_X3Y9_SLICE_X2Y9_C_CY, CLBLM_R_X3Y9_SLICE_X2Y9_B_CY, CLBLM_R_X3Y9_SLICE_X2Y9_A_CY}),
+.CI(CLBLM_R_X3Y8_SLICE_X2Y8_COUT),
+.CO({CLBLM_R_X3Y9_SLICE_X2Y9_D_CY, CLBLM_R_X3Y9_SLICE_X2Y9_C_CY, CLBLM_R_X3Y9_SLICE_X2Y9_B_CY, CLBLM_R_X3Y9_SLICE_X2Y9_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1451.O [19], CLBLM_R_X3Y9_SLICE_X2Y9_C_XOR, \$auto$alumacc.cc:485:replace_alu$1451.O [17], \$auto$alumacc.cc:485:replace_alu$1451.O [16]}),
+.O({CLBLM_R_X3Y9_SLICE_X2Y9_D_XOR, CLBLM_R_X3Y9_SLICE_X2Y9_C_XOR, CLBLM_R_X3Y9_SLICE_X2Y9_B_XOR, CLBLM_R_X3Y9_SLICE_X2Y9_A_XOR}),
 .S({CLBLM_R_X3Y9_SLICE_X2Y9_DO6, CLBLM_R_X3Y9_SLICE_X2Y9_CO6, CLBLM_R_X3Y9_SLICE_X2Y9_BO6, CLBLM_R_X3Y9_SLICE_X2Y9_AO6})
   );
 
@@ -5523,11 +5332,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X3Y9_SLICE_X2Y9_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1451.O [17]),
+.I0(CLBLM_R_X3Y9_SLICE_X2Y9_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$254 ),
+.I4(CLBLM_R_X3Y8_SLICE_X2Y8_A5Q),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y9_SLICE_X2Y9_DO5),
 .O6(CLBLM_R_X3Y9_SLICE_X2Y9_DO6)
@@ -5540,8 +5349,8 @@ module top(
   ) CLBLM_R_X3Y9_SLICE_X2Y9_CLUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$abc$4817$aiger4816$253 ),
-.I3(\$auto$alumacc.cc:485:replace_alu$1451.O [22]),
+.I2(CLBLM_R_X3Y9_SLICE_X2Y9_CQ),
+.I3(CLBLM_R_X3Y10_SLICE_X2Y10_C_XOR),
 .I4(1'b1),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y9_SLICE_X2Y9_CO5),
@@ -5554,10 +5363,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X3Y9_SLICE_X2Y9_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$251 ),
+.I1(CLBLM_R_X3Y9_SLICE_X2Y9_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1451.O [16]),
+.I4(CLBLM_R_X3Y9_SLICE_X2Y9_A_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y9_SLICE_X2Y9_BO5),
 .O6(CLBLM_R_X3Y9_SLICE_X2Y9_BO6)
@@ -5569,8 +5378,8 @@ module top(
     .INIT(64'hccccccccf0f0f0f0)
   ) CLBLM_R_X3Y9_SLICE_X2Y9_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$252 ),
-.I2(\$auto$alumacc.cc:485:replace_alu$1451.O [23]),
+.I1(CLBLM_R_X3Y9_SLICE_X2Y9_BQ),
+.I2(CLBLM_R_X3Y10_SLICE_X2Y10_D_XOR),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -5643,12 +5452,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1574CLBLM_R_X3Y10_SLICE_X2Y10_C_FDCE  (
+  ) CLBLM_R_X3Y10_SLICE_X2Y10_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y10_SLICE_X2Y10_CO5),
-.Q(\mmcme2_test.O_CNT [0])
+.Q(CLBLM_R_X3Y10_SLICE_X2Y10_CQ)
   );
 
 
@@ -5656,23 +5465,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1573CLBLM_R_X3Y10_SLICE_X2Y10_D_FDCE  (
+  ) CLBLM_R_X3Y10_SLICE_X2Y10_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X3Y10_SLICE_X2Y10_DO5),
-.Q(\$abc$4817$aiger4816$264 )
+.Q(CLBLM_R_X3Y10_SLICE_X2Y10_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X3Y10_SLICE_X2Y10_CARRY4 (
-.CI(\$abc$4817$aiger4816$268 ),
+.CI(CLBLM_R_X3Y9_SLICE_X2Y9_COUT),
 .CO({CLBLM_R_X3Y10_SLICE_X2Y10_D_CY, CLBLM_R_X3Y10_SLICE_X2Y10_C_CY, CLBLM_R_X3Y10_SLICE_X2Y10_B_CY, CLBLM_R_X3Y10_SLICE_X2Y10_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1451.O [23], \$auto$alumacc.cc:485:replace_alu$1451.O [22], \$auto$alumacc.cc:485:replace_alu$1451.O [21], \$auto$alumacc.cc:485:replace_alu$1451.O [20]}),
+.O({CLBLM_R_X3Y10_SLICE_X2Y10_D_XOR, CLBLM_R_X3Y10_SLICE_X2Y10_C_XOR, CLBLM_R_X3Y10_SLICE_X2Y10_B_XOR, CLBLM_R_X3Y10_SLICE_X2Y10_A_XOR}),
 .S({CLBLM_R_X3Y10_SLICE_X2Y10_DO6, CLBLM_R_X3Y10_SLICE_X2Y10_CO6, CLBLM_R_X3Y10_SLICE_X2Y10_BO6, CLBLM_R_X3Y10_SLICE_X2Y10_AO6})
   );
 
@@ -5684,8 +5493,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1451.O [20]),
-.I4(\$abc$4817$aiger4816$267 ),
+.I3(CLBLM_R_X3Y10_SLICE_X2Y10_A_XOR),
+.I4(CLBLM_R_X3Y9_SLICE_X2Y9_AQ),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y10_SLICE_X2Y10_DO5),
 .O6(CLBLM_R_X3Y10_SLICE_X2Y10_DO6)
@@ -5696,10 +5505,10 @@ module top(
   LUT6_2 #(
     .INIT(64'hff00ff00aaaaaaaa)
   ) CLBLM_R_X3Y10_SLICE_X2Y10_CLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1451.O [21]),
+.I0(CLBLM_R_X3Y10_SLICE_X2Y10_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$abc$4817$aiger4816$266 ),
+.I3(CLBLM_R_X3Y9_SLICE_X2Y9_C5Q),
 .I4(1'b1),
 .I5(1'b1),
 .O5(CLBLM_R_X3Y10_SLICE_X2Y10_CO5),
@@ -5712,7 +5521,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X3Y10_SLICE_X2Y10_BLUT (
 .I0(1'b1),
-.I1(\mmcme2_test.O_CNT [0]),
+.I1(CLBLM_R_X3Y10_SLICE_X2Y10_CQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -5727,7 +5536,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X3Y10_SLICE_X2Y10_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$264 ),
+.I1(CLBLM_R_X3Y10_SLICE_X2Y10_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -5861,12 +5670,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1651CLBLM_R_X5Y15_SLICE_X7Y15_A_FDCE  (
+  ) CLBLM_R_X5Y15_SLICE_X7Y15_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y15_SLICE_X7Y15_AO5),
-.Q(\$abc$4817$aiger4816$507 )
+.Q(CLBLM_R_X5Y15_SLICE_X7Y15_AQ)
   );
 
 
@@ -5874,12 +5683,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1652CLBLM_R_X5Y15_SLICE_X7Y15_B_FDCE  (
+  ) CLBLM_R_X5Y15_SLICE_X7Y15_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y15_SLICE_X7Y15_BO5),
-.Q(\$abc$4817$aiger4816$506 )
+.Q(CLBLM_R_X5Y15_SLICE_X7Y15_BQ)
   );
 
 
@@ -5887,12 +5696,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1650CLBLM_R_X5Y15_SLICE_X7Y15_C_FDCE  (
+  ) CLBLM_R_X5Y15_SLICE_X7Y15_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y15_SLICE_X7Y15_CO5),
-.Q(\$abc$4817$aiger4816$505 )
+.Q(CLBLM_R_X5Y15_SLICE_X7Y15_CQ)
   );
 
 
@@ -5900,12 +5709,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1649CLBLM_R_X5Y15_SLICE_X7Y15_D_FDCE  (
+  ) CLBLM_R_X5Y15_SLICE_X7Y15_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y15_SLICE_X7Y15_DO5),
-.Q(\$techmap3070$abc$2918$lut$not$aiger2917$481.A )
+.Q(CLBLM_R_X5Y15_SLICE_X7Y15_DQ)
   );
 
 
@@ -5913,10 +5722,10 @@ module top(
   CARRY4 #(
   ) CLBLM_R_X5Y15_SLICE_X7Y15_CARRY4 (
 .CI(1'b0),
-.CO({\$abc$4817$aiger4816$520 , CLBLM_R_X5Y15_SLICE_X7Y15_C_CY, CLBLM_R_X5Y15_SLICE_X7Y15_B_CY, CLBLM_R_X5Y15_SLICE_X7Y15_A_CY}),
+.CO({CLBLM_R_X5Y15_SLICE_X7Y15_D_CY, CLBLM_R_X5Y15_SLICE_X7Y15_C_CY, CLBLM_R_X5Y15_SLICE_X7Y15_B_CY, CLBLM_R_X5Y15_SLICE_X7Y15_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b1}),
-.O({\$auto$alumacc.cc:485:replace_alu$1463.O [3], \$auto$alumacc.cc:485:replace_alu$1463.O [2], \$auto$alumacc.cc:485:replace_alu$1463.O [1], CLBLM_R_X5Y15_SLICE_X7Y15_A_XOR}),
+.O({CLBLM_R_X5Y15_SLICE_X7Y15_D_XOR, CLBLM_R_X5Y15_SLICE_X7Y15_C_XOR, CLBLM_R_X5Y15_SLICE_X7Y15_B_XOR, CLBLM_R_X5Y15_SLICE_X7Y15_A_XOR}),
 .S({CLBLM_R_X5Y15_SLICE_X7Y15_DO6, CLBLM_R_X5Y15_SLICE_X7Y15_CO6, CLBLM_R_X5Y15_SLICE_X7Y15_BO6, CLBLM_R_X5Y15_SLICE_X7Y15_AO6})
   );
 
@@ -5929,7 +5738,7 @@ module top(
 .I1(1'b1),
 .I2(CLBLM_R_X5Y15_SLICE_X7Y15_AO6),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$506 ),
+.I4(CLBLM_R_X5Y15_SLICE_X7Y15_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y15_SLICE_X7Y15_DO5),
 .O6(CLBLM_R_X5Y15_SLICE_X7Y15_DO6)
@@ -5940,8 +5749,8 @@ module top(
   LUT6_2 #(
     .INIT(64'haaaaaaaacccccccc)
   ) CLBLM_R_X5Y15_SLICE_X7Y15_CLUT (
-.I0(\$abc$4817$aiger4816$507 ),
-.I1(\$auto$alumacc.cc:485:replace_alu$1463.O [1]),
+.I0(CLBLM_R_X5Y15_SLICE_X7Y15_AQ),
+.I1(CLBLM_R_X5Y15_SLICE_X7Y15_B_XOR),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -5956,10 +5765,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X5Y15_SLICE_X7Y15_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$505 ),
+.I1(CLBLM_R_X5Y15_SLICE_X7Y15_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1463.O [3]),
+.I4(CLBLM_R_X5Y15_SLICE_X7Y15_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y15_SLICE_X7Y15_BO5),
 .O6(CLBLM_R_X5Y15_SLICE_X7Y15_BO6)
@@ -5972,9 +5781,9 @@ module top(
   ) CLBLM_R_X5Y15_SLICE_X7Y15_ALUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$techmap3070$abc$2918$lut$not$aiger2917$481.A ),
+.I2(CLBLM_R_X5Y15_SLICE_X7Y15_DQ),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1463.O [2]),
+.I4(CLBLM_R_X5Y15_SLICE_X7Y15_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y15_SLICE_X7Y15_AO5),
 .O6(CLBLM_R_X5Y15_SLICE_X7Y15_AO6)
@@ -6045,12 +5854,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1655CLBLM_R_X5Y16_SLICE_X7Y16_A_FDCE  (
+  ) CLBLM_R_X5Y16_SLICE_X7Y16_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y16_SLICE_X7Y16_AO5),
-.Q(\$abc$4817$aiger4816$518 )
+.Q(CLBLM_R_X5Y16_SLICE_X7Y16_AQ)
   );
 
 
@@ -6058,12 +5867,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1656CLBLM_R_X5Y16_SLICE_X7Y16_B_FDCE  (
+  ) CLBLM_R_X5Y16_SLICE_X7Y16_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y16_SLICE_X7Y16_BO5),
-.Q(\$abc$4817$aiger4816$516 )
+.Q(CLBLM_R_X5Y16_SLICE_X7Y16_BQ)
   );
 
 
@@ -6071,12 +5880,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1653CLBLM_R_X5Y16_SLICE_X7Y16_C_FDCE  (
+  ) CLBLM_R_X5Y16_SLICE_X7Y16_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y16_SLICE_X7Y16_CO5),
-.Q(\$abc$4817$aiger4816$519 )
+.Q(CLBLM_R_X5Y16_SLICE_X7Y16_CQ)
   );
 
 
@@ -6084,23 +5893,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1654CLBLM_R_X5Y16_SLICE_X7Y16_D_FDCE  (
+  ) CLBLM_R_X5Y16_SLICE_X7Y16_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y16_SLICE_X7Y16_DO5),
-.Q(\$abc$4817$aiger4816$517 )
+.Q(CLBLM_R_X5Y16_SLICE_X7Y16_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X5Y16_SLICE_X7Y16_CARRY4 (
-.CI(\$abc$4817$aiger4816$520 ),
-.CO({\$abc$4817$aiger4816$533 , CLBLM_R_X5Y16_SLICE_X7Y16_C_CY, CLBLM_R_X5Y16_SLICE_X7Y16_B_CY, CLBLM_R_X5Y16_SLICE_X7Y16_A_CY}),
+.CI(CLBLM_R_X5Y15_SLICE_X7Y15_COUT),
+.CO({CLBLM_R_X5Y16_SLICE_X7Y16_D_CY, CLBLM_R_X5Y16_SLICE_X7Y16_C_CY, CLBLM_R_X5Y16_SLICE_X7Y16_B_CY, CLBLM_R_X5Y16_SLICE_X7Y16_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1463.O [7], \$auto$alumacc.cc:485:replace_alu$1463.O [6], \$auto$alumacc.cc:485:replace_alu$1463.O [5], \$auto$alumacc.cc:485:replace_alu$1463.O [4]}),
+.O({CLBLM_R_X5Y16_SLICE_X7Y16_D_XOR, CLBLM_R_X5Y16_SLICE_X7Y16_C_XOR, CLBLM_R_X5Y16_SLICE_X7Y16_B_XOR, CLBLM_R_X5Y16_SLICE_X7Y16_A_XOR}),
 .S({CLBLM_R_X5Y16_SLICE_X7Y16_DO6, CLBLM_R_X5Y16_SLICE_X7Y16_CO6, CLBLM_R_X5Y16_SLICE_X7Y16_BO6, CLBLM_R_X5Y16_SLICE_X7Y16_AO6})
   );
 
@@ -6112,8 +5921,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1463.O [5]),
-.I4(\$abc$4817$aiger4816$516 ),
+.I3(CLBLM_R_X5Y16_SLICE_X7Y16_B_XOR),
+.I4(CLBLM_R_X5Y16_SLICE_X7Y16_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y16_SLICE_X7Y16_DO5),
 .O6(CLBLM_R_X5Y16_SLICE_X7Y16_DO6)
@@ -6125,8 +5934,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X5Y16_SLICE_X7Y16_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1463.O [4]),
-.I2(\$abc$4817$aiger4816$518 ),
+.I1(CLBLM_R_X5Y16_SLICE_X7Y16_A_XOR),
+.I2(CLBLM_R_X5Y16_SLICE_X7Y16_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -6140,10 +5949,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X5Y16_SLICE_X7Y16_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$517 ),
+.I1(CLBLM_R_X5Y16_SLICE_X7Y16_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1463.O [7]),
+.I4(CLBLM_R_X5Y16_SLICE_X7Y16_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y16_SLICE_X7Y16_BO5),
 .O6(CLBLM_R_X5Y16_SLICE_X7Y16_BO6)
@@ -6155,10 +5964,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X5Y16_SLICE_X7Y16_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$519 ),
+.I1(CLBLM_R_X5Y16_SLICE_X7Y16_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1463.O [6]),
+.I4(CLBLM_R_X5Y16_SLICE_X7Y16_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y16_SLICE_X7Y16_AO5),
 .O6(CLBLM_R_X5Y16_SLICE_X7Y16_AO6)
@@ -6229,12 +6038,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1659CLBLM_R_X5Y17_SLICE_X7Y17_A_FDCE  (
+  ) CLBLM_R_X5Y17_SLICE_X7Y17_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y17_SLICE_X7Y17_AO5),
-.Q(\$abc$4817$aiger4816$531 )
+.Q(CLBLM_R_X5Y17_SLICE_X7Y17_AQ)
   );
 
 
@@ -6242,12 +6051,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1660CLBLM_R_X5Y17_SLICE_X7Y17_B_FDCE  (
+  ) CLBLM_R_X5Y17_SLICE_X7Y17_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y17_SLICE_X7Y17_BO5),
-.Q(\$abc$4817$aiger4816$529 )
+.Q(CLBLM_R_X5Y17_SLICE_X7Y17_BQ)
   );
 
 
@@ -6255,12 +6064,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1657CLBLM_R_X5Y17_SLICE_X7Y17_C_FDCE  (
+  ) CLBLM_R_X5Y17_SLICE_X7Y17_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y17_SLICE_X7Y17_CO5),
-.Q(\$abc$4817$aiger4816$532 )
+.Q(CLBLM_R_X5Y17_SLICE_X7Y17_CQ)
   );
 
 
@@ -6268,23 +6077,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1658CLBLM_R_X5Y17_SLICE_X7Y17_D_FDCE  (
+  ) CLBLM_R_X5Y17_SLICE_X7Y17_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y17_SLICE_X7Y17_DO5),
-.Q(\$abc$4817$aiger4816$530 )
+.Q(CLBLM_R_X5Y17_SLICE_X7Y17_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X5Y17_SLICE_X7Y17_CARRY4 (
-.CI(\$abc$4817$aiger4816$533 ),
-.CO({\$abc$4817$aiger4816$546 , CLBLM_R_X5Y17_SLICE_X7Y17_C_CY, CLBLM_R_X5Y17_SLICE_X7Y17_B_CY, CLBLM_R_X5Y17_SLICE_X7Y17_A_CY}),
+.CI(CLBLM_R_X5Y16_SLICE_X7Y16_COUT),
+.CO({CLBLM_R_X5Y17_SLICE_X7Y17_D_CY, CLBLM_R_X5Y17_SLICE_X7Y17_C_CY, CLBLM_R_X5Y17_SLICE_X7Y17_B_CY, CLBLM_R_X5Y17_SLICE_X7Y17_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1463.O [11], \$auto$alumacc.cc:485:replace_alu$1463.O [10], \$auto$alumacc.cc:485:replace_alu$1463.O [9], \$auto$alumacc.cc:485:replace_alu$1463.O [8]}),
+.O({CLBLM_R_X5Y17_SLICE_X7Y17_D_XOR, CLBLM_R_X5Y17_SLICE_X7Y17_C_XOR, CLBLM_R_X5Y17_SLICE_X7Y17_B_XOR, CLBLM_R_X5Y17_SLICE_X7Y17_A_XOR}),
 .S({CLBLM_R_X5Y17_SLICE_X7Y17_DO6, CLBLM_R_X5Y17_SLICE_X7Y17_CO6, CLBLM_R_X5Y17_SLICE_X7Y17_BO6, CLBLM_R_X5Y17_SLICE_X7Y17_AO6})
   );
 
@@ -6296,8 +6105,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1463.O [9]),
-.I4(\$abc$4817$aiger4816$529 ),
+.I3(CLBLM_R_X5Y17_SLICE_X7Y17_B_XOR),
+.I4(CLBLM_R_X5Y17_SLICE_X7Y17_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y17_SLICE_X7Y17_DO5),
 .O6(CLBLM_R_X5Y17_SLICE_X7Y17_DO6)
@@ -6309,8 +6118,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X5Y17_SLICE_X7Y17_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1463.O [8]),
-.I2(\$abc$4817$aiger4816$531 ),
+.I1(CLBLM_R_X5Y17_SLICE_X7Y17_A_XOR),
+.I2(CLBLM_R_X5Y17_SLICE_X7Y17_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -6324,10 +6133,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X5Y17_SLICE_X7Y17_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$530 ),
+.I1(CLBLM_R_X5Y17_SLICE_X7Y17_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1463.O [11]),
+.I4(CLBLM_R_X5Y17_SLICE_X7Y17_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y17_SLICE_X7Y17_BO5),
 .O6(CLBLM_R_X5Y17_SLICE_X7Y17_BO6)
@@ -6339,10 +6148,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X5Y17_SLICE_X7Y17_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$532 ),
+.I1(CLBLM_R_X5Y17_SLICE_X7Y17_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1463.O [10]),
+.I4(CLBLM_R_X5Y17_SLICE_X7Y17_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y17_SLICE_X7Y17_AO5),
 .O6(CLBLM_R_X5Y17_SLICE_X7Y17_AO6)
@@ -6413,12 +6222,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1661CLBLM_R_X5Y18_SLICE_X7Y18_A_FDCE  (
+  ) CLBLM_R_X5Y18_SLICE_X7Y18_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y18_SLICE_X7Y18_A_XOR),
-.Q(\$abc$4817$aiger4816$542 )
+.Q(CLBLM_R_X5Y18_SLICE_X7Y18_AQ)
   );
 
 
@@ -6426,12 +6235,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1663CLBLM_R_X5Y18_SLICE_X7Y18_B_FDCE  (
+  ) CLBLM_R_X5Y18_SLICE_X7Y18_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y18_SLICE_X7Y18_BO5),
-.Q(\$abc$4817$aiger4816$545 )
+.Q(CLBLM_R_X5Y18_SLICE_X7Y18_BQ)
   );
 
 
@@ -6439,12 +6248,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1664CLBLM_R_X5Y18_SLICE_X7Y18_C_FDCE  (
+  ) CLBLM_R_X5Y18_SLICE_X7Y18_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y18_SLICE_X7Y18_CO5),
-.Q(\$abc$4817$aiger4816$543 )
+.Q(CLBLM_R_X5Y18_SLICE_X7Y18_CQ)
   );
 
 
@@ -6452,23 +6261,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1662CLBLM_R_X5Y18_SLICE_X7Y18_D_FDCE  (
+  ) CLBLM_R_X5Y18_SLICE_X7Y18_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y18_SLICE_X7Y18_DO5),
-.Q(\$abc$4817$aiger4816$544 )
+.Q(CLBLM_R_X5Y18_SLICE_X7Y18_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X5Y18_SLICE_X7Y18_CARRY4 (
-.CI(\$abc$4817$aiger4816$546 ),
-.CO({\$abc$4817$aiger4816$559 , CLBLM_R_X5Y18_SLICE_X7Y18_C_CY, CLBLM_R_X5Y18_SLICE_X7Y18_B_CY, CLBLM_R_X5Y18_SLICE_X7Y18_A_CY}),
+.CI(CLBLM_R_X5Y17_SLICE_X7Y17_COUT),
+.CO({CLBLM_R_X5Y18_SLICE_X7Y18_D_CY, CLBLM_R_X5Y18_SLICE_X7Y18_C_CY, CLBLM_R_X5Y18_SLICE_X7Y18_B_CY, CLBLM_R_X5Y18_SLICE_X7Y18_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1463.O [15], \$auto$alumacc.cc:485:replace_alu$1463.O [14], \$auto$alumacc.cc:485:replace_alu$1463.O [13], CLBLM_R_X5Y18_SLICE_X7Y18_A_XOR}),
+.O({CLBLM_R_X5Y18_SLICE_X7Y18_D_XOR, CLBLM_R_X5Y18_SLICE_X7Y18_C_XOR, CLBLM_R_X5Y18_SLICE_X7Y18_B_XOR, CLBLM_R_X5Y18_SLICE_X7Y18_A_XOR}),
 .S({CLBLM_R_X5Y18_SLICE_X7Y18_DO6, CLBLM_R_X5Y18_SLICE_X7Y18_CO6, CLBLM_R_X5Y18_SLICE_X7Y18_BO6, CLBLM_R_X5Y18_SLICE_X7Y18_AO6})
   );
 
@@ -6477,11 +6286,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X5Y18_SLICE_X7Y18_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1463.O [13]),
+.I0(CLBLM_R_X5Y18_SLICE_X7Y18_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$543 ),
+.I4(CLBLM_R_X5Y18_SLICE_X7Y18_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y18_SLICE_X7Y18_DO5),
 .O6(CLBLM_R_X5Y18_SLICE_X7Y18_DO6)
@@ -6493,8 +6302,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X5Y18_SLICE_X7Y18_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1463.O [15]),
-.I2(\$abc$4817$aiger4816$545 ),
+.I1(CLBLM_R_X5Y18_SLICE_X7Y18_D_XOR),
+.I2(CLBLM_R_X5Y18_SLICE_X7Y18_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -6507,8 +6316,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X5Y18_SLICE_X7Y18_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1463.O [14]),
-.I1(\$abc$4817$aiger4816$544 ),
+.I0(CLBLM_R_X5Y18_SLICE_X7Y18_C_XOR),
+.I1(CLBLM_R_X5Y18_SLICE_X7Y18_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -6523,7 +6332,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X5Y18_SLICE_X7Y18_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$542 ),
+.I1(CLBLM_R_X5Y18_SLICE_X7Y18_AQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -6597,12 +6406,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1665CLBLM_R_X5Y19_SLICE_X7Y19_A_FDCE  (
+  ) CLBLM_R_X5Y19_SLICE_X7Y19_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y19_SLICE_X7Y19_A_XOR),
-.Q(\$abc$4817$aiger4816$557 )
+.Q(CLBLM_R_X5Y19_SLICE_X7Y19_AQ)
   );
 
 
@@ -6610,12 +6419,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1667CLBLM_R_X5Y19_SLICE_X7Y19_B_FDCE  (
+  ) CLBLM_R_X5Y19_SLICE_X7Y19_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y19_SLICE_X7Y19_BO5),
-.Q(\$abc$4817$aiger4816$556 )
+.Q(CLBLM_R_X5Y19_SLICE_X7Y19_BQ)
   );
 
 
@@ -6623,12 +6432,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1668CLBLM_R_X5Y19_SLICE_X7Y19_C_FDCE  (
+  ) CLBLM_R_X5Y19_SLICE_X7Y19_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y19_SLICE_X7Y19_CO5),
-.Q(\$abc$4817$aiger4816$555 )
+.Q(CLBLM_R_X5Y19_SLICE_X7Y19_CQ)
   );
 
 
@@ -6636,23 +6445,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1666CLBLM_R_X5Y19_SLICE_X7Y19_D_FDCE  (
+  ) CLBLM_R_X5Y19_SLICE_X7Y19_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y19_SLICE_X7Y19_DO5),
-.Q(\$abc$4817$aiger4816$558 )
+.Q(CLBLM_R_X5Y19_SLICE_X7Y19_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X5Y19_SLICE_X7Y19_CARRY4 (
-.CI(\$abc$4817$aiger4816$559 ),
-.CO({\$abc$4817$aiger4816$572 , CLBLM_R_X5Y19_SLICE_X7Y19_C_CY, CLBLM_R_X5Y19_SLICE_X7Y19_B_CY, CLBLM_R_X5Y19_SLICE_X7Y19_A_CY}),
+.CI(CLBLM_R_X5Y18_SLICE_X7Y18_COUT),
+.CO({CLBLM_R_X5Y19_SLICE_X7Y19_D_CY, CLBLM_R_X5Y19_SLICE_X7Y19_C_CY, CLBLM_R_X5Y19_SLICE_X7Y19_B_CY, CLBLM_R_X5Y19_SLICE_X7Y19_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1463.O [19], \$auto$alumacc.cc:485:replace_alu$1463.O [18], \$auto$alumacc.cc:485:replace_alu$1463.O [17], CLBLM_R_X5Y19_SLICE_X7Y19_A_XOR}),
+.O({CLBLM_R_X5Y19_SLICE_X7Y19_D_XOR, CLBLM_R_X5Y19_SLICE_X7Y19_C_XOR, CLBLM_R_X5Y19_SLICE_X7Y19_B_XOR, CLBLM_R_X5Y19_SLICE_X7Y19_A_XOR}),
 .S({CLBLM_R_X5Y19_SLICE_X7Y19_DO6, CLBLM_R_X5Y19_SLICE_X7Y19_CO6, CLBLM_R_X5Y19_SLICE_X7Y19_BO6, CLBLM_R_X5Y19_SLICE_X7Y19_AO6})
   );
 
@@ -6661,11 +6470,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X5Y19_SLICE_X7Y19_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1463.O [17]),
+.I0(CLBLM_R_X5Y19_SLICE_X7Y19_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$555 ),
+.I4(CLBLM_R_X5Y19_SLICE_X7Y19_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y19_SLICE_X7Y19_DO5),
 .O6(CLBLM_R_X5Y19_SLICE_X7Y19_DO6)
@@ -6677,8 +6486,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X5Y19_SLICE_X7Y19_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1463.O [19]),
-.I2(\$abc$4817$aiger4816$556 ),
+.I1(CLBLM_R_X5Y19_SLICE_X7Y19_D_XOR),
+.I2(CLBLM_R_X5Y19_SLICE_X7Y19_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -6691,8 +6500,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X5Y19_SLICE_X7Y19_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1463.O [18]),
-.I1(\$abc$4817$aiger4816$558 ),
+.I0(CLBLM_R_X5Y19_SLICE_X7Y19_C_XOR),
+.I1(CLBLM_R_X5Y19_SLICE_X7Y19_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -6707,7 +6516,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X5Y19_SLICE_X7Y19_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$557 ),
+.I1(CLBLM_R_X5Y19_SLICE_X7Y19_AQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -6781,12 +6590,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1670CLBLM_R_X5Y20_SLICE_X7Y20_A_FDCE  (
+  ) CLBLM_R_X5Y20_SLICE_X7Y20_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y20_SLICE_X7Y20_AO5),
-.Q(\mmcme2_test.O_CNT [4])
+.Q(CLBLM_R_X5Y20_SLICE_X7Y20_AQ)
   );
 
 
@@ -6794,12 +6603,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1669CLBLM_R_X5Y20_SLICE_X7Y20_B_FDCE  (
+  ) CLBLM_R_X5Y20_SLICE_X7Y20_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y20_SLICE_X7Y20_BO5),
-.Q(\$abc$4817$aiger4816$571 )
+.Q(CLBLM_R_X5Y20_SLICE_X7Y20_BQ)
   );
 
 
@@ -6807,12 +6616,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1671CLBLM_R_X5Y20_SLICE_X7Y20_C_FDCE  (
+  ) CLBLM_R_X5Y20_SLICE_X7Y20_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y20_SLICE_X7Y20_C_XOR),
-.Q(\$abc$4817$aiger4816$569 )
+.Q(CLBLM_R_X5Y20_SLICE_X7Y20_CQ)
   );
 
 
@@ -6820,23 +6629,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1672CLBLM_R_X5Y20_SLICE_X7Y20_D_FDCE  (
+  ) CLBLM_R_X5Y20_SLICE_X7Y20_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X5Y20_SLICE_X7Y20_D_XOR),
-.Q(\$abc$4817$aiger4816$568 )
+.Q(CLBLM_R_X5Y20_SLICE_X7Y20_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X5Y20_SLICE_X7Y20_CARRY4 (
-.CI(\$abc$4817$aiger4816$572 ),
+.CI(CLBLM_R_X5Y19_SLICE_X7Y19_COUT),
 .CO({CLBLM_R_X5Y20_SLICE_X7Y20_D_CY, CLBLM_R_X5Y20_SLICE_X7Y20_C_CY, CLBLM_R_X5Y20_SLICE_X7Y20_B_CY, CLBLM_R_X5Y20_SLICE_X7Y20_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({CLBLM_R_X5Y20_SLICE_X7Y20_D_XOR, CLBLM_R_X5Y20_SLICE_X7Y20_C_XOR, \$auto$alumacc.cc:485:replace_alu$1463.O [21], \$auto$alumacc.cc:485:replace_alu$1463.O [20]}),
+.O({CLBLM_R_X5Y20_SLICE_X7Y20_D_XOR, CLBLM_R_X5Y20_SLICE_X7Y20_C_XOR, CLBLM_R_X5Y20_SLICE_X7Y20_B_XOR, CLBLM_R_X5Y20_SLICE_X7Y20_A_XOR}),
 .S({CLBLM_R_X5Y20_SLICE_X7Y20_DO6, CLBLM_R_X5Y20_SLICE_X7Y20_CO6, CLBLM_R_X5Y20_SLICE_X7Y20_BO6, CLBLM_R_X5Y20_SLICE_X7Y20_AO6})
   );
 
@@ -6849,7 +6658,7 @@ module top(
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$568 ),
+.I4(CLBLM_R_X5Y20_SLICE_X7Y20_DQ),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y20_SLICE_X7Y20_DO5),
 .O6(CLBLM_R_X5Y20_SLICE_X7Y20_DO6)
@@ -6862,7 +6671,7 @@ module top(
   ) CLBLM_R_X5Y20_SLICE_X7Y20_CLUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$abc$4817$aiger4816$569 ),
+.I2(CLBLM_R_X5Y20_SLICE_X7Y20_CQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -6876,10 +6685,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X5Y20_SLICE_X7Y20_BLUT (
 .I0(1'b1),
-.I1(\mmcme2_test.O_CNT [4]),
+.I1(CLBLM_R_X5Y20_SLICE_X7Y20_AQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1463.O [20]),
+.I4(CLBLM_R_X5Y20_SLICE_X7Y20_A_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y20_SLICE_X7Y20_BO5),
 .O6(CLBLM_R_X5Y20_SLICE_X7Y20_BO6)
@@ -6891,10 +6700,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X5Y20_SLICE_X7Y20_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$571 ),
+.I1(CLBLM_R_X5Y20_SLICE_X7Y20_BQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1463.O [21]),
+.I4(CLBLM_R_X5Y20_SLICE_X7Y20_B_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X5Y20_SLICE_X7Y20_AO5),
 .O6(CLBLM_R_X5Y20_SLICE_X7Y20_AO6)
@@ -6965,12 +6774,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1675CLBLM_R_X11Y5_SLICE_X15Y5_A_FDCE  (
+  ) CLBLM_R_X11Y5_SLICE_X15Y5_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y5_SLICE_X15Y5_AO5),
-.Q(\$abc$4817$aiger4816$582 )
+.Q(CLBLM_R_X11Y5_SLICE_X15Y5_AQ)
   );
 
 
@@ -6978,12 +6787,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1676CLBLM_R_X11Y5_SLICE_X15Y5_B_FDCE  (
+  ) CLBLM_R_X11Y5_SLICE_X15Y5_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y5_SLICE_X15Y5_BO5),
-.Q(\$abc$4817$aiger4816$581 )
+.Q(CLBLM_R_X11Y5_SLICE_X15Y5_BQ)
   );
 
 
@@ -6991,12 +6800,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1674CLBLM_R_X11Y5_SLICE_X15Y5_C_FDCE  (
+  ) CLBLM_R_X11Y5_SLICE_X15Y5_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y5_SLICE_X15Y5_CO5),
-.Q(\$abc$4817$aiger4816$583 )
+.Q(CLBLM_R_X11Y5_SLICE_X15Y5_CQ)
   );
 
 
@@ -7004,12 +6813,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1673CLBLM_R_X11Y5_SLICE_X15Y5_D_FDCE  (
+  ) CLBLM_R_X11Y5_SLICE_X15Y5_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y5_SLICE_X15Y5_DO5),
-.Q(\$techmap3069$abc$2918$lut$not$aiger2917$553.A )
+.Q(CLBLM_R_X11Y5_SLICE_X15Y5_DQ)
   );
 
 
@@ -7017,10 +6826,10 @@ module top(
   CARRY4 #(
   ) CLBLM_R_X11Y5_SLICE_X15Y5_CARRY4 (
 .CI(1'b0),
-.CO({\$abc$4817$aiger4816$596 , CLBLM_R_X11Y5_SLICE_X15Y5_C_CY, CLBLM_R_X11Y5_SLICE_X15Y5_B_CY, CLBLM_R_X11Y5_SLICE_X15Y5_A_CY}),
+.CO({CLBLM_R_X11Y5_SLICE_X15Y5_D_CY, CLBLM_R_X11Y5_SLICE_X15Y5_C_CY, CLBLM_R_X11Y5_SLICE_X15Y5_B_CY, CLBLM_R_X11Y5_SLICE_X15Y5_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b1}),
-.O({\$auto$alumacc.cc:485:replace_alu$1466.O [3], \$auto$alumacc.cc:485:replace_alu$1466.O [2], \$auto$alumacc.cc:485:replace_alu$1466.O [1], CLBLM_R_X11Y5_SLICE_X15Y5_A_XOR}),
+.O({CLBLM_R_X11Y5_SLICE_X15Y5_D_XOR, CLBLM_R_X11Y5_SLICE_X15Y5_C_XOR, CLBLM_R_X11Y5_SLICE_X15Y5_B_XOR, CLBLM_R_X11Y5_SLICE_X15Y5_A_XOR}),
 .S({CLBLM_R_X11Y5_SLICE_X15Y5_DO6, CLBLM_R_X11Y5_SLICE_X15Y5_CO6, CLBLM_R_X11Y5_SLICE_X15Y5_BO6, CLBLM_R_X11Y5_SLICE_X15Y5_AO6})
   );
 
@@ -7033,7 +6842,7 @@ module top(
 .I1(1'b1),
 .I2(CLBLM_R_X11Y5_SLICE_X15Y5_AO6),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$581 ),
+.I4(CLBLM_R_X11Y5_SLICE_X15Y5_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y5_SLICE_X15Y5_DO5),
 .O6(CLBLM_R_X11Y5_SLICE_X15Y5_DO6)
@@ -7044,8 +6853,8 @@ module top(
   LUT6_2 #(
     .INIT(64'haaaaaaaacccccccc)
   ) CLBLM_R_X11Y5_SLICE_X15Y5_CLUT (
-.I0(\$abc$4817$aiger4816$582 ),
-.I1(\$auto$alumacc.cc:485:replace_alu$1466.O [1]),
+.I0(CLBLM_R_X11Y5_SLICE_X15Y5_AQ),
+.I1(CLBLM_R_X11Y5_SLICE_X15Y5_B_XOR),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -7060,10 +6869,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y5_SLICE_X15Y5_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$583 ),
+.I1(CLBLM_R_X11Y5_SLICE_X15Y5_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1466.O [3]),
+.I4(CLBLM_R_X11Y5_SLICE_X15Y5_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y5_SLICE_X15Y5_BO5),
 .O6(CLBLM_R_X11Y5_SLICE_X15Y5_BO6)
@@ -7076,9 +6885,9 @@ module top(
   ) CLBLM_R_X11Y5_SLICE_X15Y5_ALUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$techmap3069$abc$2918$lut$not$aiger2917$553.A ),
+.I2(CLBLM_R_X11Y5_SLICE_X15Y5_DQ),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1466.O [2]),
+.I4(CLBLM_R_X11Y5_SLICE_X15Y5_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y5_SLICE_X15Y5_AO5),
 .O6(CLBLM_R_X11Y5_SLICE_X15Y5_AO6)
@@ -7149,12 +6958,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1679CLBLM_R_X11Y6_SLICE_X15Y6_A_FDCE  (
+  ) CLBLM_R_X11Y6_SLICE_X15Y6_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y6_SLICE_X15Y6_AO5),
-.Q(\$abc$4817$aiger4816$593 )
+.Q(CLBLM_R_X11Y6_SLICE_X15Y6_AQ)
   );
 
 
@@ -7162,12 +6971,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1680CLBLM_R_X11Y6_SLICE_X15Y6_B_FDCE  (
+  ) CLBLM_R_X11Y6_SLICE_X15Y6_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y6_SLICE_X15Y6_BO5),
-.Q(\$abc$4817$aiger4816$592 )
+.Q(CLBLM_R_X11Y6_SLICE_X15Y6_BQ)
   );
 
 
@@ -7175,12 +6984,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1677CLBLM_R_X11Y6_SLICE_X15Y6_C_FDCE  (
+  ) CLBLM_R_X11Y6_SLICE_X15Y6_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y6_SLICE_X15Y6_CO5),
-.Q(\$abc$4817$aiger4816$595 )
+.Q(CLBLM_R_X11Y6_SLICE_X15Y6_CQ)
   );
 
 
@@ -7188,23 +6997,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1678CLBLM_R_X11Y6_SLICE_X15Y6_D_FDCE  (
+  ) CLBLM_R_X11Y6_SLICE_X15Y6_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y6_SLICE_X15Y6_DO5),
-.Q(\$abc$4817$aiger4816$594 )
+.Q(CLBLM_R_X11Y6_SLICE_X15Y6_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y6_SLICE_X15Y6_CARRY4 (
-.CI(\$abc$4817$aiger4816$596 ),
-.CO({\$abc$4817$aiger4816$609 , CLBLM_R_X11Y6_SLICE_X15Y6_C_CY, CLBLM_R_X11Y6_SLICE_X15Y6_B_CY, CLBLM_R_X11Y6_SLICE_X15Y6_A_CY}),
+.CI(CLBLM_R_X11Y5_SLICE_X15Y5_COUT),
+.CO({CLBLM_R_X11Y6_SLICE_X15Y6_D_CY, CLBLM_R_X11Y6_SLICE_X15Y6_C_CY, CLBLM_R_X11Y6_SLICE_X15Y6_B_CY, CLBLM_R_X11Y6_SLICE_X15Y6_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1466.O [7], \$auto$alumacc.cc:485:replace_alu$1466.O [6], \$auto$alumacc.cc:485:replace_alu$1466.O [5], \$auto$alumacc.cc:485:replace_alu$1466.O [4]}),
+.O({CLBLM_R_X11Y6_SLICE_X15Y6_D_XOR, CLBLM_R_X11Y6_SLICE_X15Y6_C_XOR, CLBLM_R_X11Y6_SLICE_X15Y6_B_XOR, CLBLM_R_X11Y6_SLICE_X15Y6_A_XOR}),
 .S({CLBLM_R_X11Y6_SLICE_X15Y6_DO6, CLBLM_R_X11Y6_SLICE_X15Y6_CO6, CLBLM_R_X11Y6_SLICE_X15Y6_BO6, CLBLM_R_X11Y6_SLICE_X15Y6_AO6})
   );
 
@@ -7216,8 +7025,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1466.O [5]),
-.I4(\$abc$4817$aiger4816$592 ),
+.I3(CLBLM_R_X11Y6_SLICE_X15Y6_B_XOR),
+.I4(CLBLM_R_X11Y6_SLICE_X15Y6_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y6_SLICE_X15Y6_DO5),
 .O6(CLBLM_R_X11Y6_SLICE_X15Y6_DO6)
@@ -7229,8 +7038,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X11Y6_SLICE_X15Y6_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1466.O [4]),
-.I2(\$abc$4817$aiger4816$593 ),
+.I1(CLBLM_R_X11Y6_SLICE_X15Y6_A_XOR),
+.I2(CLBLM_R_X11Y6_SLICE_X15Y6_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -7244,10 +7053,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y6_SLICE_X15Y6_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$594 ),
+.I1(CLBLM_R_X11Y6_SLICE_X15Y6_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1466.O [7]),
+.I4(CLBLM_R_X11Y6_SLICE_X15Y6_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y6_SLICE_X15Y6_BO5),
 .O6(CLBLM_R_X11Y6_SLICE_X15Y6_BO6)
@@ -7259,10 +7068,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y6_SLICE_X15Y6_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$595 ),
+.I1(CLBLM_R_X11Y6_SLICE_X15Y6_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1466.O [6]),
+.I4(CLBLM_R_X11Y6_SLICE_X15Y6_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y6_SLICE_X15Y6_AO5),
 .O6(CLBLM_R_X11Y6_SLICE_X15Y6_AO6)
@@ -7333,12 +7142,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1683CLBLM_R_X11Y7_SLICE_X15Y7_A_FDCE  (
+  ) CLBLM_R_X11Y7_SLICE_X15Y7_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y7_SLICE_X15Y7_AO5),
-.Q(\$abc$4817$aiger4816$606 )
+.Q(CLBLM_R_X11Y7_SLICE_X15Y7_AQ)
   );
 
 
@@ -7346,12 +7155,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1684CLBLM_R_X11Y7_SLICE_X15Y7_B_FDCE  (
+  ) CLBLM_R_X11Y7_SLICE_X15Y7_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y7_SLICE_X15Y7_BO5),
-.Q(\$abc$4817$aiger4816$605 )
+.Q(CLBLM_R_X11Y7_SLICE_X15Y7_BQ)
   );
 
 
@@ -7359,12 +7168,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1681CLBLM_R_X11Y7_SLICE_X15Y7_C_FDCE  (
+  ) CLBLM_R_X11Y7_SLICE_X15Y7_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y7_SLICE_X15Y7_CO5),
-.Q(\$abc$4817$aiger4816$608 )
+.Q(CLBLM_R_X11Y7_SLICE_X15Y7_CQ)
   );
 
 
@@ -7372,23 +7181,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1682CLBLM_R_X11Y7_SLICE_X15Y7_D_FDCE  (
+  ) CLBLM_R_X11Y7_SLICE_X15Y7_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y7_SLICE_X15Y7_DO5),
-.Q(\$abc$4817$aiger4816$607 )
+.Q(CLBLM_R_X11Y7_SLICE_X15Y7_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y7_SLICE_X15Y7_CARRY4 (
-.CI(\$abc$4817$aiger4816$609 ),
-.CO({\$abc$4817$aiger4816$622 , CLBLM_R_X11Y7_SLICE_X15Y7_C_CY, CLBLM_R_X11Y7_SLICE_X15Y7_B_CY, CLBLM_R_X11Y7_SLICE_X15Y7_A_CY}),
+.CI(CLBLM_R_X11Y6_SLICE_X15Y6_COUT),
+.CO({CLBLM_R_X11Y7_SLICE_X15Y7_D_CY, CLBLM_R_X11Y7_SLICE_X15Y7_C_CY, CLBLM_R_X11Y7_SLICE_X15Y7_B_CY, CLBLM_R_X11Y7_SLICE_X15Y7_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1466.O [11], \$auto$alumacc.cc:485:replace_alu$1466.O [10], \$auto$alumacc.cc:485:replace_alu$1466.O [9], \$auto$alumacc.cc:485:replace_alu$1466.O [8]}),
+.O({CLBLM_R_X11Y7_SLICE_X15Y7_D_XOR, CLBLM_R_X11Y7_SLICE_X15Y7_C_XOR, CLBLM_R_X11Y7_SLICE_X15Y7_B_XOR, CLBLM_R_X11Y7_SLICE_X15Y7_A_XOR}),
 .S({CLBLM_R_X11Y7_SLICE_X15Y7_DO6, CLBLM_R_X11Y7_SLICE_X15Y7_CO6, CLBLM_R_X11Y7_SLICE_X15Y7_BO6, CLBLM_R_X11Y7_SLICE_X15Y7_AO6})
   );
 
@@ -7400,8 +7209,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1466.O [9]),
-.I4(\$abc$4817$aiger4816$605 ),
+.I3(CLBLM_R_X11Y7_SLICE_X15Y7_B_XOR),
+.I4(CLBLM_R_X11Y7_SLICE_X15Y7_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y7_SLICE_X15Y7_DO5),
 .O6(CLBLM_R_X11Y7_SLICE_X15Y7_DO6)
@@ -7413,8 +7222,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X11Y7_SLICE_X15Y7_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1466.O [8]),
-.I2(\$abc$4817$aiger4816$606 ),
+.I1(CLBLM_R_X11Y7_SLICE_X15Y7_A_XOR),
+.I2(CLBLM_R_X11Y7_SLICE_X15Y7_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -7428,10 +7237,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y7_SLICE_X15Y7_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$607 ),
+.I1(CLBLM_R_X11Y7_SLICE_X15Y7_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1466.O [11]),
+.I4(CLBLM_R_X11Y7_SLICE_X15Y7_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y7_SLICE_X15Y7_BO5),
 .O6(CLBLM_R_X11Y7_SLICE_X15Y7_BO6)
@@ -7443,10 +7252,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y7_SLICE_X15Y7_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$608 ),
+.I1(CLBLM_R_X11Y7_SLICE_X15Y7_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1466.O [10]),
+.I4(CLBLM_R_X11Y7_SLICE_X15Y7_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y7_SLICE_X15Y7_AO5),
 .O6(CLBLM_R_X11Y7_SLICE_X15Y7_AO6)
@@ -7517,12 +7326,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1685CLBLM_R_X11Y8_SLICE_X15Y8_A_FDCE  (
+  ) CLBLM_R_X11Y8_SLICE_X15Y8_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y8_SLICE_X15Y8_A_XOR),
-.Q(\$abc$4817$aiger4816$621 )
+.Q(CLBLM_R_X11Y8_SLICE_X15Y8_AQ)
   );
 
 
@@ -7530,12 +7339,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1687CLBLM_R_X11Y8_SLICE_X15Y8_B_FDCE  (
+  ) CLBLM_R_X11Y8_SLICE_X15Y8_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y8_SLICE_X15Y8_BO5),
-.Q(\$abc$4817$aiger4816$619 )
+.Q(CLBLM_R_X11Y8_SLICE_X15Y8_BQ)
   );
 
 
@@ -7543,12 +7352,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1688CLBLM_R_X11Y8_SLICE_X15Y8_C_FDCE  (
+  ) CLBLM_R_X11Y8_SLICE_X15Y8_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y8_SLICE_X15Y8_CO5),
-.Q(\$abc$4817$aiger4816$618 )
+.Q(CLBLM_R_X11Y8_SLICE_X15Y8_CQ)
   );
 
 
@@ -7556,23 +7365,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1686CLBLM_R_X11Y8_SLICE_X15Y8_D_FDCE  (
+  ) CLBLM_R_X11Y8_SLICE_X15Y8_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y8_SLICE_X15Y8_DO5),
-.Q(\$abc$4817$aiger4816$620 )
+.Q(CLBLM_R_X11Y8_SLICE_X15Y8_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y8_SLICE_X15Y8_CARRY4 (
-.CI(\$abc$4817$aiger4816$622 ),
-.CO({\$abc$4817$aiger4816$635 , CLBLM_R_X11Y8_SLICE_X15Y8_C_CY, CLBLM_R_X11Y8_SLICE_X15Y8_B_CY, CLBLM_R_X11Y8_SLICE_X15Y8_A_CY}),
+.CI(CLBLM_R_X11Y7_SLICE_X15Y7_COUT),
+.CO({CLBLM_R_X11Y8_SLICE_X15Y8_D_CY, CLBLM_R_X11Y8_SLICE_X15Y8_C_CY, CLBLM_R_X11Y8_SLICE_X15Y8_B_CY, CLBLM_R_X11Y8_SLICE_X15Y8_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1466.O [15], \$auto$alumacc.cc:485:replace_alu$1466.O [14], \$auto$alumacc.cc:485:replace_alu$1466.O [13], CLBLM_R_X11Y8_SLICE_X15Y8_A_XOR}),
+.O({CLBLM_R_X11Y8_SLICE_X15Y8_D_XOR, CLBLM_R_X11Y8_SLICE_X15Y8_C_XOR, CLBLM_R_X11Y8_SLICE_X15Y8_B_XOR, CLBLM_R_X11Y8_SLICE_X15Y8_A_XOR}),
 .S({CLBLM_R_X11Y8_SLICE_X15Y8_DO6, CLBLM_R_X11Y8_SLICE_X15Y8_CO6, CLBLM_R_X11Y8_SLICE_X15Y8_BO6, CLBLM_R_X11Y8_SLICE_X15Y8_AO6})
   );
 
@@ -7581,11 +7390,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X11Y8_SLICE_X15Y8_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1466.O [13]),
+.I0(CLBLM_R_X11Y8_SLICE_X15Y8_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$618 ),
+.I4(CLBLM_R_X11Y8_SLICE_X15Y8_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y8_SLICE_X15Y8_DO5),
 .O6(CLBLM_R_X11Y8_SLICE_X15Y8_DO6)
@@ -7597,8 +7406,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X11Y8_SLICE_X15Y8_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1466.O [15]),
-.I2(\$abc$4817$aiger4816$619 ),
+.I1(CLBLM_R_X11Y8_SLICE_X15Y8_D_XOR),
+.I2(CLBLM_R_X11Y8_SLICE_X15Y8_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -7611,8 +7420,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X11Y8_SLICE_X15Y8_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1466.O [14]),
-.I1(\$abc$4817$aiger4816$620 ),
+.I0(CLBLM_R_X11Y8_SLICE_X15Y8_C_XOR),
+.I1(CLBLM_R_X11Y8_SLICE_X15Y8_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -7627,7 +7436,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X11Y8_SLICE_X15Y8_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$621 ),
+.I1(CLBLM_R_X11Y8_SLICE_X15Y8_AQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -7701,12 +7510,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1689CLBLM_R_X11Y9_SLICE_X15Y9_A_FDCE  (
+  ) CLBLM_R_X11Y9_SLICE_X15Y9_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y9_SLICE_X15Y9_A_XOR),
-.Q(\$abc$4817$aiger4816$634 )
+.Q(CLBLM_R_X11Y9_SLICE_X15Y9_AQ)
   );
 
 
@@ -7714,12 +7523,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1691CLBLM_R_X11Y9_SLICE_X15Y9_B_FDCE  (
+  ) CLBLM_R_X11Y9_SLICE_X15Y9_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y9_SLICE_X15Y9_BO5),
-.Q(\$abc$4817$aiger4816$632 )
+.Q(CLBLM_R_X11Y9_SLICE_X15Y9_BQ)
   );
 
 
@@ -7727,12 +7536,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1692CLBLM_R_X11Y9_SLICE_X15Y9_C_FDCE  (
+  ) CLBLM_R_X11Y9_SLICE_X15Y9_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y9_SLICE_X15Y9_CO5),
-.Q(\$abc$4817$aiger4816$631 )
+.Q(CLBLM_R_X11Y9_SLICE_X15Y9_CQ)
   );
 
 
@@ -7740,23 +7549,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1690CLBLM_R_X11Y9_SLICE_X15Y9_D_FDCE  (
+  ) CLBLM_R_X11Y9_SLICE_X15Y9_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y9_SLICE_X15Y9_DO5),
-.Q(\$abc$4817$aiger4816$633 )
+.Q(CLBLM_R_X11Y9_SLICE_X15Y9_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y9_SLICE_X15Y9_CARRY4 (
-.CI(\$abc$4817$aiger4816$635 ),
-.CO({\$abc$4817$aiger4816$648 , CLBLM_R_X11Y9_SLICE_X15Y9_C_CY, CLBLM_R_X11Y9_SLICE_X15Y9_B_CY, CLBLM_R_X11Y9_SLICE_X15Y9_A_CY}),
+.CI(CLBLM_R_X11Y8_SLICE_X15Y8_COUT),
+.CO({CLBLM_R_X11Y9_SLICE_X15Y9_D_CY, CLBLM_R_X11Y9_SLICE_X15Y9_C_CY, CLBLM_R_X11Y9_SLICE_X15Y9_B_CY, CLBLM_R_X11Y9_SLICE_X15Y9_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1466.O [19], \$auto$alumacc.cc:485:replace_alu$1466.O [18], \$auto$alumacc.cc:485:replace_alu$1466.O [17], CLBLM_R_X11Y9_SLICE_X15Y9_A_XOR}),
+.O({CLBLM_R_X11Y9_SLICE_X15Y9_D_XOR, CLBLM_R_X11Y9_SLICE_X15Y9_C_XOR, CLBLM_R_X11Y9_SLICE_X15Y9_B_XOR, CLBLM_R_X11Y9_SLICE_X15Y9_A_XOR}),
 .S({CLBLM_R_X11Y9_SLICE_X15Y9_DO6, CLBLM_R_X11Y9_SLICE_X15Y9_CO6, CLBLM_R_X11Y9_SLICE_X15Y9_BO6, CLBLM_R_X11Y9_SLICE_X15Y9_AO6})
   );
 
@@ -7765,11 +7574,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X11Y9_SLICE_X15Y9_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1466.O [17]),
+.I0(CLBLM_R_X11Y9_SLICE_X15Y9_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$631 ),
+.I4(CLBLM_R_X11Y9_SLICE_X15Y9_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y9_SLICE_X15Y9_DO5),
 .O6(CLBLM_R_X11Y9_SLICE_X15Y9_DO6)
@@ -7781,8 +7590,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X11Y9_SLICE_X15Y9_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1466.O [19]),
-.I2(\$abc$4817$aiger4816$632 ),
+.I1(CLBLM_R_X11Y9_SLICE_X15Y9_D_XOR),
+.I2(CLBLM_R_X11Y9_SLICE_X15Y9_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -7795,8 +7604,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X11Y9_SLICE_X15Y9_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1466.O [18]),
-.I1(\$abc$4817$aiger4816$633 ),
+.I0(CLBLM_R_X11Y9_SLICE_X15Y9_C_XOR),
+.I1(CLBLM_R_X11Y9_SLICE_X15Y9_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -7811,7 +7620,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X11Y9_SLICE_X15Y9_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$634 ),
+.I1(CLBLM_R_X11Y9_SLICE_X15Y9_AQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -7885,12 +7694,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1694CLBLM_R_X11Y10_SLICE_X15Y10_A_FDCE  (
+  ) CLBLM_R_X11Y10_SLICE_X15Y10_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y10_SLICE_X15Y10_AO5),
-.Q(\mmcme2_test.O_CNT [5])
+.Q(CLBLM_R_X11Y10_SLICE_X15Y10_AQ)
   );
 
 
@@ -7898,12 +7707,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1693CLBLM_R_X11Y10_SLICE_X15Y10_B_FDCE  (
+  ) CLBLM_R_X11Y10_SLICE_X15Y10_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y10_SLICE_X15Y10_BO5),
-.Q(\$abc$4817$aiger4816$647 )
+.Q(CLBLM_R_X11Y10_SLICE_X15Y10_BQ)
   );
 
 
@@ -7911,12 +7720,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1695CLBLM_R_X11Y10_SLICE_X15Y10_C_FDCE  (
+  ) CLBLM_R_X11Y10_SLICE_X15Y10_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y10_SLICE_X15Y10_C_XOR),
-.Q(\$abc$4817$aiger4816$644 )
+.Q(CLBLM_R_X11Y10_SLICE_X15Y10_CQ)
   );
 
 
@@ -7924,23 +7733,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1696CLBLM_R_X11Y10_SLICE_X15Y10_D_FDCE  (
+  ) CLBLM_R_X11Y10_SLICE_X15Y10_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y10_SLICE_X15Y10_D_XOR),
-.Q(\$abc$4817$aiger4816$645 )
+.Q(CLBLM_R_X11Y10_SLICE_X15Y10_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y10_SLICE_X15Y10_CARRY4 (
-.CI(\$abc$4817$aiger4816$648 ),
+.CI(CLBLM_R_X11Y9_SLICE_X15Y9_COUT),
 .CO({CLBLM_R_X11Y10_SLICE_X15Y10_D_CY, CLBLM_R_X11Y10_SLICE_X15Y10_C_CY, CLBLM_R_X11Y10_SLICE_X15Y10_B_CY, CLBLM_R_X11Y10_SLICE_X15Y10_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({CLBLM_R_X11Y10_SLICE_X15Y10_D_XOR, CLBLM_R_X11Y10_SLICE_X15Y10_C_XOR, \$auto$alumacc.cc:485:replace_alu$1466.O [21], \$auto$alumacc.cc:485:replace_alu$1466.O [20]}),
+.O({CLBLM_R_X11Y10_SLICE_X15Y10_D_XOR, CLBLM_R_X11Y10_SLICE_X15Y10_C_XOR, CLBLM_R_X11Y10_SLICE_X15Y10_B_XOR, CLBLM_R_X11Y10_SLICE_X15Y10_A_XOR}),
 .S({CLBLM_R_X11Y10_SLICE_X15Y10_DO6, CLBLM_R_X11Y10_SLICE_X15Y10_CO6, CLBLM_R_X11Y10_SLICE_X15Y10_BO6, CLBLM_R_X11Y10_SLICE_X15Y10_AO6})
   );
 
@@ -7953,7 +7762,7 @@ module top(
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$645 ),
+.I4(CLBLM_R_X11Y10_SLICE_X15Y10_DQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y10_SLICE_X15Y10_DO5),
 .O6(CLBLM_R_X11Y10_SLICE_X15Y10_DO6)
@@ -7966,7 +7775,7 @@ module top(
   ) CLBLM_R_X11Y10_SLICE_X15Y10_CLUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$abc$4817$aiger4816$644 ),
+.I2(CLBLM_R_X11Y10_SLICE_X15Y10_CQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -7980,10 +7789,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y10_SLICE_X15Y10_BLUT (
 .I0(1'b1),
-.I1(\mmcme2_test.O_CNT [5]),
+.I1(CLBLM_R_X11Y10_SLICE_X15Y10_AQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1466.O [20]),
+.I4(CLBLM_R_X11Y10_SLICE_X15Y10_A_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y10_SLICE_X15Y10_BO5),
 .O6(CLBLM_R_X11Y10_SLICE_X15Y10_BO6)
@@ -7995,10 +7804,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y10_SLICE_X15Y10_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$647 ),
+.I1(CLBLM_R_X11Y10_SLICE_X15Y10_BQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1466.O [21]),
+.I4(CLBLM_R_X11Y10_SLICE_X15Y10_B_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y10_SLICE_X15Y10_AO5),
 .O6(CLBLM_R_X11Y10_SLICE_X15Y10_AO6)
@@ -8009,12 +7818,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1603CLBLM_R_X11Y28_SLICE_X14Y28_A_FDCE  (
+  ) CLBLM_R_X11Y28_SLICE_X14Y28_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y28_SLICE_X14Y28_AO5),
-.Q(\$abc$4817$aiger4816$354 )
+.Q(CLBLM_R_X11Y28_SLICE_X14Y28_AQ)
   );
 
 
@@ -8022,12 +7831,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1604CLBLM_R_X11Y28_SLICE_X14Y28_B_FDCE  (
+  ) CLBLM_R_X11Y28_SLICE_X14Y28_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y28_SLICE_X14Y28_BO5),
-.Q(\$abc$4817$aiger4816$355 )
+.Q(CLBLM_R_X11Y28_SLICE_X14Y28_BQ)
   );
 
 
@@ -8035,12 +7844,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1602CLBLM_R_X11Y28_SLICE_X14Y28_C_FDCE  (
+  ) CLBLM_R_X11Y28_SLICE_X14Y28_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y28_SLICE_X14Y28_CO5),
-.Q(\$abc$4817$aiger4816$353 )
+.Q(CLBLM_R_X11Y28_SLICE_X14Y28_CQ)
   );
 
 
@@ -8048,12 +7857,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1601CLBLM_R_X11Y28_SLICE_X14Y28_D_FDCE  (
+  ) CLBLM_R_X11Y28_SLICE_X14Y28_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y28_SLICE_X14Y28_DO5),
-.Q(\$techmap3072$abc$2918$lut$not$aiger2917$337.A )
+.Q(CLBLM_R_X11Y28_SLICE_X14Y28_DQ)
   );
 
 
@@ -8061,10 +7870,10 @@ module top(
   CARRY4 #(
   ) CLBLM_R_X11Y28_SLICE_X14Y28_CARRY4 (
 .CI(1'b0),
-.CO({\$abc$4817$aiger4816$368 , CLBLM_R_X11Y28_SLICE_X14Y28_C_CY, CLBLM_R_X11Y28_SLICE_X14Y28_B_CY, CLBLM_R_X11Y28_SLICE_X14Y28_A_CY}),
+.CO({CLBLM_R_X11Y28_SLICE_X14Y28_D_CY, CLBLM_R_X11Y28_SLICE_X14Y28_C_CY, CLBLM_R_X11Y28_SLICE_X14Y28_B_CY, CLBLM_R_X11Y28_SLICE_X14Y28_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b1}),
-.O({\$auto$alumacc.cc:485:replace_alu$1457.O [3], \$auto$alumacc.cc:485:replace_alu$1457.O [2], \$auto$alumacc.cc:485:replace_alu$1457.O [1], CLBLM_R_X11Y28_SLICE_X14Y28_A_XOR}),
+.O({CLBLM_R_X11Y28_SLICE_X14Y28_D_XOR, CLBLM_R_X11Y28_SLICE_X14Y28_C_XOR, CLBLM_R_X11Y28_SLICE_X14Y28_B_XOR, CLBLM_R_X11Y28_SLICE_X14Y28_A_XOR}),
 .S({CLBLM_R_X11Y28_SLICE_X14Y28_DO6, CLBLM_R_X11Y28_SLICE_X14Y28_CO6, CLBLM_R_X11Y28_SLICE_X14Y28_BO6, CLBLM_R_X11Y28_SLICE_X14Y28_AO6})
   );
 
@@ -8077,7 +7886,7 @@ module top(
 .I1(1'b1),
 .I2(CLBLM_R_X11Y28_SLICE_X14Y28_AO6),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$355 ),
+.I4(CLBLM_R_X11Y28_SLICE_X14Y28_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y28_SLICE_X14Y28_DO5),
 .O6(CLBLM_R_X11Y28_SLICE_X14Y28_DO6)
@@ -8088,8 +7897,8 @@ module top(
   LUT6_2 #(
     .INIT(64'haaaaaaaacccccccc)
   ) CLBLM_R_X11Y28_SLICE_X14Y28_CLUT (
-.I0(\$abc$4817$aiger4816$354 ),
-.I1(\$auto$alumacc.cc:485:replace_alu$1457.O [1]),
+.I0(CLBLM_R_X11Y28_SLICE_X14Y28_AQ),
+.I1(CLBLM_R_X11Y28_SLICE_X14Y28_B_XOR),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -8104,10 +7913,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y28_SLICE_X14Y28_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$353 ),
+.I1(CLBLM_R_X11Y28_SLICE_X14Y28_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1457.O [3]),
+.I4(CLBLM_R_X11Y28_SLICE_X14Y28_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y28_SLICE_X14Y28_BO5),
 .O6(CLBLM_R_X11Y28_SLICE_X14Y28_BO6)
@@ -8120,9 +7929,9 @@ module top(
   ) CLBLM_R_X11Y28_SLICE_X14Y28_ALUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$techmap3072$abc$2918$lut$not$aiger2917$337.A ),
+.I2(CLBLM_R_X11Y28_SLICE_X14Y28_DQ),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1457.O [2]),
+.I4(CLBLM_R_X11Y28_SLICE_X14Y28_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y28_SLICE_X14Y28_AO5),
 .O6(CLBLM_R_X11Y28_SLICE_X14Y28_AO6)
@@ -8193,12 +8002,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1607CLBLM_R_X11Y29_SLICE_X14Y29_A_FDCE  (
+  ) CLBLM_R_X11Y29_SLICE_X14Y29_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y29_SLICE_X14Y29_AO5),
-.Q(\$abc$4817$aiger4816$366 )
+.Q(CLBLM_R_X11Y29_SLICE_X14Y29_AQ)
   );
 
 
@@ -8206,12 +8015,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1608CLBLM_R_X11Y29_SLICE_X14Y29_B_FDCE  (
+  ) CLBLM_R_X11Y29_SLICE_X14Y29_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y29_SLICE_X14Y29_BO5),
-.Q(\$abc$4817$aiger4816$367 )
+.Q(CLBLM_R_X11Y29_SLICE_X14Y29_BQ)
   );
 
 
@@ -8219,12 +8028,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1605CLBLM_R_X11Y29_SLICE_X14Y29_C_FDCE  (
+  ) CLBLM_R_X11Y29_SLICE_X14Y29_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y29_SLICE_X14Y29_CO5),
-.Q(\$abc$4817$aiger4816$364 )
+.Q(CLBLM_R_X11Y29_SLICE_X14Y29_CQ)
   );
 
 
@@ -8232,23 +8041,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1606CLBLM_R_X11Y29_SLICE_X14Y29_D_FDCE  (
+  ) CLBLM_R_X11Y29_SLICE_X14Y29_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y29_SLICE_X14Y29_DO5),
-.Q(\$abc$4817$aiger4816$365 )
+.Q(CLBLM_R_X11Y29_SLICE_X14Y29_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y29_SLICE_X14Y29_CARRY4 (
-.CI(\$abc$4817$aiger4816$368 ),
-.CO({\$abc$4817$aiger4816$381 , CLBLM_R_X11Y29_SLICE_X14Y29_C_CY, CLBLM_R_X11Y29_SLICE_X14Y29_B_CY, CLBLM_R_X11Y29_SLICE_X14Y29_A_CY}),
+.CI(CLBLM_R_X11Y28_SLICE_X14Y28_COUT),
+.CO({CLBLM_R_X11Y29_SLICE_X14Y29_D_CY, CLBLM_R_X11Y29_SLICE_X14Y29_C_CY, CLBLM_R_X11Y29_SLICE_X14Y29_B_CY, CLBLM_R_X11Y29_SLICE_X14Y29_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1457.O [7], \$auto$alumacc.cc:485:replace_alu$1457.O [6], \$auto$alumacc.cc:485:replace_alu$1457.O [5], \$auto$alumacc.cc:485:replace_alu$1457.O [4]}),
+.O({CLBLM_R_X11Y29_SLICE_X14Y29_D_XOR, CLBLM_R_X11Y29_SLICE_X14Y29_C_XOR, CLBLM_R_X11Y29_SLICE_X14Y29_B_XOR, CLBLM_R_X11Y29_SLICE_X14Y29_A_XOR}),
 .S({CLBLM_R_X11Y29_SLICE_X14Y29_DO6, CLBLM_R_X11Y29_SLICE_X14Y29_CO6, CLBLM_R_X11Y29_SLICE_X14Y29_BO6, CLBLM_R_X11Y29_SLICE_X14Y29_AO6})
   );
 
@@ -8260,8 +8069,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1457.O [5]),
-.I4(\$abc$4817$aiger4816$367 ),
+.I3(CLBLM_R_X11Y29_SLICE_X14Y29_B_XOR),
+.I4(CLBLM_R_X11Y29_SLICE_X14Y29_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y29_SLICE_X14Y29_DO5),
 .O6(CLBLM_R_X11Y29_SLICE_X14Y29_DO6)
@@ -8273,8 +8082,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X11Y29_SLICE_X14Y29_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1457.O [4]),
-.I2(\$abc$4817$aiger4816$366 ),
+.I1(CLBLM_R_X11Y29_SLICE_X14Y29_A_XOR),
+.I2(CLBLM_R_X11Y29_SLICE_X14Y29_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -8288,10 +8097,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y29_SLICE_X14Y29_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$365 ),
+.I1(CLBLM_R_X11Y29_SLICE_X14Y29_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1457.O [7]),
+.I4(CLBLM_R_X11Y29_SLICE_X14Y29_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y29_SLICE_X14Y29_BO5),
 .O6(CLBLM_R_X11Y29_SLICE_X14Y29_BO6)
@@ -8303,10 +8112,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y29_SLICE_X14Y29_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$364 ),
+.I1(CLBLM_R_X11Y29_SLICE_X14Y29_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1457.O [6]),
+.I4(CLBLM_R_X11Y29_SLICE_X14Y29_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y29_SLICE_X14Y29_AO5),
 .O6(CLBLM_R_X11Y29_SLICE_X14Y29_AO6)
@@ -8377,12 +8186,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1611CLBLM_R_X11Y30_SLICE_X14Y30_A_FDCE  (
+  ) CLBLM_R_X11Y30_SLICE_X14Y30_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y30_SLICE_X14Y30_AO5),
-.Q(\$abc$4817$aiger4816$379 )
+.Q(CLBLM_R_X11Y30_SLICE_X14Y30_AQ)
   );
 
 
@@ -8390,12 +8199,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1612CLBLM_R_X11Y30_SLICE_X14Y30_B_FDCE  (
+  ) CLBLM_R_X11Y30_SLICE_X14Y30_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y30_SLICE_X14Y30_BO5),
-.Q(\$abc$4817$aiger4816$380 )
+.Q(CLBLM_R_X11Y30_SLICE_X14Y30_BQ)
   );
 
 
@@ -8403,12 +8212,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1609CLBLM_R_X11Y30_SLICE_X14Y30_C_FDCE  (
+  ) CLBLM_R_X11Y30_SLICE_X14Y30_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y30_SLICE_X14Y30_CO5),
-.Q(\$abc$4817$aiger4816$377 )
+.Q(CLBLM_R_X11Y30_SLICE_X14Y30_CQ)
   );
 
 
@@ -8416,23 +8225,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1610CLBLM_R_X11Y30_SLICE_X14Y30_D_FDCE  (
+  ) CLBLM_R_X11Y30_SLICE_X14Y30_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y30_SLICE_X14Y30_DO5),
-.Q(\$abc$4817$aiger4816$378 )
+.Q(CLBLM_R_X11Y30_SLICE_X14Y30_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y30_SLICE_X14Y30_CARRY4 (
-.CI(\$abc$4817$aiger4816$381 ),
-.CO({\$abc$4817$aiger4816$394 , CLBLM_R_X11Y30_SLICE_X14Y30_C_CY, CLBLM_R_X11Y30_SLICE_X14Y30_B_CY, CLBLM_R_X11Y30_SLICE_X14Y30_A_CY}),
+.CI(CLBLM_R_X11Y29_SLICE_X14Y29_COUT),
+.CO({CLBLM_R_X11Y30_SLICE_X14Y30_D_CY, CLBLM_R_X11Y30_SLICE_X14Y30_C_CY, CLBLM_R_X11Y30_SLICE_X14Y30_B_CY, CLBLM_R_X11Y30_SLICE_X14Y30_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1457.O [11], \$auto$alumacc.cc:485:replace_alu$1457.O [10], \$auto$alumacc.cc:485:replace_alu$1457.O [9], \$auto$alumacc.cc:485:replace_alu$1457.O [8]}),
+.O({CLBLM_R_X11Y30_SLICE_X14Y30_D_XOR, CLBLM_R_X11Y30_SLICE_X14Y30_C_XOR, CLBLM_R_X11Y30_SLICE_X14Y30_B_XOR, CLBLM_R_X11Y30_SLICE_X14Y30_A_XOR}),
 .S({CLBLM_R_X11Y30_SLICE_X14Y30_DO6, CLBLM_R_X11Y30_SLICE_X14Y30_CO6, CLBLM_R_X11Y30_SLICE_X14Y30_BO6, CLBLM_R_X11Y30_SLICE_X14Y30_AO6})
   );
 
@@ -8444,8 +8253,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1457.O [9]),
-.I4(\$abc$4817$aiger4816$380 ),
+.I3(CLBLM_R_X11Y30_SLICE_X14Y30_B_XOR),
+.I4(CLBLM_R_X11Y30_SLICE_X14Y30_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y30_SLICE_X14Y30_DO5),
 .O6(CLBLM_R_X11Y30_SLICE_X14Y30_DO6)
@@ -8457,8 +8266,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X11Y30_SLICE_X14Y30_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1457.O [8]),
-.I2(\$abc$4817$aiger4816$379 ),
+.I1(CLBLM_R_X11Y30_SLICE_X14Y30_A_XOR),
+.I2(CLBLM_R_X11Y30_SLICE_X14Y30_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -8472,10 +8281,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y30_SLICE_X14Y30_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$378 ),
+.I1(CLBLM_R_X11Y30_SLICE_X14Y30_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1457.O [11]),
+.I4(CLBLM_R_X11Y30_SLICE_X14Y30_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y30_SLICE_X14Y30_BO5),
 .O6(CLBLM_R_X11Y30_SLICE_X14Y30_BO6)
@@ -8487,10 +8296,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y30_SLICE_X14Y30_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$377 ),
+.I1(CLBLM_R_X11Y30_SLICE_X14Y30_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1457.O [10]),
+.I4(CLBLM_R_X11Y30_SLICE_X14Y30_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y30_SLICE_X14Y30_AO5),
 .O6(CLBLM_R_X11Y30_SLICE_X14Y30_AO6)
@@ -8561,12 +8370,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1613CLBLM_R_X11Y31_SLICE_X14Y31_A_FDCE  (
+  ) CLBLM_R_X11Y31_SLICE_X14Y31_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y31_SLICE_X14Y31_A_XOR),
-.Q(\$abc$4817$aiger4816$390 )
+.Q(CLBLM_R_X11Y31_SLICE_X14Y31_AQ)
   );
 
 
@@ -8574,12 +8383,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1615CLBLM_R_X11Y31_SLICE_X14Y31_B_FDCE  (
+  ) CLBLM_R_X11Y31_SLICE_X14Y31_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y31_SLICE_X14Y31_BO5),
-.Q(\$abc$4817$aiger4816$392 )
+.Q(CLBLM_R_X11Y31_SLICE_X14Y31_BQ)
   );
 
 
@@ -8587,12 +8396,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1616CLBLM_R_X11Y31_SLICE_X14Y31_C_FDCE  (
+  ) CLBLM_R_X11Y31_SLICE_X14Y31_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y31_SLICE_X14Y31_CO5),
-.Q(\$abc$4817$aiger4816$393 )
+.Q(CLBLM_R_X11Y31_SLICE_X14Y31_CQ)
   );
 
 
@@ -8600,23 +8409,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1614CLBLM_R_X11Y31_SLICE_X14Y31_D_FDCE  (
+  ) CLBLM_R_X11Y31_SLICE_X14Y31_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y31_SLICE_X14Y31_DO5),
-.Q(\$abc$4817$aiger4816$391 )
+.Q(CLBLM_R_X11Y31_SLICE_X14Y31_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y31_SLICE_X14Y31_CARRY4 (
-.CI(\$abc$4817$aiger4816$394 ),
-.CO({\$abc$4817$aiger4816$407 , CLBLM_R_X11Y31_SLICE_X14Y31_C_CY, CLBLM_R_X11Y31_SLICE_X14Y31_B_CY, CLBLM_R_X11Y31_SLICE_X14Y31_A_CY}),
+.CI(CLBLM_R_X11Y30_SLICE_X14Y30_COUT),
+.CO({CLBLM_R_X11Y31_SLICE_X14Y31_D_CY, CLBLM_R_X11Y31_SLICE_X14Y31_C_CY, CLBLM_R_X11Y31_SLICE_X14Y31_B_CY, CLBLM_R_X11Y31_SLICE_X14Y31_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1457.O [15], \$auto$alumacc.cc:485:replace_alu$1457.O [14], \$auto$alumacc.cc:485:replace_alu$1457.O [13], CLBLM_R_X11Y31_SLICE_X14Y31_A_XOR}),
+.O({CLBLM_R_X11Y31_SLICE_X14Y31_D_XOR, CLBLM_R_X11Y31_SLICE_X14Y31_C_XOR, CLBLM_R_X11Y31_SLICE_X14Y31_B_XOR, CLBLM_R_X11Y31_SLICE_X14Y31_A_XOR}),
 .S({CLBLM_R_X11Y31_SLICE_X14Y31_DO6, CLBLM_R_X11Y31_SLICE_X14Y31_CO6, CLBLM_R_X11Y31_SLICE_X14Y31_BO6, CLBLM_R_X11Y31_SLICE_X14Y31_AO6})
   );
 
@@ -8625,11 +8434,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X11Y31_SLICE_X14Y31_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1457.O [13]),
+.I0(CLBLM_R_X11Y31_SLICE_X14Y31_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$393 ),
+.I4(CLBLM_R_X11Y31_SLICE_X14Y31_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y31_SLICE_X14Y31_DO5),
 .O6(CLBLM_R_X11Y31_SLICE_X14Y31_DO6)
@@ -8641,8 +8450,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X11Y31_SLICE_X14Y31_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1457.O [15]),
-.I2(\$abc$4817$aiger4816$392 ),
+.I1(CLBLM_R_X11Y31_SLICE_X14Y31_D_XOR),
+.I2(CLBLM_R_X11Y31_SLICE_X14Y31_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -8655,8 +8464,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X11Y31_SLICE_X14Y31_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1457.O [14]),
-.I1(\$abc$4817$aiger4816$391 ),
+.I0(CLBLM_R_X11Y31_SLICE_X14Y31_C_XOR),
+.I1(CLBLM_R_X11Y31_SLICE_X14Y31_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -8671,7 +8480,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X11Y31_SLICE_X14Y31_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$390 ),
+.I1(CLBLM_R_X11Y31_SLICE_X14Y31_AQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -8745,12 +8554,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1617CLBLM_R_X11Y32_SLICE_X14Y32_A_FDCE  (
+  ) CLBLM_R_X11Y32_SLICE_X14Y32_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y32_SLICE_X14Y32_A_XOR),
-.Q(\$abc$4817$aiger4816$404 )
+.Q(CLBLM_R_X11Y32_SLICE_X14Y32_AQ)
   );
 
 
@@ -8758,12 +8567,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1619CLBLM_R_X11Y32_SLICE_X14Y32_B_FDCE  (
+  ) CLBLM_R_X11Y32_SLICE_X14Y32_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y32_SLICE_X14Y32_BO5),
-.Q(\$abc$4817$aiger4816$406 )
+.Q(CLBLM_R_X11Y32_SLICE_X14Y32_BQ)
   );
 
 
@@ -8771,12 +8580,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1620CLBLM_R_X11Y32_SLICE_X14Y32_C_FDCE  (
+  ) CLBLM_R_X11Y32_SLICE_X14Y32_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y32_SLICE_X14Y32_CO5),
-.Q(\$abc$4817$aiger4816$403 )
+.Q(CLBLM_R_X11Y32_SLICE_X14Y32_CQ)
   );
 
 
@@ -8784,23 +8593,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1618CLBLM_R_X11Y32_SLICE_X14Y32_D_FDCE  (
+  ) CLBLM_R_X11Y32_SLICE_X14Y32_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y32_SLICE_X14Y32_DO5),
-.Q(\$abc$4817$aiger4816$405 )
+.Q(CLBLM_R_X11Y32_SLICE_X14Y32_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y32_SLICE_X14Y32_CARRY4 (
-.CI(\$abc$4817$aiger4816$407 ),
-.CO({\$abc$4817$aiger4816$420 , CLBLM_R_X11Y32_SLICE_X14Y32_C_CY, CLBLM_R_X11Y32_SLICE_X14Y32_B_CY, CLBLM_R_X11Y32_SLICE_X14Y32_A_CY}),
+.CI(CLBLM_R_X11Y31_SLICE_X14Y31_COUT),
+.CO({CLBLM_R_X11Y32_SLICE_X14Y32_D_CY, CLBLM_R_X11Y32_SLICE_X14Y32_C_CY, CLBLM_R_X11Y32_SLICE_X14Y32_B_CY, CLBLM_R_X11Y32_SLICE_X14Y32_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1457.O [19], \$auto$alumacc.cc:485:replace_alu$1457.O [18], \$auto$alumacc.cc:485:replace_alu$1457.O [17], CLBLM_R_X11Y32_SLICE_X14Y32_A_XOR}),
+.O({CLBLM_R_X11Y32_SLICE_X14Y32_D_XOR, CLBLM_R_X11Y32_SLICE_X14Y32_C_XOR, CLBLM_R_X11Y32_SLICE_X14Y32_B_XOR, CLBLM_R_X11Y32_SLICE_X14Y32_A_XOR}),
 .S({CLBLM_R_X11Y32_SLICE_X14Y32_DO6, CLBLM_R_X11Y32_SLICE_X14Y32_CO6, CLBLM_R_X11Y32_SLICE_X14Y32_BO6, CLBLM_R_X11Y32_SLICE_X14Y32_AO6})
   );
 
@@ -8809,11 +8618,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X11Y32_SLICE_X14Y32_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1457.O [17]),
+.I0(CLBLM_R_X11Y32_SLICE_X14Y32_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$403 ),
+.I4(CLBLM_R_X11Y32_SLICE_X14Y32_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y32_SLICE_X14Y32_DO5),
 .O6(CLBLM_R_X11Y32_SLICE_X14Y32_DO6)
@@ -8825,8 +8634,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X11Y32_SLICE_X14Y32_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1457.O [19]),
-.I2(\$abc$4817$aiger4816$406 ),
+.I1(CLBLM_R_X11Y32_SLICE_X14Y32_D_XOR),
+.I2(CLBLM_R_X11Y32_SLICE_X14Y32_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -8839,8 +8648,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X11Y32_SLICE_X14Y32_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1457.O [18]),
-.I1(\$abc$4817$aiger4816$405 ),
+.I0(CLBLM_R_X11Y32_SLICE_X14Y32_C_XOR),
+.I1(CLBLM_R_X11Y32_SLICE_X14Y32_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -8855,7 +8664,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X11Y32_SLICE_X14Y32_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$404 ),
+.I1(CLBLM_R_X11Y32_SLICE_X14Y32_AQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -8929,12 +8738,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1622CLBLM_R_X11Y33_SLICE_X14Y33_A_FDCE  (
+  ) CLBLM_R_X11Y33_SLICE_X14Y33_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y33_SLICE_X14Y33_AO5),
-.Q(\mmcme2_test.O_CNT [2])
+.Q(CLBLM_R_X11Y33_SLICE_X14Y33_AQ)
   );
 
 
@@ -8942,12 +8751,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1621CLBLM_R_X11Y33_SLICE_X14Y33_B_FDCE  (
+  ) CLBLM_R_X11Y33_SLICE_X14Y33_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y33_SLICE_X14Y33_BO5),
-.Q(\$abc$4817$aiger4816$419 )
+.Q(CLBLM_R_X11Y33_SLICE_X14Y33_BQ)
   );
 
 
@@ -8955,12 +8764,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1623CLBLM_R_X11Y33_SLICE_X14Y33_C_FDCE  (
+  ) CLBLM_R_X11Y33_SLICE_X14Y33_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y33_SLICE_X14Y33_C_XOR),
-.Q(\$abc$4817$aiger4816$417 )
+.Q(CLBLM_R_X11Y33_SLICE_X14Y33_CQ)
   );
 
 
@@ -8968,23 +8777,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1624CLBLM_R_X11Y33_SLICE_X14Y33_D_FDCE  (
+  ) CLBLM_R_X11Y33_SLICE_X14Y33_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X11Y33_SLICE_X14Y33_D_XOR),
-.Q(\$abc$4817$aiger4816$418 )
+.Q(CLBLM_R_X11Y33_SLICE_X14Y33_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X11Y33_SLICE_X14Y33_CARRY4 (
-.CI(\$abc$4817$aiger4816$420 ),
+.CI(CLBLM_R_X11Y32_SLICE_X14Y32_COUT),
 .CO({CLBLM_R_X11Y33_SLICE_X14Y33_D_CY, CLBLM_R_X11Y33_SLICE_X14Y33_C_CY, CLBLM_R_X11Y33_SLICE_X14Y33_B_CY, CLBLM_R_X11Y33_SLICE_X14Y33_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({CLBLM_R_X11Y33_SLICE_X14Y33_D_XOR, CLBLM_R_X11Y33_SLICE_X14Y33_C_XOR, \$auto$alumacc.cc:485:replace_alu$1457.O [21], \$auto$alumacc.cc:485:replace_alu$1457.O [20]}),
+.O({CLBLM_R_X11Y33_SLICE_X14Y33_D_XOR, CLBLM_R_X11Y33_SLICE_X14Y33_C_XOR, CLBLM_R_X11Y33_SLICE_X14Y33_B_XOR, CLBLM_R_X11Y33_SLICE_X14Y33_A_XOR}),
 .S({CLBLM_R_X11Y33_SLICE_X14Y33_DO6, CLBLM_R_X11Y33_SLICE_X14Y33_CO6, CLBLM_R_X11Y33_SLICE_X14Y33_BO6, CLBLM_R_X11Y33_SLICE_X14Y33_AO6})
   );
 
@@ -8997,7 +8806,7 @@ module top(
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$418 ),
+.I4(CLBLM_R_X11Y33_SLICE_X14Y33_DQ),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y33_SLICE_X14Y33_DO5),
 .O6(CLBLM_R_X11Y33_SLICE_X14Y33_DO6)
@@ -9010,7 +8819,7 @@ module top(
   ) CLBLM_R_X11Y33_SLICE_X14Y33_CLUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$abc$4817$aiger4816$417 ),
+.I2(CLBLM_R_X11Y33_SLICE_X14Y33_CQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -9024,10 +8833,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y33_SLICE_X14Y33_BLUT (
 .I0(1'b1),
-.I1(\mmcme2_test.O_CNT [2]),
+.I1(CLBLM_R_X11Y33_SLICE_X14Y33_AQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1457.O [20]),
+.I4(CLBLM_R_X11Y33_SLICE_X14Y33_A_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y33_SLICE_X14Y33_BO5),
 .O6(CLBLM_R_X11Y33_SLICE_X14Y33_BO6)
@@ -9039,10 +8848,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X11Y33_SLICE_X14Y33_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$419 ),
+.I1(CLBLM_R_X11Y33_SLICE_X14Y33_BQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1457.O [21]),
+.I4(CLBLM_R_X11Y33_SLICE_X14Y33_B_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X11Y33_SLICE_X14Y33_AO5),
 .O6(CLBLM_R_X11Y33_SLICE_X14Y33_AO6)
@@ -9113,11 +8922,11 @@ module top(
   FDSE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1551CLBLM_R_X27Y8_SLICE_X42Y8_B_FDSE  (
+  ) CLBLM_R_X27Y8_SLICE_X42Y8_B_FDSE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y11_O),
 .CE(1'b1),
-.D(\rst_sr [3]),
-.Q(\rst_sr [2]),
+.D(CLBLL_L_X26Y9_SLICE_X40Y9_DQ),
+.Q(CLBLM_R_X27Y8_SLICE_X42Y8_BQ),
 .S(LIOB33_X0Y11_IOB_X0Y11_I)
   );
 
@@ -9126,11 +8935,11 @@ module top(
   FDSE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1550CLBLM_R_X27Y8_SLICE_X42Y8_C_FDSE  (
+  ) CLBLM_R_X27Y8_SLICE_X42Y8_C_FDSE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y11_O),
 .CE(1'b1),
-.D(\rst_sr [2]),
-.Q(\rst_sr [1]),
+.D(CLBLM_R_X27Y8_SLICE_X42Y8_BQ),
+.Q(CLBLM_R_X27Y8_SLICE_X42Y8_CQ),
 .S(LIOB33_X0Y11_IOB_X0Y11_I)
   );
 
@@ -9139,11 +8948,11 @@ module top(
   FDSE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1549CLBLM_R_X27Y8_SLICE_X42Y8_D_FDSE  (
+  ) CLBLM_R_X27Y8_SLICE_X42Y8_D_FDSE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y11_O),
 .CE(1'b1),
-.D(\rst_sr [1]),
-.Q(\RST ),
+.D(CLBLM_R_X27Y8_SLICE_X42Y8_CQ),
+.Q(CLBLM_R_X27Y8_SLICE_X42Y8_DQ),
 .S(LIOB33_X0Y11_IOB_X0Y11_I)
   );
 
@@ -9332,12 +9141,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1627CLBLM_R_X27Y14_SLICE_X43Y14_A_FDCE  (
+  ) CLBLM_R_X27Y14_SLICE_X43Y14_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y14_SLICE_X43Y14_AO5),
-.Q(\$abc$4817$aiger4816$431 )
+.Q(CLBLM_R_X27Y14_SLICE_X43Y14_AQ)
   );
 
 
@@ -9345,12 +9154,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1628CLBLM_R_X27Y14_SLICE_X43Y14_B_FDCE  (
+  ) CLBLM_R_X27Y14_SLICE_X43Y14_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y14_SLICE_X43Y14_BO5),
-.Q(\$abc$4817$aiger4816$429 )
+.Q(CLBLM_R_X27Y14_SLICE_X43Y14_BQ)
   );
 
 
@@ -9358,12 +9167,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1626CLBLM_R_X27Y14_SLICE_X43Y14_C_FDCE  (
+  ) CLBLM_R_X27Y14_SLICE_X43Y14_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y14_SLICE_X43Y14_CO5),
-.Q(\$abc$4817$aiger4816$430 )
+.Q(CLBLM_R_X27Y14_SLICE_X43Y14_CQ)
   );
 
 
@@ -9371,12 +9180,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1625CLBLM_R_X27Y14_SLICE_X43Y14_D_FDCE  (
+  ) CLBLM_R_X27Y14_SLICE_X43Y14_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y14_SLICE_X43Y14_DO5),
-.Q(\$techmap3071$abc$2918$lut$not$aiger2917$409.A )
+.Q(CLBLM_R_X27Y14_SLICE_X43Y14_DQ)
   );
 
 
@@ -9384,10 +9193,10 @@ module top(
   CARRY4 #(
   ) CLBLM_R_X27Y14_SLICE_X43Y14_CARRY4 (
 .CI(1'b0),
-.CO({\$abc$4817$aiger4816$444 , CLBLM_R_X27Y14_SLICE_X43Y14_C_CY, CLBLM_R_X27Y14_SLICE_X43Y14_B_CY, CLBLM_R_X27Y14_SLICE_X43Y14_A_CY}),
+.CO({CLBLM_R_X27Y14_SLICE_X43Y14_D_CY, CLBLM_R_X27Y14_SLICE_X43Y14_C_CY, CLBLM_R_X27Y14_SLICE_X43Y14_B_CY, CLBLM_R_X27Y14_SLICE_X43Y14_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b1}),
-.O({\$auto$alumacc.cc:485:replace_alu$1460.O [3], \$auto$alumacc.cc:485:replace_alu$1460.O [2], \$auto$alumacc.cc:485:replace_alu$1460.O [1], CLBLM_R_X27Y14_SLICE_X43Y14_A_XOR}),
+.O({CLBLM_R_X27Y14_SLICE_X43Y14_D_XOR, CLBLM_R_X27Y14_SLICE_X43Y14_C_XOR, CLBLM_R_X27Y14_SLICE_X43Y14_B_XOR, CLBLM_R_X27Y14_SLICE_X43Y14_A_XOR}),
 .S({CLBLM_R_X27Y14_SLICE_X43Y14_DO6, CLBLM_R_X27Y14_SLICE_X43Y14_CO6, CLBLM_R_X27Y14_SLICE_X43Y14_BO6, CLBLM_R_X27Y14_SLICE_X43Y14_AO6})
   );
 
@@ -9400,7 +9209,7 @@ module top(
 .I1(1'b1),
 .I2(CLBLM_R_X27Y14_SLICE_X43Y14_AO6),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$429 ),
+.I4(CLBLM_R_X27Y14_SLICE_X43Y14_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y14_SLICE_X43Y14_DO5),
 .O6(CLBLM_R_X27Y14_SLICE_X43Y14_DO6)
@@ -9411,8 +9220,8 @@ module top(
   LUT6_2 #(
     .INIT(64'haaaaaaaacccccccc)
   ) CLBLM_R_X27Y14_SLICE_X43Y14_CLUT (
-.I0(\$abc$4817$aiger4816$431 ),
-.I1(\$auto$alumacc.cc:485:replace_alu$1460.O [1]),
+.I0(CLBLM_R_X27Y14_SLICE_X43Y14_AQ),
+.I1(CLBLM_R_X27Y14_SLICE_X43Y14_B_XOR),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -9427,10 +9236,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y14_SLICE_X43Y14_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$430 ),
+.I1(CLBLM_R_X27Y14_SLICE_X43Y14_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1460.O [3]),
+.I4(CLBLM_R_X27Y14_SLICE_X43Y14_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y14_SLICE_X43Y14_BO5),
 .O6(CLBLM_R_X27Y14_SLICE_X43Y14_BO6)
@@ -9443,9 +9252,9 @@ module top(
   ) CLBLM_R_X27Y14_SLICE_X43Y14_ALUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$techmap3071$abc$2918$lut$not$aiger2917$409.A ),
+.I2(CLBLM_R_X27Y14_SLICE_X43Y14_DQ),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1460.O [2]),
+.I4(CLBLM_R_X27Y14_SLICE_X43Y14_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y14_SLICE_X43Y14_AO5),
 .O6(CLBLM_R_X27Y14_SLICE_X43Y14_AO6)
@@ -9516,12 +9325,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1631CLBLM_R_X27Y15_SLICE_X43Y15_A_FDCE  (
+  ) CLBLM_R_X27Y15_SLICE_X43Y15_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y15_SLICE_X43Y15_AO5),
-.Q(\$abc$4817$aiger4816$441 )
+.Q(CLBLM_R_X27Y15_SLICE_X43Y15_AQ)
   );
 
 
@@ -9529,12 +9338,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1632CLBLM_R_X27Y15_SLICE_X43Y15_B_FDCE  (
+  ) CLBLM_R_X27Y15_SLICE_X43Y15_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y15_SLICE_X43Y15_BO5),
-.Q(\$abc$4817$aiger4816$440 )
+.Q(CLBLM_R_X27Y15_SLICE_X43Y15_BQ)
   );
 
 
@@ -9542,12 +9351,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1629CLBLM_R_X27Y15_SLICE_X43Y15_C_FDCE  (
+  ) CLBLM_R_X27Y15_SLICE_X43Y15_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y15_SLICE_X43Y15_CO5),
-.Q(\$abc$4817$aiger4816$443 )
+.Q(CLBLM_R_X27Y15_SLICE_X43Y15_CQ)
   );
 
 
@@ -9555,23 +9364,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1630CLBLM_R_X27Y15_SLICE_X43Y15_D_FDCE  (
+  ) CLBLM_R_X27Y15_SLICE_X43Y15_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y15_SLICE_X43Y15_DO5),
-.Q(\$abc$4817$aiger4816$442 )
+.Q(CLBLM_R_X27Y15_SLICE_X43Y15_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y15_SLICE_X43Y15_CARRY4 (
-.CI(\$abc$4817$aiger4816$444 ),
-.CO({\$abc$4817$aiger4816$457 , CLBLM_R_X27Y15_SLICE_X43Y15_C_CY, CLBLM_R_X27Y15_SLICE_X43Y15_B_CY, CLBLM_R_X27Y15_SLICE_X43Y15_A_CY}),
+.CI(CLBLM_R_X27Y14_SLICE_X43Y14_COUT),
+.CO({CLBLM_R_X27Y15_SLICE_X43Y15_D_CY, CLBLM_R_X27Y15_SLICE_X43Y15_C_CY, CLBLM_R_X27Y15_SLICE_X43Y15_B_CY, CLBLM_R_X27Y15_SLICE_X43Y15_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1460.O [7], \$auto$alumacc.cc:485:replace_alu$1460.O [6], \$auto$alumacc.cc:485:replace_alu$1460.O [5], \$auto$alumacc.cc:485:replace_alu$1460.O [4]}),
+.O({CLBLM_R_X27Y15_SLICE_X43Y15_D_XOR, CLBLM_R_X27Y15_SLICE_X43Y15_C_XOR, CLBLM_R_X27Y15_SLICE_X43Y15_B_XOR, CLBLM_R_X27Y15_SLICE_X43Y15_A_XOR}),
 .S({CLBLM_R_X27Y15_SLICE_X43Y15_DO6, CLBLM_R_X27Y15_SLICE_X43Y15_CO6, CLBLM_R_X27Y15_SLICE_X43Y15_BO6, CLBLM_R_X27Y15_SLICE_X43Y15_AO6})
   );
 
@@ -9583,8 +9392,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1460.O [5]),
-.I4(\$abc$4817$aiger4816$440 ),
+.I3(CLBLM_R_X27Y15_SLICE_X43Y15_B_XOR),
+.I4(CLBLM_R_X27Y15_SLICE_X43Y15_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y15_SLICE_X43Y15_DO5),
 .O6(CLBLM_R_X27Y15_SLICE_X43Y15_DO6)
@@ -9596,8 +9405,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X27Y15_SLICE_X43Y15_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1460.O [4]),
-.I2(\$abc$4817$aiger4816$441 ),
+.I1(CLBLM_R_X27Y15_SLICE_X43Y15_A_XOR),
+.I2(CLBLM_R_X27Y15_SLICE_X43Y15_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -9611,10 +9420,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y15_SLICE_X43Y15_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$442 ),
+.I1(CLBLM_R_X27Y15_SLICE_X43Y15_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1460.O [7]),
+.I4(CLBLM_R_X27Y15_SLICE_X43Y15_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y15_SLICE_X43Y15_BO5),
 .O6(CLBLM_R_X27Y15_SLICE_X43Y15_BO6)
@@ -9626,10 +9435,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y15_SLICE_X43Y15_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$443 ),
+.I1(CLBLM_R_X27Y15_SLICE_X43Y15_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1460.O [6]),
+.I4(CLBLM_R_X27Y15_SLICE_X43Y15_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y15_SLICE_X43Y15_AO5),
 .O6(CLBLM_R_X27Y15_SLICE_X43Y15_AO6)
@@ -9700,12 +9509,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1635CLBLM_R_X27Y16_SLICE_X43Y16_A_FDCE  (
+  ) CLBLM_R_X27Y16_SLICE_X43Y16_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y16_SLICE_X43Y16_AO5),
-.Q(\$abc$4817$aiger4816$456 )
+.Q(CLBLM_R_X27Y16_SLICE_X43Y16_AQ)
   );
 
 
@@ -9713,12 +9522,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1636CLBLM_R_X27Y16_SLICE_X43Y16_B_FDCE  (
+  ) CLBLM_R_X27Y16_SLICE_X43Y16_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y16_SLICE_X43Y16_BO5),
-.Q(\$abc$4817$aiger4816$453 )
+.Q(CLBLM_R_X27Y16_SLICE_X43Y16_BQ)
   );
 
 
@@ -9726,12 +9535,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1633CLBLM_R_X27Y16_SLICE_X43Y16_C_FDCE  (
+  ) CLBLM_R_X27Y16_SLICE_X43Y16_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y16_SLICE_X43Y16_CO5),
-.Q(\$abc$4817$aiger4816$454 )
+.Q(CLBLM_R_X27Y16_SLICE_X43Y16_CQ)
   );
 
 
@@ -9739,23 +9548,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1634CLBLM_R_X27Y16_SLICE_X43Y16_D_FDCE  (
+  ) CLBLM_R_X27Y16_SLICE_X43Y16_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y16_SLICE_X43Y16_DO5),
-.Q(\$abc$4817$aiger4816$455 )
+.Q(CLBLM_R_X27Y16_SLICE_X43Y16_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y16_SLICE_X43Y16_CARRY4 (
-.CI(\$abc$4817$aiger4816$457 ),
-.CO({\$abc$4817$aiger4816$470 , CLBLM_R_X27Y16_SLICE_X43Y16_C_CY, CLBLM_R_X27Y16_SLICE_X43Y16_B_CY, CLBLM_R_X27Y16_SLICE_X43Y16_A_CY}),
+.CI(CLBLM_R_X27Y15_SLICE_X43Y15_COUT),
+.CO({CLBLM_R_X27Y16_SLICE_X43Y16_D_CY, CLBLM_R_X27Y16_SLICE_X43Y16_C_CY, CLBLM_R_X27Y16_SLICE_X43Y16_B_CY, CLBLM_R_X27Y16_SLICE_X43Y16_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1460.O [11], \$auto$alumacc.cc:485:replace_alu$1460.O [10], \$auto$alumacc.cc:485:replace_alu$1460.O [9], \$auto$alumacc.cc:485:replace_alu$1460.O [8]}),
+.O({CLBLM_R_X27Y16_SLICE_X43Y16_D_XOR, CLBLM_R_X27Y16_SLICE_X43Y16_C_XOR, CLBLM_R_X27Y16_SLICE_X43Y16_B_XOR, CLBLM_R_X27Y16_SLICE_X43Y16_A_XOR}),
 .S({CLBLM_R_X27Y16_SLICE_X43Y16_DO6, CLBLM_R_X27Y16_SLICE_X43Y16_CO6, CLBLM_R_X27Y16_SLICE_X43Y16_BO6, CLBLM_R_X27Y16_SLICE_X43Y16_AO6})
   );
 
@@ -9767,8 +9576,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1460.O [9]),
-.I4(\$abc$4817$aiger4816$453 ),
+.I3(CLBLM_R_X27Y16_SLICE_X43Y16_B_XOR),
+.I4(CLBLM_R_X27Y16_SLICE_X43Y16_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y16_SLICE_X43Y16_DO5),
 .O6(CLBLM_R_X27Y16_SLICE_X43Y16_DO6)
@@ -9780,8 +9589,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X27Y16_SLICE_X43Y16_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1460.O [8]),
-.I2(\$abc$4817$aiger4816$456 ),
+.I1(CLBLM_R_X27Y16_SLICE_X43Y16_A_XOR),
+.I2(CLBLM_R_X27Y16_SLICE_X43Y16_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -9795,10 +9604,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y16_SLICE_X43Y16_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$455 ),
+.I1(CLBLM_R_X27Y16_SLICE_X43Y16_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1460.O [11]),
+.I4(CLBLM_R_X27Y16_SLICE_X43Y16_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y16_SLICE_X43Y16_BO5),
 .O6(CLBLM_R_X27Y16_SLICE_X43Y16_BO6)
@@ -9810,10 +9619,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y16_SLICE_X43Y16_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$454 ),
+.I1(CLBLM_R_X27Y16_SLICE_X43Y16_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1460.O [10]),
+.I4(CLBLM_R_X27Y16_SLICE_X43Y16_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y16_SLICE_X43Y16_AO5),
 .O6(CLBLM_R_X27Y16_SLICE_X43Y16_AO6)
@@ -9884,12 +9693,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1637CLBLM_R_X27Y17_SLICE_X43Y17_A_FDCE  (
+  ) CLBLM_R_X27Y17_SLICE_X43Y17_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y17_SLICE_X43Y17_A_XOR),
-.Q(\$abc$4817$aiger4816$469 )
+.Q(CLBLM_R_X27Y17_SLICE_X43Y17_AQ)
   );
 
 
@@ -9897,12 +9706,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1639CLBLM_R_X27Y17_SLICE_X43Y17_B_FDCE  (
+  ) CLBLM_R_X27Y17_SLICE_X43Y17_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y17_SLICE_X43Y17_BO5),
-.Q(\$abc$4817$aiger4816$466 )
+.Q(CLBLM_R_X27Y17_SLICE_X43Y17_BQ)
   );
 
 
@@ -9910,12 +9719,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1640CLBLM_R_X27Y17_SLICE_X43Y17_C_FDCE  (
+  ) CLBLM_R_X27Y17_SLICE_X43Y17_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y17_SLICE_X43Y17_CO5),
-.Q(\$abc$4817$aiger4816$468 )
+.Q(CLBLM_R_X27Y17_SLICE_X43Y17_CQ)
   );
 
 
@@ -9923,23 +9732,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1638CLBLM_R_X27Y17_SLICE_X43Y17_D_FDCE  (
+  ) CLBLM_R_X27Y17_SLICE_X43Y17_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y17_SLICE_X43Y17_DO5),
-.Q(\$abc$4817$aiger4816$467 )
+.Q(CLBLM_R_X27Y17_SLICE_X43Y17_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y17_SLICE_X43Y17_CARRY4 (
-.CI(\$abc$4817$aiger4816$470 ),
-.CO({\$abc$4817$aiger4816$483 , CLBLM_R_X27Y17_SLICE_X43Y17_C_CY, CLBLM_R_X27Y17_SLICE_X43Y17_B_CY, CLBLM_R_X27Y17_SLICE_X43Y17_A_CY}),
+.CI(CLBLM_R_X27Y16_SLICE_X43Y16_COUT),
+.CO({CLBLM_R_X27Y17_SLICE_X43Y17_D_CY, CLBLM_R_X27Y17_SLICE_X43Y17_C_CY, CLBLM_R_X27Y17_SLICE_X43Y17_B_CY, CLBLM_R_X27Y17_SLICE_X43Y17_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1460.O [15], \$auto$alumacc.cc:485:replace_alu$1460.O [14], \$auto$alumacc.cc:485:replace_alu$1460.O [13], CLBLM_R_X27Y17_SLICE_X43Y17_A_XOR}),
+.O({CLBLM_R_X27Y17_SLICE_X43Y17_D_XOR, CLBLM_R_X27Y17_SLICE_X43Y17_C_XOR, CLBLM_R_X27Y17_SLICE_X43Y17_B_XOR, CLBLM_R_X27Y17_SLICE_X43Y17_A_XOR}),
 .S({CLBLM_R_X27Y17_SLICE_X43Y17_DO6, CLBLM_R_X27Y17_SLICE_X43Y17_CO6, CLBLM_R_X27Y17_SLICE_X43Y17_BO6, CLBLM_R_X27Y17_SLICE_X43Y17_AO6})
   );
 
@@ -9948,11 +9757,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X27Y17_SLICE_X43Y17_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1460.O [13]),
+.I0(CLBLM_R_X27Y17_SLICE_X43Y17_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$468 ),
+.I4(CLBLM_R_X27Y17_SLICE_X43Y17_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y17_SLICE_X43Y17_DO5),
 .O6(CLBLM_R_X27Y17_SLICE_X43Y17_DO6)
@@ -9964,8 +9773,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X27Y17_SLICE_X43Y17_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1460.O [15]),
-.I2(\$abc$4817$aiger4816$466 ),
+.I1(CLBLM_R_X27Y17_SLICE_X43Y17_D_XOR),
+.I2(CLBLM_R_X27Y17_SLICE_X43Y17_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -9978,8 +9787,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X27Y17_SLICE_X43Y17_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1460.O [14]),
-.I1(\$abc$4817$aiger4816$467 ),
+.I0(CLBLM_R_X27Y17_SLICE_X43Y17_C_XOR),
+.I1(CLBLM_R_X27Y17_SLICE_X43Y17_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -9994,7 +9803,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X27Y17_SLICE_X43Y17_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$469 ),
+.I1(CLBLM_R_X27Y17_SLICE_X43Y17_AQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -10068,12 +9877,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1641CLBLM_R_X27Y18_SLICE_X43Y18_A_FDCE  (
+  ) CLBLM_R_X27Y18_SLICE_X43Y18_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y18_SLICE_X43Y18_A_XOR),
-.Q(\$abc$4817$aiger4816$479 )
+.Q(CLBLM_R_X27Y18_SLICE_X43Y18_AQ)
   );
 
 
@@ -10081,12 +9890,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1643CLBLM_R_X27Y18_SLICE_X43Y18_B_FDCE  (
+  ) CLBLM_R_X27Y18_SLICE_X43Y18_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y18_SLICE_X43Y18_BO5),
-.Q(\$abc$4817$aiger4816$481 )
+.Q(CLBLM_R_X27Y18_SLICE_X43Y18_BQ)
   );
 
 
@@ -10094,12 +9903,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1644CLBLM_R_X27Y18_SLICE_X43Y18_C_FDCE  (
+  ) CLBLM_R_X27Y18_SLICE_X43Y18_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y18_SLICE_X43Y18_CO5),
-.Q(\$abc$4817$aiger4816$482 )
+.Q(CLBLM_R_X27Y18_SLICE_X43Y18_CQ)
   );
 
 
@@ -10107,23 +9916,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1642CLBLM_R_X27Y18_SLICE_X43Y18_D_FDCE  (
+  ) CLBLM_R_X27Y18_SLICE_X43Y18_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y18_SLICE_X43Y18_DO5),
-.Q(\$abc$4817$aiger4816$480 )
+.Q(CLBLM_R_X27Y18_SLICE_X43Y18_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y18_SLICE_X43Y18_CARRY4 (
-.CI(\$abc$4817$aiger4816$483 ),
-.CO({\$abc$4817$aiger4816$496 , CLBLM_R_X27Y18_SLICE_X43Y18_C_CY, CLBLM_R_X27Y18_SLICE_X43Y18_B_CY, CLBLM_R_X27Y18_SLICE_X43Y18_A_CY}),
+.CI(CLBLM_R_X27Y17_SLICE_X43Y17_COUT),
+.CO({CLBLM_R_X27Y18_SLICE_X43Y18_D_CY, CLBLM_R_X27Y18_SLICE_X43Y18_C_CY, CLBLM_R_X27Y18_SLICE_X43Y18_B_CY, CLBLM_R_X27Y18_SLICE_X43Y18_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1460.O [19], \$auto$alumacc.cc:485:replace_alu$1460.O [18], \$auto$alumacc.cc:485:replace_alu$1460.O [17], CLBLM_R_X27Y18_SLICE_X43Y18_A_XOR}),
+.O({CLBLM_R_X27Y18_SLICE_X43Y18_D_XOR, CLBLM_R_X27Y18_SLICE_X43Y18_C_XOR, CLBLM_R_X27Y18_SLICE_X43Y18_B_XOR, CLBLM_R_X27Y18_SLICE_X43Y18_A_XOR}),
 .S({CLBLM_R_X27Y18_SLICE_X43Y18_DO6, CLBLM_R_X27Y18_SLICE_X43Y18_CO6, CLBLM_R_X27Y18_SLICE_X43Y18_BO6, CLBLM_R_X27Y18_SLICE_X43Y18_AO6})
   );
 
@@ -10132,11 +9941,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X27Y18_SLICE_X43Y18_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1460.O [17]),
+.I0(CLBLM_R_X27Y18_SLICE_X43Y18_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$482 ),
+.I4(CLBLM_R_X27Y18_SLICE_X43Y18_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y18_SLICE_X43Y18_DO5),
 .O6(CLBLM_R_X27Y18_SLICE_X43Y18_DO6)
@@ -10148,8 +9957,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X27Y18_SLICE_X43Y18_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1460.O [19]),
-.I2(\$abc$4817$aiger4816$481 ),
+.I1(CLBLM_R_X27Y18_SLICE_X43Y18_D_XOR),
+.I2(CLBLM_R_X27Y18_SLICE_X43Y18_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -10162,8 +9971,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X27Y18_SLICE_X43Y18_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1460.O [18]),
-.I1(\$abc$4817$aiger4816$480 ),
+.I0(CLBLM_R_X27Y18_SLICE_X43Y18_C_XOR),
+.I1(CLBLM_R_X27Y18_SLICE_X43Y18_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -10178,7 +9987,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X27Y18_SLICE_X43Y18_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$479 ),
+.I1(CLBLM_R_X27Y18_SLICE_X43Y18_AQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -10252,12 +10061,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1646CLBLM_R_X27Y19_SLICE_X43Y19_A_FDCE  (
+  ) CLBLM_R_X27Y19_SLICE_X43Y19_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y19_SLICE_X43Y19_AO5),
-.Q(\mmcme2_test.O_CNT [3])
+.Q(CLBLM_R_X27Y19_SLICE_X43Y19_AQ)
   );
 
 
@@ -10265,12 +10074,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1645CLBLM_R_X27Y19_SLICE_X43Y19_B_FDCE  (
+  ) CLBLM_R_X27Y19_SLICE_X43Y19_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y19_SLICE_X43Y19_BO5),
-.Q(\$abc$4817$aiger4816$493 )
+.Q(CLBLM_R_X27Y19_SLICE_X43Y19_BQ)
   );
 
 
@@ -10278,12 +10087,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1647CLBLM_R_X27Y19_SLICE_X43Y19_C_FDCE  (
+  ) CLBLM_R_X27Y19_SLICE_X43Y19_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y19_SLICE_X43Y19_C_XOR),
-.Q(\$abc$4817$aiger4816$492 )
+.Q(CLBLM_R_X27Y19_SLICE_X43Y19_CQ)
   );
 
 
@@ -10291,23 +10100,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1648CLBLM_R_X27Y19_SLICE_X43Y19_D_FDCE  (
+  ) CLBLM_R_X27Y19_SLICE_X43Y19_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y19_SLICE_X43Y19_D_XOR),
-.Q(\$abc$4817$aiger4816$494 )
+.Q(CLBLM_R_X27Y19_SLICE_X43Y19_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y19_SLICE_X43Y19_CARRY4 (
-.CI(\$abc$4817$aiger4816$496 ),
+.CI(CLBLM_R_X27Y18_SLICE_X43Y18_COUT),
 .CO({CLBLM_R_X27Y19_SLICE_X43Y19_D_CY, CLBLM_R_X27Y19_SLICE_X43Y19_C_CY, CLBLM_R_X27Y19_SLICE_X43Y19_B_CY, CLBLM_R_X27Y19_SLICE_X43Y19_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({CLBLM_R_X27Y19_SLICE_X43Y19_D_XOR, CLBLM_R_X27Y19_SLICE_X43Y19_C_XOR, \$auto$alumacc.cc:485:replace_alu$1460.O [21], \$auto$alumacc.cc:485:replace_alu$1460.O [20]}),
+.O({CLBLM_R_X27Y19_SLICE_X43Y19_D_XOR, CLBLM_R_X27Y19_SLICE_X43Y19_C_XOR, CLBLM_R_X27Y19_SLICE_X43Y19_B_XOR, CLBLM_R_X27Y19_SLICE_X43Y19_A_XOR}),
 .S({CLBLM_R_X27Y19_SLICE_X43Y19_DO6, CLBLM_R_X27Y19_SLICE_X43Y19_CO6, CLBLM_R_X27Y19_SLICE_X43Y19_BO6, CLBLM_R_X27Y19_SLICE_X43Y19_AO6})
   );
 
@@ -10320,7 +10129,7 @@ module top(
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$494 ),
+.I4(CLBLM_R_X27Y19_SLICE_X43Y19_DQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y19_SLICE_X43Y19_DO5),
 .O6(CLBLM_R_X27Y19_SLICE_X43Y19_DO6)
@@ -10332,12 +10141,12 @@ module top(
     .INIT(64'hf0f0f0f0ccccffff)
   ) CLBLM_R_X27Y19_SLICE_X43Y19_CLUT (
 .I0(1'b1),
-.I1(\RST ),
-.I2(\$abc$4817$aiger4816$492 ),
+.I1(CLBLM_R_X27Y8_SLICE_X42Y8_DQ),
+.I2(CLBLM_R_X27Y19_SLICE_X43Y19_CQ),
 .I3(1'b1),
-.I4(\mmcme2_test.O_LOCKED ),
+.I4(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_LOCKED),
 .I5(1'b1),
-.O5(\mmcme2_test.rst ),
+.O5(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .O6(CLBLM_R_X27Y19_SLICE_X43Y19_CO6)
   );
 
@@ -10347,10 +10156,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y19_SLICE_X43Y19_BLUT (
 .I0(1'b1),
-.I1(\mmcme2_test.O_CNT [3]),
+.I1(CLBLM_R_X27Y19_SLICE_X43Y19_AQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1460.O [20]),
+.I4(CLBLM_R_X27Y19_SLICE_X43Y19_A_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y19_SLICE_X43Y19_BO5),
 .O6(CLBLM_R_X27Y19_SLICE_X43Y19_BO6)
@@ -10362,10 +10171,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y19_SLICE_X43Y19_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$493 ),
+.I1(CLBLM_R_X27Y19_SLICE_X43Y19_BQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1460.O [21]),
+.I4(CLBLM_R_X27Y19_SLICE_X43Y19_B_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y19_SLICE_X43Y19_AO5),
 .O6(CLBLM_R_X27Y19_SLICE_X43Y19_AO6)
@@ -10436,12 +10245,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1599CLBLM_R_X27Y38_SLICE_X43Y38_A_FDCE  (
+  ) CLBLM_R_X27Y38_SLICE_X43Y38_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y38_SLICE_X43Y38_AO5),
-.Q(\$abc$4817$aiger4816$342 )
+.Q(CLBLM_R_X27Y38_SLICE_X43Y38_AQ)
   );
 
 
@@ -10449,12 +10258,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1600CLBLM_R_X27Y38_SLICE_X43Y38_B_FDCE  (
+  ) CLBLM_R_X27Y38_SLICE_X43Y38_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y38_SLICE_X43Y38_BO5),
-.Q(\$abc$4817$aiger4816$343 )
+.Q(CLBLM_R_X27Y38_SLICE_X43Y38_BQ)
   );
 
 
@@ -10462,12 +10271,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1580CLBLM_R_X27Y38_SLICE_X43Y38_C_FDCE  (
+  ) CLBLM_R_X27Y38_SLICE_X43Y38_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y38_SLICE_X43Y38_CO5),
-.Q(\$abc$4817$aiger4816$278 )
+.Q(CLBLM_R_X27Y38_SLICE_X43Y38_CQ)
   );
 
 
@@ -10475,12 +10284,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1577CLBLM_R_X27Y38_SLICE_X43Y38_D_FDCE  (
+  ) CLBLM_R_X27Y38_SLICE_X43Y38_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y38_SLICE_X43Y38_DO5),
-.Q(\$techmap3073$abc$2918$lut$not$aiger2917$265.A )
+.Q(CLBLM_R_X27Y38_SLICE_X43Y38_DQ)
   );
 
 
@@ -10488,10 +10297,10 @@ module top(
   CARRY4 #(
   ) CLBLM_R_X27Y38_SLICE_X43Y38_CARRY4 (
 .CI(1'b0),
-.CO({\$abc$4817$aiger4816$292 , CLBLM_R_X27Y38_SLICE_X43Y38_C_CY, CLBLM_R_X27Y38_SLICE_X43Y38_B_CY, CLBLM_R_X27Y38_SLICE_X43Y38_A_CY}),
+.CO({CLBLM_R_X27Y38_SLICE_X43Y38_D_CY, CLBLM_R_X27Y38_SLICE_X43Y38_C_CY, CLBLM_R_X27Y38_SLICE_X43Y38_B_CY, CLBLM_R_X27Y38_SLICE_X43Y38_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b1}),
-.O({\$auto$alumacc.cc:485:replace_alu$1454.O [3], \$auto$alumacc.cc:485:replace_alu$1454.O [2], \$auto$alumacc.cc:485:replace_alu$1454.O [1], CLBLM_R_X27Y38_SLICE_X43Y38_A_XOR}),
+.O({CLBLM_R_X27Y38_SLICE_X43Y38_D_XOR, CLBLM_R_X27Y38_SLICE_X43Y38_C_XOR, CLBLM_R_X27Y38_SLICE_X43Y38_B_XOR, CLBLM_R_X27Y38_SLICE_X43Y38_A_XOR}),
 .S({CLBLM_R_X27Y38_SLICE_X43Y38_DO6, CLBLM_R_X27Y38_SLICE_X43Y38_CO6, CLBLM_R_X27Y38_SLICE_X43Y38_BO6, CLBLM_R_X27Y38_SLICE_X43Y38_AO6})
   );
 
@@ -10504,7 +10313,7 @@ module top(
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$278 ),
+.I4(CLBLM_R_X27Y38_SLICE_X43Y38_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y38_SLICE_X43Y38_DO5),
 .O6(CLBLM_R_X27Y38_SLICE_X43Y38_DO6)
@@ -10515,8 +10324,8 @@ module top(
   LUT6_2 #(
     .INIT(64'haaaaaaaacccccccc)
   ) CLBLM_R_X27Y38_SLICE_X43Y38_CLUT (
-.I0(\$abc$4817$aiger4816$277 ),
-.I1(\$auto$alumacc.cc:485:replace_alu$1454.O [3]),
+.I0(CLBLM_R_X27Y42_SLICE_X43Y42_A5Q),
+.I1(CLBLM_R_X27Y38_SLICE_X43Y38_D_XOR),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -10532,8 +10341,8 @@ module top(
   ) CLBLM_R_X27Y38_SLICE_X43Y38_BLUT (
 .I0(1'b1),
 .I1(1'b1),
-.I2(\$abc$4817$aiger4816$279 ),
-.I3(\$auto$alumacc.cc:485:replace_alu$1454.O [23]),
+.I2(CLBLM_R_X27Y41_SLICE_X43Y41_A5Q),
+.I3(CLBLM_R_X27Y43_SLICE_X43Y43_D_XOR),
 .I4(1'b1),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y38_SLICE_X43Y38_BO5),
@@ -10545,9 +10354,9 @@ module top(
   LUT6_2 #(
     .INIT(64'h0f0f0f0faaaaaaaa)
   ) CLBLM_R_X27Y38_SLICE_X43Y38_ALUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1454.O [22]),
+.I0(CLBLM_R_X27Y43_SLICE_X43Y43_C_XOR),
 .I1(1'b1),
-.I2(\$techmap3073$abc$2918$lut$not$aiger2917$265.A ),
+.I2(CLBLM_R_X27Y38_SLICE_X43Y38_DQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -10620,12 +10429,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1583CLBLM_R_X27Y39_SLICE_X43Y39_A_FDCE  (
+  ) CLBLM_R_X27Y39_SLICE_X43Y39_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y39_SLICE_X43Y39_AO5),
-.Q(\$abc$4817$aiger4816$290 )
+.Q(CLBLM_R_X27Y39_SLICE_X43Y39_AQ)
   );
 
 
@@ -10633,12 +10442,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1584CLBLM_R_X27Y39_SLICE_X43Y39_B_FDCE  (
+  ) CLBLM_R_X27Y39_SLICE_X43Y39_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y39_SLICE_X43Y39_BO5),
-.Q(\$abc$4817$aiger4816$291 )
+.Q(CLBLM_R_X27Y39_SLICE_X43Y39_BQ)
   );
 
 
@@ -10646,12 +10455,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1581CLBLM_R_X27Y39_SLICE_X43Y39_C_FDCE  (
+  ) CLBLM_R_X27Y39_SLICE_X43Y39_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y39_SLICE_X43Y39_CO5),
-.Q(\$abc$4817$aiger4816$288 )
+.Q(CLBLM_R_X27Y39_SLICE_X43Y39_CQ)
   );
 
 
@@ -10659,23 +10468,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1582CLBLM_R_X27Y39_SLICE_X43Y39_D_FDCE  (
+  ) CLBLM_R_X27Y39_SLICE_X43Y39_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y39_SLICE_X43Y39_DO5),
-.Q(\$abc$4817$aiger4816$289 )
+.Q(CLBLM_R_X27Y39_SLICE_X43Y39_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y39_SLICE_X43Y39_CARRY4 (
-.CI(\$abc$4817$aiger4816$292 ),
-.CO({\$abc$4817$aiger4816$305 , CLBLM_R_X27Y39_SLICE_X43Y39_C_CY, CLBLM_R_X27Y39_SLICE_X43Y39_B_CY, CLBLM_R_X27Y39_SLICE_X43Y39_A_CY}),
+.CI(CLBLM_R_X27Y38_SLICE_X43Y38_COUT),
+.CO({CLBLM_R_X27Y39_SLICE_X43Y39_D_CY, CLBLM_R_X27Y39_SLICE_X43Y39_C_CY, CLBLM_R_X27Y39_SLICE_X43Y39_B_CY, CLBLM_R_X27Y39_SLICE_X43Y39_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1454.O [7], \$auto$alumacc.cc:485:replace_alu$1454.O [6], \$auto$alumacc.cc:485:replace_alu$1454.O [5], \$auto$alumacc.cc:485:replace_alu$1454.O [4]}),
+.O({CLBLM_R_X27Y39_SLICE_X43Y39_D_XOR, CLBLM_R_X27Y39_SLICE_X43Y39_C_XOR, CLBLM_R_X27Y39_SLICE_X43Y39_B_XOR, CLBLM_R_X27Y39_SLICE_X43Y39_A_XOR}),
 .S({CLBLM_R_X27Y39_SLICE_X43Y39_DO6, CLBLM_R_X27Y39_SLICE_X43Y39_CO6, CLBLM_R_X27Y39_SLICE_X43Y39_BO6, CLBLM_R_X27Y39_SLICE_X43Y39_AO6})
   );
 
@@ -10687,8 +10496,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1454.O [5]),
-.I4(\$abc$4817$aiger4816$291 ),
+.I3(CLBLM_R_X27Y39_SLICE_X43Y39_B_XOR),
+.I4(CLBLM_R_X27Y39_SLICE_X43Y39_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y39_SLICE_X43Y39_DO5),
 .O6(CLBLM_R_X27Y39_SLICE_X43Y39_DO6)
@@ -10700,8 +10509,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X27Y39_SLICE_X43Y39_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1454.O [4]),
-.I2(\$abc$4817$aiger4816$290 ),
+.I1(CLBLM_R_X27Y39_SLICE_X43Y39_A_XOR),
+.I2(CLBLM_R_X27Y39_SLICE_X43Y39_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -10715,10 +10524,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y39_SLICE_X43Y39_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$289 ),
+.I1(CLBLM_R_X27Y39_SLICE_X43Y39_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1454.O [7]),
+.I4(CLBLM_R_X27Y39_SLICE_X43Y39_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y39_SLICE_X43Y39_BO5),
 .O6(CLBLM_R_X27Y39_SLICE_X43Y39_BO6)
@@ -10730,10 +10539,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y39_SLICE_X43Y39_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$288 ),
+.I1(CLBLM_R_X27Y39_SLICE_X43Y39_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1454.O [6]),
+.I4(CLBLM_R_X27Y39_SLICE_X43Y39_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y39_SLICE_X43Y39_AO5),
 .O6(CLBLM_R_X27Y39_SLICE_X43Y39_AO6)
@@ -10804,12 +10613,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1587CLBLM_R_X27Y40_SLICE_X43Y40_A_FDCE  (
+  ) CLBLM_R_X27Y40_SLICE_X43Y40_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y40_SLICE_X43Y40_AO5),
-.Q(\$abc$4817$aiger4816$303 )
+.Q(CLBLM_R_X27Y40_SLICE_X43Y40_AQ)
   );
 
 
@@ -10817,12 +10626,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1588CLBLM_R_X27Y40_SLICE_X43Y40_B_FDCE  (
+  ) CLBLM_R_X27Y40_SLICE_X43Y40_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y40_SLICE_X43Y40_BO5),
-.Q(\$abc$4817$aiger4816$304 )
+.Q(CLBLM_R_X27Y40_SLICE_X43Y40_BQ)
   );
 
 
@@ -10830,12 +10639,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1585CLBLM_R_X27Y40_SLICE_X43Y40_C_FDCE  (
+  ) CLBLM_R_X27Y40_SLICE_X43Y40_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y40_SLICE_X43Y40_CO5),
-.Q(\$abc$4817$aiger4816$301 )
+.Q(CLBLM_R_X27Y40_SLICE_X43Y40_CQ)
   );
 
 
@@ -10843,23 +10652,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1586CLBLM_R_X27Y40_SLICE_X43Y40_D_FDCE  (
+  ) CLBLM_R_X27Y40_SLICE_X43Y40_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y40_SLICE_X43Y40_DO5),
-.Q(\$abc$4817$aiger4816$302 )
+.Q(CLBLM_R_X27Y40_SLICE_X43Y40_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y40_SLICE_X43Y40_CARRY4 (
-.CI(\$abc$4817$aiger4816$305 ),
-.CO({\$abc$4817$aiger4816$318 , CLBLM_R_X27Y40_SLICE_X43Y40_C_CY, CLBLM_R_X27Y40_SLICE_X43Y40_B_CY, CLBLM_R_X27Y40_SLICE_X43Y40_A_CY}),
+.CI(CLBLM_R_X27Y39_SLICE_X43Y39_COUT),
+.CO({CLBLM_R_X27Y40_SLICE_X43Y40_D_CY, CLBLM_R_X27Y40_SLICE_X43Y40_C_CY, CLBLM_R_X27Y40_SLICE_X43Y40_B_CY, CLBLM_R_X27Y40_SLICE_X43Y40_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1454.O [11], \$auto$alumacc.cc:485:replace_alu$1454.O [10], \$auto$alumacc.cc:485:replace_alu$1454.O [9], \$auto$alumacc.cc:485:replace_alu$1454.O [8]}),
+.O({CLBLM_R_X27Y40_SLICE_X43Y40_D_XOR, CLBLM_R_X27Y40_SLICE_X43Y40_C_XOR, CLBLM_R_X27Y40_SLICE_X43Y40_B_XOR, CLBLM_R_X27Y40_SLICE_X43Y40_A_XOR}),
 .S({CLBLM_R_X27Y40_SLICE_X43Y40_DO6, CLBLM_R_X27Y40_SLICE_X43Y40_CO6, CLBLM_R_X27Y40_SLICE_X43Y40_BO6, CLBLM_R_X27Y40_SLICE_X43Y40_AO6})
   );
 
@@ -10871,8 +10680,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1454.O [9]),
-.I4(\$abc$4817$aiger4816$304 ),
+.I3(CLBLM_R_X27Y40_SLICE_X43Y40_B_XOR),
+.I4(CLBLM_R_X27Y40_SLICE_X43Y40_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y40_SLICE_X43Y40_DO5),
 .O6(CLBLM_R_X27Y40_SLICE_X43Y40_DO6)
@@ -10884,8 +10693,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X27Y40_SLICE_X43Y40_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1454.O [8]),
-.I2(\$abc$4817$aiger4816$303 ),
+.I1(CLBLM_R_X27Y40_SLICE_X43Y40_A_XOR),
+.I2(CLBLM_R_X27Y40_SLICE_X43Y40_AQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -10899,10 +10708,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y40_SLICE_X43Y40_BLUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$302 ),
+.I1(CLBLM_R_X27Y40_SLICE_X43Y40_DQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1454.O [11]),
+.I4(CLBLM_R_X27Y40_SLICE_X43Y40_D_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y40_SLICE_X43Y40_BO5),
 .O6(CLBLM_R_X27Y40_SLICE_X43Y40_BO6)
@@ -10914,10 +10723,10 @@ module top(
     .INIT(64'hccccccccffff0000)
   ) CLBLM_R_X27Y40_SLICE_X43Y40_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$301 ),
+.I1(CLBLM_R_X27Y40_SLICE_X43Y40_CQ),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$auto$alumacc.cc:485:replace_alu$1454.O [10]),
+.I4(CLBLM_R_X27Y40_SLICE_X43Y40_C_XOR),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y40_SLICE_X43Y40_AO5),
 .O6(CLBLM_R_X27Y40_SLICE_X43Y40_AO6)
@@ -10988,12 +10797,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1578CLBLM_R_X27Y41_SLICE_X43Y41_A5_FDCE  (
+  ) CLBLM_R_X27Y41_SLICE_X43Y41_A5_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y41_SLICE_X43Y41_AO5),
-.Q(\$abc$4817$aiger4816$279 )
+.Q(CLBLM_R_X27Y41_SLICE_X43Y41_A5Q)
   );
 
 
@@ -11001,12 +10810,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1589CLBLM_R_X27Y41_SLICE_X43Y41_A_FDCE  (
+  ) CLBLM_R_X27Y41_SLICE_X43Y41_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y41_SLICE_X43Y41_A_XOR),
-.Q(\$abc$4817$aiger4816$314 )
+.Q(CLBLM_R_X27Y41_SLICE_X43Y41_AQ)
   );
 
 
@@ -11014,12 +10823,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1591CLBLM_R_X27Y41_SLICE_X43Y41_B_FDCE  (
+  ) CLBLM_R_X27Y41_SLICE_X43Y41_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y41_SLICE_X43Y41_BO5),
-.Q(\$abc$4817$aiger4816$316 )
+.Q(CLBLM_R_X27Y41_SLICE_X43Y41_BQ)
   );
 
 
@@ -11027,12 +10836,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1592CLBLM_R_X27Y41_SLICE_X43Y41_C_FDCE  (
+  ) CLBLM_R_X27Y41_SLICE_X43Y41_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y41_SLICE_X43Y41_CO5),
-.Q(\$abc$4817$aiger4816$317 )
+.Q(CLBLM_R_X27Y41_SLICE_X43Y41_CQ)
   );
 
 
@@ -11040,23 +10849,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1590CLBLM_R_X27Y41_SLICE_X43Y41_D_FDCE  (
+  ) CLBLM_R_X27Y41_SLICE_X43Y41_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y41_SLICE_X43Y41_DO5),
-.Q(\$abc$4817$aiger4816$315 )
+.Q(CLBLM_R_X27Y41_SLICE_X43Y41_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y41_SLICE_X43Y41_CARRY4 (
-.CI(\$abc$4817$aiger4816$318 ),
-.CO({\$abc$4817$aiger4816$331 , CLBLM_R_X27Y41_SLICE_X43Y41_C_CY, CLBLM_R_X27Y41_SLICE_X43Y41_B_CY, CLBLM_R_X27Y41_SLICE_X43Y41_A_CY}),
+.CI(CLBLM_R_X27Y40_SLICE_X43Y40_COUT),
+.CO({CLBLM_R_X27Y41_SLICE_X43Y41_D_CY, CLBLM_R_X27Y41_SLICE_X43Y41_C_CY, CLBLM_R_X27Y41_SLICE_X43Y41_B_CY, CLBLM_R_X27Y41_SLICE_X43Y41_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1454.O [15], \$auto$alumacc.cc:485:replace_alu$1454.O [14], \$auto$alumacc.cc:485:replace_alu$1454.O [13], CLBLM_R_X27Y41_SLICE_X43Y41_A_XOR}),
+.O({CLBLM_R_X27Y41_SLICE_X43Y41_D_XOR, CLBLM_R_X27Y41_SLICE_X43Y41_C_XOR, CLBLM_R_X27Y41_SLICE_X43Y41_B_XOR, CLBLM_R_X27Y41_SLICE_X43Y41_A_XOR}),
 .S({CLBLM_R_X27Y41_SLICE_X43Y41_DO6, CLBLM_R_X27Y41_SLICE_X43Y41_CO6, CLBLM_R_X27Y41_SLICE_X43Y41_BO6, CLBLM_R_X27Y41_SLICE_X43Y41_AO6})
   );
 
@@ -11065,11 +10874,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X27Y41_SLICE_X43Y41_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1454.O [13]),
+.I0(CLBLM_R_X27Y41_SLICE_X43Y41_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$317 ),
+.I4(CLBLM_R_X27Y41_SLICE_X43Y41_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y41_SLICE_X43Y41_DO5),
 .O6(CLBLM_R_X27Y41_SLICE_X43Y41_DO6)
@@ -11081,8 +10890,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X27Y41_SLICE_X43Y41_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1454.O [15]),
-.I2(\$abc$4817$aiger4816$316 ),
+.I1(CLBLM_R_X27Y41_SLICE_X43Y41_D_XOR),
+.I2(CLBLM_R_X27Y41_SLICE_X43Y41_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -11095,8 +10904,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X27Y41_SLICE_X43Y41_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1454.O [14]),
-.I1(\$abc$4817$aiger4816$315 ),
+.I0(CLBLM_R_X27Y41_SLICE_X43Y41_C_XOR),
+.I1(CLBLM_R_X27Y41_SLICE_X43Y41_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -11111,8 +10920,8 @@ module top(
     .INIT(64'hccccccccf0f0f0f0)
   ) CLBLM_R_X27Y41_SLICE_X43Y41_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$314 ),
-.I2(\$auto$alumacc.cc:485:replace_alu$1454.O [1]),
+.I1(CLBLM_R_X27Y41_SLICE_X43Y41_AQ),
+.I2(CLBLM_R_X27Y38_SLICE_X43Y38_B_XOR),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -11185,12 +10994,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1579CLBLM_R_X27Y42_SLICE_X43Y42_A5_FDCE  (
+  ) CLBLM_R_X27Y42_SLICE_X43Y42_A5_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y42_SLICE_X43Y42_AO5),
-.Q(\$abc$4817$aiger4816$277 )
+.Q(CLBLM_R_X27Y42_SLICE_X43Y42_A5Q)
   );
 
 
@@ -11198,12 +11007,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1593CLBLM_R_X27Y42_SLICE_X43Y42_A_FDCE  (
+  ) CLBLM_R_X27Y42_SLICE_X43Y42_A_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y42_SLICE_X43Y42_A_XOR),
-.Q(\$abc$4817$aiger4816$327 )
+.Q(CLBLM_R_X27Y42_SLICE_X43Y42_AQ)
   );
 
 
@@ -11211,12 +11020,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1595CLBLM_R_X27Y42_SLICE_X43Y42_B_FDCE  (
+  ) CLBLM_R_X27Y42_SLICE_X43Y42_B_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y42_SLICE_X43Y42_BO5),
-.Q(\$abc$4817$aiger4816$329 )
+.Q(CLBLM_R_X27Y42_SLICE_X43Y42_BQ)
   );
 
 
@@ -11224,12 +11033,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1596CLBLM_R_X27Y42_SLICE_X43Y42_C_FDCE  (
+  ) CLBLM_R_X27Y42_SLICE_X43Y42_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y42_SLICE_X43Y42_CO5),
-.Q(\$abc$4817$aiger4816$330 )
+.Q(CLBLM_R_X27Y42_SLICE_X43Y42_CQ)
   );
 
 
@@ -11237,23 +11046,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1594CLBLM_R_X27Y42_SLICE_X43Y42_D_FDCE  (
+  ) CLBLM_R_X27Y42_SLICE_X43Y42_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y42_SLICE_X43Y42_DO5),
-.Q(\$abc$4817$aiger4816$328 )
+.Q(CLBLM_R_X27Y42_SLICE_X43Y42_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y42_SLICE_X43Y42_CARRY4 (
-.CI(\$abc$4817$aiger4816$331 ),
-.CO({\$abc$4817$aiger4816$344 , CLBLM_R_X27Y42_SLICE_X43Y42_C_CY, CLBLM_R_X27Y42_SLICE_X43Y42_B_CY, CLBLM_R_X27Y42_SLICE_X43Y42_A_CY}),
+.CI(CLBLM_R_X27Y41_SLICE_X43Y41_COUT),
+.CO({CLBLM_R_X27Y42_SLICE_X43Y42_D_CY, CLBLM_R_X27Y42_SLICE_X43Y42_C_CY, CLBLM_R_X27Y42_SLICE_X43Y42_B_CY, CLBLM_R_X27Y42_SLICE_X43Y42_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1454.O [19], \$auto$alumacc.cc:485:replace_alu$1454.O [18], \$auto$alumacc.cc:485:replace_alu$1454.O [17], CLBLM_R_X27Y42_SLICE_X43Y42_A_XOR}),
+.O({CLBLM_R_X27Y42_SLICE_X43Y42_D_XOR, CLBLM_R_X27Y42_SLICE_X43Y42_C_XOR, CLBLM_R_X27Y42_SLICE_X43Y42_B_XOR, CLBLM_R_X27Y42_SLICE_X43Y42_A_XOR}),
 .S({CLBLM_R_X27Y42_SLICE_X43Y42_DO6, CLBLM_R_X27Y42_SLICE_X43Y42_CO6, CLBLM_R_X27Y42_SLICE_X43Y42_BO6, CLBLM_R_X27Y42_SLICE_X43Y42_AO6})
   );
 
@@ -11262,11 +11071,11 @@ module top(
   LUT6_2 #(
     .INIT(64'hffff0000aaaaaaaa)
   ) CLBLM_R_X27Y42_SLICE_X43Y42_DLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1454.O [17]),
+.I0(CLBLM_R_X27Y42_SLICE_X43Y42_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
 .I3(1'b1),
-.I4(\$abc$4817$aiger4816$330 ),
+.I4(CLBLM_R_X27Y42_SLICE_X43Y42_CQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y42_SLICE_X43Y42_DO5),
 .O6(CLBLM_R_X27Y42_SLICE_X43Y42_DO6)
@@ -11278,8 +11087,8 @@ module top(
     .INIT(64'hf0f0f0f0cccccccc)
   ) CLBLM_R_X27Y42_SLICE_X43Y42_CLUT (
 .I0(1'b1),
-.I1(\$auto$alumacc.cc:485:replace_alu$1454.O [19]),
-.I2(\$abc$4817$aiger4816$329 ),
+.I1(CLBLM_R_X27Y42_SLICE_X43Y42_D_XOR),
+.I2(CLBLM_R_X27Y42_SLICE_X43Y42_BQ),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -11292,8 +11101,8 @@ module top(
   LUT6_2 #(
     .INIT(64'hccccccccaaaaaaaa)
   ) CLBLM_R_X27Y42_SLICE_X43Y42_BLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1454.O [18]),
-.I1(\$abc$4817$aiger4816$328 ),
+.I0(CLBLM_R_X27Y42_SLICE_X43Y42_C_XOR),
+.I1(CLBLM_R_X27Y42_SLICE_X43Y42_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -11308,8 +11117,8 @@ module top(
     .INIT(64'hccccccccf0f0f0f0)
   ) CLBLM_R_X27Y42_SLICE_X43Y42_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$327 ),
-.I2(\$auto$alumacc.cc:485:replace_alu$1454.O [2]),
+.I1(CLBLM_R_X27Y42_SLICE_X43Y42_AQ),
+.I2(CLBLM_R_X27Y38_SLICE_X43Y38_C_XOR),
 .I3(1'b1),
 .I4(1'b1),
 .I5(1'b1),
@@ -11382,12 +11191,12 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1598CLBLM_R_X27Y43_SLICE_X43Y43_C_FDCE  (
+  ) CLBLM_R_X27Y43_SLICE_X43Y43_C_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y43_SLICE_X43Y43_CO5),
-.Q(\mmcme2_test.O_CNT [1])
+.Q(CLBLM_R_X27Y43_SLICE_X43Y43_CQ)
   );
 
 
@@ -11395,23 +11204,23 @@ module top(
   FDCE #(
     .INIT(1),
     .IS_C_INVERTED(0)
-  ) \$auto$simplemap.cc:527:simplemap_adff_sdff$1597CLBLM_R_X27Y43_SLICE_X43Y43_D_FDCE  (
+  ) CLBLM_R_X27Y43_SLICE_X43Y43_D_FDCE (
 .C(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O),
 .CE(1'b1),
-.CLR(\mmcme2_test.rst ),
+.CLR(CLBLM_R_X27Y19_SLICE_X43Y19_CO5),
 .D(CLBLM_R_X27Y43_SLICE_X43Y43_DO5),
-.Q(\$abc$4817$aiger4816$340 )
+.Q(CLBLM_R_X27Y43_SLICE_X43Y43_DQ)
   );
 
 
   (* KEEP, DONT_TOUCH, BEL = "CARRY4" *)
   CARRY4 #(
   ) CLBLM_R_X27Y43_SLICE_X43Y43_CARRY4 (
-.CI(\$abc$4817$aiger4816$344 ),
+.CI(CLBLM_R_X27Y42_SLICE_X43Y42_COUT),
 .CO({CLBLM_R_X27Y43_SLICE_X43Y43_D_CY, CLBLM_R_X27Y43_SLICE_X43Y43_C_CY, CLBLM_R_X27Y43_SLICE_X43Y43_B_CY, CLBLM_R_X27Y43_SLICE_X43Y43_A_CY}),
 .CYINIT(1'b0),
 .DI({1'b0, 1'b0, 1'b0, 1'b0}),
-.O({\$auto$alumacc.cc:485:replace_alu$1454.O [23], \$auto$alumacc.cc:485:replace_alu$1454.O [22], \$auto$alumacc.cc:485:replace_alu$1454.O [21], \$auto$alumacc.cc:485:replace_alu$1454.O [20]}),
+.O({CLBLM_R_X27Y43_SLICE_X43Y43_D_XOR, CLBLM_R_X27Y43_SLICE_X43Y43_C_XOR, CLBLM_R_X27Y43_SLICE_X43Y43_B_XOR, CLBLM_R_X27Y43_SLICE_X43Y43_A_XOR}),
 .S({CLBLM_R_X27Y43_SLICE_X43Y43_DO6, CLBLM_R_X27Y43_SLICE_X43Y43_CO6, CLBLM_R_X27Y43_SLICE_X43Y43_BO6, CLBLM_R_X27Y43_SLICE_X43Y43_AO6})
   );
 
@@ -11423,8 +11232,8 @@ module top(
 .I0(1'b1),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$auto$alumacc.cc:485:replace_alu$1454.O [20]),
-.I4(\$abc$4817$aiger4816$343 ),
+.I3(CLBLM_R_X27Y43_SLICE_X43Y43_A_XOR),
+.I4(CLBLM_R_X27Y38_SLICE_X43Y38_BQ),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y43_SLICE_X43Y43_DO5),
 .O6(CLBLM_R_X27Y43_SLICE_X43Y43_DO6)
@@ -11435,10 +11244,10 @@ module top(
   LUT6_2 #(
     .INIT(64'hff00ff00aaaaaaaa)
   ) CLBLM_R_X27Y43_SLICE_X43Y43_CLUT (
-.I0(\$auto$alumacc.cc:485:replace_alu$1454.O [21]),
+.I0(CLBLM_R_X27Y43_SLICE_X43Y43_B_XOR),
 .I1(1'b1),
 .I2(1'b1),
-.I3(\$abc$4817$aiger4816$342 ),
+.I3(CLBLM_R_X27Y38_SLICE_X43Y38_AQ),
 .I4(1'b1),
 .I5(1'b1),
 .O5(CLBLM_R_X27Y43_SLICE_X43Y43_CO5),
@@ -11451,7 +11260,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X27Y43_SLICE_X43Y43_BLUT (
 .I0(1'b1),
-.I1(\mmcme2_test.O_CNT [1]),
+.I1(CLBLM_R_X27Y43_SLICE_X43Y43_CQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -11466,7 +11275,7 @@ module top(
     .INIT(64'hcccccccc00000000)
   ) CLBLM_R_X27Y43_SLICE_X43Y43_ALUT (
 .I0(1'b1),
-.I1(\$abc$4817$aiger4816$340 ),
+.I1(CLBLM_R_X27Y43_SLICE_X43Y43_DQ),
 .I2(1'b1),
 .I3(1'b1),
 .I4(1'b1),
@@ -11487,14 +11296,14 @@ module top(
     .IS_S1_INVERTED(1),
     .PRESELECT_I0("TRUE"),
     .PRESELECT_I1("FALSE")
-  ) \$flatten\mmcme2_test.$genblock$mmcme2_test.v:127$1208[0].\bufgCLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y0_BUFGCTRL  (
+  ) CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y0_BUFGCTRL (
 .CE0(1'b1),
 .CE1(1'b1),
-.I0(\mmcme2_test.clk [0]),
+.I0(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT0),
 .I1(1'b1),
 .IGNORE0(1'b1),
 .IGNORE1(1'b1),
-.O(\mmcme2_test.gclk [0]),
+.O(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y0_O),
 .S0(1'b1),
 .S1(1'b1)
   );
@@ -11511,14 +11320,14 @@ module top(
     .IS_S1_INVERTED(1),
     .PRESELECT_I0("TRUE"),
     .PRESELECT_I1("FALSE")
-  ) \$flatten\mmcme2_test.$genblock$mmcme2_test.v:127$1209[1].\bufgCLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y1_BUFGCTRL  (
+  ) CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y1_BUFGCTRL (
 .CE0(1'b1),
 .CE1(1'b1),
-.I0(\mmcme2_test.clk [1]),
+.I0(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT1),
 .I1(1'b1),
 .IGNORE0(1'b1),
 .IGNORE1(1'b1),
-.O(\mmcme2_test.gclk [1]),
+.O(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y1_O),
 .S0(1'b1),
 .S1(1'b1)
   );
@@ -11535,14 +11344,14 @@ module top(
     .IS_S1_INVERTED(1),
     .PRESELECT_I0("TRUE"),
     .PRESELECT_I1("FALSE")
-  ) \$flatten\mmcme2_test.$genblock$mmcme2_test.v:127$1210[2].\bufgCLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y10_BUFGCTRL  (
+  ) CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y10_BUFGCTRL (
 .CE0(1'b1),
 .CE1(1'b1),
-.I0(\mmcme2_test.clk [2]),
+.I0(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT2),
 .I1(1'b1),
 .IGNORE0(1'b1),
 .IGNORE1(1'b1),
-.O(\mmcme2_test.gclk [2]),
+.O(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y10_O),
 .S0(1'b1),
 .S1(1'b1)
   );
@@ -11559,14 +11368,14 @@ module top(
     .IS_S1_INVERTED(1),
     .PRESELECT_I0("TRUE"),
     .PRESELECT_I1("FALSE")
-  ) \$flatten\mmcme2_test.$genblock$mmcme2_test.v:127$1211[3].\bufgCLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y11_BUFGCTRL  (
+  ) CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y11_BUFGCTRL (
 .CE0(1'b1),
 .CE1(1'b1),
-.I0(\mmcme2_test.clk [3]),
+.I0(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT3),
 .I1(1'b1),
 .IGNORE0(1'b1),
 .IGNORE1(1'b1),
-.O(\mmcme2_test.gclk [3]),
+.O(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y11_O),
 .S0(1'b1),
 .S1(1'b1)
   );
@@ -11583,14 +11392,14 @@ module top(
     .IS_S1_INVERTED(1),
     .PRESELECT_I0("TRUE"),
     .PRESELECT_I1("FALSE")
-  ) \$flatten\mmcme2_test.$genblock$mmcme2_test.v:127$1212[4].\bufgCLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_BUFGCTRL  (
+  ) CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_BUFGCTRL (
 .CE0(1'b1),
 .CE1(1'b1),
-.I0(\mmcme2_test.clk [4]),
+.I0(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT4),
 .I1(1'b1),
 .IGNORE0(1'b1),
 .IGNORE1(1'b1),
-.O(\mmcme2_test.gclk [4]),
+.O(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_O),
 .S0(1'b1),
 .S1(1'b1)
   );
@@ -11607,14 +11416,14 @@ module top(
     .IS_S1_INVERTED(1),
     .PRESELECT_I0("TRUE"),
     .PRESELECT_I1("FALSE")
-  ) \$flatten\mmcme2_test.$genblock$mmcme2_test.v:127$1213[5].\bufgCLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_BUFGCTRL  (
+  ) CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_BUFGCTRL (
 .CE0(1'b1),
 .CE1(1'b1),
-.I0(\mmcme2_test.clk [5]),
+.I0(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT5),
 .I1(1'b1),
 .IGNORE0(1'b1),
 .IGNORE1(1'b1),
-.O(\mmcme2_test.gclk [5]),
+.O(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_O),
 .S0(1'b1),
 .S1(1'b1)
   );
@@ -11631,14 +11440,14 @@ module top(
     .IS_S1_INVERTED(1),
     .PRESELECT_I0("TRUE"),
     .PRESELECT_I1("FALSE")
-  ) \bufgctrlCLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y14_BUFGCTRL  (
+  ) CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y14_BUFGCTRL (
 .CE0(1'b1),
 .CE1(1'b1),
 .I0(RIOB33_X43Y25_IOB_X1Y26_I),
 .I1(1'b1),
 .IGNORE0(1'b1),
 .IGNORE1(1'b1),
-.O(\CLK ),
+.O(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y14_O),
 .S0(1'b1),
 .S1(1'b1)
   );
@@ -11655,14 +11464,14 @@ module top(
     .IS_S1_INVERTED(1),
     .PRESELECT_I0("TRUE"),
     .PRESELECT_I1("FALSE")
-  ) \mmcme2_test.bufg50CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_BUFGCTRL  (
-.CE0(\mmcme2_test.clk50_ce ),
+  ) CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_BUFGCTRL (
+.CE0(CLBLL_L_X24Y46_SLICE_X36Y46_DQ),
 .CE1(1'b1),
 .I0(RIOB33_X43Y25_IOB_X1Y26_I),
 .I1(1'b1),
 .IGNORE0(1'b1),
 .IGNORE1(1'b1),
-.O(\mmcme2_test.clk50 ),
+.O(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_O),
 .S0(1'b1),
 .S1(1'b1)
   );
@@ -11675,7 +11484,7 @@ module top(
     .IS_CE_INVERTED(0)
   ) CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_BUFHCE (
 .CE(1'b1),
-.I(\mmcme2_test.gclk [2]),
+.I(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y10_O),
 .O(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O)
   );
 
@@ -11687,7 +11496,7 @@ module top(
     .IS_CE_INVERTED(0)
   ) CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_BUFHCE (
 .CE(1'b1),
-.I(\mmcme2_test.gclk [4]),
+.I(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_O),
 .O(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O)
   );
 
@@ -11699,7 +11508,7 @@ module top(
     .IS_CE_INVERTED(0)
   ) CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_BUFHCE (
 .CE(1'b1),
-.I(\mmcme2_test.gclk [5]),
+.I(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_O),
 .O(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O)
   );
 
@@ -11711,7 +11520,7 @@ module top(
     .IS_CE_INVERTED(0)
   ) CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_BUFHCE (
 .CE(1'b1),
-.I(\mmcme2_test.gclk [0]),
+.I(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y0_O),
 .O(CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O)
   );
 
@@ -11723,7 +11532,7 @@ module top(
     .IS_CE_INVERTED(0)
   ) CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_BUFHCE (
 .CE(1'b1),
-.I(\mmcme2_test.gclk [1]),
+.I(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y1_O),
 .O(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O)
   );
 
@@ -11735,7 +11544,7 @@ module top(
     .IS_CE_INVERTED(0)
   ) CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y11_BUFHCE (
 .CE(1'b1),
-.I(\CLK ),
+.I(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y14_O),
 .O(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y11_O)
   );
 
@@ -11747,7 +11556,7 @@ module top(
     .IS_CE_INVERTED(0)
   ) CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_BUFHCE (
 .CE(1'b1),
-.I(\mmcme2_test.gclk [3]),
+.I(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y11_O),
 .O(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O)
   );
 
@@ -11759,7 +11568,7 @@ module top(
     .IS_CE_INVERTED(0)
   ) CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y8_BUFHCE (
 .CE(1'b1),
-.I(\mmcme2_test.clk50 ),
+.I(CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_O),
 .O(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y8_O)
   );
 
@@ -11792,7 +11601,7 @@ module top(
     .CLKOUT6_DIVIDE(1),
     .CLKOUT6_DUTY_CYCLE(0.500),
     .CLKOUT6_PHASE(0.000),
-    .COMPENSATION(),
+    .COMPENSATION(""),
     .DIVCLK_DIVIDE(1),
     .IS_CLKINSEL_INVERTED(1'b0),
     .IS_PSEN_INVERTED(1'b1),
@@ -11800,25 +11609,25 @@ module top(
     .IS_PWRDWN_INVERTED(1'b0),
     .IS_RST_INVERTED(1'b0),
     .STARTUP_WAIT("FALSE")
-  ) \mmcme2_test.mmcmCMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_MMCME2_ADV  (
-.CLKFBIN(\mmcme2_test.clk_fb_o ),
-.CLKFBOUT(\mmcme2_test.clk_fb_o ),
+  ) CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_MMCME2_ADV (
+.CLKFBIN(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKFBOUT),
+.CLKFBOUT(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKFBOUT),
 .CLKFBOUTB(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKFBOUTB),
 .CLKFBSTOPPED(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKFBSTOPPED),
 .CLKIN1(CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y8_O),
 .CLKIN2(RIOB33_X43Y25_IOB_X1Y26_I),
 .CLKINSEL(LIOB33_X0Y9_IOB_X0Y10_I),
 .CLKINSTOPPED(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKINSTOPPED),
-.CLKOUT0(\mmcme2_test.clk [0]),
+.CLKOUT0(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT0),
 .CLKOUT0B(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT0B),
-.CLKOUT1(\mmcme2_test.clk [1]),
+.CLKOUT1(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT1),
 .CLKOUT1B(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT1B),
-.CLKOUT2(\mmcme2_test.clk [2]),
+.CLKOUT2(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT2),
 .CLKOUT2B(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT2B),
-.CLKOUT3(\mmcme2_test.clk [3]),
+.CLKOUT3(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT3),
 .CLKOUT3B(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT3B),
-.CLKOUT4(\mmcme2_test.clk [4]),
-.CLKOUT5(\mmcme2_test.clk [5]),
+.CLKOUT4(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT4),
+.CLKOUT5(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT5),
 .DADDR({1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0}),
 .DCLK(1'b0),
 .DEN(1'b0),
@@ -11826,13 +11635,13 @@ module top(
 .DO({CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO15, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO14, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO13, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO12, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO11, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO10, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO9, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO8, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO7, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO6, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO5, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO4, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO3, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO2, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO1, CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DO0}),
 .DRDY(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DRDY),
 .DWE(1'b0),
-.LOCKED(\mmcme2_test.O_LOCKED ),
+.LOCKED(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_LOCKED),
 .PSCLK(1'b0),
 .PSDONE(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_PSDONE),
 .PSEN(1'b1),
 .PSINCDEC(1'b1),
 .PWRDWN(LIOB33_X0Y11_IOB_X0Y12_I),
-.RST(\RST )
+.RST(CLBLM_R_X27Y8_SLICE_X42Y8_DQ)
   );
 
 
@@ -11853,7 +11662,7 @@ module top(
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y3_IOB_X0Y3_OBUF (
-.I(\mmcme2_test.O_CNT [0]),
+.I(CLBLM_R_X3Y10_SLICE_X2Y10_CQ),
 .O(led[0])
   );
 
@@ -11864,7 +11673,7 @@ module top(
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y3_IOB_X0Y4_OBUF (
-.I(\mmcme2_test.O_CNT [5]),
+.I(CLBLM_R_X11Y10_SLICE_X15Y10_AQ),
 .O(led[5])
   );
 
@@ -11911,7 +11720,7 @@ module top(
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y17_IOB_X0Y18_OBUF (
-.I(\mmcme2_test.O_CNT [4]),
+.I(CLBLM_R_X5Y20_SLICE_X7Y20_AQ),
 .O(led[4])
   );
 
@@ -11922,7 +11731,7 @@ module top(
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y19_IOB_X0Y19_OBUF (
-.I(\mmcme2_test.O_CNT [3]),
+.I(CLBLM_R_X27Y19_SLICE_X43Y19_AQ),
 .O(led[3])
   );
 
@@ -11933,7 +11742,7 @@ module top(
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y19_IOB_X0Y20_OBUF (
-.I(\mmcme2_test.O_CNT [2]),
+.I(CLBLM_R_X11Y33_SLICE_X14Y33_AQ),
 .O(led[2])
   );
 
@@ -11964,7 +11773,7 @@ module top(
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y43_IOB_X0Y43_OBUF (
-.I(\mmcme2_test.O_CNT [1]),
+.I(CLBLM_R_X27Y43_SLICE_X43Y43_CQ),
 .O(led[1])
   );
 
@@ -11975,7 +11784,7 @@ module top(
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_SING_X0Y0_IOB_X0Y0_OBUF (
-.I(\mmcme2_test.O_LOCKED ),
+.I(CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_LOCKED),
 .O(led[6])
   );
 
@@ -11987,479 +11796,6 @@ module top(
 .I(clk),
 .O(RIOB33_X43Y25_IOB_X1Y26_I)
   );
-  assign CLBLL_L_X24Y46_SLICE_X36Y46_DQ = \mmcme2_test.clk50_ce ;
-  assign CLBLL_L_X26Y9_SLICE_X40Y9_DQ = \rst_sr [3];
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_COUT = \$abc$4817$aiger4816$216 ;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_AQ = \$abc$4817$aiger4816$201 ;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_BQ = \$abc$4817$aiger4816$202 ;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_CQ = \$abc$4817$aiger4816$203 ;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_DQ = \$techmap3074$abc$2918$lut$not$aiger2917$193.A ;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_BMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [1];
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_CMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [2];
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_DMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [3];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_COUT = \$abc$4817$aiger4816$229 ;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_AQ = \$abc$4817$aiger4816$215 ;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_BQ = \$abc$4817$aiger4816$213 ;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_CQ = \$abc$4817$aiger4816$214 ;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_DQ = \$abc$4817$aiger4816$212 ;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_AMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [4];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_BMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [5];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_CMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [6];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_DMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [7];
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_COUT = \$abc$4817$aiger4816$242 ;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_AQ = \$abc$4817$aiger4816$227 ;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_BQ = \$abc$4817$aiger4816$226 ;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_CQ = \$abc$4817$aiger4816$225 ;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_DQ = \$abc$4817$aiger4816$228 ;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_AMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [8];
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_BMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [9];
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_CMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [10];
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_DMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [11];
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_COUT = \$abc$4817$aiger4816$255 ;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_AQ = \$abc$4817$aiger4816$239 ;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_BQ = \$abc$4817$aiger4816$241 ;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_CQ = \$abc$4817$aiger4816$240 ;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_DQ = \$abc$4817$aiger4816$238 ;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_AMUX = \$abc$4817$aiger4816$254 ;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_BMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [13];
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_CMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [14];
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_DMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [15];
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_COUT = \$abc$4817$aiger4816$268 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_AQ = \$abc$4817$aiger4816$267 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_BQ = \$abc$4817$aiger4816$252 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_CQ = \$abc$4817$aiger4816$253 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_DQ = \$abc$4817$aiger4816$251 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_AMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [16];
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_BMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [17];
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_CMUX = \$abc$4817$aiger4816$266 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_DMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [19];
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_CQ = \mmcme2_test.O_CNT [0];
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_DQ = \$abc$4817$aiger4816$264 ;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_AMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [20];
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_BMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [21];
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_CMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [22];
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_DMUX = \$auto$alumacc.cc:485:replace_alu$1451.O [23];
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_COUT = \$abc$4817$aiger4816$520 ;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_AQ = \$abc$4817$aiger4816$507 ;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_BQ = \$abc$4817$aiger4816$506 ;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_CQ = \$abc$4817$aiger4816$505 ;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_DQ = \$techmap3070$abc$2918$lut$not$aiger2917$481.A ;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_BMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [1];
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_CMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [2];
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_DMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [3];
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_COUT = \$abc$4817$aiger4816$533 ;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_AQ = \$abc$4817$aiger4816$518 ;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_BQ = \$abc$4817$aiger4816$516 ;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_CQ = \$abc$4817$aiger4816$519 ;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_DQ = \$abc$4817$aiger4816$517 ;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_AMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [4];
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_BMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [5];
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_CMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [6];
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_DMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [7];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_COUT = \$abc$4817$aiger4816$546 ;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_AQ = \$abc$4817$aiger4816$531 ;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_BQ = \$abc$4817$aiger4816$529 ;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_CQ = \$abc$4817$aiger4816$532 ;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_DQ = \$abc$4817$aiger4816$530 ;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_AMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [8];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_BMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [9];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_CMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [10];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_DMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [11];
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_COUT = \$abc$4817$aiger4816$559 ;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_AQ = \$abc$4817$aiger4816$542 ;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_BQ = \$abc$4817$aiger4816$545 ;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_CQ = \$abc$4817$aiger4816$543 ;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_DQ = \$abc$4817$aiger4816$544 ;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_BMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [13];
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_CMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [14];
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_DMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [15];
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_COUT = \$abc$4817$aiger4816$572 ;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_AQ = \$abc$4817$aiger4816$557 ;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_BQ = \$abc$4817$aiger4816$556 ;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_CQ = \$abc$4817$aiger4816$555 ;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_DQ = \$abc$4817$aiger4816$558 ;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_BMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [17];
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_CMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [18];
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_DMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [19];
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_AQ = \mmcme2_test.O_CNT [4];
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_BQ = \$abc$4817$aiger4816$571 ;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_CQ = \$abc$4817$aiger4816$569 ;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_DQ = \$abc$4817$aiger4816$568 ;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_AMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [20];
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_BMUX = \$auto$alumacc.cc:485:replace_alu$1463.O [21];
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_COUT = \$abc$4817$aiger4816$596 ;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_AQ = \$abc$4817$aiger4816$582 ;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_BQ = \$abc$4817$aiger4816$581 ;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_CQ = \$abc$4817$aiger4816$583 ;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_DQ = \$techmap3069$abc$2918$lut$not$aiger2917$553.A ;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_BMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [1];
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_CMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [2];
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_DMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [3];
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_COUT = \$abc$4817$aiger4816$609 ;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_AQ = \$abc$4817$aiger4816$593 ;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_BQ = \$abc$4817$aiger4816$592 ;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_CQ = \$abc$4817$aiger4816$595 ;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_DQ = \$abc$4817$aiger4816$594 ;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_AMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [4];
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_BMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [5];
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_CMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [6];
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_DMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [7];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_COUT = \$abc$4817$aiger4816$622 ;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_AQ = \$abc$4817$aiger4816$606 ;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_BQ = \$abc$4817$aiger4816$605 ;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_CQ = \$abc$4817$aiger4816$608 ;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_DQ = \$abc$4817$aiger4816$607 ;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_AMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [8];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_BMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [9];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_CMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [10];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_DMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [11];
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_COUT = \$abc$4817$aiger4816$635 ;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_AQ = \$abc$4817$aiger4816$621 ;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_BQ = \$abc$4817$aiger4816$619 ;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_CQ = \$abc$4817$aiger4816$618 ;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_DQ = \$abc$4817$aiger4816$620 ;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_BMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [13];
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_CMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [14];
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_DMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [15];
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_COUT = \$abc$4817$aiger4816$648 ;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_AQ = \$abc$4817$aiger4816$634 ;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_BQ = \$abc$4817$aiger4816$632 ;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_CQ = \$abc$4817$aiger4816$631 ;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_DQ = \$abc$4817$aiger4816$633 ;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_BMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [17];
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_CMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [18];
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_DMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [19];
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_AQ = \mmcme2_test.O_CNT [5];
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_BQ = \$abc$4817$aiger4816$647 ;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_CQ = \$abc$4817$aiger4816$644 ;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_DQ = \$abc$4817$aiger4816$645 ;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_AMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [20];
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_BMUX = \$auto$alumacc.cc:485:replace_alu$1466.O [21];
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_COUT = \$abc$4817$aiger4816$368 ;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_AQ = \$abc$4817$aiger4816$354 ;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_BQ = \$abc$4817$aiger4816$355 ;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_CQ = \$abc$4817$aiger4816$353 ;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_DQ = \$techmap3072$abc$2918$lut$not$aiger2917$337.A ;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_BMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [1];
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_CMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [2];
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_DMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [3];
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_COUT = \$abc$4817$aiger4816$381 ;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_AQ = \$abc$4817$aiger4816$366 ;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_BQ = \$abc$4817$aiger4816$367 ;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_CQ = \$abc$4817$aiger4816$364 ;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_DQ = \$abc$4817$aiger4816$365 ;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_AMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [4];
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_BMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [5];
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_CMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [6];
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_DMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [7];
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_COUT = \$abc$4817$aiger4816$394 ;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_AQ = \$abc$4817$aiger4816$379 ;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_BQ = \$abc$4817$aiger4816$380 ;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_CQ = \$abc$4817$aiger4816$377 ;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_DQ = \$abc$4817$aiger4816$378 ;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_AMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [8];
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_BMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [9];
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_CMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [10];
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_DMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [11];
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_COUT = \$abc$4817$aiger4816$407 ;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_AQ = \$abc$4817$aiger4816$390 ;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_BQ = \$abc$4817$aiger4816$392 ;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_CQ = \$abc$4817$aiger4816$393 ;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_DQ = \$abc$4817$aiger4816$391 ;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_BMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [13];
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_CMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [14];
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_DMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [15];
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_COUT = \$abc$4817$aiger4816$420 ;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_AQ = \$abc$4817$aiger4816$404 ;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_BQ = \$abc$4817$aiger4816$406 ;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_CQ = \$abc$4817$aiger4816$403 ;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_DQ = \$abc$4817$aiger4816$405 ;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_BMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [17];
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_CMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [18];
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_DMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [19];
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_AQ = \mmcme2_test.O_CNT [2];
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_BQ = \$abc$4817$aiger4816$419 ;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_CQ = \$abc$4817$aiger4816$417 ;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_DQ = \$abc$4817$aiger4816$418 ;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_AMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [20];
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_BMUX = \$auto$alumacc.cc:485:replace_alu$1457.O [21];
-  assign CLBLM_R_X27Y8_SLICE_X42Y8_BQ = \rst_sr [2];
-  assign CLBLM_R_X27Y8_SLICE_X42Y8_CQ = \rst_sr [1];
-  assign CLBLM_R_X27Y8_SLICE_X42Y8_DQ = \RST ;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_COUT = \$abc$4817$aiger4816$444 ;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_AQ = \$abc$4817$aiger4816$431 ;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_BQ = \$abc$4817$aiger4816$429 ;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_CQ = \$abc$4817$aiger4816$430 ;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_DQ = \$techmap3071$abc$2918$lut$not$aiger2917$409.A ;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_BMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [1];
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_CMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [2];
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_DMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [3];
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_COUT = \$abc$4817$aiger4816$457 ;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_AQ = \$abc$4817$aiger4816$441 ;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_BQ = \$abc$4817$aiger4816$440 ;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_CQ = \$abc$4817$aiger4816$443 ;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_DQ = \$abc$4817$aiger4816$442 ;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_AMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [4];
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_BMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [5];
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_CMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [6];
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_DMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [7];
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_COUT = \$abc$4817$aiger4816$470 ;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_AQ = \$abc$4817$aiger4816$456 ;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_BQ = \$abc$4817$aiger4816$453 ;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_CQ = \$abc$4817$aiger4816$454 ;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_DQ = \$abc$4817$aiger4816$455 ;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_AMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [8];
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_BMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [9];
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_CMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [10];
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_DMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [11];
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_COUT = \$abc$4817$aiger4816$483 ;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_AQ = \$abc$4817$aiger4816$469 ;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_BQ = \$abc$4817$aiger4816$466 ;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_CQ = \$abc$4817$aiger4816$468 ;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_DQ = \$abc$4817$aiger4816$467 ;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_BMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [13];
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_CMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [14];
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_DMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [15];
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_COUT = \$abc$4817$aiger4816$496 ;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_AQ = \$abc$4817$aiger4816$479 ;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_BQ = \$abc$4817$aiger4816$481 ;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_CQ = \$abc$4817$aiger4816$482 ;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_DQ = \$abc$4817$aiger4816$480 ;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_BMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [17];
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_CMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [18];
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_DMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [19];
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_AQ = \mmcme2_test.O_CNT [3];
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_BQ = \$abc$4817$aiger4816$493 ;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_CQ = \$abc$4817$aiger4816$492 ;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_DQ = \$abc$4817$aiger4816$494 ;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_AMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [20];
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_BMUX = \$auto$alumacc.cc:485:replace_alu$1460.O [21];
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_CMUX = \mmcme2_test.rst ;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_COUT = \$abc$4817$aiger4816$292 ;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_AQ = \$abc$4817$aiger4816$342 ;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_BQ = \$abc$4817$aiger4816$343 ;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_CQ = \$abc$4817$aiger4816$278 ;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_DQ = \$techmap3073$abc$2918$lut$not$aiger2917$265.A ;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_BMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [1];
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_CMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [2];
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_DMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [3];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_COUT = \$abc$4817$aiger4816$305 ;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_AQ = \$abc$4817$aiger4816$290 ;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_BQ = \$abc$4817$aiger4816$291 ;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_CQ = \$abc$4817$aiger4816$288 ;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_DQ = \$abc$4817$aiger4816$289 ;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_AMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [4];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_BMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [5];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_CMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [6];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_DMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [7];
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_COUT = \$abc$4817$aiger4816$318 ;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_AQ = \$abc$4817$aiger4816$303 ;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_BQ = \$abc$4817$aiger4816$304 ;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_CQ = \$abc$4817$aiger4816$301 ;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_DQ = \$abc$4817$aiger4816$302 ;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_AMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [8];
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_BMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [9];
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_CMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [10];
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_DMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [11];
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_COUT = \$abc$4817$aiger4816$331 ;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_AQ = \$abc$4817$aiger4816$314 ;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_BQ = \$abc$4817$aiger4816$316 ;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_CQ = \$abc$4817$aiger4816$317 ;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_DQ = \$abc$4817$aiger4816$315 ;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_AMUX = \$abc$4817$aiger4816$279 ;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_BMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [13];
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_CMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [14];
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_DMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [15];
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_COUT = \$abc$4817$aiger4816$344 ;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_AQ = \$abc$4817$aiger4816$327 ;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_BQ = \$abc$4817$aiger4816$329 ;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_CQ = \$abc$4817$aiger4816$330 ;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_DQ = \$abc$4817$aiger4816$328 ;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_AMUX = \$abc$4817$aiger4816$277 ;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_BMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [17];
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_CMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [18];
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_DMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [19];
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_CQ = \mmcme2_test.O_CNT [1];
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_DQ = \$abc$4817$aiger4816$340 ;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_AMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [20];
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_BMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [21];
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_CMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [22];
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_DMUX = \$auto$alumacc.cc:485:replace_alu$1454.O [23];
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y0_O = \mmcme2_test.gclk [0];
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y1_O = \mmcme2_test.gclk [1];
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y10_O = \mmcme2_test.gclk [2];
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y11_O = \mmcme2_test.gclk [3];
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_O = \mmcme2_test.gclk [4];
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_O = \mmcme2_test.gclk [5];
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y14_O = \CLK ;
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_O = \mmcme2_test.clk50 ;
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_LOCKED = \mmcme2_test.O_LOCKED ;
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKFBOUT = \mmcme2_test.clk_fb_o ;
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT0 = \mmcme2_test.clk [0];
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT1 = \mmcme2_test.clk [1];
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT2 = \mmcme2_test.clk [2];
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT3 = \mmcme2_test.clk [3];
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT4 = \mmcme2_test.clk [4];
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT5 = \mmcme2_test.clk [5];
-  assign LIOI3_X0Y5_ILOGIC_X0Y6_O = LIOB33_X0Y5_IOB_X0Y6_I;
-  assign LIOI3_X0Y9_ILOGIC_X0Y10_O = LIOB33_X0Y9_IOB_X0Y10_I;
-  assign LIOI3_X0Y11_ILOGIC_X0Y12_O = LIOB33_X0Y11_IOB_X0Y12_I;
-  assign LIOI3_X0Y11_ILOGIC_X0Y11_O = LIOB33_X0Y11_IOB_X0Y11_I;
-  assign LIOI3_X0Y25_ILOGIC_X0Y26_O = LIOB33_X0Y25_IOB_X0Y26_I;
-  assign RIOI3_X43Y25_ILOGIC_X1Y26_O = RIOB33_X43Y25_IOB_X1Y26_I;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_B_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [1];
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_C_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [2];
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_D_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [3];
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_D_CY = \$abc$4817$aiger4816$216 ;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_A_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [4];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_B_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [5];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_C_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [6];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_D_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [7];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_D_CY = \$abc$4817$aiger4816$229 ;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_A_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [8];
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_B_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [9];
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_C_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [10];
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_D_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [11];
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_D_CY = \$abc$4817$aiger4816$242 ;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_B_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [13];
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_C_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [14];
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_D_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [15];
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_D_CY = \$abc$4817$aiger4816$255 ;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_A5Q = \$abc$4817$aiger4816$254 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_A_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [16];
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_B_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [17];
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_D_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [19];
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_D_CY = \$abc$4817$aiger4816$268 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_C5Q = \$abc$4817$aiger4816$266 ;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_A_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [20];
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_B_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [21];
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_C_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [22];
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_D_XOR = \$auto$alumacc.cc:485:replace_alu$1451.O [23];
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_B_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [1];
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_C_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [2];
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_D_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [3];
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_D_CY = \$abc$4817$aiger4816$520 ;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_A_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [4];
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_B_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [5];
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_C_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [6];
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_D_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [7];
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_D_CY = \$abc$4817$aiger4816$533 ;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_A_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [8];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_B_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [9];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_C_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [10];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_D_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [11];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_D_CY = \$abc$4817$aiger4816$546 ;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_B_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [13];
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_C_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [14];
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_D_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [15];
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_D_CY = \$abc$4817$aiger4816$559 ;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_B_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [17];
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_C_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [18];
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_D_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [19];
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_D_CY = \$abc$4817$aiger4816$572 ;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_A_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [20];
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_B_XOR = \$auto$alumacc.cc:485:replace_alu$1463.O [21];
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_B_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [1];
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_C_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [2];
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_D_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [3];
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_D_CY = \$abc$4817$aiger4816$596 ;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_A_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [4];
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_B_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [5];
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_C_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [6];
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_D_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [7];
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_D_CY = \$abc$4817$aiger4816$609 ;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_A_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [8];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_B_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [9];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_C_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [10];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_D_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [11];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_D_CY = \$abc$4817$aiger4816$622 ;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_B_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [13];
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_C_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [14];
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_D_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [15];
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_D_CY = \$abc$4817$aiger4816$635 ;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_B_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [17];
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_C_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [18];
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_D_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [19];
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_D_CY = \$abc$4817$aiger4816$648 ;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_A_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [20];
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_B_XOR = \$auto$alumacc.cc:485:replace_alu$1466.O [21];
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_B_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [1];
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_C_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [2];
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_D_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [3];
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_D_CY = \$abc$4817$aiger4816$368 ;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_A_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [4];
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_B_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [5];
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_C_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [6];
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_D_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [7];
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_D_CY = \$abc$4817$aiger4816$381 ;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_A_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [8];
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_B_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [9];
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_C_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [10];
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_D_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [11];
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_D_CY = \$abc$4817$aiger4816$394 ;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_B_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [13];
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_C_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [14];
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_D_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [15];
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_D_CY = \$abc$4817$aiger4816$407 ;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_B_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [17];
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_C_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [18];
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_D_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [19];
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_D_CY = \$abc$4817$aiger4816$420 ;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_A_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [20];
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_B_XOR = \$auto$alumacc.cc:485:replace_alu$1457.O [21];
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_B_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [1];
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_C_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [2];
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_D_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [3];
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_D_CY = \$abc$4817$aiger4816$444 ;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_A_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [4];
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_B_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [5];
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_C_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [6];
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_D_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [7];
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_D_CY = \$abc$4817$aiger4816$457 ;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_A_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [8];
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_B_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [9];
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_C_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [10];
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_D_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [11];
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_D_CY = \$abc$4817$aiger4816$470 ;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_B_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [13];
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_C_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [14];
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_D_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [15];
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_D_CY = \$abc$4817$aiger4816$483 ;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_B_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [17];
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_C_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [18];
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_D_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [19];
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_D_CY = \$abc$4817$aiger4816$496 ;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_CO5 = \mmcme2_test.rst ;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_A_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [20];
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_B_XOR = \$auto$alumacc.cc:485:replace_alu$1460.O [21];
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_B_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [1];
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_C_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [2];
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_D_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [3];
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_D_CY = \$abc$4817$aiger4816$292 ;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_A_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [4];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_B_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [5];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_C_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [6];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_D_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [7];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_D_CY = \$abc$4817$aiger4816$305 ;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_A_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [8];
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_B_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [9];
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_C_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [10];
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_D_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [11];
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_D_CY = \$abc$4817$aiger4816$318 ;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_B_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [13];
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_C_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [14];
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_D_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [15];
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_D_CY = \$abc$4817$aiger4816$331 ;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_A5Q = \$abc$4817$aiger4816$279 ;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_B_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [17];
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_C_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [18];
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_D_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [19];
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_D_CY = \$abc$4817$aiger4816$344 ;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_A5Q = \$abc$4817$aiger4816$277 ;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_A_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [20];
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_B_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [21];
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_C_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [22];
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_D_XOR = \$auto$alumacc.cc:485:replace_alu$1454.O [23];
   assign CLBLL_L_X24Y46_SLICE_X36Y46_A = CLBLL_L_X24Y46_SLICE_X36Y46_AO6;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_B = CLBLL_L_X24Y46_SLICE_X36Y46_BO6;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_C = CLBLL_L_X24Y46_SLICE_X36Y46_CO6;
@@ -12482,6 +11818,9 @@ module top(
   assign CLBLM_R_X3Y5_SLICE_X2Y5_C = CLBLM_R_X3Y5_SLICE_X2Y5_CO6;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_D = CLBLM_R_X3Y5_SLICE_X2Y5_DO6;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_AMUX = CLBLM_R_X3Y5_SLICE_X2Y5_AO6;
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_BMUX = CLBLM_R_X3Y5_SLICE_X2Y5_B_XOR;
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_CMUX = CLBLM_R_X3Y5_SLICE_X2Y5_C_XOR;
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_DMUX = CLBLM_R_X3Y5_SLICE_X2Y5_D_XOR;
   assign CLBLM_R_X3Y5_SLICE_X3Y5_A = CLBLM_R_X3Y5_SLICE_X3Y5_AO6;
   assign CLBLM_R_X3Y5_SLICE_X3Y5_B = CLBLM_R_X3Y5_SLICE_X3Y5_BO6;
   assign CLBLM_R_X3Y5_SLICE_X3Y5_C = CLBLM_R_X3Y5_SLICE_X3Y5_CO6;
@@ -12490,6 +11829,10 @@ module top(
   assign CLBLM_R_X3Y6_SLICE_X2Y6_B = CLBLM_R_X3Y6_SLICE_X2Y6_BO6;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_C = CLBLM_R_X3Y6_SLICE_X2Y6_CO6;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_D = CLBLM_R_X3Y6_SLICE_X2Y6_DO6;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_AMUX = CLBLM_R_X3Y6_SLICE_X2Y6_A_XOR;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_BMUX = CLBLM_R_X3Y6_SLICE_X2Y6_B_XOR;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_CMUX = CLBLM_R_X3Y6_SLICE_X2Y6_C_XOR;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_DMUX = CLBLM_R_X3Y6_SLICE_X2Y6_D_XOR;
   assign CLBLM_R_X3Y6_SLICE_X3Y6_A = CLBLM_R_X3Y6_SLICE_X3Y6_AO6;
   assign CLBLM_R_X3Y6_SLICE_X3Y6_B = CLBLM_R_X3Y6_SLICE_X3Y6_BO6;
   assign CLBLM_R_X3Y6_SLICE_X3Y6_C = CLBLM_R_X3Y6_SLICE_X3Y6_CO6;
@@ -12498,6 +11841,10 @@ module top(
   assign CLBLM_R_X3Y7_SLICE_X2Y7_B = CLBLM_R_X3Y7_SLICE_X2Y7_BO6;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_C = CLBLM_R_X3Y7_SLICE_X2Y7_CO6;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_D = CLBLM_R_X3Y7_SLICE_X2Y7_DO6;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_AMUX = CLBLM_R_X3Y7_SLICE_X2Y7_A_XOR;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_BMUX = CLBLM_R_X3Y7_SLICE_X2Y7_B_XOR;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_CMUX = CLBLM_R_X3Y7_SLICE_X2Y7_C_XOR;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_DMUX = CLBLM_R_X3Y7_SLICE_X2Y7_D_XOR;
   assign CLBLM_R_X3Y7_SLICE_X3Y7_A = CLBLM_R_X3Y7_SLICE_X3Y7_AO6;
   assign CLBLM_R_X3Y7_SLICE_X3Y7_B = CLBLM_R_X3Y7_SLICE_X3Y7_BO6;
   assign CLBLM_R_X3Y7_SLICE_X3Y7_C = CLBLM_R_X3Y7_SLICE_X3Y7_CO6;
@@ -12506,6 +11853,10 @@ module top(
   assign CLBLM_R_X3Y8_SLICE_X2Y8_B = CLBLM_R_X3Y8_SLICE_X2Y8_BO6;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_C = CLBLM_R_X3Y8_SLICE_X2Y8_CO6;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_D = CLBLM_R_X3Y8_SLICE_X2Y8_DO6;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_AMUX = CLBLM_R_X3Y8_SLICE_X2Y8_A5Q;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_BMUX = CLBLM_R_X3Y8_SLICE_X2Y8_B_XOR;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_CMUX = CLBLM_R_X3Y8_SLICE_X2Y8_C_XOR;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_DMUX = CLBLM_R_X3Y8_SLICE_X2Y8_D_XOR;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_A = CLBLM_R_X3Y8_SLICE_X3Y8_AO6;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_B = CLBLM_R_X3Y8_SLICE_X3Y8_BO6;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_C = CLBLM_R_X3Y8_SLICE_X3Y8_CO6;
@@ -12514,6 +11865,10 @@ module top(
   assign CLBLM_R_X3Y9_SLICE_X2Y9_B = CLBLM_R_X3Y9_SLICE_X2Y9_BO6;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_C = CLBLM_R_X3Y9_SLICE_X2Y9_CO6;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_D = CLBLM_R_X3Y9_SLICE_X2Y9_DO6;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_AMUX = CLBLM_R_X3Y9_SLICE_X2Y9_A_XOR;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_BMUX = CLBLM_R_X3Y9_SLICE_X2Y9_B_XOR;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_CMUX = CLBLM_R_X3Y9_SLICE_X2Y9_C5Q;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_DMUX = CLBLM_R_X3Y9_SLICE_X2Y9_D_XOR;
   assign CLBLM_R_X3Y9_SLICE_X3Y9_A = CLBLM_R_X3Y9_SLICE_X3Y9_AO6;
   assign CLBLM_R_X3Y9_SLICE_X3Y9_B = CLBLM_R_X3Y9_SLICE_X3Y9_BO6;
   assign CLBLM_R_X3Y9_SLICE_X3Y9_C = CLBLM_R_X3Y9_SLICE_X3Y9_CO6;
@@ -12522,6 +11877,10 @@ module top(
   assign CLBLM_R_X3Y10_SLICE_X2Y10_B = CLBLM_R_X3Y10_SLICE_X2Y10_BO6;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_C = CLBLM_R_X3Y10_SLICE_X2Y10_CO6;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_D = CLBLM_R_X3Y10_SLICE_X2Y10_DO6;
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_AMUX = CLBLM_R_X3Y10_SLICE_X2Y10_A_XOR;
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_BMUX = CLBLM_R_X3Y10_SLICE_X2Y10_B_XOR;
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_CMUX = CLBLM_R_X3Y10_SLICE_X2Y10_C_XOR;
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_DMUX = CLBLM_R_X3Y10_SLICE_X2Y10_D_XOR;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_A = CLBLM_R_X3Y10_SLICE_X3Y10_AO6;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_B = CLBLM_R_X3Y10_SLICE_X3Y10_BO6;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_C = CLBLM_R_X3Y10_SLICE_X3Y10_CO6;
@@ -12535,6 +11894,9 @@ module top(
   assign CLBLM_R_X5Y15_SLICE_X7Y15_C = CLBLM_R_X5Y15_SLICE_X7Y15_CO6;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_D = CLBLM_R_X5Y15_SLICE_X7Y15_DO6;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_AMUX = CLBLM_R_X5Y15_SLICE_X7Y15_AO6;
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_BMUX = CLBLM_R_X5Y15_SLICE_X7Y15_B_XOR;
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_CMUX = CLBLM_R_X5Y15_SLICE_X7Y15_C_XOR;
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_DMUX = CLBLM_R_X5Y15_SLICE_X7Y15_D_XOR;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_A = CLBLM_R_X5Y16_SLICE_X6Y16_AO6;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_B = CLBLM_R_X5Y16_SLICE_X6Y16_BO6;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_C = CLBLM_R_X5Y16_SLICE_X6Y16_CO6;
@@ -12543,6 +11905,10 @@ module top(
   assign CLBLM_R_X5Y16_SLICE_X7Y16_B = CLBLM_R_X5Y16_SLICE_X7Y16_BO6;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_C = CLBLM_R_X5Y16_SLICE_X7Y16_CO6;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_D = CLBLM_R_X5Y16_SLICE_X7Y16_DO6;
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_AMUX = CLBLM_R_X5Y16_SLICE_X7Y16_A_XOR;
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_BMUX = CLBLM_R_X5Y16_SLICE_X7Y16_B_XOR;
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_CMUX = CLBLM_R_X5Y16_SLICE_X7Y16_C_XOR;
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_DMUX = CLBLM_R_X5Y16_SLICE_X7Y16_D_XOR;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_A = CLBLM_R_X5Y17_SLICE_X6Y17_AO6;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_B = CLBLM_R_X5Y17_SLICE_X6Y17_BO6;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_C = CLBLM_R_X5Y17_SLICE_X6Y17_CO6;
@@ -12551,6 +11917,10 @@ module top(
   assign CLBLM_R_X5Y17_SLICE_X7Y17_B = CLBLM_R_X5Y17_SLICE_X7Y17_BO6;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_C = CLBLM_R_X5Y17_SLICE_X7Y17_CO6;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_D = CLBLM_R_X5Y17_SLICE_X7Y17_DO6;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_AMUX = CLBLM_R_X5Y17_SLICE_X7Y17_A_XOR;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_BMUX = CLBLM_R_X5Y17_SLICE_X7Y17_B_XOR;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_CMUX = CLBLM_R_X5Y17_SLICE_X7Y17_C_XOR;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_DMUX = CLBLM_R_X5Y17_SLICE_X7Y17_D_XOR;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_A = CLBLM_R_X5Y18_SLICE_X6Y18_AO6;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_B = CLBLM_R_X5Y18_SLICE_X6Y18_BO6;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_C = CLBLM_R_X5Y18_SLICE_X6Y18_CO6;
@@ -12559,6 +11929,9 @@ module top(
   assign CLBLM_R_X5Y18_SLICE_X7Y18_B = CLBLM_R_X5Y18_SLICE_X7Y18_BO6;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_C = CLBLM_R_X5Y18_SLICE_X7Y18_CO6;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_D = CLBLM_R_X5Y18_SLICE_X7Y18_DO6;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_BMUX = CLBLM_R_X5Y18_SLICE_X7Y18_B_XOR;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_CMUX = CLBLM_R_X5Y18_SLICE_X7Y18_C_XOR;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_DMUX = CLBLM_R_X5Y18_SLICE_X7Y18_D_XOR;
   assign CLBLM_R_X5Y19_SLICE_X6Y19_A = CLBLM_R_X5Y19_SLICE_X6Y19_AO6;
   assign CLBLM_R_X5Y19_SLICE_X6Y19_B = CLBLM_R_X5Y19_SLICE_X6Y19_BO6;
   assign CLBLM_R_X5Y19_SLICE_X6Y19_C = CLBLM_R_X5Y19_SLICE_X6Y19_CO6;
@@ -12567,6 +11940,9 @@ module top(
   assign CLBLM_R_X5Y19_SLICE_X7Y19_B = CLBLM_R_X5Y19_SLICE_X7Y19_BO6;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_C = CLBLM_R_X5Y19_SLICE_X7Y19_CO6;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_D = CLBLM_R_X5Y19_SLICE_X7Y19_DO6;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_BMUX = CLBLM_R_X5Y19_SLICE_X7Y19_B_XOR;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_CMUX = CLBLM_R_X5Y19_SLICE_X7Y19_C_XOR;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_DMUX = CLBLM_R_X5Y19_SLICE_X7Y19_D_XOR;
   assign CLBLM_R_X5Y20_SLICE_X6Y20_A = CLBLM_R_X5Y20_SLICE_X6Y20_AO6;
   assign CLBLM_R_X5Y20_SLICE_X6Y20_B = CLBLM_R_X5Y20_SLICE_X6Y20_BO6;
   assign CLBLM_R_X5Y20_SLICE_X6Y20_C = CLBLM_R_X5Y20_SLICE_X6Y20_CO6;
@@ -12575,6 +11951,8 @@ module top(
   assign CLBLM_R_X5Y20_SLICE_X7Y20_B = CLBLM_R_X5Y20_SLICE_X7Y20_BO6;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_C = CLBLM_R_X5Y20_SLICE_X7Y20_CO6;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_D = CLBLM_R_X5Y20_SLICE_X7Y20_DO6;
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_AMUX = CLBLM_R_X5Y20_SLICE_X7Y20_A_XOR;
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_BMUX = CLBLM_R_X5Y20_SLICE_X7Y20_B_XOR;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_A = CLBLM_R_X11Y5_SLICE_X14Y5_AO6;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_B = CLBLM_R_X11Y5_SLICE_X14Y5_BO6;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_C = CLBLM_R_X11Y5_SLICE_X14Y5_CO6;
@@ -12584,6 +11962,9 @@ module top(
   assign CLBLM_R_X11Y5_SLICE_X15Y5_C = CLBLM_R_X11Y5_SLICE_X15Y5_CO6;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_D = CLBLM_R_X11Y5_SLICE_X15Y5_DO6;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_AMUX = CLBLM_R_X11Y5_SLICE_X15Y5_AO6;
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_BMUX = CLBLM_R_X11Y5_SLICE_X15Y5_B_XOR;
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_CMUX = CLBLM_R_X11Y5_SLICE_X15Y5_C_XOR;
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_DMUX = CLBLM_R_X11Y5_SLICE_X15Y5_D_XOR;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_A = CLBLM_R_X11Y6_SLICE_X14Y6_AO6;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_B = CLBLM_R_X11Y6_SLICE_X14Y6_BO6;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_C = CLBLM_R_X11Y6_SLICE_X14Y6_CO6;
@@ -12592,6 +11973,10 @@ module top(
   assign CLBLM_R_X11Y6_SLICE_X15Y6_B = CLBLM_R_X11Y6_SLICE_X15Y6_BO6;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_C = CLBLM_R_X11Y6_SLICE_X15Y6_CO6;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_D = CLBLM_R_X11Y6_SLICE_X15Y6_DO6;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_AMUX = CLBLM_R_X11Y6_SLICE_X15Y6_A_XOR;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_BMUX = CLBLM_R_X11Y6_SLICE_X15Y6_B_XOR;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_CMUX = CLBLM_R_X11Y6_SLICE_X15Y6_C_XOR;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_DMUX = CLBLM_R_X11Y6_SLICE_X15Y6_D_XOR;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_A = CLBLM_R_X11Y7_SLICE_X14Y7_AO6;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_B = CLBLM_R_X11Y7_SLICE_X14Y7_BO6;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_C = CLBLM_R_X11Y7_SLICE_X14Y7_CO6;
@@ -12600,6 +11985,10 @@ module top(
   assign CLBLM_R_X11Y7_SLICE_X15Y7_B = CLBLM_R_X11Y7_SLICE_X15Y7_BO6;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_C = CLBLM_R_X11Y7_SLICE_X15Y7_CO6;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_D = CLBLM_R_X11Y7_SLICE_X15Y7_DO6;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_AMUX = CLBLM_R_X11Y7_SLICE_X15Y7_A_XOR;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_BMUX = CLBLM_R_X11Y7_SLICE_X15Y7_B_XOR;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_CMUX = CLBLM_R_X11Y7_SLICE_X15Y7_C_XOR;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_DMUX = CLBLM_R_X11Y7_SLICE_X15Y7_D_XOR;
   assign CLBLM_R_X11Y8_SLICE_X14Y8_A = CLBLM_R_X11Y8_SLICE_X14Y8_AO6;
   assign CLBLM_R_X11Y8_SLICE_X14Y8_B = CLBLM_R_X11Y8_SLICE_X14Y8_BO6;
   assign CLBLM_R_X11Y8_SLICE_X14Y8_C = CLBLM_R_X11Y8_SLICE_X14Y8_CO6;
@@ -12608,6 +11997,9 @@ module top(
   assign CLBLM_R_X11Y8_SLICE_X15Y8_B = CLBLM_R_X11Y8_SLICE_X15Y8_BO6;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_C = CLBLM_R_X11Y8_SLICE_X15Y8_CO6;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_D = CLBLM_R_X11Y8_SLICE_X15Y8_DO6;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_BMUX = CLBLM_R_X11Y8_SLICE_X15Y8_B_XOR;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_CMUX = CLBLM_R_X11Y8_SLICE_X15Y8_C_XOR;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_DMUX = CLBLM_R_X11Y8_SLICE_X15Y8_D_XOR;
   assign CLBLM_R_X11Y9_SLICE_X14Y9_A = CLBLM_R_X11Y9_SLICE_X14Y9_AO6;
   assign CLBLM_R_X11Y9_SLICE_X14Y9_B = CLBLM_R_X11Y9_SLICE_X14Y9_BO6;
   assign CLBLM_R_X11Y9_SLICE_X14Y9_C = CLBLM_R_X11Y9_SLICE_X14Y9_CO6;
@@ -12616,6 +12008,9 @@ module top(
   assign CLBLM_R_X11Y9_SLICE_X15Y9_B = CLBLM_R_X11Y9_SLICE_X15Y9_BO6;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_C = CLBLM_R_X11Y9_SLICE_X15Y9_CO6;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_D = CLBLM_R_X11Y9_SLICE_X15Y9_DO6;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_BMUX = CLBLM_R_X11Y9_SLICE_X15Y9_B_XOR;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_CMUX = CLBLM_R_X11Y9_SLICE_X15Y9_C_XOR;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_DMUX = CLBLM_R_X11Y9_SLICE_X15Y9_D_XOR;
   assign CLBLM_R_X11Y10_SLICE_X14Y10_A = CLBLM_R_X11Y10_SLICE_X14Y10_AO6;
   assign CLBLM_R_X11Y10_SLICE_X14Y10_B = CLBLM_R_X11Y10_SLICE_X14Y10_BO6;
   assign CLBLM_R_X11Y10_SLICE_X14Y10_C = CLBLM_R_X11Y10_SLICE_X14Y10_CO6;
@@ -12624,11 +12019,16 @@ module top(
   assign CLBLM_R_X11Y10_SLICE_X15Y10_B = CLBLM_R_X11Y10_SLICE_X15Y10_BO6;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_C = CLBLM_R_X11Y10_SLICE_X15Y10_CO6;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_D = CLBLM_R_X11Y10_SLICE_X15Y10_DO6;
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_AMUX = CLBLM_R_X11Y10_SLICE_X15Y10_A_XOR;
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_BMUX = CLBLM_R_X11Y10_SLICE_X15Y10_B_XOR;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_A = CLBLM_R_X11Y28_SLICE_X14Y28_AO6;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_B = CLBLM_R_X11Y28_SLICE_X14Y28_BO6;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_C = CLBLM_R_X11Y28_SLICE_X14Y28_CO6;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_D = CLBLM_R_X11Y28_SLICE_X14Y28_DO6;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_AMUX = CLBLM_R_X11Y28_SLICE_X14Y28_AO6;
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_BMUX = CLBLM_R_X11Y28_SLICE_X14Y28_B_XOR;
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_CMUX = CLBLM_R_X11Y28_SLICE_X14Y28_C_XOR;
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_DMUX = CLBLM_R_X11Y28_SLICE_X14Y28_D_XOR;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_A = CLBLM_R_X11Y28_SLICE_X15Y28_AO6;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_B = CLBLM_R_X11Y28_SLICE_X15Y28_BO6;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_C = CLBLM_R_X11Y28_SLICE_X15Y28_CO6;
@@ -12637,6 +12037,10 @@ module top(
   assign CLBLM_R_X11Y29_SLICE_X14Y29_B = CLBLM_R_X11Y29_SLICE_X14Y29_BO6;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_C = CLBLM_R_X11Y29_SLICE_X14Y29_CO6;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_D = CLBLM_R_X11Y29_SLICE_X14Y29_DO6;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_AMUX = CLBLM_R_X11Y29_SLICE_X14Y29_A_XOR;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_BMUX = CLBLM_R_X11Y29_SLICE_X14Y29_B_XOR;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_CMUX = CLBLM_R_X11Y29_SLICE_X14Y29_C_XOR;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_DMUX = CLBLM_R_X11Y29_SLICE_X14Y29_D_XOR;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_A = CLBLM_R_X11Y29_SLICE_X15Y29_AO6;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_B = CLBLM_R_X11Y29_SLICE_X15Y29_BO6;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_C = CLBLM_R_X11Y29_SLICE_X15Y29_CO6;
@@ -12645,6 +12049,10 @@ module top(
   assign CLBLM_R_X11Y30_SLICE_X14Y30_B = CLBLM_R_X11Y30_SLICE_X14Y30_BO6;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_C = CLBLM_R_X11Y30_SLICE_X14Y30_CO6;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_D = CLBLM_R_X11Y30_SLICE_X14Y30_DO6;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_AMUX = CLBLM_R_X11Y30_SLICE_X14Y30_A_XOR;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_BMUX = CLBLM_R_X11Y30_SLICE_X14Y30_B_XOR;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_CMUX = CLBLM_R_X11Y30_SLICE_X14Y30_C_XOR;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_DMUX = CLBLM_R_X11Y30_SLICE_X14Y30_D_XOR;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_A = CLBLM_R_X11Y30_SLICE_X15Y30_AO6;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_B = CLBLM_R_X11Y30_SLICE_X15Y30_BO6;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_C = CLBLM_R_X11Y30_SLICE_X15Y30_CO6;
@@ -12653,6 +12061,9 @@ module top(
   assign CLBLM_R_X11Y31_SLICE_X14Y31_B = CLBLM_R_X11Y31_SLICE_X14Y31_BO6;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_C = CLBLM_R_X11Y31_SLICE_X14Y31_CO6;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_D = CLBLM_R_X11Y31_SLICE_X14Y31_DO6;
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_BMUX = CLBLM_R_X11Y31_SLICE_X14Y31_B_XOR;
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_CMUX = CLBLM_R_X11Y31_SLICE_X14Y31_C_XOR;
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_DMUX = CLBLM_R_X11Y31_SLICE_X14Y31_D_XOR;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_A = CLBLM_R_X11Y31_SLICE_X15Y31_AO6;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_B = CLBLM_R_X11Y31_SLICE_X15Y31_BO6;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_C = CLBLM_R_X11Y31_SLICE_X15Y31_CO6;
@@ -12661,6 +12072,9 @@ module top(
   assign CLBLM_R_X11Y32_SLICE_X14Y32_B = CLBLM_R_X11Y32_SLICE_X14Y32_BO6;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_C = CLBLM_R_X11Y32_SLICE_X14Y32_CO6;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_D = CLBLM_R_X11Y32_SLICE_X14Y32_DO6;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_BMUX = CLBLM_R_X11Y32_SLICE_X14Y32_B_XOR;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_CMUX = CLBLM_R_X11Y32_SLICE_X14Y32_C_XOR;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_DMUX = CLBLM_R_X11Y32_SLICE_X14Y32_D_XOR;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_A = CLBLM_R_X11Y32_SLICE_X15Y32_AO6;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_B = CLBLM_R_X11Y32_SLICE_X15Y32_BO6;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_C = CLBLM_R_X11Y32_SLICE_X15Y32_CO6;
@@ -12669,6 +12083,8 @@ module top(
   assign CLBLM_R_X11Y33_SLICE_X14Y33_B = CLBLM_R_X11Y33_SLICE_X14Y33_BO6;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_C = CLBLM_R_X11Y33_SLICE_X14Y33_CO6;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_D = CLBLM_R_X11Y33_SLICE_X14Y33_DO6;
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_AMUX = CLBLM_R_X11Y33_SLICE_X14Y33_A_XOR;
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_BMUX = CLBLM_R_X11Y33_SLICE_X14Y33_B_XOR;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_A = CLBLM_R_X11Y33_SLICE_X15Y33_AO6;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_B = CLBLM_R_X11Y33_SLICE_X15Y33_BO6;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_C = CLBLM_R_X11Y33_SLICE_X15Y33_CO6;
@@ -12690,6 +12106,9 @@ module top(
   assign CLBLM_R_X27Y14_SLICE_X43Y14_C = CLBLM_R_X27Y14_SLICE_X43Y14_CO6;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_D = CLBLM_R_X27Y14_SLICE_X43Y14_DO6;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_AMUX = CLBLM_R_X27Y14_SLICE_X43Y14_AO6;
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_BMUX = CLBLM_R_X27Y14_SLICE_X43Y14_B_XOR;
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_CMUX = CLBLM_R_X27Y14_SLICE_X43Y14_C_XOR;
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_DMUX = CLBLM_R_X27Y14_SLICE_X43Y14_D_XOR;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_A = CLBLM_R_X27Y15_SLICE_X42Y15_AO6;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_B = CLBLM_R_X27Y15_SLICE_X42Y15_BO6;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_C = CLBLM_R_X27Y15_SLICE_X42Y15_CO6;
@@ -12698,6 +12117,10 @@ module top(
   assign CLBLM_R_X27Y15_SLICE_X43Y15_B = CLBLM_R_X27Y15_SLICE_X43Y15_BO6;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_C = CLBLM_R_X27Y15_SLICE_X43Y15_CO6;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_D = CLBLM_R_X27Y15_SLICE_X43Y15_DO6;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_AMUX = CLBLM_R_X27Y15_SLICE_X43Y15_A_XOR;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_BMUX = CLBLM_R_X27Y15_SLICE_X43Y15_B_XOR;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_CMUX = CLBLM_R_X27Y15_SLICE_X43Y15_C_XOR;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_DMUX = CLBLM_R_X27Y15_SLICE_X43Y15_D_XOR;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_A = CLBLM_R_X27Y16_SLICE_X42Y16_AO6;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_B = CLBLM_R_X27Y16_SLICE_X42Y16_BO6;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_C = CLBLM_R_X27Y16_SLICE_X42Y16_CO6;
@@ -12706,6 +12129,10 @@ module top(
   assign CLBLM_R_X27Y16_SLICE_X43Y16_B = CLBLM_R_X27Y16_SLICE_X43Y16_BO6;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_C = CLBLM_R_X27Y16_SLICE_X43Y16_CO6;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_D = CLBLM_R_X27Y16_SLICE_X43Y16_DO6;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_AMUX = CLBLM_R_X27Y16_SLICE_X43Y16_A_XOR;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_BMUX = CLBLM_R_X27Y16_SLICE_X43Y16_B_XOR;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_CMUX = CLBLM_R_X27Y16_SLICE_X43Y16_C_XOR;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_DMUX = CLBLM_R_X27Y16_SLICE_X43Y16_D_XOR;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_A = CLBLM_R_X27Y17_SLICE_X42Y17_AO6;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_B = CLBLM_R_X27Y17_SLICE_X42Y17_BO6;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_C = CLBLM_R_X27Y17_SLICE_X42Y17_CO6;
@@ -12714,6 +12141,9 @@ module top(
   assign CLBLM_R_X27Y17_SLICE_X43Y17_B = CLBLM_R_X27Y17_SLICE_X43Y17_BO6;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_C = CLBLM_R_X27Y17_SLICE_X43Y17_CO6;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_D = CLBLM_R_X27Y17_SLICE_X43Y17_DO6;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_BMUX = CLBLM_R_X27Y17_SLICE_X43Y17_B_XOR;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_CMUX = CLBLM_R_X27Y17_SLICE_X43Y17_C_XOR;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_DMUX = CLBLM_R_X27Y17_SLICE_X43Y17_D_XOR;
   assign CLBLM_R_X27Y18_SLICE_X42Y18_A = CLBLM_R_X27Y18_SLICE_X42Y18_AO6;
   assign CLBLM_R_X27Y18_SLICE_X42Y18_B = CLBLM_R_X27Y18_SLICE_X42Y18_BO6;
   assign CLBLM_R_X27Y18_SLICE_X42Y18_C = CLBLM_R_X27Y18_SLICE_X42Y18_CO6;
@@ -12722,6 +12152,9 @@ module top(
   assign CLBLM_R_X27Y18_SLICE_X43Y18_B = CLBLM_R_X27Y18_SLICE_X43Y18_BO6;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_C = CLBLM_R_X27Y18_SLICE_X43Y18_CO6;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_D = CLBLM_R_X27Y18_SLICE_X43Y18_DO6;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_BMUX = CLBLM_R_X27Y18_SLICE_X43Y18_B_XOR;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_CMUX = CLBLM_R_X27Y18_SLICE_X43Y18_C_XOR;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_DMUX = CLBLM_R_X27Y18_SLICE_X43Y18_D_XOR;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_A = CLBLM_R_X27Y19_SLICE_X42Y19_AO6;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_B = CLBLM_R_X27Y19_SLICE_X42Y19_BO6;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_C = CLBLM_R_X27Y19_SLICE_X42Y19_CO6;
@@ -12730,6 +12163,9 @@ module top(
   assign CLBLM_R_X27Y19_SLICE_X43Y19_B = CLBLM_R_X27Y19_SLICE_X43Y19_BO6;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_C = CLBLM_R_X27Y19_SLICE_X43Y19_CO6;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_D = CLBLM_R_X27Y19_SLICE_X43Y19_DO6;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_AMUX = CLBLM_R_X27Y19_SLICE_X43Y19_A_XOR;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_BMUX = CLBLM_R_X27Y19_SLICE_X43Y19_B_XOR;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_CMUX = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_A = CLBLM_R_X27Y38_SLICE_X42Y38_AO6;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_B = CLBLM_R_X27Y38_SLICE_X42Y38_BO6;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_C = CLBLM_R_X27Y38_SLICE_X42Y38_CO6;
@@ -12739,6 +12175,9 @@ module top(
   assign CLBLM_R_X27Y38_SLICE_X43Y38_C = CLBLM_R_X27Y38_SLICE_X43Y38_CO6;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_D = CLBLM_R_X27Y38_SLICE_X43Y38_DO6;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_AMUX = CLBLM_R_X27Y38_SLICE_X43Y38_AO6;
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_BMUX = CLBLM_R_X27Y38_SLICE_X43Y38_B_XOR;
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_CMUX = CLBLM_R_X27Y38_SLICE_X43Y38_C_XOR;
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_DMUX = CLBLM_R_X27Y38_SLICE_X43Y38_D_XOR;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_A = CLBLM_R_X27Y39_SLICE_X42Y39_AO6;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_B = CLBLM_R_X27Y39_SLICE_X42Y39_BO6;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_C = CLBLM_R_X27Y39_SLICE_X42Y39_CO6;
@@ -12747,6 +12186,10 @@ module top(
   assign CLBLM_R_X27Y39_SLICE_X43Y39_B = CLBLM_R_X27Y39_SLICE_X43Y39_BO6;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_C = CLBLM_R_X27Y39_SLICE_X43Y39_CO6;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_D = CLBLM_R_X27Y39_SLICE_X43Y39_DO6;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_AMUX = CLBLM_R_X27Y39_SLICE_X43Y39_A_XOR;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_BMUX = CLBLM_R_X27Y39_SLICE_X43Y39_B_XOR;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_CMUX = CLBLM_R_X27Y39_SLICE_X43Y39_C_XOR;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_DMUX = CLBLM_R_X27Y39_SLICE_X43Y39_D_XOR;
   assign CLBLM_R_X27Y40_SLICE_X42Y40_A = CLBLM_R_X27Y40_SLICE_X42Y40_AO6;
   assign CLBLM_R_X27Y40_SLICE_X42Y40_B = CLBLM_R_X27Y40_SLICE_X42Y40_BO6;
   assign CLBLM_R_X27Y40_SLICE_X42Y40_C = CLBLM_R_X27Y40_SLICE_X42Y40_CO6;
@@ -12755,6 +12198,10 @@ module top(
   assign CLBLM_R_X27Y40_SLICE_X43Y40_B = CLBLM_R_X27Y40_SLICE_X43Y40_BO6;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_C = CLBLM_R_X27Y40_SLICE_X43Y40_CO6;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_D = CLBLM_R_X27Y40_SLICE_X43Y40_DO6;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_AMUX = CLBLM_R_X27Y40_SLICE_X43Y40_A_XOR;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_BMUX = CLBLM_R_X27Y40_SLICE_X43Y40_B_XOR;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_CMUX = CLBLM_R_X27Y40_SLICE_X43Y40_C_XOR;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_DMUX = CLBLM_R_X27Y40_SLICE_X43Y40_D_XOR;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_A = CLBLM_R_X27Y41_SLICE_X42Y41_AO6;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_B = CLBLM_R_X27Y41_SLICE_X42Y41_BO6;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_C = CLBLM_R_X27Y41_SLICE_X42Y41_CO6;
@@ -12763,6 +12210,10 @@ module top(
   assign CLBLM_R_X27Y41_SLICE_X43Y41_B = CLBLM_R_X27Y41_SLICE_X43Y41_BO6;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_C = CLBLM_R_X27Y41_SLICE_X43Y41_CO6;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_D = CLBLM_R_X27Y41_SLICE_X43Y41_DO6;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_AMUX = CLBLM_R_X27Y41_SLICE_X43Y41_A5Q;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_BMUX = CLBLM_R_X27Y41_SLICE_X43Y41_B_XOR;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_CMUX = CLBLM_R_X27Y41_SLICE_X43Y41_C_XOR;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_DMUX = CLBLM_R_X27Y41_SLICE_X43Y41_D_XOR;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_A = CLBLM_R_X27Y42_SLICE_X42Y42_AO6;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_B = CLBLM_R_X27Y42_SLICE_X42Y42_BO6;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_C = CLBLM_R_X27Y42_SLICE_X42Y42_CO6;
@@ -12771,6 +12222,10 @@ module top(
   assign CLBLM_R_X27Y42_SLICE_X43Y42_B = CLBLM_R_X27Y42_SLICE_X43Y42_BO6;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_C = CLBLM_R_X27Y42_SLICE_X43Y42_CO6;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_D = CLBLM_R_X27Y42_SLICE_X43Y42_DO6;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_AMUX = CLBLM_R_X27Y42_SLICE_X43Y42_A5Q;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_BMUX = CLBLM_R_X27Y42_SLICE_X43Y42_B_XOR;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_CMUX = CLBLM_R_X27Y42_SLICE_X43Y42_C_XOR;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_DMUX = CLBLM_R_X27Y42_SLICE_X43Y42_D_XOR;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_A = CLBLM_R_X27Y43_SLICE_X42Y43_AO6;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_B = CLBLM_R_X27Y43_SLICE_X42Y43_BO6;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_C = CLBLM_R_X27Y43_SLICE_X42Y43_CO6;
@@ -12779,35 +12234,45 @@ module top(
   assign CLBLM_R_X27Y43_SLICE_X43Y43_B = CLBLM_R_X27Y43_SLICE_X43Y43_BO6;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_C = CLBLM_R_X27Y43_SLICE_X43Y43_CO6;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_D = CLBLM_R_X27Y43_SLICE_X43Y43_DO6;
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_AMUX = CLBLM_R_X27Y43_SLICE_X43Y43_A_XOR;
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_BMUX = CLBLM_R_X27Y43_SLICE_X43Y43_B_XOR;
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_CMUX = CLBLM_R_X27Y43_SLICE_X43Y43_C_XOR;
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_DMUX = CLBLM_R_X27Y43_SLICE_X43Y43_D_XOR;
   assign LIOI3_X0Y1_OLOGIC_X0Y1_OQ = LIOB33_X0Y5_IOB_X0Y6_I;
   assign LIOI3_X0Y1_OLOGIC_X0Y1_TQ = 1'b1;
-  assign LIOI3_X0Y3_OLOGIC_X0Y4_OQ = \mmcme2_test.O_CNT [5];
+  assign LIOI3_X0Y3_OLOGIC_X0Y4_OQ = CLBLM_R_X11Y10_SLICE_X15Y10_AQ;
   assign LIOI3_X0Y3_OLOGIC_X0Y4_TQ = 1'b1;
-  assign LIOI3_X0Y3_OLOGIC_X0Y3_OQ = \mmcme2_test.O_CNT [0];
+  assign LIOI3_X0Y3_OLOGIC_X0Y3_OQ = CLBLM_R_X3Y10_SLICE_X2Y10_CQ;
   assign LIOI3_X0Y3_OLOGIC_X0Y3_TQ = 1'b1;
-  assign LIOI3_X0Y17_OLOGIC_X0Y18_OQ = \mmcme2_test.O_CNT [4];
+  assign LIOI3_X0Y5_ILOGIC_X0Y6_O = LIOB33_X0Y5_IOB_X0Y6_I;
+  assign LIOI3_X0Y9_ILOGIC_X0Y10_O = LIOB33_X0Y9_IOB_X0Y10_I;
+  assign LIOI3_X0Y11_ILOGIC_X0Y12_O = LIOB33_X0Y11_IOB_X0Y12_I;
+  assign LIOI3_X0Y11_ILOGIC_X0Y11_O = LIOB33_X0Y11_IOB_X0Y11_I;
+  assign LIOI3_X0Y17_OLOGIC_X0Y18_OQ = CLBLM_R_X5Y20_SLICE_X7Y20_AQ;
   assign LIOI3_X0Y17_OLOGIC_X0Y18_TQ = 1'b1;
+  assign LIOI3_X0Y25_ILOGIC_X0Y26_O = LIOB33_X0Y25_IOB_X0Y26_I;
   assign LIOI3_X0Y27_OLOGIC_X0Y28_OQ = LIOB33_X0Y25_IOB_X0Y26_I;
   assign LIOI3_X0Y27_OLOGIC_X0Y28_TQ = 1'b1;
-  assign LIOI3_SING_X0Y0_OLOGIC_X0Y0_OQ = \mmcme2_test.O_LOCKED ;
+  assign LIOI3_SING_X0Y0_OLOGIC_X0Y0_OQ = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_LOCKED;
   assign LIOI3_SING_X0Y0_OLOGIC_X0Y0_TQ = 1'b1;
-  assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y20_OQ = \mmcme2_test.O_CNT [2];
+  assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y20_OQ = CLBLM_R_X11Y33_SLICE_X14Y33_AQ;
   assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y20_TQ = 1'b1;
-  assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y19_OQ = \mmcme2_test.O_CNT [3];
+  assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y19_OQ = CLBLM_R_X27Y19_SLICE_X43Y19_AQ;
   assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y19_TQ = 1'b1;
-  assign LIOI3_TBYTESRC_X0Y43_OLOGIC_X0Y43_OQ = \mmcme2_test.O_CNT [1];
+  assign LIOI3_TBYTESRC_X0Y43_OLOGIC_X0Y43_OQ = CLBLM_R_X27Y43_SLICE_X43Y43_CQ;
   assign LIOI3_TBYTESRC_X0Y43_OLOGIC_X0Y43_TQ = 1'b1;
+  assign RIOI3_X43Y25_ILOGIC_X1Y26_O = RIOB33_X43Y25_IOB_X1Y26_I;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_D2 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_B6 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_D3 = 1'b1;
-  assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y20_D1 = \mmcme2_test.O_CNT [2];
+  assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y20_D1 = CLBLM_R_X11Y33_SLICE_X14Y33_AQ;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_D4 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_A3 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_D5 = 1'b1;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_D5 = \$abc$4817$aiger4816$429 ;
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_D5 = CLBLM_R_X27Y14_SLICE_X43Y14_BQ;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_D6 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_A1 = 1'b1;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_A2 = \$abc$4817$aiger4816$390 ;
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_A2 = CLBLM_R_X11Y31_SLICE_X14Y31_AQ;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_A3 = 1'b1;
   assign LIOB33_X0Y1_IOB_X0Y1_O = LIOB33_X0Y5_IOB_X0Y6_I;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_A4 = 1'b1;
@@ -12816,10 +12281,10 @@ module top(
   assign LIOI3_X0Y25_ILOGIC_X0Y26_D = LIOB33_X0Y25_IOB_X0Y26_I;
   assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y20_T1 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_AX = 1'b0;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_B1 = \$auto$alumacc.cc:485:replace_alu$1457.O [14];
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_C2 = \$auto$alumacc.cc:485:replace_alu$1460.O [19];
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_B2 = \$abc$4817$aiger4816$391 ;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_C3 = \$abc$4817$aiger4816$481 ;
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_B1 = CLBLM_R_X11Y31_SLICE_X14Y31_C_XOR;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_C2 = CLBLM_R_X27Y18_SLICE_X43Y18_D_XOR;
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_B2 = CLBLM_R_X11Y31_SLICE_X14Y31_DQ;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_C3 = CLBLM_R_X27Y18_SLICE_X43Y18_BQ;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_B3 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_C4 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_B4 = 1'b1;
@@ -12829,36 +12294,36 @@ module top(
   assign CLBLM_R_X11Y31_SLICE_X14Y31_B6 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_A1 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_A1 = 1'b1;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_A2 = \$abc$4817$aiger4816$647 ;
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_A2 = CLBLM_R_X11Y10_SLICE_X15Y10_BQ;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_A3 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_A4 = 1'b1;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_A5 = \$auto$alumacc.cc:485:replace_alu$1466.O [21];
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_A5 = CLBLM_R_X11Y10_SLICE_X15Y10_B_XOR;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_A6 = 1'b1;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_CIN = \$abc$4817$aiger4816$483 ;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_CIN = CLBLM_R_X27Y17_SLICE_X43Y17_COUT;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_B1 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_AX = 1'b0;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_B1 = 1'b1;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_B2 = \mmcme2_test.O_CNT [5];
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_B2 = CLBLM_R_X11Y10_SLICE_X15Y10_AQ;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_B3 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_B4 = 1'b1;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_B5 = \$auto$alumacc.cc:485:replace_alu$1466.O [20];
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_B5 = CLBLM_R_X11Y10_SLICE_X15Y10_A_XOR;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_B6 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_BX = 1'b0;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_BX = 1'b0;
-  assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y19_D1 = \mmcme2_test.O_CNT [3];
+  assign LIOI3_TBYTESRC_X0Y19_OLOGIC_X0Y19_D1 = CLBLM_R_X27Y19_SLICE_X43Y19_AQ;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_C1 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_C2 = 1'b1;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_C3 = \$abc$4817$aiger4816$644 ;
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_C3 = CLBLM_R_X11Y10_SLICE_X15Y10_CQ;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_C4 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_C5 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_C6 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_C1 = 1'b1;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_CIN = \$abc$4817$aiger4816$648 ;
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_CIN = CLBLM_R_X11Y9_SLICE_X15Y9_COUT;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_A2 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_B2 = 1'b1;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_C2 = \$auto$alumacc.cc:485:replace_alu$1457.O [15];
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_C2 = CLBLM_R_X11Y31_SLICE_X14Y31_D_XOR;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_CX = 1'b0;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_D6 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X3Y5_A1 = 1'b1;
@@ -12905,31 +12370,31 @@ module top(
   assign CLBLM_R_X11Y10_SLICE_X14Y10_C5 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_A1 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_A2 = 1'b1;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_A3 = \$techmap3074$abc$2918$lut$not$aiger2917$193.A ;
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_A3 = CLBLM_R_X3Y5_SLICE_X2Y5_DQ;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_A4 = 1'b1;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_A5 = \$auto$alumacc.cc:485:replace_alu$1451.O [2];
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_A5 = CLBLM_R_X3Y5_SLICE_X2Y5_C_XOR;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_A6 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X14Y10_D1 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X14Y10_D2 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_AX = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X14Y10_D3 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_B1 = 1'b1;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_B2 = \$abc$4817$aiger4816$203 ;
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_B2 = CLBLM_R_X3Y5_SLICE_X2Y5_CQ;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_B3 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_B4 = 1'b1;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_B5 = \$auto$alumacc.cc:485:replace_alu$1451.O [3];
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_B5 = CLBLM_R_X3Y5_SLICE_X2Y5_D_XOR;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_B6 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X14Y10_D6 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_CX = 1'b0;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_BX = 1'b0;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_A5 = 1'b1;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_C1 = \$abc$4817$aiger4816$201 ;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_C2 = \$auto$alumacc.cc:485:replace_alu$1451.O [1];
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_C1 = CLBLM_R_X3Y5_SLICE_X2Y5_AQ;
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_C2 = CLBLM_R_X3Y5_SLICE_X2Y5_B_XOR;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_C3 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_C4 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_C5 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_C6 = 1'b1;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_D1 = \$auto$alumacc.cc:485:replace_alu$1457.O [13];
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_D1 = CLBLM_R_X11Y31_SLICE_X14Y31_B_XOR;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_D2 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_B4 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O;
@@ -12942,13 +12407,13 @@ module top(
   assign CLBLM_R_X3Y5_SLICE_X2Y5_D2 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_D3 = CLBLM_R_X3Y5_SLICE_X2Y5_AO6;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_D4 = 1'b1;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_D5 = \$abc$4817$aiger4816$202 ;
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_D5 = CLBLM_R_X3Y5_SLICE_X2Y5_BQ;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_D6 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_D4 = 1'b1;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_D5 = \$abc$4817$aiger4816$393 ;
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_D5 = CLBLM_R_X11Y31_SLICE_X14Y31_CQ;
   assign CLBLM_R_X27Y18_SLICE_X42Y18_A4 = 1'b1;
   assign CLBLM_R_X3Y5_SLICE_X2Y5_DX = 1'b0;
-  assign CLBLM_R_X3Y5_SLICE_X2Y5_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X3Y5_SLICE_X2Y5_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_D6 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X42Y18_A5 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X42Y18_A6 = 1'b1;
@@ -13000,7 +12465,7 @@ module top(
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_S0 = 1'b1;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_S1 = 1'b1;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_CE0 = 1'b1;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_C3 = \$abc$4817$aiger4816$406 ;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_C3 = CLBLM_R_X11Y32_SLICE_X14Y32_BQ;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_A1 = 1'b1;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_CE1 = 1'b1;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_IGNORE0 = 1'b1;
@@ -13018,11 +12483,11 @@ module top(
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_IGNORE1 = 1'b1;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_S0 = 1'b1;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_S1 = 1'b1;
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_CE0 = \mmcme2_test.clk50_ce ;
+  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_CE0 = CLBLL_L_X24Y46_SLICE_X36Y46_DQ;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_CE1 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_C1 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_A2 = 1'b1;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_CIN = \$abc$4817$aiger4816$520 ;
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_CIN = CLBLM_R_X5Y15_SLICE_X7Y15_COUT;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_B2 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X42Y18_D1 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O;
@@ -13034,7 +12499,7 @@ module top(
   assign CLBLM_R_X27Y18_SLICE_X42Y18_D5 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_B3 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X42Y18_D6 = 1'b1;
-  assign LIOI3_SING_X0Y0_OLOGIC_X0Y0_D1 = \mmcme2_test.O_LOCKED ;
+  assign LIOI3_SING_X0Y0_OLOGIC_X0Y0_D1 = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_LOCKED;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_C3 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_A4 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_D3 = 1'b1;
@@ -13074,42 +12539,42 @@ module top(
   assign LIOI3_SING_X0Y0_OLOGIC_X0Y0_T1 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_B6 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_A1 = 1'b1;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_A2 = \$abc$4817$aiger4816$214 ;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_A2 = CLBLM_R_X3Y6_SLICE_X2Y6_CQ;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_A3 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_A4 = 1'b1;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_A5 = \$auto$alumacc.cc:485:replace_alu$1451.O [6];
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_A5 = CLBLM_R_X3Y6_SLICE_X2Y6_C_XOR;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_A6 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_A1 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_AX = 1'b0;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_B1 = 1'b1;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_B2 = \$abc$4817$aiger4816$212 ;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_B2 = CLBLM_R_X3Y6_SLICE_X2Y6_DQ;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_B3 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_B4 = 1'b1;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_B5 = \$auto$alumacc.cc:485:replace_alu$1451.O [7];
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_B5 = CLBLM_R_X3Y6_SLICE_X2Y6_D_XOR;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_B6 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_A3 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_A4 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_C6 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_BX = 1'b0;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_C1 = 1'b1;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_C2 = \$auto$alumacc.cc:485:replace_alu$1451.O [4];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_C3 = \$abc$4817$aiger4816$215 ;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_C2 = CLBLM_R_X3Y6_SLICE_X2Y6_A_XOR;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_C3 = CLBLM_R_X3Y6_SLICE_X2Y6_AQ;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_C4 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_C5 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_C6 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_A5 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_A6 = 1'b1;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_CIN = \$abc$4817$aiger4816$216 ;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_CIN = CLBLM_R_X3Y5_SLICE_X2Y5_COUT;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_CX = 1'b0;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_D1 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_D2 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_D3 = 1'b1;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_D4 = \$auto$alumacc.cc:485:replace_alu$1451.O [5];
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_D5 = \$abc$4817$aiger4816$213 ;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_D4 = CLBLM_R_X3Y6_SLICE_X2Y6_B_XOR;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_D5 = CLBLM_R_X3Y6_SLICE_X2Y6_BQ;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_D6 = 1'b1;
   assign CLBLM_R_X3Y6_SLICE_X2Y6_DX = 1'b0;
-  assign CLBLM_R_X3Y6_SLICE_X2Y6_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X3Y6_SLICE_X2Y6_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_B4 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_B5 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_B6 = 1'b1;
@@ -13177,25 +12642,25 @@ module top(
   assign CLBLM_R_X27Y39_SLICE_X42Y39_B6 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI15 = 1'b0;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_A1 = 1'b1;
-  assign CLBLL_L_X24Y46_SLICE_X36Y46_A2 = \mmcme2_test.clk50_ce ;
+  assign CLBLL_L_X24Y46_SLICE_X36Y46_A2 = CLBLL_L_X24Y46_SLICE_X36Y46_DQ;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_A3 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_A4 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_A5 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_A6 = 1'b1;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_A4 = 1'b1;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_A5 = \$auto$alumacc.cc:485:replace_alu$1451.O [10];
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_A5 = CLBLM_R_X3Y7_SLICE_X2Y7_C_XOR;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_A6 = 1'b1;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_A1 = 1'b1;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_A2 = \$abc$4817$aiger4816$225 ;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_A2 = CLBLM_R_X3Y7_SLICE_X2Y7_CQ;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_AX = 1'b0;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_A3 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_B1 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_B2 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_B3 = 1'b1;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_B4 = 1'b1;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_B5 = \$auto$alumacc.cc:485:replace_alu$1451.O [11];
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_B5 = CLBLM_R_X3Y7_SLICE_X2Y7_D_XOR;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_B1 = 1'b1;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_B2 = \$abc$4817$aiger4816$228 ;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_B2 = CLBLM_R_X3Y7_SLICE_X2Y7_DQ;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_B3 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_B4 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_B5 = 1'b1;
@@ -13211,7 +12676,7 @@ module top(
   assign CLBLM_R_X3Y7_SLICE_X2Y7_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_C5 = 1'b1;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_C6 = 1'b1;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_CIN = \$abc$4817$aiger4816$229 ;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_CIN = CLBLM_R_X3Y6_SLICE_X2Y6_COUT;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_D1 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_D2 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_D3 = 1'b1;
@@ -13223,11 +12688,11 @@ module top(
   assign CLBLM_R_X3Y7_SLICE_X2Y7_D1 = 1'b1;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_D2 = 1'b1;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_D3 = 1'b1;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_D4 = \$auto$alumacc.cc:485:replace_alu$1451.O [9];
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_D5 = \$abc$4817$aiger4816$226 ;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_D4 = CLBLM_R_X3Y7_SLICE_X2Y7_B_XOR;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_D5 = CLBLM_R_X3Y7_SLICE_X2Y7_BQ;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_D6 = 1'b1;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_DX = 1'b0;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_C6 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_C4 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_C5 = 1'b1;
@@ -13273,35 +12738,35 @@ module top(
   assign CLBLM_R_X27Y42_SLICE_X42Y42_A4 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_D6 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_D2 = 1'b1;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_A2 = \$abc$4817$aiger4816$364 ;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_A2 = CLBLM_R_X11Y29_SLICE_X14Y29_CQ;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_D3 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_D4 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X42Y40_B3 = 1'b1;
-  assign LIOB33_X0Y43_IOB_X0Y43_O = \mmcme2_test.O_CNT [1];
+  assign LIOB33_X0Y43_IOB_X0Y43_O = CLBLM_R_X27Y43_SLICE_X43Y43_CQ;
   assign CLBLM_R_X27Y40_SLICE_X42Y40_B4 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X42Y40_B5 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_C5 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_C6 = 1'b1;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_A1 = \$auto$alumacc.cc:485:replace_alu$1454.O [22];
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_A1 = CLBLM_R_X27Y43_SLICE_X43Y43_C_XOR;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_B6 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_A2 = 1'b1;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_A3 = \$techmap3073$abc$2918$lut$not$aiger2917$265.A ;
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_A3 = CLBLM_R_X27Y38_SLICE_X43Y38_DQ;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_A4 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_A5 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_A6 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_AX = 1'b1;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_CIN = \$abc$4817$aiger4816$457 ;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_CIN = CLBLM_R_X27Y15_SLICE_X43Y15_COUT;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_B1 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_B2 = 1'b1;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_B3 = \$abc$4817$aiger4816$279 ;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_B4 = \$auto$alumacc.cc:485:replace_alu$1454.O [23];
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_B3 = CLBLM_R_X27Y41_SLICE_X43Y41_A5Q;
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_B4 = CLBLM_R_X27Y43_SLICE_X43Y43_D_XOR;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_B5 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_B6 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_BX = 1'b0;
   assign CLBLM_R_X27Y40_SLICE_X42Y40_B6 = 1'b1;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_C1 = \$abc$4817$aiger4816$277 ;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_C2 = \$auto$alumacc.cc:485:replace_alu$1454.O [3];
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_C1 = CLBLM_R_X27Y42_SLICE_X43Y42_A5Q;
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_C2 = CLBLM_R_X27Y38_SLICE_X43Y38_D_XOR;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_BX = 1'b0;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_C3 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_C4 = 1'b1;
@@ -13313,11 +12778,11 @@ module top(
   assign CLBLM_R_X27Y38_SLICE_X43Y38_D2 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_D3 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_D4 = 1'b1;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_D5 = \$abc$4817$aiger4816$278 ;
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_D5 = CLBLM_R_X27Y38_SLICE_X43Y38_CQ;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_D6 = 1'b1;
   assign LIOB33_X0Y27_IOB_X0Y28_O = LIOB33_X0Y25_IOB_X0Y26_I;
   assign CLBLM_R_X27Y38_SLICE_X43Y38_DX = 1'b0;
-  assign CLBLM_R_X27Y38_SLICE_X43Y38_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X27Y38_SLICE_X43Y38_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_A1 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_A2 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_A3 = 1'b1;
@@ -13335,7 +12800,7 @@ module top(
   assign CLBLM_R_X3Y8_SLICE_X3Y8_A5 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_A6 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_D3 = 1'b1;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_D4 = \$auto$alumacc.cc:485:replace_alu$1460.O [9];
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_D4 = CLBLM_R_X27Y16_SLICE_X43Y16_B_XOR;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_B2 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_B1 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_B2 = 1'b1;
@@ -13343,9 +12808,9 @@ module top(
   assign CLBLM_R_X3Y8_SLICE_X3Y8_B4 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_B5 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_B6 = 1'b1;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_CIN = \$abc$4817$aiger4816$368 ;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_CIN = CLBLM_R_X11Y28_SLICE_X14Y28_COUT;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_D5 = \$abc$4817$aiger4816$453 ;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_D5 = CLBLM_R_X27Y16_SLICE_X43Y16_BQ;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_C1 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_C2 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_C3 = 1'b1;
@@ -13365,35 +12830,35 @@ module top(
   assign CLBLM_R_X3Y8_SLICE_X3Y8_D4 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_D5 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X3Y8_D6 = 1'b1;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_A1 = 1'b1;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_A2 = \$abc$4817$aiger4816$239 ;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_A3 = \$auto$alumacc.cc:485:replace_alu$1451.O [19];
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_A2 = CLBLM_R_X3Y8_SLICE_X2Y8_AQ;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_A3 = CLBLM_R_X3Y9_SLICE_X2Y9_D_XOR;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_A4 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_A5 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_A6 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_A1 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_AX = 1'b0;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_B1 = \$auto$alumacc.cc:485:replace_alu$1451.O [14];
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_B2 = \$abc$4817$aiger4816$238 ;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_B1 = CLBLM_R_X3Y8_SLICE_X2Y8_C_XOR;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_B2 = CLBLM_R_X3Y8_SLICE_X2Y8_DQ;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_B3 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_B4 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_B5 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_B6 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_A2 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_A3 = 1'b1;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_A2 = \$abc$4817$aiger4816$327 ;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_A2 = CLBLM_R_X27Y42_SLICE_X43Y42_AQ;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_BX = 1'b0;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_D4 = \$auto$alumacc.cc:485:replace_alu$1457.O [5];
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_D4 = CLBLM_R_X11Y29_SLICE_X14Y29_B_XOR;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_C1 = 1'b1;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_C2 = \$auto$alumacc.cc:485:replace_alu$1451.O [15];
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_C3 = \$abc$4817$aiger4816$241 ;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_C2 = CLBLM_R_X3Y8_SLICE_X2Y8_D_XOR;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_C3 = CLBLM_R_X3Y8_SLICE_X2Y8_BQ;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_C4 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_C5 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_C6 = 1'b1;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_D5 = \$abc$4817$aiger4816$367 ;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_D5 = CLBLM_R_X11Y29_SLICE_X14Y29_BQ;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_A4 = 1'b1;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_CIN = \$abc$4817$aiger4816$242 ;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_CIN = CLBLM_R_X3Y7_SLICE_X2Y7_COUT;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_A5 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_A6 = 1'b1;
@@ -13401,22 +12866,22 @@ module top(
   assign CLBLM_R_X27Y42_SLICE_X43Y42_A5 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_CX = 1'b0;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_A6 = 1'b1;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_D1 = \$auto$alumacc.cc:485:replace_alu$1451.O [13];
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_D1 = CLBLM_R_X3Y8_SLICE_X2Y8_B_XOR;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_D2 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_D3 = 1'b1;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_D4 = 1'b1;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_D5 = \$abc$4817$aiger4816$240 ;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_D5 = CLBLM_R_X3Y8_SLICE_X2Y8_CQ;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_D6 = 1'b1;
-  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_I = \mmcme2_test.gclk [1];
-  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y11_I = \CLK ;
+  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_I = CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y1_O;
+  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y11_I = CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y14_O;
   assign CLBLM_R_X3Y8_SLICE_X2Y8_DX = 1'b0;
-  assign CLBLM_R_X3Y8_SLICE_X2Y8_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X3Y8_SLICE_X2Y8_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_AX = 1'b0;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_A6 = 1'b1;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_B1 = \$auto$alumacc.cc:485:replace_alu$1454.O [18];
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_B1 = CLBLM_R_X27Y42_SLICE_X43Y42_C_XOR;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_B1 = 1'b1;
   assign LIOI3_X0Y1_OLOGIC_X0Y1_T1 = 1'b1;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_B2 = \$abc$4817$aiger4816$328 ;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_B2 = CLBLM_R_X27Y42_SLICE_X43Y42_DQ;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_B2 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_B3 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_B3 = 1'b1;
@@ -13428,12 +12893,12 @@ module top(
   assign CLBLM_R_X11Y6_SLICE_X15Y6_C6 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_C1 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_C1 = 1'b1;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_C2 = \$auto$alumacc.cc:485:replace_alu$1454.O [19];
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_CIN = \$abc$4817$aiger4816$596 ;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_C2 = CLBLM_R_X27Y42_SLICE_X43Y42_D_XOR;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_CIN = CLBLM_R_X11Y5_SLICE_X15Y5_COUT;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_C2 = 1'b1;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_C3 = \$abc$4817$aiger4816$329 ;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_C3 = CLBLM_R_X27Y42_SLICE_X43Y42_BQ;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O;
-  assign LIOB33_X0Y17_IOB_X0Y18_O = \mmcme2_test.O_CNT [4];
+  assign LIOB33_X0Y17_IOB_X0Y18_O = CLBLM_R_X5Y20_SLICE_X7Y20_AQ;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_C3 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_C4 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DWE = 1'b0;
@@ -13442,15 +12907,15 @@ module top(
   assign CLBLM_R_X27Y16_SLICE_X42Y16_C5 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_C6 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_C6 = 1'b1;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_CIN = \$abc$4817$aiger4816$331 ;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_CIN = CLBLM_R_X27Y41_SLICE_X43Y41_COUT;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_D3 = 1'b1;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_D4 = \$auto$alumacc.cc:485:replace_alu$1466.O [5];
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_D4 = CLBLM_R_X11Y6_SLICE_X15Y6_B_XOR;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_CX = 1'b0;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_PSCLK = 1'b0;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_D5 = \$abc$4817$aiger4816$592 ;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_D5 = CLBLM_R_X11Y6_SLICE_X15Y6_BQ;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_D6 = 1'b1;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_D1 = \$auto$alumacc.cc:485:replace_alu$1454.O [17];
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_D1 = CLBLM_R_X27Y42_SLICE_X43Y42_B_XOR;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_D2 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_D3 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_D1 = 1'b1;
@@ -13458,35 +12923,35 @@ module top(
   assign CLBLM_R_X27Y42_SLICE_X43Y42_D4 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_D2 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_A1 = 1'b1;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_A2 = \$abc$4817$aiger4816$288 ;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_A2 = CLBLM_R_X27Y39_SLICE_X43Y39_CQ;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_D3 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_A3 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_A4 = 1'b1;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_A5 = \$auto$alumacc.cc:485:replace_alu$1454.O [6];
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_A5 = CLBLM_R_X27Y39_SLICE_X43Y39_C_XOR;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_A6 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_D4 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_AX = 1'b0;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_D5 = \$abc$4817$aiger4816$330 ;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_D5 = CLBLM_R_X27Y42_SLICE_X43Y42_CQ;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_B1 = 1'b1;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_B2 = \$abc$4817$aiger4816$289 ;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_B2 = CLBLM_R_X27Y39_SLICE_X43Y39_DQ;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_B4 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_D5 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_B3 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_B4 = 1'b1;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_B5 = \$auto$alumacc.cc:485:replace_alu$1454.O [7];
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_B5 = CLBLM_R_X27Y39_SLICE_X43Y39_D_XOR;
   assign CLBLM_R_X27Y16_SLICE_X42Y16_D6 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_B6 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_BX = 1'b0;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_C1 = 1'b1;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_C2 = \$auto$alumacc.cc:485:replace_alu$1454.O [4];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_C3 = \$abc$4817$aiger4816$290 ;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_C2 = CLBLM_R_X27Y39_SLICE_X43Y39_A_XOR;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_C3 = CLBLM_R_X27Y39_SLICE_X43Y39_AQ;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_C4 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_C5 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_C6 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_DX = 1'b0;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_CIN = \$abc$4817$aiger4816$292 ;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_CIN = CLBLM_R_X27Y38_SLICE_X43Y38_COUT;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_PSEN = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_CX = 1'b0;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_D1 = 1'b1;
@@ -13494,28 +12959,28 @@ module top(
   assign CLBLM_R_X27Y8_SLICE_X42Y8_B5 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_A4 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_D3 = 1'b1;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_D4 = \$auto$alumacc.cc:485:replace_alu$1454.O [5];
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_D5 = \$abc$4817$aiger4816$291 ;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_D4 = CLBLM_R_X27Y39_SLICE_X43Y39_B_XOR;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_D5 = CLBLM_R_X27Y39_SLICE_X43Y39_BQ;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_D6 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_A6 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_A5 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X43Y39_DX = 1'b0;
-  assign CLBLM_R_X27Y39_SLICE_X43Y39_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X27Y39_SLICE_X43Y39_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_A1 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_A2 = 1'b1;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_A3 = \$techmap3070$abc$2918$lut$not$aiger2917$481.A ;
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_A3 = CLBLM_R_X5Y15_SLICE_X7Y15_DQ;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_A4 = 1'b1;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_A5 = \$auto$alumacc.cc:485:replace_alu$1463.O [2];
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_A5 = CLBLM_R_X5Y15_SLICE_X7Y15_C_XOR;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_A6 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_A6 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_A1 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_AX = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_A2 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_B1 = 1'b1;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_B2 = \$abc$4817$aiger4816$505 ;
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_B2 = CLBLM_R_X5Y15_SLICE_X7Y15_CQ;
   assign CLBLM_R_X3Y9_SLICE_X3Y9_A1 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_B4 = 1'b1;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_B5 = \$auto$alumacc.cc:485:replace_alu$1463.O [3];
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_B5 = CLBLM_R_X5Y15_SLICE_X7Y15_D_XOR;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_B6 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X3Y9_A2 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X3Y9_A3 = 1'b1;
@@ -13524,7 +12989,7 @@ module top(
   assign CLBLM_R_X3Y9_SLICE_X3Y9_A6 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_BX = 1'b0;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_C4 = 1'b1;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_C1 = \$abc$4817$aiger4816$507 ;
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_C1 = CLBLM_R_X5Y15_SLICE_X7Y15_AQ;
   assign CLBLM_R_X3Y9_SLICE_X3Y9_B1 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X3Y9_B2 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_C5 = 1'b1;
@@ -13543,10 +13008,10 @@ module top(
   assign CLBLM_R_X5Y15_SLICE_X7Y15_CX = 1'b0;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_D1 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_D2 = 1'b1;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_D3 = CLBLM_R_X5Y15_SLICE_X7Y15_AO6;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_D4 = 1'b1;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_D5 = \$abc$4817$aiger4816$506 ;
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_D5 = CLBLM_R_X5Y15_SLICE_X7Y15_BQ;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_D6 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_DX = 1'b0;
   assign CLBLM_R_X3Y9_SLICE_X3Y9_D1 = 1'b1;
@@ -13563,8 +13028,8 @@ module top(
   assign CLBLM_R_X5Y15_SLICE_X6Y15_B4 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_B5 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_B6 = 1'b1;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_A2 = \$abc$4817$aiger4816$252 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_A3 = \$auto$alumacc.cc:485:replace_alu$1451.O [23];
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_A2 = CLBLM_R_X3Y9_SLICE_X2Y9_BQ;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_A3 = CLBLM_R_X3Y10_SLICE_X2Y10_D_XOR;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_A4 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_A5 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_C4 = 1'b1;
@@ -13572,16 +13037,16 @@ module top(
   assign CLBLM_R_X5Y15_SLICE_X6Y15_C6 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_AX = 1'b0;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_B1 = 1'b1;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_B2 = \$abc$4817$aiger4816$251 ;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_B2 = CLBLM_R_X3Y9_SLICE_X2Y9_DQ;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_B3 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_B4 = 1'b1;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_B5 = \$auto$alumacc.cc:485:replace_alu$1451.O [16];
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_B5 = CLBLM_R_X3Y9_SLICE_X2Y9_A_XOR;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_B6 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_BX = 1'b0;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_C1 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_C2 = 1'b1;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_C3 = \$abc$4817$aiger4816$253 ;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_C4 = \$auto$alumacc.cc:485:replace_alu$1451.O [22];
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_C3 = CLBLM_R_X3Y9_SLICE_X2Y9_CQ;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_C4 = CLBLM_R_X3Y10_SLICE_X2Y10_C_XOR;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_C5 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_D2 = 1'b1;
   assign CLBLL_L_X24Y46_SLICE_X36Y46_B6 = 1'b1;
@@ -13589,24 +13054,24 @@ module top(
   assign CLBLM_R_X3Y9_SLICE_X2Y9_C6 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_D1 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_D6 = 1'b1;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_CIN = \$abc$4817$aiger4816$255 ;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_CIN = CLBLM_R_X3Y8_SLICE_X2Y8_COUT;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_CX = 1'b0;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_D1 = \$auto$alumacc.cc:485:replace_alu$1451.O [17];
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_D1 = CLBLM_R_X3Y9_SLICE_X2Y9_B_XOR;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_D2 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_D3 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_D4 = 1'b1;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_D5 = \$abc$4817$aiger4816$254 ;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_D5 = CLBLM_R_X3Y8_SLICE_X2Y8_A5Q;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_D6 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_C4 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_C5 = 1'b1;
   assign CLBLM_R_X3Y9_SLICE_X2Y9_DX = 1'b0;
-  assign CLBLM_R_X3Y9_SLICE_X2Y9_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X3Y9_SLICE_X2Y9_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_C6 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_B3 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_C1 = 1'b1;
   assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_CE = 1'b1;
-  assign CLBLM_R_X27Y8_SLICE_X42Y8_BX = \rst_sr [3];
+  assign CLBLM_R_X27Y8_SLICE_X42Y8_BX = CLBLL_L_X26Y9_SLICE_X40Y9_DQ;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_C2 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_C3 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_C3 = 1'b1;
@@ -13620,12 +13085,12 @@ module top(
   assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_CE = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_C4 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_D1 = 1'b1;
-  assign LIOB33_X0Y19_IOB_X0Y19_O = \mmcme2_test.O_CNT [3];
-  assign LIOB33_X0Y19_IOB_X0Y20_O = \mmcme2_test.O_CNT [2];
+  assign LIOB33_X0Y19_IOB_X0Y19_O = CLBLM_R_X27Y19_SLICE_X43Y19_AQ;
+  assign LIOB33_X0Y19_IOB_X0Y20_O = CLBLM_R_X11Y33_SLICE_X14Y33_AQ;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_D2 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_B5 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_D3 = 1'b1;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_C5 = \mmcme2_test.O_LOCKED ;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_C5 = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_LOCKED;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_D4 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_C5 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_D5 = 1'b1;
@@ -13642,11 +13107,11 @@ module top(
   assign CLBLM_R_X11Y32_SLICE_X14Y32_BX = 1'b0;
   assign CLBLM_R_X27Y42_SLICE_X42Y42_D6 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_A1 = 1'b1;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_A2 = \$abc$4817$aiger4816$404 ;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_A2 = CLBLM_R_X11Y32_SLICE_X14Y32_AQ;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_A3 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_A4 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_A5 = 1'b1;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_CIN = \$abc$4817$aiger4816$496 ;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_CIN = CLBLM_R_X27Y18_SLICE_X43Y18_COUT;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_A6 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_AX = 1'b0;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_C1 = 1'b1;
@@ -13654,26 +13119,26 @@ module top(
   assign CLBLM_R_X27Y40_SLICE_X43Y40_A1 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_A1 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_A2 = 1'b1;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_A3 = \$techmap3071$abc$2918$lut$not$aiger2917$409.A ;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_B1 = \$auto$alumacc.cc:485:replace_alu$1457.O [18];
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_A3 = CLBLM_R_X27Y14_SLICE_X43Y14_DQ;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_B1 = CLBLM_R_X11Y32_SLICE_X14Y32_C_XOR;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_A4 = 1'b1;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_A5 = \$auto$alumacc.cc:485:replace_alu$1460.O [2];
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_A5 = CLBLM_R_X27Y14_SLICE_X43Y14_C_XOR;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_A6 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_A6 = 1'b1;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_B2 = \$abc$4817$aiger4816$405 ;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_B2 = CLBLM_R_X11Y32_SLICE_X14Y32_DQ;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_AX = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_B1 = 1'b1;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_B2 = \$abc$4817$aiger4816$430 ;
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_B2 = CLBLM_R_X27Y14_SLICE_X43Y14_CQ;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_B3 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_B3 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_B4 = 1'b1;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_B5 = \$auto$alumacc.cc:485:replace_alu$1460.O [3];
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_B5 = CLBLM_R_X27Y14_SLICE_X43Y14_D_XOR;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_B6 = 1'b1;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_C3 = \$abc$4817$aiger4816$492 ;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_C3 = CLBLM_R_X27Y19_SLICE_X43Y19_CQ;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_B4 = 1'b1;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_C2 = \$auto$alumacc.cc:485:replace_alu$1457.O [19];
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_C2 = CLBLM_R_X11Y32_SLICE_X14Y32_D_XOR;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_BX = 1'b0;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_C1 = \$abc$4817$aiger4816$431 ;
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_C1 = CLBLM_R_X27Y14_SLICE_X43Y14_AQ;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_A1 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_A2 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_A3 = 1'b1;
@@ -13697,19 +13162,19 @@ module top(
   assign CLBLM_R_X11Y28_SLICE_X15Y28_C3 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_C4 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_A1 = 1'b1;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_A2 = \$abc$4817$aiger4816$519 ;
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_A2 = CLBLM_R_X5Y16_SLICE_X7Y16_CQ;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_A3 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_A4 = 1'b1;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_A5 = \$auto$alumacc.cc:485:replace_alu$1463.O [6];
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_A5 = CLBLM_R_X5Y16_SLICE_X7Y16_C_XOR;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_A6 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_C5 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_C6 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_AX = 1'b0;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_B1 = 1'b1;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_B2 = \$abc$4817$aiger4816$517 ;
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_B2 = CLBLM_R_X5Y16_SLICE_X7Y16_DQ;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_A1 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_A2 = 1'b1;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_B5 = \$auto$alumacc.cc:485:replace_alu$1463.O [7];
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_B5 = CLBLM_R_X5Y16_SLICE_X7Y16_D_XOR;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_A3 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_B6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_A4 = 1'b1;
@@ -13717,13 +13182,13 @@ module top(
   assign CLBLM_R_X5Y16_SLICE_X7Y16_BX = 1'b0;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_C1 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_A6 = 1'b1;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_C3 = \$abc$4817$aiger4816$518 ;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_C2 = \$auto$alumacc.cc:485:replace_alu$1463.O [4];
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_C3 = CLBLM_R_X5Y16_SLICE_X7Y16_AQ;
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_C2 = CLBLM_R_X5Y16_SLICE_X7Y16_A_XOR;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_A1 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_A2 = 1'b1;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_A3 = \$techmap3072$abc$2918$lut$not$aiger2917$337.A ;
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_A3 = CLBLM_R_X11Y28_SLICE_X14Y28_DQ;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_A4 = 1'b1;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_A5 = \$auto$alumacc.cc:485:replace_alu$1457.O [2];
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_A5 = CLBLM_R_X11Y28_SLICE_X14Y28_C_XOR;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_A6 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_C4 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_C5 = 1'b1;
@@ -13731,24 +13196,24 @@ module top(
   assign CLBLM_R_X11Y28_SLICE_X14Y28_AX = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_CX = 1'b0;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_B1 = 1'b1;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_B2 = \$abc$4817$aiger4816$353 ;
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_B2 = CLBLM_R_X11Y28_SLICE_X14Y28_CQ;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_D1 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X7Y16_D2 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_B3 = 1'b1;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_D4 = \$auto$alumacc.cc:485:replace_alu$1463.O [5];
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_D4 = CLBLM_R_X5Y16_SLICE_X7Y16_B_XOR;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_B4 = 1'b1;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_B5 = \$auto$alumacc.cc:485:replace_alu$1457.O [3];
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_B5 = CLBLM_R_X11Y28_SLICE_X14Y28_D_XOR;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_B6 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_BX = 1'b0;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_D5 = \$abc$4817$aiger4816$516 ;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_C1 = \$abc$4817$aiger4816$354 ;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_C2 = \$auto$alumacc.cc:485:replace_alu$1457.O [1];
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_D5 = CLBLM_R_X5Y16_SLICE_X7Y16_BQ;
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_C1 = CLBLM_R_X11Y28_SLICE_X14Y28_AQ;
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_C2 = CLBLM_R_X11Y28_SLICE_X14Y28_B_XOR;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_C3 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_A2 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_C4 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_C5 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_C6 = 1'b1;
-  assign CLBLM_R_X5Y16_SLICE_X7Y16_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X5Y16_SLICE_X7Y16_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_D1 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_D2 = 1'b1;
@@ -13761,50 +13226,50 @@ module top(
   assign CLBLM_R_X11Y28_SLICE_X14Y28_D2 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_D3 = CLBLM_R_X11Y28_SLICE_X14Y28_AO6;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_D4 = 1'b1;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_D5 = \$abc$4817$aiger4816$355 ;
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_D5 = CLBLM_R_X11Y28_SLICE_X14Y28_BQ;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_D6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_A1 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_C1 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_C2 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X14Y28_DX = 1'b0;
-  assign CLBLM_R_X11Y28_SLICE_X14Y28_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y28_SLICE_X14Y28_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_AX = 1'b0;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_C3 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_C4 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_C5 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_C6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_B1 = 1'b1;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_B2 = \mmcme2_test.O_CNT [0];
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_B2 = CLBLM_R_X3Y10_SLICE_X2Y10_CQ;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_B3 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_B4 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_B5 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_B6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_BX = 1'b0;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_C1 = \$auto$alumacc.cc:485:replace_alu$1451.O [21];
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_C1 = CLBLM_R_X3Y10_SLICE_X2Y10_B_XOR;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_C2 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_C3 = 1'b1;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_C4 = \$abc$4817$aiger4816$266 ;
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_C4 = CLBLM_R_X3Y9_SLICE_X2Y9_C5Q;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_D3 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_D4 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_D5 = 1'b1;
   assign CLBLM_R_X5Y16_SLICE_X6Y16_D6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_C6 = 1'b1;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_CIN = \$abc$4817$aiger4816$268 ;
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_CIN = CLBLM_R_X3Y9_SLICE_X2Y9_COUT;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_O;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_CX = 1'b0;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_D1 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_D2 = 1'b1;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_D5 = \$abc$4817$aiger4816$267 ;
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_D5 = CLBLM_R_X3Y9_SLICE_X2Y9_AQ;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_D6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_D3 = 1'b1;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_D4 = \$auto$alumacc.cc:485:replace_alu$1451.O [20];
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_D4 = CLBLM_R_X3Y10_SLICE_X2Y10_A_XOR;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_DX = 1'b0;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_D3 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_D4 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_A3 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_A4 = 1'b1;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_D5 = \$abc$4817$aiger4816$403 ;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_D5 = CLBLM_R_X11Y32_SLICE_X14Y32_CQ;
   assign LIOI3_X0Y11_ILOGIC_X0Y12_D = LIOB33_X0Y11_IOB_X0Y12_I;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_A5 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_D6 = 1'b1;
@@ -13812,8 +13277,8 @@ module top(
   assign CLBLM_R_X27Y19_SLICE_X43Y19_D1 = 1'b1;
   assign LIOI3_X0Y11_ILOGIC_X0Y11_D = LIOB33_X0Y11_IOB_X0Y11_I;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_DX = 1'b0;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_SR = \mmcme2_test.rst ;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_CIN = \$abc$4817$aiger4816$407 ;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_CIN = CLBLM_R_X11Y31_SLICE_X14Y31_COUT;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_B1 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_D2 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_B2 = 1'b1;
@@ -13830,8 +13295,8 @@ module top(
   assign CLBLM_R_X27Y19_SLICE_X42Y19_C3 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_C4 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_C5 = 1'b1;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_C2 = \$auto$alumacc.cc:485:replace_alu$1460.O [1];
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_D5 = \$abc$4817$aiger4816$494 ;
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_C2 = CLBLM_R_X27Y14_SLICE_X43Y14_B_XOR;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_D5 = CLBLM_R_X27Y19_SLICE_X43Y19_DQ;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_C6 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_C4 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_C5 = 1'b1;
@@ -13841,26 +13306,26 @@ module top(
   assign CLBLM_R_X27Y19_SLICE_X43Y19_D6 = 1'b1;
   assign LIOI3_X0Y27_OLOGIC_X0Y28_T1 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_C3 = \$abc$4817$aiger4816$392 ;
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_C3 = CLBLM_R_X11Y31_SLICE_X14Y31_BQ;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_A1 = 1'b1;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_A2 = \$abc$4817$aiger4816$314 ;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_A2 = CLBLM_R_X27Y41_SLICE_X43Y41_AQ;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_A1 = 1'b1;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_A2 = \$abc$4817$aiger4816$443 ;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_A2 = CLBLM_R_X27Y15_SLICE_X43Y15_CQ;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_A3 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_A4 = 1'b1;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_A5 = \$auto$alumacc.cc:485:replace_alu$1460.O [6];
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_A5 = CLBLM_R_X27Y15_SLICE_X43Y15_C_XOR;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_A6 = 1'b1;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_A3 = \$auto$alumacc.cc:485:replace_alu$1454.O [1];
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_A3 = CLBLM_R_X27Y38_SLICE_X43Y38_B_XOR;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_A4 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_AX = 1'b0;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_B1 = 1'b1;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_B2 = \$abc$4817$aiger4816$442 ;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_B2 = CLBLM_R_X27Y15_SLICE_X43Y15_DQ;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_B3 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_B4 = 1'b1;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_B5 = \$auto$alumacc.cc:485:replace_alu$1460.O [7];
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_B5 = CLBLM_R_X27Y15_SLICE_X43Y15_D_XOR;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_B6 = 1'b1;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_B1 = \$auto$alumacc.cc:485:replace_alu$1454.O [14];
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_B2 = \$abc$4817$aiger4816$315 ;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_B1 = CLBLM_R_X27Y41_SLICE_X43Y41_C_XOR;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_B2 = CLBLM_R_X27Y41_SLICE_X43Y41_DQ;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_BX = 1'b0;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_D1 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_C1 = 1'b1;
@@ -13871,9 +13336,9 @@ module top(
   assign CLBLM_R_X11Y29_SLICE_X15Y29_A4 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_A5 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_A6 = 1'b1;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_C2 = \$auto$alumacc.cc:485:replace_alu$1460.O [4];
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_C2 = CLBLM_R_X27Y15_SLICE_X43Y15_A_XOR;
   assign CLBLM_R_X11Y32_SLICE_X14Y32_CX = 1'b0;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_C3 = \$abc$4817$aiger4816$441 ;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_C3 = CLBLM_R_X27Y15_SLICE_X43Y15_AQ;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_B1 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_B2 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_B3 = 1'b1;
@@ -13888,35 +13353,35 @@ module top(
   assign CLBLM_R_X11Y29_SLICE_X15Y29_C3 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_C4 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_A1 = 1'b1;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_A2 = \$abc$4817$aiger4816$532 ;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_A2 = CLBLM_R_X5Y17_SLICE_X7Y17_CQ;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_A3 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_A4 = 1'b1;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_A5 = \$auto$alumacc.cc:485:replace_alu$1463.O [10];
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_A5 = CLBLM_R_X5Y17_SLICE_X7Y17_C_XOR;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_A6 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_C5 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_C6 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_AX = 1'b0;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_B1 = 1'b1;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_B2 = \$abc$4817$aiger4816$530 ;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_B2 = CLBLM_R_X5Y17_SLICE_X7Y17_DQ;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_B3 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_B4 = 1'b1;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_B5 = \$auto$alumacc.cc:485:replace_alu$1463.O [11];
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_B5 = CLBLM_R_X5Y17_SLICE_X7Y17_D_XOR;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_B6 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_D1 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_D2 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_BX = 1'b0;
   assign CLBLM_R_X11Y29_SLICE_X15Y29_D3 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_C1 = 1'b1;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_C2 = \$auto$alumacc.cc:485:replace_alu$1463.O [8];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_C3 = \$abc$4817$aiger4816$531 ;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_C2 = CLBLM_R_X5Y17_SLICE_X7Y17_A_XOR;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_C3 = CLBLM_R_X5Y17_SLICE_X7Y17_AQ;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_C4 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_C5 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_C6 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_A3 = 1'b1;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_CIN = \$abc$4817$aiger4816$533 ;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_CIN = CLBLM_R_X5Y16_SLICE_X7Y16_COUT;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_A4 = 1'b1;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_A5 = \$auto$alumacc.cc:485:replace_alu$1457.O [6];
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_A5 = CLBLM_R_X11Y29_SLICE_X14Y29_C_XOR;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_A6 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_A1 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_CX = 1'b0;
@@ -13924,16 +13389,16 @@ module top(
   assign CLBLM_R_X5Y17_SLICE_X7Y17_D1 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_D2 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_D3 = 1'b1;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_D4 = \$auto$alumacc.cc:485:replace_alu$1463.O [9];
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_D5 = \$abc$4817$aiger4816$529 ;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_D4 = CLBLM_R_X5Y17_SLICE_X7Y17_B_XOR;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_D5 = CLBLM_R_X5Y17_SLICE_X7Y17_BQ;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_D6 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_B1 = 1'b1;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_B2 = \$abc$4817$aiger4816$365 ;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_B2 = CLBLM_R_X11Y29_SLICE_X14Y29_DQ;
   assign CLBLM_R_X5Y17_SLICE_X7Y17_DX = 1'b0;
-  assign CLBLM_R_X5Y17_SLICE_X7Y17_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X5Y17_SLICE_X7Y17_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_B3 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_B4 = 1'b1;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_B5 = \$auto$alumacc.cc:485:replace_alu$1457.O [7];
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_B5 = CLBLM_R_X11Y29_SLICE_X14Y29_D_XOR;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_A1 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_A2 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_A3 = 1'b1;
@@ -13941,8 +13406,8 @@ module top(
   assign CLBLM_R_X5Y17_SLICE_X6Y17_A5 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_A6 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_C1 = 1'b1;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_C2 = \$auto$alumacc.cc:485:replace_alu$1457.O [4];
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_C3 = \$abc$4817$aiger4816$366 ;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_C2 = CLBLM_R_X11Y29_SLICE_X14Y29_A_XOR;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_C3 = CLBLM_R_X11Y29_SLICE_X14Y29_AQ;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_C4 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_B1 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_B2 = 1'b1;
@@ -13962,11 +13427,11 @@ module top(
   assign CLBLM_R_X5Y17_SLICE_X6Y17_C6 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_D6 = 1'b1;
   assign CLBLM_R_X11Y29_SLICE_X14Y29_DX = 1'b0;
-  assign CLBLM_R_X11Y29_SLICE_X14Y29_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y29_SLICE_X14Y29_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_A6 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_CX = 1'b0;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_D1 = \$auto$alumacc.cc:485:replace_alu$1460.O [17];
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_A5 = \$auto$alumacc.cc:485:replace_alu$1454.O [10];
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_D1 = CLBLM_R_X27Y18_SLICE_X43Y18_B_XOR;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_A5 = CLBLM_R_X27Y40_SLICE_X43Y40_C_XOR;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_D1 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_D2 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_D3 = 1'b1;
@@ -13974,21 +13439,21 @@ module top(
   assign CLBLM_R_X5Y17_SLICE_X6Y17_D5 = 1'b1;
   assign CLBLM_R_X5Y17_SLICE_X6Y17_D6 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_AX = 1'b0;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_CIN = \$abc$4817$aiger4816$394 ;
-  assign CLBLM_R_X11Y32_SLICE_X14Y32_D1 = \$auto$alumacc.cc:485:replace_alu$1457.O [17];
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_CIN = CLBLM_R_X11Y30_SLICE_X14Y30_COUT;
+  assign CLBLM_R_X11Y32_SLICE_X14Y32_D1 = CLBLM_R_X11Y32_SLICE_X14Y32_B_XOR;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_D2 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_B1 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_B1 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_B2 = 1'b1;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_B2 = \$abc$4817$aiger4816$302 ;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_B2 = CLBLM_R_X27Y40_SLICE_X43Y40_DQ;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_B3 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_B3 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_B4 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_B4 = 1'b1;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_B5 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_B5 = \$auto$alumacc.cc:485:replace_alu$1454.O [11];
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_B5 = CLBLM_R_X27Y40_SLICE_X43Y40_D_XOR;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_D3 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_B6 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_B6 = 1'b1;
@@ -14000,11 +13465,11 @@ module top(
   assign CLBLM_R_X27Y18_SLICE_X43Y18_D4 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_C1 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DADDR2 = 1'b0;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_C2 = \$auto$alumacc.cc:485:replace_alu$1454.O [8];
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_C2 = CLBLM_R_X27Y40_SLICE_X43Y40_A_XOR;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_C1 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DADDR3 = 1'b0;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_A2 = 1'b1;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_C3 = \$abc$4817$aiger4816$303 ;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_C3 = CLBLM_R_X27Y40_SLICE_X43Y40_AQ;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_C2 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DADDR4 = 1'b0;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_C4 = 1'b1;
@@ -14014,13 +13479,13 @@ module top(
   assign CLBLM_R_X27Y40_SLICE_X43Y40_C5 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_C4 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DADDR6 = 1'b0;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_D5 = \$abc$4817$aiger4816$482 ;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_D5 = CLBLM_R_X27Y18_SLICE_X43Y18_CQ;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_C6 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_C5 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DCLK = 1'b0;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_C6 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DEN = 1'b0;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_CIN = \$abc$4817$aiger4816$305 ;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_CIN = CLBLM_R_X27Y39_SLICE_X43Y39_COUT;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI0 = 1'b0;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI1 = 1'b0;
@@ -14028,7 +13493,7 @@ module top(
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI2 = 1'b0;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_D6 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI3 = 1'b0;
-  assign LIOB33_SING_X0Y0_IOB_X0Y0_O = \mmcme2_test.O_LOCKED ;
+  assign LIOB33_SING_X0Y0_IOB_X0Y0_O = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_LOCKED;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI4 = 1'b0;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI5 = 1'b0;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_CX = 1'b0;
@@ -14043,10 +13508,10 @@ module top(
   assign CLBLM_R_X27Y40_SLICE_X43Y40_D3 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI10 = 1'b0;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_D2 = 1'b1;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_D4 = \$auto$alumacc.cc:485:replace_alu$1454.O [9];
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_D4 = CLBLM_R_X27Y40_SLICE_X43Y40_B_XOR;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI11 = 1'b0;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_D3 = 1'b1;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_D5 = \$abc$4817$aiger4816$304 ;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_D5 = CLBLM_R_X27Y40_SLICE_X43Y40_BQ;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_DI12 = 1'b0;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_D4 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_D6 = 1'b1;
@@ -14057,26 +13522,26 @@ module top(
   assign CLBLM_R_X11Y30_SLICE_X14Y30_C5 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_A1 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_A1 = 1'b1;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_A2 = \$abc$4817$aiger4816$454 ;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_A2 = CLBLM_R_X27Y16_SLICE_X43Y16_CQ;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_A3 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_A4 = 1'b1;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_A5 = \$auto$alumacc.cc:485:replace_alu$1460.O [10];
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_A5 = CLBLM_R_X27Y16_SLICE_X43Y16_C_XOR;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_A6 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_DX = 1'b0;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_AX = 1'b0;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_DX = 1'b0;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_B1 = 1'b1;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_B2 = \$abc$4817$aiger4816$455 ;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_B2 = CLBLM_R_X27Y16_SLICE_X43Y16_DQ;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_B3 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_B4 = 1'b1;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_B5 = \$auto$alumacc.cc:485:replace_alu$1460.O [11];
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_B5 = CLBLM_R_X27Y16_SLICE_X43Y16_D_XOR;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_B6 = 1'b1;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_B6 = 1'b1;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_BX = 1'b0;
   assign CLBLM_R_X27Y42_SLICE_X43Y42_BX = 1'b0;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_C1 = 1'b1;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_C2 = \$auto$alumacc.cc:485:replace_alu$1460.O [8];
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_C2 = CLBLM_R_X27Y16_SLICE_X43Y16_A_XOR;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_A1 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_C6 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_A2 = 1'b1;
@@ -14084,7 +13549,7 @@ module top(
   assign CLBLM_R_X11Y30_SLICE_X15Y30_A4 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_A5 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_A6 = 1'b1;
-  assign CLBLM_R_X27Y16_SLICE_X43Y16_C3 = \$abc$4817$aiger4816$456 ;
+  assign CLBLM_R_X27Y16_SLICE_X43Y16_C3 = CLBLM_R_X27Y16_SLICE_X43Y16_AQ;
   assign CLBLM_R_X27Y16_SLICE_X43Y16_C4 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_B1 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_B2 = 1'b1;
@@ -14100,7 +13565,7 @@ module top(
   assign CLBLM_R_X11Y30_SLICE_X15Y30_C3 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_C4 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_A1 = 1'b1;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_A2 = \$abc$4817$aiger4816$542 ;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_A2 = CLBLM_R_X5Y18_SLICE_X7Y18_AQ;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_A3 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_A4 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_A5 = 1'b1;
@@ -14108,8 +13573,8 @@ module top(
   assign CLBLM_R_X11Y30_SLICE_X15Y30_C5 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_C6 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_AX = 1'b0;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_B1 = \$auto$alumacc.cc:485:replace_alu$1463.O [14];
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_B2 = \$abc$4817$aiger4816$544 ;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_B1 = CLBLM_R_X5Y18_SLICE_X7Y18_C_XOR;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_B2 = CLBLM_R_X5Y18_SLICE_X7Y18_DQ;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_B3 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_B4 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_B5 = 1'b1;
@@ -14119,31 +13584,31 @@ module top(
   assign CLBLM_R_X5Y18_SLICE_X7Y18_BX = 1'b0;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_D3 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_C1 = 1'b1;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_C2 = \$auto$alumacc.cc:485:replace_alu$1463.O [15];
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_C3 = \$abc$4817$aiger4816$545 ;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_C2 = CLBLM_R_X5Y18_SLICE_X7Y18_D_XOR;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_C3 = CLBLM_R_X5Y18_SLICE_X7Y18_BQ;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_C4 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_C5 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_C6 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_A1 = 1'b1;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_CIN = \$abc$4817$aiger4816$546 ;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_CIN = CLBLM_R_X5Y17_SLICE_X7Y17_COUT;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_A2 = \$abc$4817$aiger4816$377 ;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_A2 = CLBLM_R_X11Y30_SLICE_X14Y30_CQ;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_A3 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_A4 = 1'b1;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_A5 = \$auto$alumacc.cc:485:replace_alu$1457.O [10];
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_A5 = CLBLM_R_X11Y30_SLICE_X14Y30_C_XOR;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_CX = 1'b0;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_A6 = 1'b1;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_D1 = \$auto$alumacc.cc:485:replace_alu$1463.O [13];
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_D1 = CLBLM_R_X5Y18_SLICE_X7Y18_B_XOR;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_D2 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_D3 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_D4 = 1'b1;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_D5 = \$abc$4817$aiger4816$543 ;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_D5 = CLBLM_R_X5Y18_SLICE_X7Y18_CQ;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_D6 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_AX = 1'b0;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_B1 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X7Y18_DX = 1'b0;
-  assign CLBLM_R_X5Y18_SLICE_X7Y18_SR = \mmcme2_test.rst ;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_B2 = \$abc$4817$aiger4816$378 ;
+  assign CLBLM_R_X5Y18_SLICE_X7Y18_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_B2 = CLBLM_R_X11Y30_SLICE_X14Y30_DQ;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_B3 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_B4 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_A1 = 1'b1;
@@ -14153,8 +13618,8 @@ module top(
   assign CLBLM_R_X5Y18_SLICE_X6Y18_A5 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_A6 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_C1 = 1'b1;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_C2 = \$auto$alumacc.cc:485:replace_alu$1457.O [8];
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_C3 = \$abc$4817$aiger4816$379 ;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_C2 = CLBLM_R_X11Y30_SLICE_X14Y30_A_XOR;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_C3 = CLBLM_R_X11Y30_SLICE_X14Y30_AQ;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_C4 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_B1 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_B2 = 1'b1;
@@ -14175,9 +13640,9 @@ module top(
   assign CLBLM_R_X11Y30_SLICE_X14Y30_D6 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_DX = 1'b0;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_D3 = 1'b1;
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_RST = \RST ;
+  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_RST = CLBLM_R_X27Y8_SLICE_X42Y8_DQ;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_D1 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_D2 = 1'b1;
   assign CLBLM_R_X5Y18_SLICE_X6Y18_D3 = 1'b1;
@@ -14191,7 +13656,7 @@ module top(
   assign CLBLM_R_X27Y40_SLICE_X42Y40_C4 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X42Y40_C5 = 1'b1;
   assign CLBLM_R_X27Y40_SLICE_X42Y40_C6 = 1'b1;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_D5 = \$abc$4817$aiger4816$468 ;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_D5 = CLBLM_R_X27Y17_SLICE_X43Y17_CQ;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_D4 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X15Y30_D5 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_D6 = 1'b1;
@@ -14207,61 +13672,61 @@ module top(
   assign CLBLM_R_X27Y17_SLICE_X43Y17_DX = 1'b0;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_BX = 1'b0;
   assign CLBLM_R_X3Y7_SLICE_X2Y7_C1 = 1'b1;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_C2 = \$auto$alumacc.cc:485:replace_alu$1451.O [8];
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_SR = \mmcme2_test.rst ;
-  assign CLBLM_R_X3Y7_SLICE_X2Y7_C3 = \$abc$4817$aiger4816$227 ;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_C2 = CLBLM_R_X3Y7_SLICE_X2Y7_A_XOR;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
+  assign CLBLM_R_X3Y7_SLICE_X2Y7_C3 = CLBLM_R_X3Y7_SLICE_X2Y7_AQ;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_B6 = 1'b1;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_C3 = \$abc$4817$aiger4816$466 ;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_C3 = CLBLM_R_X27Y17_SLICE_X43Y17_BQ;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_C4 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_A1 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_A1 = 1'b1;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_A2 = \$abc$4817$aiger4816$469 ;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_A2 = CLBLM_R_X27Y17_SLICE_X43Y17_AQ;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_A3 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_A4 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_A5 = 1'b1;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_B5 = \$auto$alumacc.cc:485:replace_alu$1457.O [11];
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_B5 = CLBLM_R_X11Y30_SLICE_X14Y30_D_XOR;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_A6 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_C5 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_AX = 1'b0;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_C6 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_B6 = 1'b1;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_B1 = \$auto$alumacc.cc:485:replace_alu$1460.O [14];
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_B2 = \$abc$4817$aiger4816$467 ;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_B1 = CLBLM_R_X27Y17_SLICE_X43Y17_C_XOR;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_B2 = CLBLM_R_X27Y17_SLICE_X43Y17_DQ;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_B3 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_B4 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_B5 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_B6 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_B1 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_BX = 1'b0;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_CIN = \$abc$4817$aiger4816$470 ;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_CIN = CLBLM_R_X27Y16_SLICE_X43Y16_COUT;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_C1 = 1'b1;
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_C2 = \$auto$alumacc.cc:485:replace_alu$1460.O [15];
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_C2 = CLBLM_R_X27Y17_SLICE_X43Y17_D_XOR;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_A1 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_A2 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_A1 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_A2 = 1'b1;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_A3 = \$techmap3069$abc$2918$lut$not$aiger2917$553.A ;
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_A3 = CLBLM_R_X11Y5_SLICE_X15Y5_DQ;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_A4 = 1'b1;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_A5 = \$auto$alumacc.cc:485:replace_alu$1466.O [2];
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_A5 = CLBLM_R_X11Y5_SLICE_X15Y5_C_XOR;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_A6 = 1'b1;
   assign CLBLM_R_X11Y30_SLICE_X14Y30_BX = 1'b0;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_A3 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_AX = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_A4 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_B1 = 1'b1;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_B2 = \$abc$4817$aiger4816$583 ;
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_B2 = CLBLM_R_X11Y5_SLICE_X15Y5_CQ;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_B3 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_B4 = 1'b1;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_B5 = \$auto$alumacc.cc:485:replace_alu$1466.O [3];
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_B5 = CLBLM_R_X11Y5_SLICE_X15Y5_D_XOR;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_B6 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_B1 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_B2 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_BX = 1'b0;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_B3 = 1'b1;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_C1 = \$abc$4817$aiger4816$582 ;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_C2 = \$auto$alumacc.cc:485:replace_alu$1466.O [1];
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_C1 = CLBLM_R_X11Y5_SLICE_X15Y5_AQ;
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_C2 = CLBLM_R_X11Y5_SLICE_X15Y5_B_XOR;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_A1 = 1'b1;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_A2 = \$abc$4817$aiger4816$557 ;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_A2 = CLBLM_R_X5Y19_SLICE_X7Y19_AQ;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_A3 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_A4 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_A5 = 1'b1;
@@ -14270,8 +13735,8 @@ module top(
   assign CLBLM_R_X11Y5_SLICE_X15Y5_C4 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_AX = 1'b0;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_C5 = 1'b1;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_B1 = \$auto$alumacc.cc:485:replace_alu$1463.O [18];
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_B2 = \$abc$4817$aiger4816$558 ;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_B1 = CLBLM_R_X5Y19_SLICE_X7Y19_C_XOR;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_B2 = CLBLM_R_X5Y19_SLICE_X7Y19_DQ;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_B3 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_B4 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_B5 = 1'b1;
@@ -14282,12 +13747,12 @@ module top(
   assign CLBLM_R_X11Y5_SLICE_X15Y5_D2 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_C1 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_DX = 1'b0;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_C2 = \$auto$alumacc.cc:485:replace_alu$1463.O [19];
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_C3 = \$abc$4817$aiger4816$556 ;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_C2 = CLBLM_R_X5Y19_SLICE_X7Y19_D_XOR;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_C3 = CLBLM_R_X5Y19_SLICE_X7Y19_BQ;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_C4 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_C5 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_C6 = 1'b1;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_CIN = \$abc$4817$aiger4816$559 ;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_CIN = CLBLM_R_X5Y18_SLICE_X7Y18_COUT;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_A1 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_A2 = 1'b1;
@@ -14295,16 +13760,16 @@ module top(
   assign CLBLM_R_X11Y5_SLICE_X14Y5_A4 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_CX = 1'b0;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_A5 = 1'b1;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_D1 = \$auto$alumacc.cc:485:replace_alu$1463.O [17];
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_D1 = CLBLM_R_X5Y19_SLICE_X7Y19_B_XOR;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_D2 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_D3 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_D4 = 1'b1;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_D5 = \$abc$4817$aiger4816$555 ;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_D5 = CLBLM_R_X5Y19_SLICE_X7Y19_CQ;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_D6 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_B1 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_B2 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X7Y19_DX = 1'b0;
-  assign CLBLM_R_X5Y19_SLICE_X7Y19_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X5Y19_SLICE_X7Y19_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_B3 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_B4 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_B5 = 1'b1;
@@ -14336,7 +13801,7 @@ module top(
   assign CLBLM_R_X11Y5_SLICE_X14Y5_D5 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_D6 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X14Y31_DX = 1'b0;
-  assign CLBLM_R_X11Y31_SLICE_X14Y31_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y31_SLICE_X14Y31_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_A1 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_A2 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X6Y19_D1 = 1'b1;
@@ -14345,13 +13810,13 @@ module top(
   assign CLBLM_R_X5Y19_SLICE_X6Y19_D4 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X6Y19_D5 = 1'b1;
   assign CLBLM_R_X5Y19_SLICE_X6Y19_D6 = 1'b1;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_D4 = \$auto$alumacc.cc:485:replace_alu$1457.O [9];
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_D4 = CLBLM_R_X11Y30_SLICE_X14Y30_B_XOR;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_A3 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_A4 = 1'b1;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_D5 = \$abc$4817$aiger4816$380 ;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_D5 = CLBLM_R_X11Y30_SLICE_X14Y30_BQ;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_A3 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_A5 = 1'b1;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_A2 = \$abc$4817$aiger4816$340 ;
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_A2 = CLBLM_R_X27Y43_SLICE_X43Y43_DQ;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_A4 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_A5 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_A6 = 1'b1;
@@ -14359,7 +13824,7 @@ module top(
   assign CLBLM_R_X27Y43_SLICE_X43Y43_A6 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_AX = 1'b0;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_B1 = 1'b1;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_B2 = \mmcme2_test.O_CNT [1];
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_B2 = CLBLM_R_X27Y43_SLICE_X43Y43_CQ;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_B2 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_B3 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_B3 = 1'b1;
@@ -14370,26 +13835,26 @@ module top(
   assign CLBLM_R_X27Y43_SLICE_X43Y43_B6 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_B6 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_BX = 1'b0;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_C1 = \$auto$alumacc.cc:485:replace_alu$1454.O [21];
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_C1 = CLBLM_R_X27Y43_SLICE_X43Y43_B_XOR;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_B3 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_C1 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_C2 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_C2 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_C3 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_C3 = 1'b1;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_C4 = \$abc$4817$aiger4816$342 ;
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_C4 = CLBLM_R_X27Y38_SLICE_X43Y38_AQ;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_C4 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_C5 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_C5 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_C6 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_C6 = 1'b1;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_CIN = \$abc$4817$aiger4816$344 ;
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_CIN = CLBLM_R_X27Y42_SLICE_X43Y42_COUT;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O;
-  assign CLBLM_R_X5Y15_SLICE_X7Y15_C2 = \$auto$alumacc.cc:485:replace_alu$1463.O [1];
+  assign CLBLM_R_X5Y15_SLICE_X7Y15_C2 = CLBLM_R_X5Y15_SLICE_X7Y15_B_XOR;
   assign CLBLM_R_X5Y15_SLICE_X7Y15_C3 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_PWRDWN = LIOB33_X0Y11_IOB_X0Y12_I;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_CX = 1'b0;
-  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKFBIN = \mmcme2_test.clk_fb_o ;
+  assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKFBIN = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKFBOUT;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKIN1 = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y8_O;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_D1 = 1'b1;
   assign CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_PSINCDEC = 1'b1;
@@ -14399,7 +13864,7 @@ module top(
   assign CLBLM_R_X27Y43_SLICE_X43Y43_D3 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_D1 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_A1 = 1'b1;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_A2 = \$abc$4817$aiger4816$479 ;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_A2 = CLBLM_R_X27Y18_SLICE_X43Y18_AQ;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_A3 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_A4 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_D2 = 1'b1;
@@ -14407,8 +13872,8 @@ module top(
   assign CLBLM_R_X27Y18_SLICE_X43Y18_A6 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_AX = 1'b0;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_D3 = 1'b1;
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_B1 = \$auto$alumacc.cc:485:replace_alu$1460.O [18];
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_B2 = \$abc$4817$aiger4816$480 ;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_B1 = CLBLM_R_X27Y18_SLICE_X43Y18_C_XOR;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_B2 = CLBLM_R_X27Y18_SLICE_X43Y18_DQ;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_B3 = 1'b1;
   assign CLBLM_R_X27Y18_SLICE_X43Y18_B4 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X42Y17_D4 = 1'b1;
@@ -14421,42 +13886,42 @@ module top(
   assign CLBLM_R_X11Y32_SLICE_X15Y32_A1 = 1'b1;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_A2 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_A1 = 1'b1;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_A2 = \$abc$4817$aiger4816$595 ;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_A2 = CLBLM_R_X11Y6_SLICE_X15Y6_CQ;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_A3 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_A4 = 1'b1;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_A5 = \$auto$alumacc.cc:485:replace_alu$1466.O [6];
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_A5 = CLBLM_R_X11Y6_SLICE_X15Y6_C_XOR;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_A6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_B2 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_B3 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_AX = 1'b0;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_A3 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_B1 = 1'b1;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_B2 = \$abc$4817$aiger4816$594 ;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_B2 = CLBLM_R_X11Y6_SLICE_X15Y6_DQ;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_B3 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_B4 = 1'b1;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_B5 = \$auto$alumacc.cc:485:replace_alu$1466.O [7];
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_B5 = CLBLM_R_X11Y6_SLICE_X15Y6_D_XOR;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_B6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_B4 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_B5 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_BX = 1'b0;
   assign CLBLM_R_X11Y32_SLICE_X15Y32_B3 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_C1 = 1'b1;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_C2 = \$auto$alumacc.cc:485:replace_alu$1466.O [4];
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_C2 = CLBLM_R_X11Y6_SLICE_X15Y6_A_XOR;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_A1 = 1'b1;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_A2 = \$abc$4817$aiger4816$571 ;
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_A2 = CLBLM_R_X5Y20_SLICE_X7Y20_BQ;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_A3 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_A4 = 1'b1;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_A5 = \$auto$alumacc.cc:485:replace_alu$1463.O [21];
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_A5 = CLBLM_R_X5Y20_SLICE_X7Y20_B_XOR;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_A6 = 1'b1;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_C3 = \$abc$4817$aiger4816$593 ;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_C3 = CLBLM_R_X11Y6_SLICE_X15Y6_AQ;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_C4 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_AX = 1'b0;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_C5 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_B1 = 1'b1;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_B2 = \mmcme2_test.O_CNT [4];
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_B2 = CLBLM_R_X5Y20_SLICE_X7Y20_AQ;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_B3 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_B4 = 1'b1;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_B5 = \$auto$alumacc.cc:485:replace_alu$1463.O [20];
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_B5 = CLBLM_R_X5Y20_SLICE_X7Y20_A_XOR;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_B6 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_CX = 1'b0;
   assign CLBLM_R_X11Y6_SLICE_X15Y6_D1 = 1'b1;
@@ -14464,16 +13929,16 @@ module top(
   assign CLBLM_R_X11Y6_SLICE_X15Y6_D2 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_C1 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_C2 = 1'b1;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_C3 = \$abc$4817$aiger4816$569 ;
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_C3 = CLBLM_R_X5Y20_SLICE_X7Y20_CQ;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_C4 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_C5 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_C6 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_A1 = 1'b1;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_CIN = \$abc$4817$aiger4816$572 ;
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_CIN = CLBLM_R_X5Y19_SLICE_X7Y19_COUT;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_O;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_A2 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_A3 = 1'b1;
-  assign CLBLM_R_X11Y6_SLICE_X15Y6_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y6_SLICE_X15Y6_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_A4 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_CX = 1'b0;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_A5 = 1'b1;
@@ -14481,13 +13946,13 @@ module top(
   assign CLBLM_R_X5Y20_SLICE_X7Y20_D2 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_D3 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_D4 = 1'b1;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_D5 = \$abc$4817$aiger4816$568 ;
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_D5 = CLBLM_R_X5Y20_SLICE_X7Y20_DQ;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_D6 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_B5 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_B6 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_B1 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X7Y20_DX = 1'b0;
-  assign CLBLM_R_X5Y20_SLICE_X7Y20_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X5Y20_SLICE_X7Y20_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_B2 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_B3 = 1'b1;
   assign CLBLM_R_X11Y6_SLICE_X14Y6_B4 = 1'b1;
@@ -14519,7 +13984,7 @@ module top(
   assign CLBLM_R_X11Y6_SLICE_X14Y6_D6 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_A5 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_A6 = 1'b1;
-  assign CLBLM_R_X27Y42_SLICE_X43Y42_A3 = \$auto$alumacc.cc:485:replace_alu$1454.O [2];
+  assign CLBLM_R_X27Y42_SLICE_X43Y42_A3 = CLBLM_R_X27Y38_SLICE_X43Y38_C_XOR;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_B4 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X6Y20_D1 = 1'b1;
   assign CLBLM_R_X5Y20_SLICE_X6Y20_D2 = 1'b1;
@@ -14530,7 +13995,7 @@ module top(
   assign CLBLM_R_X11Y33_SLICE_X15Y33_C2 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_B5 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_B6 = 1'b1;
-  assign LIOI3_X0Y17_OLOGIC_X0Y18_D1 = \mmcme2_test.O_CNT [4];
+  assign LIOI3_X0Y17_OLOGIC_X0Y18_D1 = CLBLM_R_X5Y20_SLICE_X7Y20_AQ;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_D4 = 1'b1;
   assign CLBLL_L_X26Y9_SLICE_X40Y9_A1 = 1'b1;
   assign CLBLL_L_X26Y9_SLICE_X40Y9_A2 = 1'b1;
@@ -14567,7 +14032,7 @@ module top(
   assign CLBLL_L_X26Y9_SLICE_X40Y9_D6 = 1'b1;
   assign CLBLL_L_X26Y9_SLICE_X40Y9_DX = LIOB33_X0Y11_IOB_X0Y11_I;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_C1 = 1'b1;
-  assign CLBLM_R_X3Y10_SLICE_X2Y10_A2 = \$abc$4817$aiger4816$264 ;
+  assign CLBLM_R_X3Y10_SLICE_X2Y10_A2 = CLBLM_R_X3Y10_SLICE_X2Y10_DQ;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_C2 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_D3 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_D2 = 1'b1;
@@ -14614,55 +14079,55 @@ module top(
   assign CLBLM_R_X5Y15_SLICE_X6Y15_D3 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_D4 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_A1 = 1'b1;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_A2 = \$abc$4817$aiger4816$493 ;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_A2 = CLBLM_R_X27Y19_SLICE_X43Y19_BQ;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_A3 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_AX = 1'b0;
   assign CLBLM_R_X27Y19_SLICE_X42Y19_D6 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_A4 = 1'b1;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_A5 = \$auto$alumacc.cc:485:replace_alu$1460.O [21];
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_A5 = CLBLM_R_X27Y19_SLICE_X43Y19_B_XOR;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_A6 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_AX = 1'b0;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_B1 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_D4 = 1'b1;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_B2 = \mmcme2_test.O_CNT [3];
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_B2 = CLBLM_R_X27Y19_SLICE_X43Y19_AQ;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_B3 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_B4 = 1'b1;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_B5 = \$auto$alumacc.cc:485:replace_alu$1460.O [20];
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_B5 = CLBLM_R_X27Y19_SLICE_X43Y19_A_XOR;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_B6 = 1'b1;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_C1 = 1'b1;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_BX = 1'b0;
   assign CLBLM_R_X27Y19_SLICE_X43Y19_C1 = 1'b1;
-  assign CLBLM_R_X27Y19_SLICE_X43Y19_C2 = \RST ;
+  assign CLBLM_R_X27Y19_SLICE_X43Y19_C2 = CLBLM_R_X27Y8_SLICE_X42Y8_DQ;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_A1 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_A2 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_A1 = 1'b1;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_A2 = \$abc$4817$aiger4816$608 ;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_A2 = CLBLM_R_X11Y7_SLICE_X15Y7_CQ;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_A3 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_A4 = 1'b1;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_A5 = \$auto$alumacc.cc:485:replace_alu$1466.O [10];
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_A5 = CLBLM_R_X11Y7_SLICE_X15Y7_C_XOR;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_A6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X2Y10_C5 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_B4 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_AX = 1'b0;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_B5 = \$auto$alumacc.cc:485:replace_alu$1457.O [20];
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_B5 = CLBLM_R_X11Y33_SLICE_X14Y33_A_XOR;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_B1 = 1'b1;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_B2 = \$abc$4817$aiger4816$607 ;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_B2 = CLBLM_R_X11Y7_SLICE_X15Y7_DQ;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_B3 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_B4 = 1'b1;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_B5 = \$auto$alumacc.cc:485:replace_alu$1466.O [11];
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_B5 = CLBLM_R_X11Y7_SLICE_X15Y7_D_XOR;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_B6 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_B6 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_B1 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_BX = 1'b0;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_B3 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_C1 = 1'b1;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_C2 = \$auto$alumacc.cc:485:replace_alu$1466.O [8];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_C3 = \$abc$4817$aiger4816$606 ;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_C2 = CLBLM_R_X11Y7_SLICE_X15Y7_A_XOR;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_C3 = CLBLM_R_X11Y7_SLICE_X15Y7_AQ;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_C4 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_C5 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_C6 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_C1 = 1'b1;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_CIN = \$abc$4817$aiger4816$609 ;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_CIN = CLBLM_R_X11Y6_SLICE_X15Y6_COUT;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_C3 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_C4 = 1'b1;
@@ -14673,16 +14138,16 @@ module top(
   assign CLBLM_R_X11Y7_SLICE_X15Y7_D1 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_D2 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_D3 = 1'b1;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_D4 = \$auto$alumacc.cc:485:replace_alu$1466.O [9];
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_D5 = \$abc$4817$aiger4816$605 ;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_D4 = CLBLM_R_X11Y7_SLICE_X15Y7_B_XOR;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_D5 = CLBLM_R_X11Y7_SLICE_X15Y7_BQ;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_D6 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_D1 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_D2 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X15Y7_DX = 1'b0;
-  assign CLBLM_R_X11Y7_SLICE_X15Y7_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y7_SLICE_X15Y7_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_D4 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_A1 = 1'b1;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_A2 = \$abc$4817$aiger4816$419 ;
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_A2 = CLBLM_R_X11Y33_SLICE_X14Y33_BQ;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_A1 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_A2 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_A3 = 1'b1;
@@ -14691,7 +14156,7 @@ module top(
   assign CLBLM_R_X11Y7_SLICE_X14Y7_A6 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_A3 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_A4 = 1'b1;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_A5 = \$auto$alumacc.cc:485:replace_alu$1457.O [21];
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_A5 = CLBLM_R_X11Y33_SLICE_X14Y33_B_XOR;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_A6 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_B1 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_B2 = 1'b1;
@@ -14700,7 +14165,7 @@ module top(
   assign CLBLM_R_X11Y7_SLICE_X14Y7_B5 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_B6 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_B1 = 1'b1;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_B2 = \mmcme2_test.O_CNT [2];
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_B2 = CLBLM_R_X11Y33_SLICE_X14Y33_AQ;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_B3 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_C1 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_C1 = 1'b1;
@@ -14710,11 +14175,11 @@ module top(
   assign CLBLM_R_X11Y7_SLICE_X14Y7_C5 = 1'b1;
   assign CLBLM_R_X11Y7_SLICE_X14Y7_C6 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_C2 = 1'b1;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_C3 = \$abc$4817$aiger4816$417 ;
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_C3 = CLBLM_R_X11Y33_SLICE_X14Y33_CQ;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_C4 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_C5 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_C6 = 1'b1;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_CIN = \$abc$4817$aiger4816$420 ;
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_CIN = CLBLM_R_X11Y32_SLICE_X14Y32_COUT;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_O;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_CX = 1'b0;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_D1 = 1'b1;
@@ -14727,26 +14192,26 @@ module top(
   assign CLBLM_R_X11Y33_SLICE_X14Y33_D2 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_D3 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_D4 = 1'b1;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_D5 = \$abc$4817$aiger4816$418 ;
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_D5 = CLBLM_R_X11Y33_SLICE_X14Y33_DQ;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_D6 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X14Y33_DX = 1'b0;
-  assign CLBLM_R_X11Y33_SLICE_X14Y33_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y33_SLICE_X14Y33_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_C1 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_C2 = 1'b1;
-  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_I = \mmcme2_test.gclk [2];
+  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y0_I = CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y10_O;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_C3 = 1'b1;
-  assign LIOB33_X0Y3_IOB_X0Y4_O = \mmcme2_test.O_CNT [5];
+  assign LIOB33_X0Y3_IOB_X0Y4_O = CLBLM_R_X11Y10_SLICE_X15Y10_AQ;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_C4 = 1'b1;
-  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_I = \mmcme2_test.gclk [4];
-  assign LIOB33_X0Y3_IOB_X0Y3_O = \mmcme2_test.O_CNT [0];
+  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y3_I = CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_O;
+  assign LIOB33_X0Y3_IOB_X0Y3_O = CLBLM_R_X3Y10_SLICE_X2Y10_CQ;
   assign CLBLM_R_X27Y14_SLICE_X43Y14_DX = 1'b0;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_C5 = 1'b1;
-  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_I = \mmcme2_test.gclk [5];
+  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_I = CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_O;
   assign CLBLM_R_X27Y39_SLICE_X42Y39_C2 = 1'b1;
   assign CLBLM_R_X27Y38_SLICE_X42Y38_C6 = 1'b1;
-  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_I = \mmcme2_test.gclk [0];
+  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y6_I = CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y0_O;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_D1 = 1'b1;
-  assign CLBLM_R_X27Y14_SLICE_X43Y14_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X27Y14_SLICE_X43Y14_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_D2 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_D3 = 1'b1;
   assign CLBLM_R_X11Y28_SLICE_X15Y28_D4 = 1'b1;
@@ -14754,12 +14219,12 @@ module top(
   assign CLBLM_R_X11Y28_SLICE_X15Y28_D6 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_A2 = 1'b1;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_CX = 1'b0;
-  assign LIOI3_X0Y3_OLOGIC_X0Y4_D1 = \mmcme2_test.O_CNT [5];
-  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_I = \mmcme2_test.gclk [3];
-  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y8_I = \mmcme2_test.clk50 ;
+  assign LIOI3_X0Y3_OLOGIC_X0Y4_D1 = CLBLM_R_X11Y10_SLICE_X15Y10_AQ;
+  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_I = CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y11_O;
+  assign CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y8_I = CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y15_O;
   assign LIOI3_X0Y3_OLOGIC_X0Y4_T1 = 1'b1;
-  assign LIOI3_X0Y3_OLOGIC_X0Y3_D1 = \mmcme2_test.O_CNT [0];
-  assign CLBLM_R_X27Y18_SLICE_X43Y18_SR = \mmcme2_test.rst ;
+  assign LIOI3_X0Y3_OLOGIC_X0Y3_D1 = CLBLM_R_X3Y10_SLICE_X2Y10_CQ;
+  assign CLBLM_R_X27Y18_SLICE_X43Y18_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign LIOI3_X0Y3_OLOGIC_X0Y3_T1 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_A1 = 1'b1;
   assign LIOI3_X0Y17_OLOGIC_X0Y18_T1 = 1'b1;
@@ -14768,15 +14233,15 @@ module top(
   assign CLBLM_R_X27Y15_SLICE_X43Y15_C5 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_C6 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_A3 = 1'b1;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_CIN = \$abc$4817$aiger4816$444 ;
-  assign CLBLM_R_X27Y40_SLICE_X43Y40_A2 = \$abc$4817$aiger4816$301 ;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_CIN = CLBLM_R_X27Y14_SLICE_X43Y14_COUT;
+  assign CLBLM_R_X27Y40_SLICE_X43Y40_A2 = CLBLM_R_X27Y40_SLICE_X43Y40_CQ;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y7_O;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_D4 = 1'b1;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_D5 = \$abc$4817$aiger4816$645 ;
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_D5 = CLBLM_R_X11Y10_SLICE_X15Y10_DQ;
   assign CLBLM_R_X11Y10_SLICE_X15Y10_D6 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_A4 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_A1 = 1'b1;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_A2 = \$abc$4817$aiger4816$621 ;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_A2 = CLBLM_R_X11Y8_SLICE_X15Y8_AQ;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_A3 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_A4 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_A5 = 1'b1;
@@ -14784,38 +14249,38 @@ module top(
   assign CLBLM_R_X11Y10_SLICE_X15Y10_DX = 1'b0;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_A3 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_AX = 1'b0;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_B1 = \$auto$alumacc.cc:485:replace_alu$1466.O [14];
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_B2 = \$abc$4817$aiger4816$620 ;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_B1 = CLBLM_R_X11Y8_SLICE_X15Y8_C_XOR;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_B2 = CLBLM_R_X11Y8_SLICE_X15Y8_DQ;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_B3 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_B4 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_B5 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_B6 = 1'b1;
-  assign CLBLM_R_X11Y10_SLICE_X15Y10_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y10_SLICE_X15Y10_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_BX = 1'b0;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_C1 = 1'b1;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_C2 = \$auto$alumacc.cc:485:replace_alu$1466.O [15];
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_C3 = \$abc$4817$aiger4816$619 ;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_C2 = CLBLM_R_X11Y8_SLICE_X15Y8_D_XOR;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_C3 = CLBLM_R_X11Y8_SLICE_X15Y8_BQ;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_C4 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_C5 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_C6 = 1'b1;
   assign CLBLM_R_X27Y14_SLICE_X42Y14_A5 = 1'b1;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_CIN = \$abc$4817$aiger4816$622 ;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_CIN = CLBLM_R_X11Y7_SLICE_X15Y7_COUT;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_D2 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_D3 = 1'b1;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_D4 = \$auto$alumacc.cc:485:replace_alu$1460.O [5];
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_D4 = CLBLM_R_X27Y15_SLICE_X43Y15_B_XOR;
   assign CLBLM_R_X27Y40_SLICE_X43Y40_A4 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_CX = 1'b0;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_D1 = \$auto$alumacc.cc:485:replace_alu$1466.O [13];
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_D1 = CLBLM_R_X11Y8_SLICE_X15Y8_B_XOR;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_D2 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_D3 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_D4 = 1'b1;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_D5 = \$abc$4817$aiger4816$618 ;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_D5 = CLBLM_R_X11Y8_SLICE_X15Y8_CQ;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_D6 = 1'b1;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_D5 = \$abc$4817$aiger4816$440 ;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_D5 = CLBLM_R_X27Y15_SLICE_X43Y15_BQ;
   assign CLBLM_R_X27Y15_SLICE_X43Y15_D6 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X15Y8_DX = 1'b0;
-  assign CLBLM_R_X11Y8_SLICE_X15Y8_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y8_SLICE_X15Y8_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y10_SLICE_X14Y10_A4 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X14Y8_A1 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X14Y8_A2 = 1'b1;
@@ -14831,7 +14296,7 @@ module top(
   assign CLBLM_R_X11Y8_SLICE_X14Y8_B5 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X14Y8_B6 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_B6 = 1'b1;
-  assign CLBLM_R_X27Y15_SLICE_X43Y15_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X27Y15_SLICE_X43Y15_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y8_SLICE_X14Y8_C1 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X14Y8_C2 = 1'b1;
   assign CLBLM_R_X11Y8_SLICE_X14Y8_C3 = 1'b1;
@@ -14851,12 +14316,12 @@ module top(
   assign CLBLM_R_X27Y15_SLICE_X42Y15_A5 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_A5 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_A6 = 1'b1;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_D4 = \$auto$alumacc.cc:485:replace_alu$1454.O [20];
-  assign CLBLM_R_X27Y17_SLICE_X43Y17_D1 = \$auto$alumacc.cc:485:replace_alu$1460.O [13];
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_D4 = CLBLM_R_X27Y43_SLICE_X43Y43_A_XOR;
+  assign CLBLM_R_X27Y17_SLICE_X43Y17_D1 = CLBLM_R_X27Y17_SLICE_X43Y17_B_XOR;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_A6 = 1'b1;
   assign CLBLM_R_X11Y10_SLICE_X14Y10_B6 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_AX = 1'b0;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_D5 = \$abc$4817$aiger4816$343 ;
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_D5 = CLBLM_R_X27Y38_SLICE_X43Y38_BQ;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_B1 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_B2 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_B3 = 1'b1;
@@ -14874,10 +14339,10 @@ module top(
   assign CLBLM_R_X27Y41_SLICE_X43Y41_C1 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_C1 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_C1 = 1'b1;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_C2 = \$auto$alumacc.cc:485:replace_alu$1454.O [15];
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_C2 = CLBLM_R_X27Y41_SLICE_X43Y41_D_XOR;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_A3 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_C2 = 1'b1;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_C3 = \$abc$4817$aiger4816$316 ;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_C3 = CLBLM_R_X27Y41_SLICE_X43Y41_BQ;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_C4 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_C3 = 1'b1;
@@ -14887,10 +14352,10 @@ module top(
   assign CLBLM_R_X27Y41_SLICE_X43Y41_C6 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_C5 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_C2 = 1'b1;
-  assign CLBLM_R_X11Y30_SLICE_X14Y30_CIN = \$abc$4817$aiger4816$381 ;
+  assign CLBLM_R_X11Y30_SLICE_X14Y30_CIN = CLBLM_R_X11Y29_SLICE_X14Y29_COUT;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_C6 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_A4 = 1'b1;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_CIN = \$abc$4817$aiger4816$318 ;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_CIN = CLBLM_R_X27Y40_SLICE_X43Y40_COUT;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X1Y10_O;
   assign CLBLM_R_X27Y43_SLICE_X43Y43_DX = 1'b0;
   assign CLBLM_R_X27Y17_SLICE_X43Y17_D2 = 1'b1;
@@ -14901,10 +14366,10 @@ module top(
   assign CLBLM_R_X11Y33_SLICE_X15Y33_A5 = 1'b1;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_D4 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_CX = 1'b0;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_D5 = \$abc$4817$aiger4816$581 ;
-  assign CLBLM_R_X27Y43_SLICE_X43Y43_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_D5 = CLBLM_R_X11Y5_SLICE_X15Y5_BQ;
+  assign CLBLM_R_X27Y43_SLICE_X43Y43_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X11Y5_SLICE_X15Y5_D6 = 1'b1;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_D1 = \$auto$alumacc.cc:485:replace_alu$1454.O [13];
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_D1 = CLBLM_R_X27Y41_SLICE_X43Y41_B_XOR;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_C4 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_D2 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_A6 = 1'b1;
@@ -14912,9 +14377,9 @@ module top(
   assign CLBLM_R_X27Y15_SLICE_X42Y15_D1 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_D4 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_D2 = 1'b1;
-  assign CLBLM_R_X11Y5_SLICE_X15Y5_SR = \mmcme2_test.rst ;
-  assign LIOI3_TBYTESRC_X0Y43_OLOGIC_X0Y43_D1 = \mmcme2_test.O_CNT [1];
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_D5 = \$abc$4817$aiger4816$317 ;
+  assign CLBLM_R_X11Y5_SLICE_X15Y5_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
+  assign LIOI3_TBYTESRC_X0Y43_OLOGIC_X0Y43_D1 = CLBLM_R_X27Y43_SLICE_X43Y43_CQ;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_D5 = CLBLM_R_X27Y41_SLICE_X43Y41_CQ;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_D3 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_D6 = 1'b1;
   assign CLBLM_R_X27Y15_SLICE_X42Y15_D4 = 1'b1;
@@ -14935,12 +14400,12 @@ module top(
   assign CLBLM_R_X27Y8_SLICE_X43Y8_B5 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X43Y8_B6 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X43Y41_DX = 1'b0;
-  assign CLBLM_R_X27Y41_SLICE_X43Y41_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X27Y41_SLICE_X43Y41_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y8_SLICE_X43Y8_C1 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X43Y8_C2 = 1'b1;
   assign CLBLM_R_X3Y10_SLICE_X3Y10_C6 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_A1 = 1'b1;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_A2 = \$abc$4817$aiger4816$634 ;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_A2 = CLBLM_R_X11Y9_SLICE_X15Y9_AQ;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_A3 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_A4 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_A5 = 1'b1;
@@ -14949,8 +14414,8 @@ module top(
   assign CLBLM_R_X27Y8_SLICE_X43Y8_C4 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_AX = 1'b0;
   assign CLBLM_R_X11Y5_SLICE_X14Y5_A6 = 1'b1;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_B1 = \$auto$alumacc.cc:485:replace_alu$1466.O [18];
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_B2 = \$abc$4817$aiger4816$633 ;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_B1 = CLBLM_R_X11Y9_SLICE_X15Y9_C_XOR;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_B2 = CLBLM_R_X11Y9_SLICE_X15Y9_DQ;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_B3 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_B4 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_B5 = 1'b1;
@@ -14959,26 +14424,26 @@ module top(
   assign CLBLM_R_X11Y31_SLICE_X15Y31_A6 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_BX = 1'b0;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_C1 = 1'b1;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_C2 = \$auto$alumacc.cc:485:replace_alu$1466.O [19];
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_C3 = \$abc$4817$aiger4816$632 ;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_C2 = CLBLM_R_X11Y9_SLICE_X15Y9_D_XOR;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_C3 = CLBLM_R_X11Y9_SLICE_X15Y9_BQ;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_C4 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_C5 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_C6 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_A1 = 1'b1;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_CIN = \$abc$4817$aiger4816$635 ;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_CIN = CLBLM_R_X11Y8_SLICE_X15Y8_COUT;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_CLK = CLK_HROW_BOT_R_X60Y26_BUFHCE_X0Y4_O;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_A2 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_A3 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_CX = 1'b0;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_A4 = 1'b1;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_D1 = \$auto$alumacc.cc:485:replace_alu$1466.O [17];
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_D1 = CLBLM_R_X11Y9_SLICE_X15Y9_B_XOR;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_D2 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_D3 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_D4 = 1'b1;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_D5 = \$abc$4817$aiger4816$631 ;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_D5 = CLBLM_R_X11Y9_SLICE_X15Y9_CQ;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_D6 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X15Y9_DX = 1'b0;
-  assign CLBLM_R_X11Y9_SLICE_X15Y9_SR = \mmcme2_test.rst ;
+  assign CLBLM_R_X11Y9_SLICE_X15Y9_SR = CLBLM_R_X27Y19_SLICE_X43Y19_CO5;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_B1 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_B2 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_B3 = 1'b1;
@@ -15001,7 +14466,7 @@ module top(
   assign CLBLM_R_X11Y5_SLICE_X14Y5_B6 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_B5 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_B6 = 1'b1;
-  assign CLBLM_R_X27Y8_SLICE_X42Y8_CX = \rst_sr [2];
+  assign CLBLM_R_X27Y8_SLICE_X42Y8_CX = CLBLM_R_X27Y8_SLICE_X42Y8_BQ;
   assign CLBLM_R_X11Y9_SLICE_X14Y9_C1 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X14Y9_C2 = 1'b1;
   assign CLBLM_R_X11Y9_SLICE_X14Y9_C3 = 1'b1;
@@ -15010,7 +14475,7 @@ module top(
   assign CLBLM_R_X11Y9_SLICE_X14Y9_C6 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_D5 = 1'b1;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_D6 = 1'b1;
-  assign CLBLM_R_X27Y8_SLICE_X42Y8_DX = \rst_sr [1];
+  assign CLBLM_R_X27Y8_SLICE_X42Y8_DX = CLBLM_R_X27Y8_SLICE_X42Y8_CQ;
   assign CLBLM_R_X27Y8_SLICE_X42Y8_SR = LIOB33_X0Y11_IOB_X0Y11_I;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_B2 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_A1 = 1'b1;
@@ -15039,11 +14504,11 @@ module top(
   assign CLBLM_R_X11Y5_SLICE_X14Y5_C6 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_C1 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_C2 = 1'b1;
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y0_I0 = \mmcme2_test.clk [0];
+  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y0_I0 = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT0;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y0_I1 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_A3 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_C3 = 1'b1;
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y1_I0 = \mmcme2_test.clk [1];
+  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y1_I0 = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT1;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y1_I1 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_C4 = 1'b1;
   assign CLBLM_R_X27Y41_SLICE_X42Y41_C5 = 1'b1;
@@ -15051,14 +14516,14 @@ module top(
   assign CLBLM_R_X27Y41_SLICE_X42Y41_C6 = 1'b1;
   assign CLBLM_R_X5Y15_SLICE_X6Y15_A4 = 1'b1;
   assign CLBLM_R_X11Y33_SLICE_X15Y33_B4 = 1'b1;
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y10_I0 = \mmcme2_test.clk [2];
+  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y10_I0 = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT2;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y10_I1 = 1'b1;
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y11_I0 = \mmcme2_test.clk [3];
+  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y11_I0 = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT3;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y11_I1 = 1'b1;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_D1 = 1'b1;
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_I0 = \mmcme2_test.clk [4];
+  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_I0 = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT4;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y12_I1 = 1'b1;
-  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_I0 = \mmcme2_test.clk [5];
+  assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_I0 = CMT_TOP_L_LOWER_B_X106Y9_MMCME2_ADV_X1Y0_CLKOUT5;
   assign CLBLM_R_X11Y31_SLICE_X15Y31_D2 = 1'b1;
   assign CLBLM_R_X27Y43_SLICE_X42Y43_A6 = 1'b1;
   assign CLK_BUFG_BOT_R_X60Y48_BUFGCTRL_X0Y13_I1 = 1'b1;
