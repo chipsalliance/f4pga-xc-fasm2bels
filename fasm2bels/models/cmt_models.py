@@ -388,7 +388,7 @@ def process_pll_or_mmcm(top, site):
 
             # FIXME: Cannot determine which one is it. Possibly could analyze
             # routing and distinguish betweein INTERNAL and EXTERNAL.
-            bel.parameters['COMPENSATION'] = ''
+            bel.parameters['COMPENSATION'] = '""'
 
         # Either of the two above features needs to be set
         else:
