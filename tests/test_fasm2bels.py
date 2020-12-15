@@ -15,7 +15,7 @@ class PinConstraintType(enum.Enum):
     PCF = 1
 
 
-test_names = ["simple_ff", "iddr", "oddr"]
+test_names = ["simple_ff", "iddr", "oddr", "mmcm"]
 pin_constraint_types = [PinConstraintType.XDC, PinConstraintType.PCF]
 
 
@@ -32,7 +32,7 @@ class TestFasm2Bels(unittest.TestCase):
         os.unlink(cls.channels_file.name)
 
     @parameterized.expand(itertools.product(test_names, pin_constraint_types))
-    def test_simple_ff(self, test_name, pin_constraint_type):
+    def test_fasm2bels(self, test_name, pin_constraint_type):
         cur_dir = os.path.dirname(__file__)
         base_dir = os.path.join(cur_dir, '..')
         db_root = os.path.join(base_dir, 'third_party', 'prjxray-db', 'artix7')
