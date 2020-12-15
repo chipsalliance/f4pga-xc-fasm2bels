@@ -4,6 +4,7 @@ import os
 import sys
 import tempfile
 import filecmp
+import difflib
 import itertools
 import enum
 from fasm2bels.fasm2bels import main
@@ -114,14 +115,29 @@ class TestFasm2Bels(unittest.TestCase):
         self.assertTrue(os.path.exists(tmp_top_xdc))
 
         # Check if generated files are equal to the golden ones
-        self.assertTrue(
-            filecmp.cmp(
-                os.path.join(cur_dir, 'test_data', test_name,
-                             'top_bit.golden.v'), tmp_top_v))
-        self.assertTrue(
-            filecmp.cmp(
-                os.path.join(cur_dir, 'test_data', test_name,
-                             'top_bit.golden.xdc'), tmp_top_xdc))
+        def compare(file_a, file_b):
+            """
+            Compares content of the two given files. When that fails assembles
+            an unified diff and writes it to sys.stderr.
+            """
+
+            if filecmp.cmp(file_a, file_b) is True:
+                return True
+
+            with open(file_a, "r") as fp:
+                lines_a = fp.readlines()
+            with open(file_b, "r") as fp:
+                lines_b = fp.readlines()
+
+            lines = difflib.unified_diff(lines_a, lines_b, "golden", "current")
+            sys.stderr.writelines(lines)
+
+            return False
+
+        self.assertTrue(compare(os.path.join(
+            cur_dir, 'test_data', test_name, 'top_bit.golden.v'), tmp_top_v))
+        self.assertTrue(compare(os.path.join(
+            cur_dir, 'test_data', test_name, 'top_bit.golden.xdc'), tmp_top_xdc))
 
 
 if __name__ == "__main__":
