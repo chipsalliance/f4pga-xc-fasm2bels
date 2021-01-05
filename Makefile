@@ -1,12 +1,14 @@
 SHELL=bash
 
+PYTHON:=python3
+
 FASM2BELS_PYTHON_SRCS=$(shell find fasm2bels -name "*py")
 
 IN_ENV = if [ -e env/bin/activate ]; then . env/bin/activate; fi;
 env:
 	git submodule update --init --recursive
-	virtualenv --python=python3 env
-	$(IN_ENV) pip install --upgrade -r requirements.txt
+	virtualenv --python=$(PYTHON) env
+	$(IN_ENV) pip install --no-cache-dir --upgrade -r requirements.txt
 
 format: ${PYTHON_SRCS}
 	$(IN_ENV) yapf -i ${FASM2BELS_PYTHON_SRCS} setup.py
