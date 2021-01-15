@@ -1042,11 +1042,40 @@ class Site(object):
     def decode_multi_bit_feature(self, feature):
         """
         Decodes a "multi-bit" fasm feature. If not present returns 0.
+
+        >>> site = Site(features=[
+        ...         fasm.SetFasmFeature(
+        ...             feature="TILE.CELL.VAL", start=0, end=10, value=682,
+        ...             value_format=None),
+        ...     ], site=None)
+        >>> site.decode_multi_bit_feature("VAL")
+        682
+        >>> site = Site(features=[
+        ...         fasm.SetFasmFeature(
+        ...             feature="TILE.CELL.VAL", start=0, end=0, value=1,
+        ...             value_format=None),
+        ...         fasm.SetFasmFeature(
+        ...             feature="TILE.CELL.VAL", start=2, end=2, value=1,
+        ...             value_format=None),
+        ...     ], site=None)
+        >>> site.decode_multi_bit_feature("VAL")
+        5
+        >>> site = Site(features=[
+        ...         fasm.SetFasmFeature(
+        ...             feature="TILE.CELL.VAL", start=0, end=1, value=2,
+        ...             value_format=None),
+        ...         fasm.SetFasmFeature(
+        ...             feature="TILE.CELL.VAL", start=2, end=3, value=3,
+        ...             value_format=None),
+        ...     ], site=None)
+        >>> site.decode_multi_bit_feature("VAL")
+        14
         """
+
         value = 0
 
         for f in self.set_features:
-            if f.feature.startswith(feature):
+            if f.feature == feature:
                 for canon_f in fasm.canonical_features(f):
                     if canon_f.start is None:
                         value |= 1
