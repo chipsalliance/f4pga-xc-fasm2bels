@@ -392,7 +392,7 @@ def process_pll_or_mmcm(top, site):
 
             # FIXME: Cannot determine which one is it. Possibly could analyze
             # routing and distinguish betweein INTERNAL and EXTERNAL.
-            bel.parameters['COMPENSATION'] = '""'
+            bel.parameters['COMPENSATION'] = '"INTERNAL"'
 
         # Either of the two above features needs to be set
         else:
@@ -412,6 +412,17 @@ def process_pll_or_mmcm(top, site):
             # FIXME: This is probably wrong?
             # No path is COMPENSATION = "EXTERNAL" ???
             bel.parameters['COMPENSATION'] = '"INTERNAL"'
+
+    # MMCM required parameters
+    if is_mmcm:
+
+        # Spread-spectrum clock generation.
+        # Decoding of these parameters is not possible untill all relevant
+        # bits / FASM features are known. For now default values are assigned
+        # for Vivado not to complain.
+        bel.parameters['SS_EN'] = '"FALSE"'
+        bel.parameters['SS_MODE'] = '"CENTER_HIGH"'
+        bel.parameters['SS_MOD_PERIOD'] = "10000"
 
     # Add the bel and site
     site.add_bel(bel)
