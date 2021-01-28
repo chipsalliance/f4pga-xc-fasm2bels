@@ -312,8 +312,12 @@ def process_pll_or_mmcm(top, site):
                     high_time += 0.5
                     low_time = max(0, low_time - 0.5)
 
-                divider = int(high_time + low_time)
-                duty = high_time / (low_time + high_time)
+                if no_count:
+                    divider = 1
+                    duty = 0.5
+                else:
+                    divider = int(high_time + low_time)
+                    duty = high_time / (low_time + high_time)
 
                 if clkout == 'FBOUT':
                     vco_m = float(divider)
