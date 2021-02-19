@@ -32,8 +32,9 @@ jobs:
     - name: Get and build tools
       run: |
         make build
-        git clone -b interchange https://github.com/Xilinx/RapidWright.git $GITHUB_WORKSPACE/RapidWright
+        git clone https://github.com/Xilinx/RapidWright.git $GITHUB_WORKSPACE/RapidWright
         git clone https://github.com/capnproto/capnproto-java.git $GITHUB_WORKSPACE/capnproto-java
+        git clone https://github.com/SymbiFlow/fpga-interchange-schema.git
 
     - name: Test
       run: source .github/workflows/test.sh
