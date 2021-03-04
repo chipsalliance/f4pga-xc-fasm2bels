@@ -12,7 +12,7 @@
 import re
 
 from .verilog_modeling import Bel, Site, make_site_pin_map, make_inverter_path
-from fasm2bels.make_routes import make_routes
+from fasm2bels.make_routes import make_routes, ZERO_NET, ONE_NET
 
 BUFHCE_RE = re.compile('BUFHCE_X([0-9]+)Y([0-9]+)')
 
@@ -222,6 +222,13 @@ def cleanup_hrow(top, site):
                 top.wire_assigns.remove_sink(sink_wire)
                 top.wire_assigns.add_wire(
                     sink_wire=sink_wire, src_wire=src_wire)
+
+            # Do not overwrite const nets. We don't expect any as a result of
+            # the clock signal re-routing
+            if ZERO_NET in nets:
+                del nets[ZERO_NET]
+            if ONE_NET in nets:
+                del nets[ONE_NET]
 
             # Merge new nets and net_map
             top.nets.update(nets)
