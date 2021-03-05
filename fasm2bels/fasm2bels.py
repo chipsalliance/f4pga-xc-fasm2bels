@@ -44,6 +44,8 @@ from .models.iob_models import process_iobs
 from .models.ioi_models import process_ioi
 from .models.hclk_ioi3_models import process_hclk_ioi3
 from .models.pss_models import get_ps7_site, insert_ps7
+from .models.gtp_common_models import process_gtp_common
+from .models.gtp_channel_models import process_gtp_channel
 
 from .database.create_channels import create_channels
 from .database.connection_db_utils import get_tile_type
@@ -97,6 +99,21 @@ PROCESS_TILE = {
     'CMT_TOP_R_LOWER_B': process_cmt_lower_b,
     'CMT_TOP_L_LOWER_B': process_cmt_lower_b,
     'CFG_CENTER_MID': null_process,
+    'GTP_COMMON': process_gtp_common,
+    'GTP_COMMON_MID_LEFT': process_gtp_common,
+    'GTP_COMMON_MID_RIGHT': process_gtp_common,
+    'GTP_CHANNEL_0': process_gtp_channel,
+    'GTP_CHANNEL_1': process_gtp_channel,
+    'GTP_CHANNEL_2': process_gtp_channel,
+    'GTP_CHANNEL_3': process_gtp_channel,
+    'GTP_CHANNEL_0_MID_LEFT': process_gtp_channel,
+    'GTP_CHANNEL_1_MID_LEFT': process_gtp_channel,
+    'GTP_CHANNEL_2_MID_LEFT': process_gtp_channel,
+    'GTP_CHANNEL_3_MID_LEFT': process_gtp_channel,
+    'GTP_CHANNEL_0_MID_RIGHT': process_gtp_channel,
+    'GTP_CHANNEL_1_MID_RIGHT': process_gtp_channel,
+    'GTP_CHANNEL_2_MID_RIGHT': process_gtp_channel,
+    'GTP_CHANNEL_3_MID_RIGHT': process_gtp_channel,
 }
 
 
