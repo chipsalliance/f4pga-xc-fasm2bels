@@ -30,8 +30,7 @@ def process_gtp_channel(conn, top, tile_name, features):
         return
 
     site = get_gtp_channel_site(
-        top.db, top.grid, tile=tile_name, site='GTPE2_CHANNEL'
-    )
+        top.db, top.grid, tile=tile_name, site='GTPE2_CHANNEL')
 
     # Create the site
     gtp_site = Site(gtp_channel_features, site)
@@ -51,18 +50,15 @@ def process_gtp_channel(conn, top, tile_name, features):
         value = None
         if param_type == "INT":
             value = gtp_site.decode_multi_bit_feature(
-                feature=param, allow_partial_match=False
-            )
+                feature=param, allow_partial_match=False)
 
             encoding_idx = param_info["encoding"].index(value)
             value = param_info["values"][encoding_idx]
         elif param_type == "BIN":
             value = gtp_site.decode_multi_bit_feature(
-                feature=param, allow_partial_match=False
-            )
+                feature=param, allow_partial_match=False)
             value = "{digits}'b{value:0{digits}b}".format(
-                digits=param_digits, value=value
-            )
+                digits=param_digits, value=value)
         elif param_type == "BOOL":
             value = '"TRUE"' if gtp_site.has_feature(param) else '"FALSE"'
         elif param_type == "STR":

@@ -59,9 +59,7 @@ def process_gtp_common(conn, top, tile_name, features):
     gtp_site = Site(
         gtp_common_features,
         get_gtp_common_site(
-            top.db, top.grid, tile=tile_name, site='GTPE2_COMMON'
-        )
-    )
+            top.db, top.grid, tile=tile_name, site='GTPE2_COMMON'))
 
     # Create the GTPE2_COMMON bel and add its ports
     gtp = Bel('GTPE2_COMMON')
@@ -75,8 +73,7 @@ def process_gtp_common(conn, top, tile_name, features):
         param_type = param_info["type"]
 
         value = gtp_site.decode_multi_bit_feature(
-            feature=param, allow_partial_match=False
-        )
+            feature=param, allow_partial_match=False)
 
         if param_type == "INT":
             encoding_idx = param_info["encoding"].index(value)
@@ -125,8 +122,7 @@ def process_gtp_common(conn, top, tile_name, features):
             continue
 
         site = get_ibufds_site(
-            top.db, top.grid, tile=tile_name, generic_site=generic_site
-        )
+            top.db, top.grid, tile=tile_name, generic_site=generic_site)
         ibufds_site = Site(ibufds_features, site)
 
         if not ibufds_site.has_feature("IN_USE"):
