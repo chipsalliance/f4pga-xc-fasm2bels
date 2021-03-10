@@ -39,6 +39,7 @@ from .models.hclk_ioi3_models import process_hclk_ioi3
 from .models.pss_models import get_ps7_site, insert_ps7
 from .models.gtp_common_models import process_gtp_common
 from .models.gtp_channel_models import process_gtp_channel
+from .models.pcie_models import process_pcie
 
 from .database.create_channels import create_channels
 from .database.connection_db_utils import get_tile_type
@@ -127,6 +128,7 @@ PROCESS_TILE = {
     'GTP_INT_INTERFACE': null_process,
     'GTP_INT_INTERFACE_L': null_process,
     'GTP_INT_INTERFACE_R': null_process,
+    'PCIE_BOT': process_pcie,
 }
 
 
