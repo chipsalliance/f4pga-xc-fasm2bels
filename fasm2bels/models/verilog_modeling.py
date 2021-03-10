@@ -1744,7 +1744,7 @@ class WireAssignsBimap():
             this sink.
         """
         for sink_wire, source_wires in self.sink_to_source_wires.items():
-            assert len(source_wires) == 1
+            assert len(source_wires) == 1, (sink_wire, source_wires)
 
             yield sink_wire, list(source_wires)[0]
 
