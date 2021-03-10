@@ -1,6 +1,7 @@
 import re
+import json
+import os
 from .verilog_modeling import Bel, Site, make_inverter_path
-from .models_data.gtp_common_data import ports, params
 
 
 def get_gtp_common_site(db, grid, tile, site):
@@ -69,11 +70,21 @@ def process_gtp_common(conn, top, tile_name, features):
     if not gtp_site.has_feature("IN_USE"):
         return
 
+    db_root = top.db.db_root
+
+    attrs_file = os.path.join(db_root, "cells_data", "gtpe2_common_attrs.json")
+    ports_file = os.path.join(db_root, "cells_data", "gtpe2_common_ports.json")
+    with open(attrs_file, "r") as params_file:
+        params = json.load(params_file)
+
+    with open(ports_file, "r") as ports_file:
+        ports = json.load(ports_file)
+
     for param, param_info in params.items():
         param_type = param_info["type"]
 
         value = gtp_site.decode_multi_bit_feature(
-            feature=param, allow_partial_match=False)
+            feature=param)
 
         if param_type == "INT":
             encoding_idx = param_info["encoding"].index(value)
@@ -86,29 +97,34 @@ def process_gtp_common(conn, top, tile_name, features):
         if gtp_site.has_feature(inv_feature):
             gtp.parameters["IS_{}_INVERTED".format(port)] = 1
 
-    for in_port, width in ports["inputs"]:
+    for port, port_data in ports.items():
+        if port.startswith("GT"):
+            continue
+
+        width = int(port_data["width"])
+        direction = port_data["direction"]
+
         for i in range(width):
             if width > 1:
-                port = "{}[{}]".format(in_port, i)
-                wire = "{}{}".format(in_port, i)
+                port_name = "{}[{}]".format(port, i)
+                wire_name = "{}{}".format(port, i)
             else:
-                port = wire = in_port
+                port_name = port
+                wire_name = port
 
-            gtp_site.add_sink(gtp, port, wire, gtp.bel, wire)
-
-    for out_port, width in ports["outputs"]:
-        for i in range(width):
-            if width > 1:
-                port = "{}[{}]".format(out_port, i)
-                wire = "{}{}".format(out_port, i)
+            if direction == "input":
+                gtp_site.add_sink(gtp, port_name, wire_name, gtp.bel, wire_name)
             else:
-                port = wire = out_port
+                assert direction == "output", direction
+                gtp_site.add_source(gtp, port_name, wire_name, gtp.bel, wire_name)
 
-            gtp_site.add_source(gtp, port, wire, gtp.bel, wire)
-
+    any_gtrefclk_used = False
     for port in ["GTREFCLK0", "GTREFCLK1"]:
         if gtp_site.has_feature("{}_USED".format(port)):
             gtp_site.add_sink(gtp, port, port, gtp.bel, port)
+            any_gtrefclk_used = True
+
+    assert any_gtrefclk_used, "ERROR: no GTREFCLK ports is used!"
 
     # Add the bel
     gtp_site.add_bel(gtp)
@@ -124,9 +140,6 @@ def process_gtp_common(conn, top, tile_name, features):
         site = get_ibufds_site(
             top.db, top.grid, tile=tile_name, generic_site=generic_site)
         ibufds_site = Site(ibufds_features, site)
-
-        if not ibufds_site.has_feature("IN_USE"):
-            continue
 
         # Create the IBUFDS_GTE2 bel and add its ports
         ibufds = Bel('IBUFDS_GTE2')
