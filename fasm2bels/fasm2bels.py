@@ -114,6 +114,9 @@ PROCESS_TILE = {
     'GTP_CHANNEL_1_MID_RIGHT': process_gtp_channel,
     'GTP_CHANNEL_2_MID_RIGHT': process_gtp_channel,
     'GTP_CHANNEL_3_MID_RIGHT': process_gtp_channel,
+    'GTP_INT_INTERFACE': null_process,
+    'GTP_INT_INTERFACE_L': null_process,
+    'GTP_INT_INTERFACE_R': null_process,
 }
 
 
