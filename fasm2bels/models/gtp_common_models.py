@@ -83,8 +83,7 @@ def process_gtp_common(conn, top, tile_name, features):
     for param, param_info in params.items():
         param_type = param_info["type"]
 
-        value = gtp_site.decode_multi_bit_feature(
-            feature=param)
+        value = gtp_site.decode_multi_bit_feature(feature=param)
 
         if param_type == "INT":
             encoding_idx = param_info["encoding"].index(value)
@@ -113,10 +112,12 @@ def process_gtp_common(conn, top, tile_name, features):
                 wire_name = port
 
             if direction == "input":
-                gtp_site.add_sink(gtp, port_name, wire_name, gtp.bel, wire_name)
+                gtp_site.add_sink(gtp, port_name, wire_name, gtp.bel,
+                                  wire_name)
             else:
                 assert direction == "output", direction
-                gtp_site.add_source(gtp, port_name, wire_name, gtp.bel, wire_name)
+                gtp_site.add_source(gtp, port_name, wire_name, gtp.bel,
+                                    wire_name)
 
     any_gtrefclk_used = False
     for port in ["GTREFCLK0", "GTREFCLK1"]:

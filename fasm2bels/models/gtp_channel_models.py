@@ -15,6 +15,7 @@ ZERO_VAL_PARAMS = {
     "TX_XCLK_SEL": "TXOUT",
 }
 
+
 def get_gtp_channel_site(db, grid, tile, site):
     """ Return the prjxray.tile.Site object for the given GTP site. """
     gridinfo = grid.gridinfo_at_tilename(tile)
@@ -57,8 +58,10 @@ def process_gtp_channel(conn, top, tile_name, features):
 
     db_root = top.db.db_root
 
-    attrs_file = os.path.join(db_root, "cells_data", "gtpe2_channel_attrs.json")
-    ports_file = os.path.join(db_root, "cells_data", "gtpe2_channel_ports.json")
+    attrs_file = os.path.join(db_root, "cells_data",
+                              "gtpe2_channel_attrs.json")
+    ports_file = os.path.join(db_root, "cells_data",
+                              "gtpe2_channel_ports.json")
     with open(attrs_file, "r") as params_file:
         params = json.load(params_file)
 
@@ -71,14 +74,12 @@ def process_gtp_channel(conn, top, tile_name, features):
 
         value = None
         if param_type == "INT":
-            value = gtp_site.decode_multi_bit_feature(
-                feature=param)
+            value = gtp_site.decode_multi_bit_feature(feature=param)
 
             encoding_idx = param_info["encoding"].index(value)
             value = param_info["values"][encoding_idx]
         elif param_type == "BIN":
-            value = gtp_site.decode_multi_bit_feature(
-                feature=param)
+            value = gtp_site.decode_multi_bit_feature(feature=param)
             value = "{digits}'b{value:0{digits}b}".format(
                 digits=param_digits, value=value)
         elif param_type == "BOOL":
@@ -131,11 +132,12 @@ def process_gtp_channel(conn, top, tile_name, features):
                 wire_name = port
 
             if direction == "input":
-                gtp_site.add_sink(gtp, port_name, wire_name, gtp.bel, wire_name)
+                gtp_site.add_sink(gtp, port_name, wire_name, gtp.bel,
+                                  wire_name)
             else:
                 assert direction == "output", direction
-                gtp_site.add_source(gtp, port_name, wire_name, gtp.bel, wire_name)
-
+                gtp_site.add_source(gtp, port_name, wire_name, gtp.bel,
+                                    wire_name)
 
     top_wire_tx_p = top.add_top_in_port(tile_name, site.name, "IPAD_TX_P")
     top_wire_tx_n = top.add_top_in_port(tile_name, site.name, "IPAD_TX_N")
