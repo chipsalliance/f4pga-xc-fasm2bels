@@ -423,7 +423,7 @@ def process_cmt_upper_t(conn, top, tile_name, features):
     """
 
     # Filter only PLL related features
-    pll_features = [f for f in features if 'PLLE2.' in f.feature]
+    pll_features = [f for f in features if 'PLLE2_ADV.' in f.feature]
     if len(pll_features) == 0:
         return
 
@@ -445,7 +445,7 @@ def process_cmt_lower_b(conn, top, tile_name, features):
     """
 
     # Filter only MMCM related features
-    mmcm_features = [f for f in features if 'MMCME2.' in f.feature]
+    mmcm_features = [f for f in features if 'MMCME2_ADV.' in f.feature]
     if len(mmcm_features) == 0:
         return
 

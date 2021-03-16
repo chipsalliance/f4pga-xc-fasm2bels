@@ -30,7 +30,7 @@ import fasm.output
 from fasm import SetFasmFeature
 from prjxray import fasm_disassembler
 from prjxray import bitstream
-from rr_graph_capnp import graph2 as capnp_graph2
+from rr_graph.capnp import graph2 as capnp_graph2
 import prjxray.db
 
 from .net_map import create_net_list
