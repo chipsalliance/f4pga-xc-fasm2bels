@@ -139,8 +139,8 @@ def process_gtp_channel(conn, top, tile_name, features):
                 gtp_site.add_source(gtp, port_name, wire_name, gtp.bel,
                                     wire_name)
 
-    top_wire_tx_p = top.add_top_in_port(tile_name, site.name, "IPAD_TX_P")
-    top_wire_tx_n = top.add_top_in_port(tile_name, site.name, "IPAD_TX_N")
+    top_wire_tx_p = top.add_top_out_port(tile_name, site.name, "OPAD_TX_P")
+    top_wire_tx_n = top.add_top_out_port(tile_name, site.name, "OPAD_TX_N")
     top_wire_rx_p = top.add_top_in_port(tile_name, site.name, "IPAD_RX_P")
     top_wire_rx_n = top.add_top_in_port(tile_name, site.name, "IPAD_RX_N")
 
