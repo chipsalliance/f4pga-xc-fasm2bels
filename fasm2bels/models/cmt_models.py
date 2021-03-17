@@ -223,11 +223,6 @@ def process_pll_or_mmcm(top, site):
                 'PSDONE',
                 'CLKINSTOPPED',
                 'CLKFBSTOPPED',
-                'CLKFBOUTB',
-                'CLKOUT0B',
-                'CLKOUT1B',
-                'CLKOUT2B',
-                'CLKOUT3B',
         ):
             site.add_source(bel, wire, wire, bel.bel, wire)
 
@@ -258,8 +253,13 @@ def process_pll_or_mmcm(top, site):
                 clkout, prefix))
 
             # Add output source
-            site.add_source(bel, 'CLK' + clkout, 'CLK' + clkout, bel.bel,
-                            'CLK' + clkout)
+            wire = 'CLK' + clkout
+            site.add_source(bel, wire, wire, bel.bel, wire)
+
+            # Add complementary output
+            if is_mmcm and clkout in ["FBOUT", "OUT0", "OUT1", "OUT2", "OUT3"]:
+                wire = 'CLK' + clkout + 'B'
+                site.add_source(bel, wire, wire, bel.bel, wire)
 
             # Check for fractional divider for MMCM
             is_frac = is_mmcm and clkout in ['FBOUT', 'OUT0'] and \
@@ -312,8 +312,12 @@ def process_pll_or_mmcm(top, site):
                     high_time += 0.5
                     low_time = max(0, low_time - 0.5)
 
-                divider = int(high_time + low_time)
-                duty = high_time / (low_time + high_time)
+                if no_count:
+                    divider = 1
+                    duty = 0.5
+                else:
+                    divider = int(high_time + low_time)
+                    duty = high_time / (low_time + high_time)
 
                 if clkout == 'FBOUT':
                     vco_m = float(divider)
@@ -332,13 +336,27 @@ def process_pll_or_mmcm(top, site):
                 "{0:.3f}".format(phase)
 
         else:
-            bel.add_unconnected_port('CLK' + clkout, None, direction="output")
+
+            # Add the clock output as unconnected
+            wire = 'CLK' + clkout
+            bel.add_unconnected_port(wire, None, direction="output")
             bel.map_bel_pin_to_cell_pin(
                 bel_name=bel.bel,
-                bel_pin='CLK' + clkout,
-                cell_pin='CLK' + clkout,
+                bel_pin=wire,
+                cell_pin=wire,
             )
 
+            # Add complementary clock output as unconnected for MMCM
+            if is_mmcm and clkout in ["FBOUT", "OUT0", "OUT1", "OUT2", "OUT3"]:
+                wire = 'CLK' + clkout + 'B'
+                bel.add_unconnected_port(wire, None, direction="output")
+                bel.map_bel_pin_to_cell_pin(
+                    bel_name=bel.bel,
+                    bel_pin=wire,
+                    cell_pin=wire,
+                )
+
+            # Set default parameters for feedback clock
             if clkout != 'FBOUT':
                 bel.parameters['CLK{}_DIVIDE{}'.format(clkout, suffix)] = "1"
                 bel.parameters['CLK{}_DUTY_CYCLE'.format(clkout)] = "0.500"
@@ -388,7 +406,7 @@ def process_pll_or_mmcm(top, site):
 
             # FIXME: Cannot determine which one is it. Possibly could analyze
             # routing and distinguish betweein INTERNAL and EXTERNAL.
-            bel.parameters['COMPENSATION'] = '""'
+            bel.parameters['COMPENSATION'] = '"INTERNAL"'
 
         # Either of the two above features needs to be set
         else:
@@ -408,6 +426,17 @@ def process_pll_or_mmcm(top, site):
             # FIXME: This is probably wrong?
             # No path is COMPENSATION = "EXTERNAL" ???
             bel.parameters['COMPENSATION'] = '"INTERNAL"'
+
+    # MMCM required parameters
+    if is_mmcm:
+
+        # Spread-spectrum clock generation.
+        # Decoding of these parameters is not possible untill all relevant
+        # bits / FASM features are known. For now default values are assigned
+        # for Vivado not to complain.
+        bel.parameters['SS_EN'] = '"FALSE"'
+        bel.parameters['SS_MODE'] = '"CENTER_HIGH"'
+        bel.parameters['SS_MOD_PERIOD'] = "10000"
 
     # Add the bel and site
     site.add_bel(bel)
