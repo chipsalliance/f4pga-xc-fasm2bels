@@ -27,7 +27,7 @@ class PinConstraintType(enum.Enum):
     PCF = 1
 
 
-test_names = ["simple_ff", "iddr", "oddr", "mmcm", "gtp"]
+test_names = ["simple_ff", "iddr", "oddr", "mmcm", "gtp", "pcie"]
 pin_constraint_types = [PinConstraintType.XDC, PinConstraintType.PCF]
 
 
