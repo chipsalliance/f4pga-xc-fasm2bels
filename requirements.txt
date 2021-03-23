@@ -1,6 +1,4 @@
 pyyaml
-# TODO: https://github.com/SymbiFlow/python-fpga-interchange/issues/11
-git+https://github.com/litghost/rapidyaml.git@fixup_python_packaging#egg=rapidyaml&subdirectory=api/python
 -e third_party/prjxray
 git+https://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=rr-graph
 git+https://github.com/SymbiFlow/python-fpga-interchange.git#egg=python-fpga-interchange
