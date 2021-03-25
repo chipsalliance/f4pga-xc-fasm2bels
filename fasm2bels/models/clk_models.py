@@ -163,6 +163,12 @@ def cleanup_hrow(top, site):
             bufhce_i_wire_pkey = site.site_wire_to_wire_pkey['I']
             bufhce_o_wire_pkey = site.site_wire_to_wire_pkey['O']
 
+            # Get full wire names
+            bufhce_i_wire_name = top.wire_pkey_to_wire.get(
+                bufhce_i_wire_pkey, None)
+            bufhce_o_wire_name = top.wire_pkey_to_wire.get(
+                bufhce_o_wire_pkey, None)
+
             # Identify all sinks driven by the BUFHCE, store their wire pkeys
             clk_sinks = []
             bufhce_o_net = top.nets[bufhce_o_wire_pkey]
@@ -233,6 +239,12 @@ def cleanup_hrow(top, site):
             # Merge new nets and net_map
             top.nets.update(nets)
             top.net_map.update(net_map)
+
+            # Remove BUFHCE wires as they are not used anymore
+            if bufhce_i_wire_name in top.wires:
+                top.wires.discard(bufhce_i_wire_name)
+            if bufhce_o_wire_name in top.wires:
+                top.wires.discard(bufhce_o_wire_name)
 
 
 def process_hrow(conn, top, tile, features):
