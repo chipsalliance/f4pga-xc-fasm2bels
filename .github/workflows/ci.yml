@@ -29,8 +29,12 @@ jobs:
     - name: Check formatting
       run: source .github/workflows/format.sh
 
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1
+
     - name: Get and build tools
       run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         make build
         git clone https://github.com/Xilinx/RapidWright.git $GITHUB_WORKSPACE/RapidWright
         git clone https://github.com/capnproto/capnproto-java.git $GITHUB_WORKSPACE/capnproto-java
