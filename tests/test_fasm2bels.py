@@ -7,6 +7,7 @@ import filecmp
 import difflib
 import itertools
 import enum
+import tarfile
 from fasm2bels.fasm2bels import main
 
 
@@ -15,8 +16,13 @@ class PinConstraintType(enum.Enum):
     PCF = 1
 
 
-test_names = ["simple_ff", "iddr", "oddr", "mmcm"]
+test_names = ["simple_ff", "iddr", "oddr", "mmcm", "gtp"]
 pin_constraint_types = [PinConstraintType.XDC, PinConstraintType.PCF]
+
+
+def unpack_tar(tar_file):
+    tar = tarfile.open(name=tar_file, mode="r:gz")
+    tar.extractall(path=os.path.dirname(tar_file))
 
 
 class TestFasm2Bels(unittest.TestCase):
@@ -46,6 +52,8 @@ class TestFasm2Bels(unittest.TestCase):
                                  '{}.xdc'.format(test_name))
         eblif = os.path.join(cur_dir, 'test_data', test_name,
                              '{}.eblif'.format(test_name))
+
+        unpack_tar(os.path.join(cur_dir, 'test_data', test_name, "{}.tar.gz".format(test_name)))
 
         temp_dir = tempfile.mkdtemp(
             prefix="test_fasm2bels_{}_{}_".format(test_name,
