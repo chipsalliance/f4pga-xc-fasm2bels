@@ -2,6 +2,7 @@ import re
 import json
 import os
 from .verilog_modeling import Bel, Site, make_inverter_path
+from .utils import add_bel_attributes, add_site_ports
 
 ZERO_VAL_PARAMS = {
     "CBCC_DATA_SOURCE_SEL": "ENCODED",
@@ -16,18 +17,17 @@ ZERO_VAL_PARAMS = {
 }
 
 
-def get_gtp_channel_site(db, grid, tile, site):
+def get_gtp_channel_site(db, grid, tile, site_type):
     """ Return the prjxray.tile.Site object for the given GTP site. """
     gridinfo = grid.gridinfo_at_tilename(tile)
     tile_type = db.get_tile_type(gridinfo.tile_type)
 
     sites = list(tile_type.get_instance_sites(gridinfo))
 
-    for site in sites:
-        if "GTPE2_CHANNEL" in site:
-            return site
+    gtp_channel_sites = [site for site in sites if site.type == site_type]
+    assert len(gtp_channel_sites) == 1
 
-    assert False, (tile, site)
+    return gtp_channel_sites[0]
 
 
 def process_gtp_channel(conn, top, tile_name, features):
@@ -35,22 +35,24 @@ def process_gtp_channel(conn, top, tile_name, features):
     Processes the GTP_CHANNEL tile
     """
 
+    site_name = "GTPE2_CHANNEL"
+
     # Filter only GTPE2_CHANNEL related features
     gtp_channel_features = [
-        f for f in features if 'GTPE2_CHANNEL.' in f.feature
+        f for f in features if '{}.'.format(site_name) in f.feature
     ]
     if len(gtp_channel_features) == 0:
         return
 
     site = get_gtp_channel_site(
-        top.db, top.grid, tile=tile_name, site='GTPE2_CHANNEL')
+        top.db, top.grid, tile=tile_name, site_type=site_name)
 
     # Create the site
     gtp_site = Site(gtp_channel_features, site)
 
     # Create the GTPE2_CHANNEL bel and add its ports
-    gtp = Bel('GTPE2_CHANNEL')
-    gtp.set_bel('GTPE2_CHANNEL')
+    gtp = Bel(site_name)
+    gtp.set_bel(site_name)
 
     # If the GTPE2_CHANNEL is not used then skip the rest
     if not gtp_site.has_feature("IN_USE"):
@@ -58,41 +60,8 @@ def process_gtp_channel(conn, top, tile_name, features):
 
     db_root = top.db.db_root
 
-    attrs_file = os.path.join(db_root, "cells_data",
-                              "gtpe2_channel_attrs.json")
-    ports_file = os.path.join(db_root, "cells_data",
-                              "gtpe2_channel_ports.json")
-    with open(attrs_file, "r") as params_file:
-        params = json.load(params_file)
-
-    with open(ports_file, "r") as ports_file:
-        ports = json.load(ports_file)
-
-    for param, param_info in params.items():
-        param_type = param_info["type"]
-        param_digits = param_info["digits"]
-
-        value = None
-        if param_type == "INT":
-            value = gtp_site.decode_multi_bit_feature(feature=param)
-
-            encoding_idx = param_info["encoding"].index(value)
-            value = param_info["values"][encoding_idx]
-        elif param_type == "BIN":
-            value = gtp_site.decode_multi_bit_feature(feature=param)
-            value = "{digits}'b{value:0{digits}b}".format(
-                digits=param_digits, value=value)
-        elif param_type == "BOOL":
-            value = '"TRUE"' if gtp_site.has_feature(param) else '"FALSE"'
-        elif param_type == "STR":
-            for val in param_info["values"]:
-                if gtp_site.has_feature("{}.{}".format(param, val)):
-                    value = '"{}"'.format(val)
-
-            if value is None:
-                continue
-
-        gtp.parameters[param] = value
+    # Add basic attributes to the GTP bel
+    add_bel_attributes(db_root, site_name.lower(), gtp_site, gtp)
 
     for param, zero_val in ZERO_VAL_PARAMS.items():
         if param not in gtp.parameters:
@@ -116,28 +85,8 @@ def process_gtp_channel(conn, top, tile_name, features):
         if gtp_site.has_feature(inv_feature):
             gtp.parameters["IS_{}_INVERTED".format(port)] = 1
 
-    for port, port_data in ports.items():
-        if port.startswith("PLL") or port.startswith("GTP"):
-            continue
-
-        width = int(port_data["width"])
-        direction = port_data["direction"]
-
-        for i in range(width):
-            if width > 1:
-                port_name = "{}[{}]".format(port, i)
-                wire_name = "{}{}".format(port, i)
-            else:
-                port_name = port
-                wire_name = port
-
-            if direction == "input":
-                gtp_site.add_sink(gtp, port_name, wire_name, gtp.bel,
-                                  wire_name)
-            else:
-                assert direction == "output", direction
-                gtp_site.add_source(gtp, port_name, wire_name, gtp.bel,
-                                    wire_name)
+    # Adding ports to the GTP site
+    add_site_ports(db_root, site_name.lower(), gtp_site, gtp, ["PLL", "GTP"])
 
     top_wire_tx_p = top.add_top_out_port(tile_name, site.name, "OPAD_TX_P")
     top_wire_tx_n = top.add_top_out_port(tile_name, site.name, "OPAD_TX_N")

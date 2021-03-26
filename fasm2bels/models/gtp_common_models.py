@@ -2,6 +2,7 @@ import re
 import json
 import os
 from .verilog_modeling import Bel, Site, make_inverter_path
+from .utils import add_bel_attributes, add_site_ports
 
 
 def get_gtp_common_site(db, grid, tile, site):
@@ -51,20 +52,23 @@ def process_gtp_common(conn, top, tile_name, features):
     Processes the GTP_COMMON tile
     """
 
+    site_name = "GTPE2_COMMON"
+
     # Filter only GTPE2_COMMON related features
-    gtp_common_features = [f for f in features if 'GTPE2_COMMON.' in f.feature]
+    gtp_common_features = [
+        f for f in features if '{}.'.format(site_name) in f.feature
+    ]
     if len(gtp_common_features) == 0:
         return
 
     # Create the site
     gtp_site = Site(
         gtp_common_features,
-        get_gtp_common_site(
-            top.db, top.grid, tile=tile_name, site='GTPE2_COMMON'))
+        get_gtp_common_site(top.db, top.grid, tile=tile_name, site=site_name))
 
     # Create the GTPE2_COMMON bel and add its ports
-    gtp = Bel('GTPE2_COMMON')
-    gtp.set_bel('GTPE2_COMMON')
+    gtp = Bel(site_name)
+    gtp.set_bel(site_name)
 
     # If the GTPE2_COMMON is not used then skip the rest
     if not gtp_site.has_feature("IN_USE"):
@@ -72,52 +76,13 @@ def process_gtp_common(conn, top, tile_name, features):
 
     db_root = top.db.db_root
 
-    attrs_file = os.path.join(db_root, "cells_data", "gtpe2_common_attrs.json")
-    ports_file = os.path.join(db_root, "cells_data", "gtpe2_common_ports.json")
-    with open(attrs_file, "r") as params_file:
-        params = json.load(params_file)
-
-    with open(ports_file, "r") as ports_file:
-        ports = json.load(ports_file)
-
-    for param, param_info in params.items():
-        param_type = param_info["type"]
-
-        value = gtp_site.decode_multi_bit_feature(feature=param)
-
-        if param_type == "INT":
-            encoding_idx = param_info["encoding"].index(value)
-            value = param_info["values"][encoding_idx]
-
-        gtp.parameters[param] = value
+    # Add basic attributes to the GTP bel
+    add_bel_attributes(db_root, site_name.lower(), gtp_site, gtp)
 
     for port in ["DRPCLK", "PLL0LOCKDETCLK", "PLL1LOCKDETCLK"]:
         inv_feature = "INV_{}".format(port)
         if gtp_site.has_feature(inv_feature):
             gtp.parameters["IS_{}_INVERTED".format(port)] = 1
-
-    for port, port_data in ports.items():
-        if port.startswith("GT"):
-            continue
-
-        width = int(port_data["width"])
-        direction = port_data["direction"]
-
-        for i in range(width):
-            if width > 1:
-                port_name = "{}[{}]".format(port, i)
-                wire_name = "{}{}".format(port, i)
-            else:
-                port_name = port
-                wire_name = port
-
-            if direction == "input":
-                gtp_site.add_sink(gtp, port_name, wire_name, gtp.bel,
-                                  wire_name)
-            else:
-                assert direction == "output", direction
-                gtp_site.add_source(gtp, port_name, wire_name, gtp.bel,
-                                    wire_name)
 
     any_gtrefclk_used = False
     for port in ["GTREFCLK0", "GTREFCLK1"]:
@@ -126,6 +91,9 @@ def process_gtp_common(conn, top, tile_name, features):
             any_gtrefclk_used = True
 
     assert any_gtrefclk_used, "ERROR: no GTREFCLK ports is used!"
+
+    # Adding ports to the GTP site
+    add_site_ports(db_root, site_name.lower(), gtp_site, gtp, ["GT"])
 
     # Add the bel
     gtp_site.add_bel(gtp)

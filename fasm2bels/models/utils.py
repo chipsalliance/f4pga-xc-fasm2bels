@@ -1,3 +1,7 @@
+import os
+import json
+
+
 def make_bus(wires):
     """ Combine bus wires into a consecutive bus.
 
@@ -146,3 +150,77 @@ def flatten_wires(wire, wire_assigns, wire_name_net_map):
             return "1'b{}".format(wire)
         else:
             return wire
+
+
+def add_bel_attributes(db_root, site_name, site_obj, bel_obj):
+    """
+    This function fills the attributes of a given bel with information
+    taken from the corresponding cells data definition from the database.
+    """
+
+    attrs_file = os.path.join(db_root, "cells_data",
+                              "{}_attrs.json".format(site_name))
+    with open(attrs_file, "r") as attrs_file:
+        attrs = json.load(attrs_file)
+
+    for attr, attr_info in attrs.items():
+        attr_type = attr_info["type"]
+        attr_digits = attr_info["digits"]
+
+        value = None
+        if attr_type == "INT":
+            value = site_obj.decode_multi_bit_feature(feature=attr)
+
+            encoding_idx = attr_info["encoding"].index(value)
+            value = attr_info["values"][encoding_idx]
+        elif attr_type == "BIN":
+            value = site_obj.decode_multi_bit_feature(feature=attr)
+            value = "{digits}'b{value:0{digits}b}".format(
+                digits=attr_digits, value=value)
+        elif attr_type == "BOOL":
+            value = '"TRUE"' if site_obj.has_feature(attr) else '"FALSE"'
+        elif attr_type == "STR":
+            for val in attr_info["values"]:
+                if site_obj.has_feature("{}.{}".format(attr, val)):
+                    value = '"{}"'.format(val)
+
+            if value is None:
+                continue
+
+        bel_obj.parameters[attr] = value
+
+
+def add_site_ports(db_root, site_name, site_obj, bel_obj, filter_ports=[]):
+    """
+    This function fills the given site's sinks and sources with information
+    taken from the corresponding cells data definition from the database.
+    """
+
+    ports_file = os.path.join(db_root, "cells_data",
+                              "{}_ports.json".format(site_name))
+
+    with open(ports_file, "r") as ports_file:
+        ports = json.load(ports_file)
+
+    for port, port_data in ports.items():
+        if any(port.startswith(filter_port) for filter_port in filter_ports):
+            continue
+
+        width = int(port_data["width"])
+        direction = port_data["direction"]
+
+        for i in range(width):
+            if width > 1:
+                port_name = "{}[{}]".format(port, i)
+                wire_name = "{}{}".format(port, i)
+            else:
+                port_name = port
+                wire_name = port
+
+            if direction == "input":
+                site_obj.add_sink(bel_obj, port_name, wire_name, bel_obj.bel,
+                                  wire_name)
+            else:
+                assert direction == "output", direction
+                site_obj.add_source(bel_obj, port_name, wire_name, bel_obj.bel,
+                                    wire_name)
