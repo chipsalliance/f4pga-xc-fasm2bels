@@ -1,11 +1,13 @@
-"""
-This file is used to create a basic form of the device database
-imported from the prjxray database.
-
-The connection database will hold information on nodes, sites and
-tiles that are required when reconstructing the routing tree
-of a given FASM file.
-"""
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
 
 import os
 import datetime
@@ -15,6 +17,14 @@ from prjxray.db import Database
 
 from fasm2bels.lib import progressbar_utils
 from fasm2bels.database.connection_database_cache import DatabaseCache
+"""
+This file is used to create a basic form of the device database
+imported from the prjxray database.
+
+The connection database will hold information on nodes, sites and
+tiles that are required when reconstructing the routing tree
+of a given FASM file.
+"""
 
 
 def create_tables(conn):

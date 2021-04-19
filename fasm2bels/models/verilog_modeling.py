@@ -1,3 +1,21 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
+import functools
+import re
+import fasm
+from .utils import make_bus, flatten_wires, unescape_verilog_name, escape_verilog_name
+from fasm2bels.make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
+from fasm2bels.database.connection_db_utils import get_wire_pkey, create_maybe_get_wire
+from ..lib.interchange import create_site_routing
 """ Core classes for modelling a bitstream back into verilog and routes.
 
 There are 3 modelling elements:
@@ -25,14 +43,6 @@ Bel.set_bel must be called to ensure that Vivado places the BEL in the exact
 location.
 
 """
-
-import functools
-import re
-import fasm
-from .utils import make_bus, flatten_wires, unescape_verilog_name, escape_verilog_name
-from fasm2bels.make_routes import make_routes, ONE_NET, ZERO_NET, prune_antennas
-from fasm2bels.database.connection_db_utils import get_wire_pkey, create_maybe_get_wire
-from ..lib.interchange import create_site_routing
 
 
 def pin_to_wire_and_idx(pin):
