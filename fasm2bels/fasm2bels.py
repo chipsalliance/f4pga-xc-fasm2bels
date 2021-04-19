@@ -310,7 +310,8 @@ def main():
     parser.add_argument(
         '--connection_database',
         required=True,
-        help="Path to SQLite3 database for given FASM file part.")
+        help="Path to SQLite3 database for given FASM file part." \
+        "If the database is not present at the given path, a new one will be built")
     parser.add_argument(
         '--db_root',
         required=True,
