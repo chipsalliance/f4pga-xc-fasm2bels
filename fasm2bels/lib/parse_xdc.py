@@ -8,10 +8,10 @@
 # https://opensource.org/licenses/ISC
 #
 # SPDX-License-Identifier: ISC
-""" Used to parse XDC files for pin constraints """
 
 from collections import namedtuple
 import re
+""" Used to parse XDC files for pin constraints """
 
 XdcIoConstraint = namedtuple("XdcIoConstraint",
                              "net pad line_str line_num params")

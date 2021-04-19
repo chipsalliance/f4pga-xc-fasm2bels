@@ -8,10 +8,11 @@
 # https://opensource.org/licenses/ISC
 #
 # SPDX-License-Identifier: ISC
-""" Utilities for match VPR route names with xc7 site pin sources. """
+
 from collections import namedtuple
 from .lib.parse_route import find_net_sources
 import re
+""" Utilities for match VPR route names with xc7 site pin sources. """
 
 
 class Net(namedtuple('Net', 'name wire_pkey tile site_pin')):

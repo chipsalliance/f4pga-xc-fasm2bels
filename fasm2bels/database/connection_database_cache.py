@@ -8,6 +8,9 @@
 # https://opensource.org/licenses/ISC
 #
 # SPDX-License-Identifier: ISC
+
+import sqlite3
+from ..lib.progressbar_utils import ProgressBar
 """
 This is a database cache. Its a kind of proxy object for Python sqlite3 connection
 which operates on a memory copy of the database.
@@ -15,8 +18,6 @@ which operates on a memory copy of the database.
 Upon object creation the database is "backed up" to memory. All subsequent
 operations are then pefromed on this copy which yields in performance increase.
 """
-import sqlite3
-from ..lib.progressbar_utils import ProgressBar
 
 # =============================================================================
 

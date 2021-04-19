@@ -8,23 +8,6 @@
 # https://opensource.org/licenses/ISC
 #
 # SPDX-License-Identifier: ISC
-""" Converts FASM out into BELs and nets.
-
-If given --bitstream argument, will convert bitstream to FASM first, then
-convert FASM to BELs and nets.
-
-The BELs will be Xilinx tech primatives.
-The nets will be wires and the route those wires takes.
-
-Output is a Verilog file and a TCL script.  Procedure to use the input in
-Vivado is roughly:
-
-    create_project -force -part <part> design design
-    read_verilog <verilog file name>
-    synth_design -top top
-    source <tcl script file name>
-
-"""
 
 import argparse
 import csv
@@ -65,6 +48,23 @@ from .lib.parse_xdc import parse_simple_xdc
 from .lib import eblif
 from .lib import vpr_io_place
 from .lib.interchange import output_interchange
+""" Converts FASM out into BELs and nets.
+
+If given --bitstream argument, will convert bitstream to FASM first, then
+convert FASM to BELs and nets.
+
+The BELs will be Xilinx tech primatives.
+The nets will be wires and the route those wires takes.
+
+Output is a Verilog file and a TCL script.  Procedure to use the input in
+Vivado is roughly:
+
+    create_project -force -part <part> design design
+    read_verilog <verilog file name>
+    synth_design -top top
+    source <tcl script file name>
+
+"""
 
 
 def null_process(conn, top, tile, tiles):

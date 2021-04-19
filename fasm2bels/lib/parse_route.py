@@ -8,8 +8,9 @@
 # https://opensource.org/licenses/ISC
 #
 # SPDX-License-Identifier: ISC
-""" Library for parsing route output from VPR route files. """
+
 from collections import namedtuple
+""" Library for parsing route output from VPR route files. """
 
 Node = namedtuple('Node', 'inode x_low y_low x_high y_high ptc')
 
