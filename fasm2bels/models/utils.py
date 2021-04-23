@@ -228,7 +228,7 @@ def add_site_ports(db_root, site_name, site_obj, bel_obj, filter_ports=[]):
                 port_name = port
                 wire_name = port
 
-            if direction == "input":
+            if direction == "input" or direction == "clock":
                 site_obj.add_sink(bel_obj, port_name, wire_name, bel_obj.bel,
                                   wire_name)
             else:
