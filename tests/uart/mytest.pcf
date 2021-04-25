@@ -1,0 +1,10 @@
+set_io clk E3
+set_io led[0] V15
+set_io led[1] V14
+set_io led[2] V12
+set_io led[3] V11
+
+
+set_io rx C4
+set_io tx D4
+
