@@ -330,13 +330,6 @@ def process_single_ended_iob(top, iob):
     iob_site, iologic_tile, ilogic_site, ologic_site, pin_functions = get_iob_site(
         top.db, top.grid, aparts[0], aparts[1])
 
-    # It seems that this IOB is always configured as an input at least in
-    # Artix7. So skip it here.
-    #
-    # FIXME: This will prevent from correctly decoding a design when that one
-    # is used in it.
-    if 'PUDC' in pin_functions:
-        return
 
     site = Site(iob, iob_site)
 
@@ -409,7 +402,7 @@ def process_single_ended_iob(top, iob):
 
         append_ibuf_iostandard_params(top, site, bel, iostd_in, in_term)
 
-        site.add_bel(bel)
+        site.add_bel(bel, name="IBUF")
 
     # Tri-state
     elif is_inout:
@@ -537,6 +530,18 @@ def cleanup_single_ended_iob(top, site):
       OLOGIC site. If both cases are true then the OBUFT is replaced with an
       OBUF.
     """
+
+    # The IOB that provides the PUDC functionality will always be present in the
+    # design, even when not used by user logic.  Check for this case and remove
+    # the PUDC site if necessary.
+    bel = site.maybe_get_bel("IBUF")
+    if bel:
+        # Check if this is only PUDC
+        pin_functions = top.grid.gridinfo_at_tilename(site.tile).pin_functions[site.site.name]        
+        sinks = top.find_sinks_from_source(site, "I")
+        if not sinks and 'PUDC' in pin_functions:
+            top.remove_site(site)
+            return
 
     # Check if there is an OBUFT
     bel = site.maybe_get_bel("OBUFT")
