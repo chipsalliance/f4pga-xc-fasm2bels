@@ -2147,7 +2147,7 @@ class Module(object):
         self.sites.append(site)
 
     def make_routes(self, allow_orphan_sinks):
-        """ Create nets from top level wires, activie PIPS, sources and sinks.
+        """ Create nets from top level wires, active PIPS, sources and sinks.
 
         Invoke make_routes after all sites and pips have been added.
 
