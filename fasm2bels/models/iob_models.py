@@ -541,6 +541,7 @@ def cleanup_single_ended_iob(top, site):
         sinks = top.find_sinks_from_source(site, "I")
         if not sinks and 'PUDC' in pin_functions:
             top.remove_site(site)
+            top.root_in.remove(bel.connections['I'])
             return
 
     # Check if there is an OBUFT
