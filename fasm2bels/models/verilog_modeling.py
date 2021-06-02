@@ -2387,7 +2387,9 @@ set net [get_nets -of_object $pin]""".format(
 
         assert site_idx is not None
 
-        for bel in site.bels:
+        # Remove all bels from site
+        # (since we are removing while iterating, we need to use list() to make a copy)
+        for bel in list(site.bels):
             self.remove_bel(site, bel)
 
     def remove_bel(self, site, bel):
