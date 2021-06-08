@@ -171,16 +171,20 @@ def append_obuf_iostandard_params(top,
     bel.parameters["SLEW"] = '"{}"'.format(slew)
 
 
-def append_ibuf_iostandard_params(top,
-                                  site,
-                                  bel,
-                                  possible_iostandards,
-                                  in_term=None):
+def append_ibuf_iostandard_params(top, site):
     """
-    Appends IOSTANDARD parameter to the bel. The parameter has to be decoded
+    Appends IOSTANDARD parameter to the IBUF bel for this site. The parameter has to be decoded
     from the EBLIF file. If the parameter from the EBLIF contradicts the one
     decoded from fasm, an error is printed.
     """
+
+    bel = site.maybe_get_bel("IBUF")
+    if not bel:
+        eprint("IBUF bel does not exist for IO site {}".format(site.site.name))
+        return
+
+    possible_iostandards = decode_iostandard_params(site)[0]
+    in_term = decode_in_term(site)
 
     # Check if we have IO settings information for the site read from EBLIF
     iosettings = top.get_site_iosettings(site.site.name)
@@ -330,7 +334,6 @@ def process_single_ended_iob(top, iob):
     iob_site, iologic_tile, ilogic_site, ologic_site, pin_functions = get_iob_site(
         top.db, top.grid, aparts[0], aparts[1])
 
-
     site = Site(iob, iob_site)
 
     # Change site type from IOB33M/S to IOB33
@@ -344,13 +347,9 @@ def process_single_ended_iob(top, iob):
     in_term = decode_in_term(site)
 
     # Buffer direction
-    is_input = (site.has_feature_with_part("IN")
-                or site.has_feature_with_part("IN_ONLY")
-                ) and not site.has_feature_with_part("DRIVE")
-    is_inout = site.has_feature_with_part("IN") and site.has_feature_with_part(
-        "DRIVE")
-    is_output = not site.has_feature_with_part("IN") and \
-        site.has_feature_with_part("DRIVE")
+    is_input = site.is_input()
+    is_inout = site.is_inout()
+    is_output = site.is_output()
 
     # Sanity check. Can be only one or neither of them
     assert (is_input + is_inout + is_output) <= 1, (
@@ -399,8 +398,6 @@ def process_single_ended_iob(top, iob):
             bel_name=bel.bel,
             bel_pin='OUT',
             site_pips=[('site_pip', 'IUSED', '0')])
-
-        append_ibuf_iostandard_params(top, site, bel, iostd_in, in_term)
 
         site.add_bel(bel, name="IBUF")
 
@@ -875,3 +872,15 @@ def process_iobs(conn, top, tile, features):
         for iob, features in iobs.items():
             if len(features) > 0:
                 process_single_ended_iob(top, features)
+
+
+def ibufs_append_iostandard_params(top):
+    """ Appends IOSTANDARD parameter to all IBUFs in the design. """
+
+    for site in top.sites:
+        if not site.is_input():
+            continue
+        if not site.bels:
+            continue
+
+        append_ibuf_iostandard_params(top, site)

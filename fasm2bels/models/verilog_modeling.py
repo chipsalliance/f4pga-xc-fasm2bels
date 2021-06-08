@@ -1688,6 +1688,23 @@ class Site(object):
                 del self.sinks[sink_wire]
                 return self.site_wire_to_wire_pkey[sink_wire]
 
+    def is_input(self):
+        """ Returns whether site is an input IOB """
+        return self.site_type() == "IOB33" and (
+            (self.has_feature_with_part("IN")
+             or self.has_feature_with_part("IN_ONLY"))
+            and not self.has_feature_with_part("DRIVE"))
+
+    def is_inout(self):
+        """ Returns whether site is an inout IOB """
+        return self.site_type() == "IOB33" and self.has_feature_with_part(
+            "IN") and self.has_feature_with_part("DRIVE")
+
+    def is_output(self):
+        """ Returns whether site is an output IOB """
+        return self.site_type() == "IOB33" and (not self.has_feature_with_part(
+            "IN") and self.has_feature_with_part("DRIVE"))
+
 
 @functools.lru_cache(maxsize=None)
 def make_site_pin_map(site_pins):
