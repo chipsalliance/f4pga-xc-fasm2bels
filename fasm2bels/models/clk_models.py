@@ -191,6 +191,22 @@ def cleanup_hrow(top, site):
                 assert False, bufhce_i_wire_pkey
             clk_source = bufhce_i_net.source_wire_pkey
 
+            # Get other sinks that are driven by the same source as the BUFHCE
+            # and store them
+            other_clk_sinks = []
+            for wire_pkey in bufhce_i_net.route_wire_pkeys:
+                if wire_pkey not in top.nets:
+
+                    if wire_pkey == bufhce_i_wire_pkey:
+                        continue
+
+                    if wire_pkey not in top.wire_pkey_to_wire:
+                        continue
+
+                    wire = top.wire_pkey_to_wire[wire_pkey]
+                    if wire in top.wires:
+                        other_clk_sinks.append(wire_pkey)
+
             # Identify the pip that bypasses the BUFHCE
             site_pin_map = make_site_pin_map(frozenset(site.site.site_pins))
             pip = "{}.{}.{}".format(
@@ -201,8 +217,7 @@ def cleanup_hrow(top, site):
 
             # Do not add the PIP to the active PIPs. Make a short between
             # BUFHCE input and output using the PIP instead.
-            shorted_nets = {}
-            shorted_nets[bufhce_o_wire_pkey] = bufhce_i_wire_pkey, pip
+            top.shorted_nets[bufhce_o_wire_pkey] = bufhce_i_wire_pkey, pip
 
             # Delete old nets
             del top.nets[bufhce_o_net.source_wire_pkey]
@@ -217,11 +232,11 @@ def cleanup_hrow(top, site):
                     db=top.db,
                     conn=top.conn,
                     wire_pkey_to_wire=top.wire_pkey_to_wire,
-                    unrouted_sinks=clk_sinks,
+                    unrouted_sinks=clk_sinks + other_clk_sinks,
                     unrouted_sources=[clk_source],
                     active_pips=top.active_pips,
                     allow_orphan_sinks=False,
-                    shorted_nets=shorted_nets,
+                    shorted_nets=top.shorted_nets,
                     nets=nets,
                     net_map=net_map,
             ):
