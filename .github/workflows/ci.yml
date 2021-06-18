@@ -29,6 +29,14 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - uses: SymbiFlow/actions/checks@main
+      with:
+        exclude_license: |
+          - ./tests/test_data/gtp/top_bit.golden.v
+          - ./tests/test_data/iddr/top_bit.golden.v
+          - ./tests/test_data/mmcm/top_bit.golden.v
+          - ./tests/test_data/oddr/top_bit.golden.v
+          - ./tests/test_data/pcie/top_bit.golden.v
+          - ./tests/test_data/simple_ff/top_bit.golden.v
 
     - name: Install
       run: |
