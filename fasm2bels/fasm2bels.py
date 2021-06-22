@@ -492,7 +492,7 @@ def main():
         top.prune_unconnected_ports()
 
     # IBUF IOSTANDARDS are checked here, after routing and pruning,
-    # as we don't need to issue IOSTANDARD warnings/errors for 
+    # as we don't need to issue IOSTANDARD warnings/errors for
     # removed IBUFs (eg the PUDC pin)
     ibufs_append_iostandard_params(top)
 

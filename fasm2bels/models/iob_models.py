@@ -534,7 +534,8 @@ def cleanup_single_ended_iob(top, site):
     bel = site.maybe_get_bel("IBUF")
     if bel:
         # Check if this is only PUDC
-        pin_functions = top.grid.gridinfo_at_tilename(site.tile).pin_functions[site.site.name]        
+        pin_functions = top.grid.gridinfo_at_tilename(
+            site.tile).pin_functions[site.site.name]
         sinks = top.find_sinks_from_source(site, "I")
         if not sinks and 'PUDC' in pin_functions:
             top.remove_site(site)

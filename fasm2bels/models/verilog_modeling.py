@@ -1702,8 +1702,9 @@ class Site(object):
 
     def is_output(self):
         """ Returns whether site is an output IOB """
-        return self.site_type() == "IOB33" and (not self.has_feature_with_part(
-            "IN") and self.has_feature_with_part("DRIVE"))
+        return self.site_type() == "IOB33" and (
+            not self.has_feature_with_part("IN")
+            and self.has_feature_with_part("DRIVE"))
 
 
 @functools.lru_cache(maxsize=None)
