@@ -1380,7 +1380,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y31_IOB_X0Y32_OBUF (
@@ -1391,7 +1391,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y33_IOB_X0Y33_OBUF (
@@ -1402,7 +1402,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y33_IOB_X0Y34_OBUF (
@@ -1413,7 +1413,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y35_IOB_X0Y35_OBUF (
@@ -1424,7 +1424,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y35_IOB_X0Y36_OBUF (
@@ -1435,7 +1435,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y37_IOB_X0Y37_OBUF (
@@ -1446,7 +1446,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y37_IOB_X0Y38_OBUF (
@@ -1457,7 +1457,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y39_IOB_X0Y39_OBUF (
@@ -1468,7 +1468,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y39_IOB_X0Y40_OBUF (
@@ -1479,7 +1479,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y41_IOB_X0Y41_OBUF (
@@ -1490,7 +1490,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y41_IOB_X0Y42_OBUF (
@@ -1501,7 +1501,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y43_IOB_X0Y43_OBUF (
@@ -1512,7 +1512,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y45_IOB_X0Y45_OBUF (
@@ -1523,7 +1523,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y45_IOB_X0Y46_OBUF (
@@ -1534,7 +1534,7 @@ module top(
 
   (* KEEP, DONT_TOUCH, BEL = "OUTBUF" *)
   OBUF #(
-    .DRIVE("12.0"),
+    .DRIVE("12"),
     .IOSTANDARD("LVCMOS33"),
     .SLEW("SLOW")
   ) LIOB33_X0Y47_IOB_X0Y47_OBUF (
