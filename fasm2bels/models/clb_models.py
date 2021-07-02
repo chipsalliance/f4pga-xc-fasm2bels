@@ -1791,7 +1791,8 @@ def process_slice(top, s):
                                      'CO{}'.format(idx))
             if idx == 3:
                 # Connects internal pin CO[3] to site pin COUT
-                site.add_output_from_internal('COUT', lut + '_CY')
+                site.add_output_from_internal('COUT', lut + '_CY',
+                                              [('site_pip', 'COUTUSED', '0')])
 
         bel.map_bel_pin_to_cell_pin(
             bel_name=bel.bel, bel_pin='CIN', cell_pin='CI')
