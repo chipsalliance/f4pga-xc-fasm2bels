@@ -31,6 +31,7 @@ jobs:
     - uses: SymbiFlow/actions/checks@main
       with:
         exclude_license: |
+          - ./tests/test_data/bufhce/top_bit.golden.v
           - ./tests/test_data/gtp/top_bit.golden.v
           - ./tests/test_data/iddr/top_bit.golden.v
           - ./tests/test_data/mmcm/top_bit.golden.v
