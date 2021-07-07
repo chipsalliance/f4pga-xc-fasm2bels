@@ -1786,11 +1786,13 @@ def process_slice(top, s):
                                      bel.bel, 'O{}'.format(idx))
 
             co_pin = 'CO[{}]'.format(idx)
-            if idx == 3:
-                site.add_source(bel, co_pin, 'COUT', bel.bel, 'CO3',
-                                [('site_pip', 'COUTUSED', '0')])
+
             site.add_internal_source(bel, co_pin, lut + '_CY', bel.bel,
                                      'CO{}'.format(idx))
+            if idx == 3:
+                # Connects internal pin CO[3] to site pin COUT
+                site.add_output_from_internal('COUT', lut + '_CY',
+                                              [('site_pip', 'COUTUSED', '0')])
 
         bel.map_bel_pin_to_cell_pin(
             bel_name=bel.bel, bel_pin='CIN', cell_pin='CI')
