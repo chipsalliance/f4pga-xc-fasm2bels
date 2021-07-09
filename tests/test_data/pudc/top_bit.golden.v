@@ -319,4 +319,3 @@ module top(
   assign CLBLL_L_X2Y1_SLICE_X0Y1_D5 = 1'b1;
   assign CLBLL_L_X2Y1_SLICE_X0Y1_D6 = 1'b1;
 endmodule
-
