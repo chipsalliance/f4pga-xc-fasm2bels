@@ -33,7 +33,7 @@ from .models.cmt_models import process_cmt_upper_t, process_cmt_lower_b
 from .models.bram_models import process_bram
 from .models.clb_models import process_clb
 from .models.clk_models import process_hrow, process_bufg
-from .models.iob_models import process_iobs
+from .models.iob_models import process_iobs, ibufs_append_iostandard_params
 from .models.ioi_models import process_ioi
 from .models.hclk_ioi3_models import process_hclk_ioi3
 from .models.pss_models import get_ps7_site, insert_ps7
@@ -490,6 +490,11 @@ def main():
 
     if args.prune_unconnected_ports:
         top.prune_unconnected_ports()
+
+    # IBUF IOSTANDARDS are checked here, after routing and pruning,
+    # as we don't need to issue IOSTANDARD warnings/errors for
+    # removed IBUFs (eg the PUDC pin)
+    ibufs_append_iostandard_params(top)
 
     if args.allow_non_dedicated_clk_routes:
         top.add_extra_tcl_line(

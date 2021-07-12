@@ -1688,6 +1688,24 @@ class Site(object):
                 del self.sinks[sink_wire]
                 return self.site_wire_to_wire_pkey[sink_wire]
 
+    def is_input(self):
+        """ Returns whether site is an input IOB """
+        return self.site_type() == "IOB33" and (
+            (self.has_feature_with_part("IN")
+             or self.has_feature_with_part("IN_ONLY"))
+            and not self.has_feature_with_part("DRIVE"))
+
+    def is_inout(self):
+        """ Returns whether site is an inout IOB """
+        return self.site_type() == "IOB33" and self.has_feature_with_part(
+            "IN") and self.has_feature_with_part("DRIVE")
+
+    def is_output(self):
+        """ Returns whether site is an output IOB """
+        return self.site_type() == "IOB33" and (
+            not self.has_feature_with_part("IN")
+            and self.has_feature_with_part("DRIVE"))
+
 
 @functools.lru_cache(maxsize=None)
 def make_site_pin_map(site_pins):
@@ -2147,7 +2165,7 @@ class Module(object):
         self.sites.append(site)
 
     def make_routes(self, allow_orphan_sinks):
-        """ Create nets from top level wires, activie PIPS, sources and sinks.
+        """ Create nets from top level wires, active PIPS, sources and sinks.
 
         Invoke make_routes after all sites and pips have been added.
 
@@ -2387,7 +2405,9 @@ set net [get_nets -of_object $pin]""".format(
 
         assert site_idx is not None
 
-        for bel in site.bels:
+        # Remove all bels from site
+        # (since we are removing while iterating, we need to use list() to make a copy)
+        for bel in list(site.bels):
             self.remove_bel(site, bel)
 
     def remove_bel(self, site, bel):
