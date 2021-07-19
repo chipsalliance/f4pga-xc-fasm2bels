@@ -164,6 +164,9 @@ class TestEquivalence(unittest.TestCase):
                     stderr=subprocess.STDOUT,
                     universal_newlines=True,    
                 )
+                for line in proc.stdout:
+                    fp.write(line)
+                    fp.flush()
                 proc.communicate()
                 if proc.returncode:
                     return False
