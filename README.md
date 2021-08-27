@@ -13,6 +13,16 @@ In the absence of bugs, it is expected that after consuming the BEL
 connections and TCL constraints Vivado will produce a bitstream identical to
 the bitstream the FASM file would generate.
 
+Installing
+----------
+
+After cloning this repo, run the following commands:
+ - `make env` - this should work with many versions of python3 and above.
+ - `make build`
+ - `make test-py` - It takes a few minutes to run all the tests (22).
+
+ An `OK` should appear at the bottom of the terminal run if successful.
+
 Invoking
 --------
 
