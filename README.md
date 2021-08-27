@@ -15,17 +15,13 @@ the bitstream the FASM file would generate.
 
 Installing
 ----------
-After cloning this repo:
-  - `make env` - required python >=3.7 - may have to upgrade and then change Makefile to use new version (same for Invoking below)
-    - To get python3.7 on Ubuntu 16.04 I had to do:
-      - sudo apt update
-      - sudo apt install software-properties-common
-      - sudo add-apt-repository ppa:deadsnakes/ppa
-      - sudo apt update
-      - sudo apt install python3.7
-    - Then, had to modify the Makefile to use python3.7 instead of python3
+
+After cloning this repo, run the following commands:
+ - `make env` - this should work with many versions of python3 and above.
  - `make build`
- - `make test-py` - will run a few tests (6), takes a few minutes
+ - `make test-py` - It takes a few minutes to run all the tests (22).
+
+ An `OK` should appear at the bottom of the terminal run if successful.
 
 Invoking
 --------

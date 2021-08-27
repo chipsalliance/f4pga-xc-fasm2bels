@@ -6,3 +6,5 @@ src
 *egg-info*
 dist
 env
+**/*.bit
+**/*.eblif

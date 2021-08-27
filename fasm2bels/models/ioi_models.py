@@ -1,3 +1,14 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
 from .verilog_modeling import Site, Bel, make_inverter_path
 
 # =============================================================================
@@ -348,14 +359,12 @@ def process_iddr(top, site, idelay_site=None):
     else:
         site.add_sink(bel, 'S', 'SR', bel.bel, 'SR')
 
-    # DDR_CLK_EDGE
-    assert site.has_feature('IFF.DDR_CLK_EDGE.SAME_EDGE') != site.has_feature(
-        'IFF.DDR_CLK_EDGE.OPPOSITE_EDGE'), (site.tile, site.site)
-
     if site.has_feature('IFF.DDR_CLK_EDGE.SAME_EDGE'):
         bel.parameters['DDR_CLK_EDGE'] = '"SAME_EDGE"'
-    if site.has_feature('IFF.DDR_CLK_EDGE.OPPOSITE_EDGE'):
+    elif site.has_feature('IFF.DDR_CLK_EDGE.OPPOSITE_EDGE'):
         bel.parameters['DDR_CLK_EDGE'] = '"OPPOSITE_EDGE"'
+    else:
+        bel.parameters['DDR_CLK_EDGE'] = '"SAME_EDGE_PIPELINED"'
 
     # INIT
     for q in ['Q1', 'Q2']:
@@ -610,20 +619,43 @@ def process_oserdes(top, site):
     bel.parameters['DATA_RATE_TQ'] = data_rate_tq
 
     data_width = None
-    if site.has_feature("OSERDES.DATA_WIDTH.W2"):
+    if site.has_feature("OSERDES.DATA_WIDTH.SDR.W2"):
+        expect_data_rate = 'SDR'
         data_width = 2
-    elif site.has_feature("OSERDES.DATA_WIDTH.W3"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W3"):
+        expect_data_rate = 'SDR'
         data_width = 3
-    elif site.has_feature("OSERDES.DATA_WIDTH.W4"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W4"):
+        expect_data_rate = 'SDR'
         data_width = 4
-    elif site.has_feature("OSERDES.DATA_WIDTH.W5"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W5"):
+        expect_data_rate = 'SDR'
         data_width = 5
-    elif site.has_feature("OSERDES.DATA_WIDTH.W6"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W6"):
+        expect_data_rate = 'SDR'
         data_width = 6
-    elif site.has_feature("OSERDES.DATA_WIDTH.W7"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W7"):
+        expect_data_rate = 'SDR'
         data_width = 7
-    elif site.has_feature("OSERDES.DATA_WIDTH.W8"):
+    elif site.has_feature("OSERDES.DATA_WIDTH.SDR.W8"):
+        expect_data_rate = 'SDR'
         data_width = 8
+    elif site.has_feature("OSERDES.DATA_WIDTH.DDR.W4"):
+        expect_data_rate = 'DDR'
+        data_width = 4
+    elif site.has_feature("OSERDES.DATA_WIDTH.DDR.W6"):
+        expect_data_rate = 'DDR'
+        data_width = 6
+    elif site.has_feature("OSERDES.DATA_WIDTH.DDR.W8"):
+        expect_data_rate = 'DDR'
+        data_width = 8
+    else:
+        assert False
+
+    if expect_data_rate == 'SDR':
+        assert site.has_feature("OSERDES.DATA_RATE_OQ.SDR")
+    elif expect_data_rate == 'DDR':
+        assert site.has_feature("OSERDES.DATA_RATE_OQ.DDR")
     else:
         assert False
 

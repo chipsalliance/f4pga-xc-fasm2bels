@@ -1,3 +1,14 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
 from ..lib.utils import eprint
 from .verilog_modeling import Bel, Site
 
@@ -160,16 +171,20 @@ def append_obuf_iostandard_params(top,
     bel.parameters["SLEW"] = '"{}"'.format(slew)
 
 
-def append_ibuf_iostandard_params(top,
-                                  site,
-                                  bel,
-                                  possible_iostandards,
-                                  in_term=None):
+def append_ibuf_iostandard_params(top, site):
     """
-    Appends IOSTANDARD parameter to the bel. The parameter has to be decoded
+    Appends IOSTANDARD parameter to the IBUF bel for this site. The parameter has to be decoded
     from the EBLIF file. If the parameter from the EBLIF contradicts the one
     decoded from fasm, an error is printed.
     """
+
+    bel = site.maybe_get_bel("IBUF")
+    if not bel:
+        eprint("IBUF bel does not exist for IO site {}".format(site.site.name))
+        return
+
+    possible_iostandards = decode_iostandard_params(site)[0]
+    in_term = decode_in_term(site)
 
     # Check if we have IO settings information for the site read from EBLIF
     iosettings = top.get_site_iosettings(site.site.name)
@@ -319,14 +334,6 @@ def process_single_ended_iob(top, iob):
     iob_site, iologic_tile, ilogic_site, ologic_site, pin_functions = get_iob_site(
         top.db, top.grid, aparts[0], aparts[1])
 
-    # It seems that this IOB is always configured as an input at least in
-    # Artix7. So skip it here.
-    #
-    # FIXME: This will prevent from correctly decoding a design when that one
-    # is used in it.
-    if 'PUDC' in pin_functions:
-        return
-
     site = Site(iob, iob_site)
 
     # Change site type from IOB33M/S to IOB33
@@ -340,13 +347,9 @@ def process_single_ended_iob(top, iob):
     in_term = decode_in_term(site)
 
     # Buffer direction
-    is_input = (site.has_feature_with_part("IN")
-                or site.has_feature_with_part("IN_ONLY")
-                ) and not site.has_feature_with_part("DRIVE")
-    is_inout = site.has_feature_with_part("IN") and site.has_feature_with_part(
-        "DRIVE")
-    is_output = not site.has_feature_with_part("IN") and \
-        site.has_feature_with_part("DRIVE")
+    is_input = site.is_input()
+    is_inout = site.is_inout()
+    is_output = site.is_output()
 
     # Sanity check. Can be only one or neither of them
     assert (is_input + is_inout + is_output) <= 1, (
@@ -396,9 +399,7 @@ def process_single_ended_iob(top, iob):
             bel_pin='OUT',
             site_pips=[('site_pip', 'IUSED', '0')])
 
-        append_ibuf_iostandard_params(top, site, bel, iostd_in, in_term)
-
-        site.add_bel(bel)
+        site.add_bel(bel, name="IBUF")
 
     # Tri-state
     elif is_inout:
@@ -527,6 +528,20 @@ def cleanup_single_ended_iob(top, site):
       OBUF.
     """
 
+    # The IOB that provides the PUDC functionality will always be present in the
+    # design, even when not used by user logic.  Check for this case and remove
+    # the PUDC site if necessary.
+    bel = site.maybe_get_bel("IBUF")
+    if bel:
+        # Check if this is only PUDC
+        pin_functions = top.grid.gridinfo_at_tilename(
+            site.tile).pin_functions[site.site.name]
+        sinks = top.find_sinks_from_source(site, "I")
+        if not sinks and 'PUDC' in pin_functions:
+            top.remove_site(site)
+            top.root_in.remove(bel.connections['I'])
+            return
+
     # Check if there is an OBUFT
     bel = site.maybe_get_bel("OBUFT")
     if bel is None:
@@ -632,7 +647,7 @@ def process_differential_iob(top, iob, in_diff, out_diff):
 
     # Decode IOSTANDARD parameters
     iostd_in, iostd_out = decode_iostandard_params(site, diff=True)
-    in_term = decode_in_term(site)
+    in_term = decode_in_term(site_s)
 
     # Differential input
     if in_diff and not out_diff:
@@ -858,3 +873,15 @@ def process_iobs(conn, top, tile, features):
         for iob, features in iobs.items():
             if len(features) > 0:
                 process_single_ended_iob(top, features)
+
+
+def ibufs_append_iostandard_params(top):
+    """ Appends IOSTANDARD parameter to all IBUFs in the design. """
+
+    for site in top.sites:
+        if not site.is_input():
+            continue
+        if not site.bels:
+            continue
+
+        append_ibuf_iostandard_params(top, site)

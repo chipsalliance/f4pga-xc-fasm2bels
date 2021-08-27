@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
+import sqlite3
+from ..lib.progressbar_utils import ProgressBar
 """
 This is a database cache. Its a kind of proxy object for Python sqlite3 connection
 which operates on a memory copy of the database.
@@ -5,8 +18,6 @@ which operates on a memory copy of the database.
 Upon object creation the database is "backed up" to memory. All subsequent
 operations are then pefromed on this copy which yields in performance increase.
 """
-import sqlite3
-from ..lib.progressbar_utils import ProgressBar
 
 # =============================================================================
 
