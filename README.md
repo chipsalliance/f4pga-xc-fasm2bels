@@ -19,6 +19,23 @@ Installing
 After cloning this repo, run the following commands:
  - `make env` - this should work with many versions of python3 and above.
  - `make build`
+
+Running tests
+-------------
+
+There are a set of tests to prevent regression and verify that all the functionalities
+of fasm2bels correctly work.
+
+Before running the test, export the following environmental variables to have a properly
+working interchange files generation step:
+
+```
+export CAPNP_PATH=$(pwd)/third_party/capnproto-java/compiler/src/main/schema/
+export INTERCHANGE_SCHEMA_PATH=$(pwd)/third_party/fpga-interchange-schema/interchange
+```
+
+Once the environment is ready, run the python tests:
+
  - `make test-py` - It takes a few minutes to run all the tests (22).
 
  An `OK` should appear at the bottom of the terminal run if successful.
