@@ -57,9 +57,6 @@ jobs:
       run: |
         export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
         make build
-        git clone https://github.com/Xilinx/RapidWright.git $GITHUB_WORKSPACE/RapidWright
-        git clone https://github.com/capnproto/capnproto-java.git $GITHUB_WORKSPACE/capnproto-java
-        git clone https://github.com/SymbiFlow/fpga-interchange-schema.git
 
     - name: Test
       run: source .github/workflows/test.sh

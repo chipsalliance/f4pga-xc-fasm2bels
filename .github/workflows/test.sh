@@ -7,7 +7,7 @@
 #
 # SPDX-License-Identifier: ISC
 
-export CAPNP_PATH="$GITHUB_WORKSPACE/capnproto-java/compiler/src/main/schema/"
-export INTERCHANGE_SCHEMA_PATH="$GITHUB_WORKSPACE/fpga-interchange-schema/interchange"
+export CAPNP_PATH="$(pwd)/third_party/capnproto-java/compiler/src/main/schema/"
+export INTERCHANGE_SCHEMA_PATH="$(pwd)/third_party/fpga-interchange-schema/interchange"
 
 make test-py
