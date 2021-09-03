@@ -55,7 +55,7 @@ class TestEquivalence(unittest.TestCase):
         unpack_tar(os.path.join(cur_dir, 'equivalence_checking_data', test_name, "{}.tar.gz".format(test_name)))
 
         temp_dir = tempfile.mkdtemp(
-            prefix="test_fasm2bels_{}_".format(test_name),
+            prefix="test_fasm2bels_equivalence_{}_".format(test_name),
             dir='/tmp')
 
         fasm_file = os.path.join(temp_dir, '{}.fasm'.format(test_name))
@@ -125,27 +125,42 @@ class TestEquivalence(unittest.TestCase):
             Vivado generated netlist.
             """
 
+            # Capture path of cells_sim.v from yosys
+            cmd = ["yosys-config", "--datdir"]
+            proc = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                universal_newlines=True,    
+            )
+            for line in proc.stdout:
+                yosys_config_output = line
+            proc.communicate()
+            if proc.returncode:
+                return False
+            yosys_share_path = yosys_config_output.strip()
+
             log_path = os.path.join(temp_dir, LOG_FILE_NAME)
 
             # Create Yosys script
             script_file_path = os.path.join(temp_dir, SCRIPT_FILE_NAME)
 
             with open(script_file_path, "w") as fp:
-                fp.write("read_verilog " + os.environ['YOSYS_PATH'] + "/techlibs/xilinx/cells_sim.v" + "\n")
+                fp.write("read_verilog " + yosys_share_path + "/xilinx/cells_sim.v" + "\n")
                 fp.write("read_verilog " + file_a + "\n")
                 fp.write("prep -flatten\n")
                 fp.write("hierarchy -auto-top\n")
                 fp.write("rename -top gold\n")
                 fp.write("splitnets -ports;;\n")
                 fp.write("design -stash gold\n")
-                fp.write("read_verilog " + os.environ['YOSYS_PATH'] + "/techlibs/xilinx/cells_sim.v" + "\n")
+                fp.write("read_verilog " + yosys_share_path + "/xilinx/cells_sim.v" + "\n")
                 fp.write("read_verilog " + file_b + "\n")
                 fp.write("prep -flatten\n")
                 fp.write("hierarchy -auto-top\n")
                 fp.write("rename -top gate\n")
                 fp.write("splitnets -ports;;\n")
                 fp.write("design -stash gate\n")
-                fp.write("read_verilog " + os.environ['YOSYS_PATH'] + "/techlibs/xilinx/cells_sim.v" + "\n")
+                fp.write("read_verilog " + yosys_share_path + "/xilinx/cells_sim.v" + "\n")
                 fp.write("design -copy-from gold -as gold gold\n")
                 fp.write("design -copy-from gate -as gate gate\n")
                 fp.write("equiv_make gold gate equiv\n")
@@ -156,10 +171,9 @@ class TestEquivalence(unittest.TestCase):
 
             # Run Yosys
             with open(log_path, "w") as fp:
-                cmd = ["./yosys", script_file_path]
+                cmd = ["yosys", script_file_path]
                 proc = subprocess.Popen(
                     cmd,
-                    cwd=os.environ['YOSYS_PATH'],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
                     universal_newlines=True,    
