@@ -60,8 +60,8 @@ Here is an example run:
 python3.7 -mfasm2bels --connection_database mydb \
                       --db_root ~/prjxray/database/artix7 \
                       --part xc7a35tcpg236-1 \
-                      --fasm_file cnt.fasm \
-                      cnt.v cnt.tcl
+                      --fasm_file file_name.fasm \
+                      file_name.v file_name.tcl
 ```
 
 Once the verilog and TCL is generated, it should be importable to Vivado with
