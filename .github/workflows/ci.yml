@@ -45,7 +45,6 @@ jobs:
     - name: Install
       run: |
         sudo apt-get update
-        sudo apt-get install clang-format-8 g++-8 xsltproc git
         pip install --upgrade -r requirements.txt
 
     - name: Check formatting
