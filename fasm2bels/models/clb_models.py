@@ -1837,7 +1837,7 @@ def process_slice(top, s):
             site.add_sink(bel, 'CI', 'CIN', bel.bel, 'CIN')
 
         else:
-            assert False
+            assert False, site.features
 
         site.add_bel(bel, name='CARRY4')
 
