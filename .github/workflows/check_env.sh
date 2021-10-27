@@ -7,7 +7,9 @@
 #
 # SPDX-License-Identifier: ISC
 
-if [ ! -d "$(pwd)/env" ]
+YOSYS_DIR=$(which yosys)
+
+if [ "$(pwd)/env/conda/envs/symbiflow_xc_fasm2bels/bin/yosys" != $YOSYS_DIR ]
 then
     echo "ERROR: make env failed"
     return 1
