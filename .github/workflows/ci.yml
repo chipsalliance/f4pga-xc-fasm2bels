@@ -59,6 +59,11 @@ jobs:
         make build
         make env
 
+    - name: Check conda environment setup
+      run: |
+        source env/conda/bin/activate symbiflow_xc_fasm2bels
+        source .github/workflows/check_env.sh
+
     - name: Test
       run: |
         source env/conda/bin/activate symbiflow_xc_fasm2bels
