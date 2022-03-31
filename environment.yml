@@ -1,0 +1,17 @@
+# Copyright (C) 2021  The Symbiflow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
+name: symbiflow_xc_fasm2bels
+channels:
+  - defaults
+  - litex-hub
+dependencies:
+  - litex-hub::yosys=0.9_5573_g75a4cdfc=20210818_135210_py38
+  - pip
+  - pip:
+    - -r requirements.txt
