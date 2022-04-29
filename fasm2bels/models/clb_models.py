@@ -1,3 +1,14 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
 from .verilog_modeling import Bel, Site
 import math
 
@@ -160,7 +171,7 @@ def create_srl32(site, srl, up_chain):
 
     site.add_sink(
         bel=bel,
-        cell_pin='A1'.format(idx),
+        cell_pin='A1',
         sink_site_pin='{}1'.format(srl),
         bel_name=bel_name,
         bel_pin='A1')
@@ -1510,7 +1521,7 @@ def process_slice(top, s):
                 ram32 = [
                     Bel('RAM32X1D',
                         name='RAM32X1D_{}_{}'.format(lut, idx),
-                        priority=priority) for idx in range(2)
+                        priority=priority + 1 - idx) for idx in range(2)
                 ]
 
                 ram32[0].set_bel('{}6LUT'.format(lut))
@@ -1667,9 +1678,6 @@ def process_slice(top, s):
             else:
                 assert False, lut_modes[lut]
 
-    # Detect SRL chains
-    srl_chains = set()
-
     need_f8 = site.has_feature('BFFMUX.F8') or site.has_feature('BOUTMUX.F8')
     need_f7a = site.has_feature('AFFMUX.F7') or site.has_feature('AOUTMUX.F7')
     need_f7b = site.has_feature('CFFMUX.F7') or site.has_feature('COUTMUX.F7')
@@ -1778,11 +1786,13 @@ def process_slice(top, s):
                                      bel.bel, 'O{}'.format(idx))
 
             co_pin = 'CO[{}]'.format(idx)
-            if idx == 3:
-                site.add_source(bel, co_pin, 'COUT', bel.bel, 'CO3',
-                                [('site_pip', 'COUTUSED', '0')])
+
             site.add_internal_source(bel, co_pin, lut + '_CY', bel.bel,
                                      'CO{}'.format(idx))
+            if idx == 3:
+                # Connects internal pin CO[3] to site pin COUT
+                site.add_output_from_internal('COUT', lut + '_CY',
+                                              [('site_pip', 'COUTUSED', '0')])
 
         bel.map_bel_pin_to_cell_pin(
             bel_name=bel.bel, bel_pin='CIN', cell_pin='CI')
@@ -1827,7 +1837,7 @@ def process_slice(top, s):
             site.add_sink(bel, 'CI', 'CIN', bel.bel, 'CIN')
 
         else:
-            assert False
+            assert False, site.features
 
         site.add_bel(bel, name='CARRY4')
 
@@ -1870,7 +1880,7 @@ def process_slice(top, s):
             ff5.parameters['INIT'] = init
 
             if name in ['LDCE', 'LDPE']:
-                ff5.parameters['IS_G_INVERTED'] = IS_C_INVERTED
+                ff5.parameters['IS_G_INVERTED'] = int(not IS_C_INVERTED)
             else:
                 ff5.parameters['IS_C_INVERTED'] = IS_C_INVERTED
 
@@ -1975,7 +1985,7 @@ def process_slice(top, s):
         ff.parameters['INIT'] = init
 
         if name in ['LDCE', 'LDPE']:
-            ff.parameters['IS_G_INVERTED'] = IS_C_INVERTED
+            ff.parameters['IS_G_INVERTED'] = int(not IS_C_INVERTED)
         else:
             ff.parameters['IS_C_INVERTED'] = IS_C_INVERTED
 

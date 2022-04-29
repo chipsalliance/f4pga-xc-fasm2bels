@@ -1,0 +1,4 @@
+set_io a E18
+set_io b V16
+
+set_io o U16

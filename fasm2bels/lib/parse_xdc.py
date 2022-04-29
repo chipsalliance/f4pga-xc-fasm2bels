@@ -1,15 +1,25 @@
-""" Used to parse XDC files for pin constraints """
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
 
 from collections import namedtuple
 import re
+""" Used to parse XDC files for pin constraints """
 
 XdcIoConstraint = namedtuple("XdcIoConstraint",
                              "net pad line_str line_num params")
 
 
 def to_int_float_or_string(s):
-    """ Convert string to int or float if possible 
-    
+    """ Convert string to int or float if possible
+
     If s is an integer, return int(s)
     >>> to_int_float_or_string("3")
     3

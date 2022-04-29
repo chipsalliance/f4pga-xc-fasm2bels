@@ -1,7 +1,18 @@
-""" Utilities for match VPR route names with xc7 site pin sources. """
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
 from collections import namedtuple
 from .lib.parse_route import find_net_sources
 import re
+""" Utilities for match VPR route names with xc7 site pin sources. """
 
 
 class Net(namedtuple('Net', 'name wire_pkey tile site_pin')):

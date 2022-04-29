@@ -1,0 +1,70 @@
+# Copyright (C) 2020-2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier:ISC
+
+name: CI tests
+
+on: [push, pull_request]
+
+jobs:
+
+  Run-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.7', '3.8']
+    steps:
+
+    - uses: actions/checkout@v1
+      with:
+        submodules: recursive
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - uses: SymbiFlow/actions/checks@main
+      with:
+        exclude_license: |
+          - ./tests/test_data/bufhce/top_bit.golden.v
+          - ./tests/test_data/gtp/top_bit.golden.v
+          - ./tests/test_data/iddr/top_bit.golden.v
+          - ./tests/test_data/mmcm/top_bit.golden.v
+          - ./tests/test_data/oddr/top_bit.golden.v
+          - ./tests/test_data/pcie/top_bit.golden.v
+          - ./tests/test_data/simple_ff/top_bit.golden.v
+          - ./tests/test_data/carry4/top_bit.golden.v
+          - ./tests/test_data/pudc/top_bit.golden.v
+          - ./tests/equivalence_checking_data/add32/top_bit.golden.v
+
+    - name: Install
+      run: |
+        sudo apt-get update
+        pip install --upgrade -r requirements.txt
+
+    - name: Check formatting
+      run: source .github/workflows/format.sh
+
+    - name: ccache
+      uses: hendrikmuhs/ccache-action@v1
+
+    - name: Get and build tools
+      run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        make build
+        make env
+
+    - name: Check conda environment setup
+      run: |
+        source env/conda/bin/activate symbiflow_xc_fasm2bels
+        source .github/workflows/check_env.sh
+
+    - name: Test
+      run: |
+        source env/conda/bin/activate symbiflow_xc_fasm2bels
+        source .github/workflows/test.sh

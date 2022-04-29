@@ -1,3 +1,54 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
+import argparse
+import csv
+import os.path
+import sqlite3
+import subprocess
+import sys
+import tempfile
+import json
+
+import fasm
+import fasm.output
+from fasm import SetFasmFeature
+from prjxray import fasm_disassembler
+from prjxray import bitstream
+from rr_graph.capnp import graph2 as capnp_graph2
+import prjxray.db
+
+from .net_map import create_net_list
+
+from .models.verilog_modeling import Module
+from .models.cmt_models import process_cmt_upper_t, process_cmt_lower_b
+from .models.bram_models import process_bram
+from .models.clb_models import process_clb
+from .models.clk_models import process_hrow, process_bufg
+from .models.iob_models import process_iobs, ibufs_append_iostandard_params
+from .models.ioi_models import process_ioi
+from .models.hclk_ioi3_models import process_hclk_ioi3
+from .models.pss_models import get_ps7_site, insert_ps7
+from .models.gtp_common_models import process_gtp_common
+from .models.gtp_channel_models import process_gtp_channel
+from .models.pcie_models import process_pcie
+
+from .database.create_channels import create_channels
+from .database.connection_db_utils import get_tile_type
+
+from .lib.parse_pcf import parse_simple_pcf
+from .lib.parse_xdc import parse_simple_xdc
+from .lib import eblif
+from .lib import vpr_io_place
+from .lib.interchange import output_interchange
 """ Converts FASM out into BELs and nets.
 
 If given --bitstream argument, will convert bitstream to FASM first, then
@@ -15,44 +66,6 @@ Vivado is roughly:
     source <tcl script file name>
 
 """
-
-import argparse
-import csv
-import os.path
-import sqlite3
-import subprocess
-import sys
-import tempfile
-import json
-
-import fasm
-import fasm.output
-from fasm import SetFasmFeature
-from prjxray import fasm_disassembler
-from prjxray import bitstream
-from rr_graph_capnp import graph2 as capnp_graph2
-import prjxray.db
-
-from .net_map import create_net_list
-
-from .models.verilog_modeling import Module
-from .models.cmt_models import process_pll
-from .models.bram_models import process_bram
-from .models.clb_models import process_clb
-from .models.clk_models import process_hrow, process_bufg
-from .models.iob_models import process_iobs
-from .models.ioi_models import process_ioi
-from .models.hclk_ioi3_models import process_hclk_ioi3
-from .models.pss_models import get_ps7_site, insert_ps7
-
-from .database.create_channels import create_channels
-from .database.connection_db_utils import get_tile_type
-
-from .lib.parse_pcf import parse_simple_pcf
-from .lib.parse_xdc import parse_simple_xdc
-from .lib import eblif
-from .lib import vpr_io_place
-from .lib.interchange_capnp import output_interchange
 
 
 def null_process(conn, top, tile, tiles):
@@ -92,9 +105,30 @@ PROCESS_TILE = {
     'HCLK_IOI3': process_hclk_ioi3,
     'BRAM_L': process_bram,
     'BRAM_R': process_bram,
-    'CMT_TOP_R_UPPER_T': process_pll,
-    'CMT_TOP_L_UPPER_T': process_pll,
+    'CMT_TOP_R_UPPER_T': process_cmt_upper_t,
+    'CMT_TOP_L_UPPER_T': process_cmt_upper_t,
+    'CMT_TOP_R_LOWER_B': process_cmt_lower_b,
+    'CMT_TOP_L_LOWER_B': process_cmt_lower_b,
     'CFG_CENTER_MID': null_process,
+    'GTP_COMMON': process_gtp_common,
+    'GTP_COMMON_MID_LEFT': process_gtp_common,
+    'GTP_COMMON_MID_RIGHT': process_gtp_common,
+    'GTP_CHANNEL_0': process_gtp_channel,
+    'GTP_CHANNEL_1': process_gtp_channel,
+    'GTP_CHANNEL_2': process_gtp_channel,
+    'GTP_CHANNEL_3': process_gtp_channel,
+    'GTP_CHANNEL_0_MID_LEFT': process_gtp_channel,
+    'GTP_CHANNEL_1_MID_LEFT': process_gtp_channel,
+    'GTP_CHANNEL_2_MID_LEFT': process_gtp_channel,
+    'GTP_CHANNEL_3_MID_LEFT': process_gtp_channel,
+    'GTP_CHANNEL_0_MID_RIGHT': process_gtp_channel,
+    'GTP_CHANNEL_1_MID_RIGHT': process_gtp_channel,
+    'GTP_CHANNEL_2_MID_RIGHT': process_gtp_channel,
+    'GTP_CHANNEL_3_MID_RIGHT': process_gtp_channel,
+    'GTP_INT_INTERFACE': null_process,
+    'GTP_INT_INTERFACE_L': null_process,
+    'GTP_INT_INTERFACE_R': null_process,
+    'PCIE_BOT': process_pcie,
 }
 
 
@@ -456,6 +490,11 @@ def main():
 
     if args.prune_unconnected_ports:
         top.prune_unconnected_ports()
+
+    # IBUF IOSTANDARDS are checked here, after routing and pruning,
+    # as we don't need to issue IOSTANDARD warnings/errors for
+    # removed IBUFs (eg the PUDC pin)
+    ibufs_append_iostandard_params(top)
 
     if args.allow_non_dedicated_clk_routes:
         top.add_extra_tcl_line(

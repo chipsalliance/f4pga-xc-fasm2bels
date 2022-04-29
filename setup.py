@@ -1,3 +1,14 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
 import setuptools
 
 with open("README.md", "r") as fh:
@@ -22,9 +33,10 @@ setuptools.setup(
         "parameterized",
         "progressbar2",
         "lxml",
-        "prjxray@git+git://github.com/SymbiFlow/prjxray.git#egg=prjxray",
-        "fasm@git+git://github.com/SymbiFlow/fasm.git#egg=fasm",
-        "rr-graph@git+git://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=symbiflow-rr-graph",
+        "prjxray",
+        "fasm",
+        "rr-graph",
+        "python-fpga-interchange",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

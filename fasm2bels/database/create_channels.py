@@ -1,10 +1,30 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2021  The SymbiFlow Authors.
+#
+# Use of this source code is governed by a ISC-style
+# license that can be found in the LICENSE file or at
+# https://opensource.org/licenses/ISC
+#
+# SPDX-License-Identifier: ISC
+
 import os
 import datetime
+import argparse
 
-import prjxray
+from prjxray.db import Database
 
 from fasm2bels.lib import progressbar_utils
 from fasm2bels.database.connection_database_cache import DatabaseCache
+"""
+This file is used to create a basic form of the device database
+imported from the prjxray database.
+
+The connection database will hold information on nodes, sites and
+tiles that are required when reconstructing the routing tree
+of a given FASM file.
+"""
 
 
 def create_tables(conn):
@@ -421,7 +441,7 @@ SET
 
 
 def create_channels(db_root, part, connection_database):
-    db = prjxray.db.Database(db_root, part)
+    db = Database(db_root, part)
     grid = db.grid()
 
     if os.path.exists(connection_database):
@@ -437,3 +457,25 @@ def create_channels(db_root, part, connection_database):
         print("{}: Connections made".format(datetime.datetime.now()))
         count_sites_on_nodes(conn)
         print("{}: Counted sites".format(datetime.datetime.now()))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        '--db-root',
+        required=True,
+        help="Path to prjxray database for given FASM file part.")
+    parser.add_argument(
+        '--part', required=True, help="Name of part being targeted.")
+    parser.add_argument(
+        '--connection-database-output',
+        required=True,
+        help="Path to SQLite3 database for the given part.")
+
+    args = parser.parse_args()
+
+    create_channels(args.db_root, args.part, args.connection_database_output)
+
+
+if __name__ == "__main__":
+    main()

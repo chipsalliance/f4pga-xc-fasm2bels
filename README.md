@@ -15,17 +15,30 @@ the bitstream the FASM file would generate.
 
 Installing
 ----------
-After cloning this repo:
-  - `make env` - required python >=3.7 - may have to upgrade and then change Makefile to use new version (same for Invoking below)
-    - To get python3.7 on Ubuntu 16.04 I had to do:
-      - sudo apt update
-      - sudo apt install software-properties-common
-      - sudo add-apt-repository ppa:deadsnakes/ppa
-      - sudo apt update
-      - sudo apt install python3.7
-    - Then, had to modify the Makefile to use python3.7 instead of python3
+
+After cloning this repo, run the following commands:
+ - `make env` - this should work with many versions of python3 and above.
  - `make build`
- - `make test-py` - will run a few tests (6), takes a few minutes
+
+Running tests
+-------------
+
+There are a set of tests to prevent regression and verify that all the functionalities
+of fasm2bels correctly work.
+
+Before running the test, export the following environmental variables to have a properly
+working interchange files generation step:
+
+```
+export CAPNP_PATH=$(pwd)/third_party/capnproto-java/compiler/src/main/schema/
+export INTERCHANGE_SCHEMA_PATH=$(pwd)/third_party/fpga-interchange-schema/interchange
+```
+
+Once the environment is ready, run the python tests:
+
+ - `make test-py` - It takes a few minutes to run all the tests (22).
+
+ An `OK` should appear at the bottom of the terminal run if successful.
 
 Invoking
 --------
@@ -47,8 +60,8 @@ Here is an example run:
 python3.7 -mfasm2bels --connection_database mydb \
                       --db_root ~/prjxray/database/artix7 \
                       --part xc7a35tcpg236-1 \
-                      --fasm_file cnt.fasm \
-                      cnt.v cnt.tcl
+                      --fasm_file file_name.fasm \
+                      file_name.v file_name.tcl
 ```
 
 Once the verilog and TCL is generated, it should be importable to Vivado with
