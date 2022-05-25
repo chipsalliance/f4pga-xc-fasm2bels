@@ -41,7 +41,7 @@ jobs:
           - ./tests/test_data/carry4/top_bit.golden.v
           - ./tests/test_data/pudc/top_bit.golden.v
           - ./tests/equivalence_checking_data/add32/top_bit.golden.v
-
+          - ./tests/equivalence_checking_data/alu/top_bit.golden.v
     - name: Install
       run: |
         sudo apt-get update

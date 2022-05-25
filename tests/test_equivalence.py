@@ -20,7 +20,7 @@ import subprocess
 from fasm2bels.fasm2bels import main
 
 
-test_names = ["add32"]
+test_names = ["add32", "alu"]
 
 
 def unpack_tar(tar_file):
