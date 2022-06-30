@@ -28,36 +28,17 @@ def unpack_tar(tar_file):
     tar = tarfile.open(name=tar_file, mode="r:gz")
     tar.extractall(path=os.path.dirname(tar_file))
 
-def createGoldenfile(fileName):
-    path = os.environ['VIVADO_PATH'] #Note: Please use export VIVADO_PATH=/tools/Xilinx/Vivado/(VERSION OF VIVADO YOU'RE USING)/bin/vivado before running this.
-    file_exists = exists("equivalence_checking_data/"+fileName+"/top_bit.golden.v")
+def create_golden_file(file_name):
+    vivado = os.environ.get('VIVADO_PATH', None) 
+    assert vivado is not None, "VIVADO_PATH enviromental variable was not set! Please use export VIVADO_PATH=(path to vivado)"
+    file_exists = exists("equivalence_checking_data/"+file_name+"/top_bit.golden.v") 
     if(file_exists):
-        os.system("echo GoldenFile already exists.")
-        toTCL = "rm -r __pycache__"
-        os.system(toTCL)
+        subprocess.run(["echo", "Golden File already exists."])
     else:
-        file_exists = exists(path)
-        if(file_exists):
-            updateTCL('FILENAME', fileName)
-            
-            os.system(path +  " -mode batch -source createGoldenFile.tcl")
-        
-            updateTCL(fileName, 'FILENAME')
-            
-            toTCL = "rm vivado* && rm -r *.dcp && rm -r *.edf && rm report_io.txt && rm -r .Xil && mv *_impl.v equivalence_checking_data/" + fileName + "/top_bit.golden.v"
-            os.system(toTCL)
-
-        else:
-            os.system("echo GoldenFile cannot be generated. Vivado must be installed in order for goldenfile to be created.")
-
-def updateTCL(findStr, replaceStr):
-    with open('createGoldenFile.tcl', 'r') as file:
-        filedata = file.read()
-    
-    filedata = filedata.replace(findStr, replaceStr)
-
-    with open('createGoldenFile.tcl', 'w') as file:
-        file.write(filedata)
+        temp = tempfile.TemporaryDirectory()
+        subprocess.run([vivado, "-mode", "batch", "-source", "create_golden_file.tcl", "-tclargs", file_name, temp.name])
+        subprocess.run(["rm", "vivado.log", "vivado.jou", "-r", ".Xil"])    
+        temp.cleanup()
 
 class TestEquivalence(unittest.TestCase):
     @classmethod
@@ -73,7 +54,7 @@ class TestEquivalence(unittest.TestCase):
 
     @parameterized.expand(itertools.product(test_names))
     def test_equivalence(self, test_name):
-        createGoldenfile(test_name)
+        create_golden_file(test_name)
         cur_dir = os.path.dirname(__file__)
         base_dir = os.path.join(cur_dir, '..')
         db_root = os.path.join(base_dir, 'third_party', 'prjxray-db', 'artix7')
