@@ -28,17 +28,12 @@ def unpack_tar(tar_file):
     tar = tarfile.open(name=tar_file, mode="r:gz")
     tar.extractall(path=os.path.dirname(tar_file))
 
-def create_golden_file(file_name):
+def create_golden_file(file_name, part):
     vivado = os.environ.get('VIVADO_PATH', None) 
     assert vivado is not None, "VIVADO_PATH enviromental variable was not set! Please use export VIVADO_PATH=(path to vivado)"
-    file_exists = exists("equivalence_checking_data/"+file_name+"/top_bit.golden.v") 
-    if(file_exists):
-        subprocess.run(["echo", "Golden File already exists."])
-    else:
-        temp = tempfile.TemporaryDirectory()
-        subprocess.run([vivado, "-mode", "batch", "-source", "create_golden_file.tcl", "-tclargs", file_name, temp.name])
-        subprocess.run(["rm", "vivado.log", "vivado.jou", "-r", ".Xil"])    
-        temp.cleanup()
+    golden_file_temp_dir = tempfile.TemporaryDirectory()
+    subprocess.run([vivado, "-nolog", "-nojournal", "-mode", "batch", "-source", "create_golden_file.tcl", "-tclargs", file_name, golden_file_temp_dir.name, part])
+    return golden_file_temp_dir    
 
 class TestEquivalence(unittest.TestCase):
     @classmethod
@@ -54,7 +49,6 @@ class TestEquivalence(unittest.TestCase):
 
     @parameterized.expand(itertools.product(test_names))
     def test_equivalence(self, test_name):
-        create_golden_file(test_name)
         cur_dir = os.path.dirname(__file__)
         base_dir = os.path.join(cur_dir, '..')
         db_root = os.path.join(base_dir, 'third_party', 'prjxray-db', 'artix7')
@@ -77,6 +71,8 @@ class TestEquivalence(unittest.TestCase):
         drive = '12'
         top = 'top'
         part = 'xc7a35tcpg236-1'
+
+        golden_file_temp_dir = create_golden_file(test_name, part)
 
         generated_top_v = os.path.join(temp_dir, 'top_bit.v')
         generated_top_xdc = os.path.join(temp_dir, 'top_bit.xdc')
@@ -201,7 +197,9 @@ class TestEquivalence(unittest.TestCase):
             return True
 
         self.assertTrue(compare(os.path.join(
-            cur_dir, 'equivalence_checking_data', test_name, 'top_bit.golden.v'), tmp_top_v))
+            golden_file_temp_dir.name, 'top_bit.golden.v'), tmp_top_v))
+
+        golden_file_temp_dir.cleanup()
 
 
 if __name__ == "__main__":
