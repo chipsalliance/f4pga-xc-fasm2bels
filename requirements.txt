@@ -1,6 +1,6 @@
 pyyaml
 -e third_party/prjxray
-git+https://github.com/SymbiFlow/symbiflow-rr-graph.git#egg=rr-graph
-git+https://github.com/SymbiFlow/python-fpga-interchange.git#egg=python-fpga-interchange
+git+https://github.com/chipsalliance/f4pga-rr-graph.git#egg=rr-graph
+git+https://github.com/chipsalliance/python-fpga-interchange.git#egg=python-fpga-interchange
 -e .
 yapf==0.24.0
