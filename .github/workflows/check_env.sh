@@ -22,3 +22,13 @@ then
     echo "ERROR: make env failed"
     return 1
 fi
+
+set -e
+
+echo
+echo "======================================="
+echo "Creating Vivado Symbolic Link"
+echo "---------------------------------------"
+ln -s /mnt/aux/Xilinx /opt/Xilinx
+source /opt/Xilinx/Vivado/2017.2/settings64.sh
+vivado -version

@@ -34,7 +34,7 @@ format: ${PYTHON_SRCS}
 	$(IN_CONDA_ENV) yapf -i ${FASM2BELS_PYTHON_SRCS} setup.py
 
 build:
-	cd third_party/prjxray; make build -j`nproc`
+	cd third_party/prjxray; make ALLOW_ROOT=1 build -j$(nproc)
 
 test-py:
 	$(IN_CONDA_ENV) cd tests; PYTHONPATH=../ python -m unittest
