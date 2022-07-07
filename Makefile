@@ -1,10 +1,18 @@
-# Copyright (C) 2021  The Symbiflow Authors.
+# Copyright 2021-2022 F4PGA Authors
 #
-# Use of this source code is governed by a ISC-style
-# license that can be found in the LICENSE file or at
-# https://opensource.org/licenses/ISC
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# SPDX-License-Identifier: ISC
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
 
 SHELL=bash
 
@@ -26,7 +34,7 @@ format: ${PYTHON_SRCS}
 	$(IN_CONDA_ENV) yapf -i ${FASM2BELS_PYTHON_SRCS} setup.py
 
 build:
-	cd third_party/prjxray; make build -j`nproc`
+	cd third_party/prjxray; make ALLOW_ROOT=1 build -j$(nproc)
 
 test-py:
 	$(IN_CONDA_ENV) cd tests; PYTHONPATH=../ python -m unittest
