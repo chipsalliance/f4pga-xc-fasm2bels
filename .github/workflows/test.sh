@@ -17,6 +17,6 @@
 
 export CAPNP_PATH="$(pwd)/third_party/capnproto-java/compiler/src/main/schema/"
 export INTERCHANGE_SCHEMA_PATH="$(pwd)/third_party/fpga-interchange-schema/interchange"
-export VIVADO_PATH="$/opt/Xilinx/Vivado/2017.2/bin/vivado"
+export VIVADO_PATH=vivado
 
 make test-py
