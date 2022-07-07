@@ -37,8 +37,7 @@ def unpack_tar(tar_file):
     tar.extractall(path=os.path.dirname(tar_file))
 
 def create_golden_file(file_name, part):
-    vivado = os.environ.get('VIVADO_PATH', None) 
-    assert vivado is not None, "VIVADO_PATH enviromental variable was not set! Please use export VIVADO_PATH=(path to vivado)"
+    vivado = os.environ('VIVADO_PATH') 
     golden_file_temp_dir = tempfile.TemporaryDirectory()
     subprocess.run([vivado, "-nolog", "-nojournal", "-mode", "batch", "-source", "create_golden_file.tcl", "-tclargs", file_name, golden_file_temp_dir.name, part])
     return golden_file_temp_dir    
