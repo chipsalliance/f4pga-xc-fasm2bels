@@ -20,6 +20,7 @@
 import unittest
 from parameterized import parameterized
 import os
+from os.path import exists
 import sys
 import tempfile
 import itertools
@@ -28,13 +29,19 @@ import subprocess
 from fasm2bels.fasm2bels import main
 
 
-test_names = ["add32"]
+test_names = ["add32","alu"]
 
 
 def unpack_tar(tar_file):
     tar = tarfile.open(name=tar_file, mode="r:gz")
     tar.extractall(path=os.path.dirname(tar_file))
 
+def create_golden_file(file_name, part):
+    vivado = os.environ.get('VIVADO_PATH') 
+    assert vivado is not None, "VIVADO_PATH environmental variable was not set!"
+    golden_file_temp_dir = tempfile.TemporaryDirectory()
+    subprocess.run([vivado, "-nolog", "-nojournal", "-mode", "batch", "-source", "create_golden_file.tcl", "-tclargs", file_name, golden_file_temp_dir.name, part])
+    return golden_file_temp_dir    
 
 class TestEquivalence(unittest.TestCase):
     @classmethod
@@ -72,6 +79,8 @@ class TestEquivalence(unittest.TestCase):
         drive = '12'
         top = 'top'
         part = 'xc7a35tcpg236-1'
+
+        golden_file_temp_dir = create_golden_file(test_name, part)
 
         generated_top_v = os.path.join(temp_dir, 'top_bit.v')
         generated_top_xdc = os.path.join(temp_dir, 'top_bit.xdc')
@@ -196,7 +205,9 @@ class TestEquivalence(unittest.TestCase):
             return True
 
         self.assertTrue(compare(os.path.join(
-            cur_dir, 'equivalence_checking_data', test_name, 'top_bit.golden.v'), tmp_top_v))
+            golden_file_temp_dir.name, 'top_bit.golden.v'), tmp_top_v))
+
+        golden_file_temp_dir.cleanup()
 
 
 if __name__ == "__main__":
