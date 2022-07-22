@@ -53,6 +53,17 @@ Required arguments are:
  - verilog - Path to verilog file to write
  - tcl - Path to TCL file to write
 
+The first time you run it you will not have a connection database for the part.  Provide a name for this parameter such as `./basys3.db` and the program will generate the database the first time you run.  On subsequent runs you can then specify that filename and avoid re-building the database each time.
+
+Here is an example run of the process:
+```
+python3 -mfasm2bels --connection_database mydb \
+                      --db_root ~/prjxray/database/artix7 \
+                      --part xc7a35tcpg236-1 \
+                      --fasm_file file_name.fasm \
+                      file_name.v file_name.tcl
+```
+
 Once the verilog and TCL is generated, it should be importable to Vivado with
 a script roughly like:
 
