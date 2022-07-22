@@ -57,7 +57,7 @@ The first time you run it you will not have a connection database for the part. 
 
 Here is an example run of the process:
 ```
-python3.7 -mfasm2bels --connection_database mydb \
+python3 -mfasm2bels --connection_database mydb \
                       --db_root ~/prjxray/database/artix7 \
                       --part xc7a35tcpg236-1 \
                       --fasm_file file_name.fasm \
