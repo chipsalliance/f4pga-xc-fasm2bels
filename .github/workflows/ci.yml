@@ -64,10 +64,7 @@ jobs:
   Run-tests:
 
     container: ubuntu:bionic
-    runs-on:
-      - self-hosted
-      - Linux
-      - X64
+    runs-on: [self-hosted, Linux, X64, gcp-custom-runners]
 
     env:
       GHA_EXTERNAL_DISK: "tools"
