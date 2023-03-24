@@ -19,7 +19,7 @@ channels:
   - defaults
   - litex-hub
 dependencies:
-  - litex-hub::yosys=0.9_5573_g75a4cdfc=20210818_135210_py38
+  - litex-hub::yosys=0.27_22_gf35bdaa52
   - pip
   - pip:
     - -r requirements.txt
