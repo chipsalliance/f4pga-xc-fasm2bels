@@ -17,20 +17,40 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+import fasm
+import math
 from .verilog_modeling import Bel, Site, make_inverter_path
 
 # =============================================================================
 
+def binary_value_from_multi_bit_feature(features, target_feature, width, invert=False):
+    value = 0
+    for f in features:
+        if f.feature.startswith(target_feature):
+            for canon_f in fasm.canonical_features(f):
+                if canon_f.start is None:
+                    value |= 1
+                else:
+                    value |= (1 << canon_f.start)
+
+    if invert:
+        value ^= (2**width) - 1
+
+    value = format(value, f'0{width}b')
+
+    return "{width}'b{value}".format(width=width, value=value[-width:])
 
 def get_dsp_site(db, grid, tile, site):
-    """ Return the prjxray.tile.Site object for the given PLL/MMCM site. """
+    """ Return the prjxray.tile.Site object for the given dsp site. """
     gridinfo = grid.gridinfo_at_tilename(tile)
     tile_type = db.get_tile_type(gridinfo.tile_type)
 
     sites = list(tile_type.get_instance_sites(gridinfo))
-    # assert len(sites) == 1, sites
-
-    return sites[0]
+    
+    if site == 'DSP_0':
+        return sites[0]
+    elif site == 'DSP_1':
+        return sites[2]
 
 
 def process_dsp48e1_site(top, features, set_features):
@@ -40,12 +60,16 @@ def process_dsp48e1_site(top, features, set_features):
 
     aparts = features[0].feature.split('.')
     dsp_site = get_dsp_site(top.db, top.grid, aparts[0], aparts[2])
+
     site = Site(features, dsp_site)
 
     assert 'DSP48E1', site.site.type
 
     bel = Bel('DSP48E1')
     bel.set_bel('DSP48E1')
+
+    def make_target_feature(feature):
+        return '{}.{}.{}.{}'.format(aparts[0], aparts[1], aparts[2], feature)
 
     for input_wire in [
             "CEA1", "CEA2", "CEAD", "CEALUMODE", "CEB1", "CEB2", "CEC",
@@ -78,6 +102,9 @@ def process_dsp48e1_site(top, features, set_features):
         ("C", 48),
         ("CARRYINSEL", 3),
         ("D", 25),
+        ("OPMODE", 7),
+        ("ALUMODE", 4),
+        ("INMODE", 5)
     ]
 
     for input_wire, width in input_wires:
@@ -108,8 +135,8 @@ def process_dsp48e1_site(top, features, set_features):
                 source_site_type_pin=site_wire)
 
     for wire in ["CARRYIN", "CLK"]:
-        bel.parameters['IS_{}_INVERTED'.format(wire)] = int(
-            not 'ZIS_{}_INVERTED'.format(wire) in set_features)
+        bel.parameters['IS_{}_INVERTED'.format(wire)] = "1'b{}".format(int(
+            not 'ZIS_{}_INVERTED'.format(wire) in set_features))
 
         site_pips = make_inverter_path(
             wire, bel.parameters['IS_{}_INVERTED'.format(wire)])
@@ -140,9 +167,9 @@ def process_dsp48e1_site(top, features, set_features):
     elif 'AREG_2' in set_features:
         bel.parameters['AREG'] = "2'b10"
         if 'ZAREG_2_ACASCREG_1' in set_features:
-            bel.parameters['ACASCREG'] = "1'b1"
+            bel.parameters['ACASCREG'] = "2'b10"
         else:
-            bel.parameters['ACASCREG'] = "1'b0"
+            bel.parameters['ACASCREG'] = "1'b1"
     else:
         bel.parameters['AREG'] = "1'b1"
         bel.parameters['ACASCREG'] = "1'b1"
@@ -153,42 +180,42 @@ def process_dsp48e1_site(top, features, set_features):
     elif 'BREG_2' in set_features:
         bel.parameters['BREG'] = "2'b10"
         if 'ZBREG_2_BCASCREG_1' in set_features:
-            bel.parameters['BCASCREG'] = "1'b1"
+            bel.parameters['BCASCREG'] = "2'b10"
         else:
-            bel.parameters['BCASCREG'] = "1'b0"
+            bel.parameters['BCASCREG'] = "1'b1"
     else:
         bel.parameters['BREG'] = "1'b1"
         bel.parameters['BCASCREG'] = "1'b1"
 
     if 'ZALUMODEREG' in set_features:
-        bel.parameters['ALUMODEREG'] = "1'b1"
-    else:
         bel.parameters['ALUMODEREG'] = "1'b0"
+    else:
+        bel.parameters['ALUMODEREG'] = "1'b1"
 
     if 'ZCARRYINREG' in set_features:
-        bel.parameters['CARRYINREG'] = "1'b1"
-    else:
         bel.parameters['CARRYINREG'] = "1'b0"
+    else:
+        bel.parameters['CARRYINREG'] = "1'b1"
 
     if 'ZCARRYINSELREG' in set_features:
-        bel.parameters['CARRYINSELREG'] = "1'b1"
-    else:
         bel.parameters['CARRYINSELREG'] = "1'b0"
+    else:
+        bel.parameters['CARRYINSELREG'] = "1'b1"
 
     if 'ZCREG' in set_features:
-        bel.parameters['CREG'] = "1'b1"
-    else:
         bel.parameters['CREG'] = "1'b0"
+    else:
+        bel.parameters['CREG'] = "1'b1"
 
     if 'ZOPMODEREG' in set_features:
-        bel.parameters['OPMODEREG'] = "1'b1"
-    else:
         bel.parameters['OPMODEREG'] = "1'b0"
+    else:
+        bel.parameters['OPMODEREG'] = "1'b1"
 
     #TO DO: USE_MULT, SEL_PATTERN, USE_PATTERNDETECT are not found in the segbits database. They are always set as their default value.
     bel.parameters['USE_MULT'] = '"MULTIPLY"'
     bel.parameters['SEL_PATTERN'] = '"PATTERN"'
-    bel.parameters['USE_PATTERNDETECT'] = '"NO_PATDET"'
+    bel.parameters['USE_PATTERN_DETECT'] = '"NO_PATDET"'
 
     if 'AUTORESET_PATDET_RESET' in set_features:
         bel.parameters['AUTORESET_PATDET'] = '"RESET_MATCH"'
@@ -207,29 +234,29 @@ def process_dsp48e1_site(top, features, set_features):
         bel.parameters['SEL_MASK'] = '"MASK"'
 
     if 'ZMREG' in set_features:
-        bel.parameters['MREG'] = "1'b1"
-    else:
         bel.parameters['MREG'] = "1'b0"
+    else:
+        bel.parameters['MREG'] = "1'b1"
 
     if 'ZPREG' in set_features:
-        bel.parameters['PREG'] = "1'b1"
-    else:
         bel.parameters['PREG'] = "1'b0"
+    else:
+        bel.parameters['PREG'] = "1'b1"
 
     if 'ZADREG' in set_features:
-        bel.parameters['ADREG'] = "1'b1"
-    else:
         bel.parameters['ADREG'] = "1'b0"
+    else:
+        bel.parameters['ADREG'] = "1'b1"
 
     if 'ZDREG' in set_features:
-        bel.parameters['DREG'] = "1'b1"
-    else:
         bel.parameters['DREG'] = "1'b0"
+    else:
+        bel.parameters['DREG'] = "1'b1"
 
     if 'ZINMODEREG' in set_features:
-        bel.parameters['INMODEREG'] = "1'b1"
-    else:
         bel.parameters['INMODEREG'] = "1'b0"
+    else:
+        bel.parameters['INMODEREG'] = "1'b1"
 
     if 'USE_DPORT' in set_features:
         bel.parameters['USE_DPORT'] = '"TRUE"'
@@ -243,10 +270,12 @@ def process_dsp48e1_site(top, features, set_features):
     else:
         bel.parameters['USE_SIMD'] = '"ONE48"'
 
-    bel.parameters['MASK'] = "48'h{:012X}".format(
-        site.decode_multi_bit_feature('MASK'))
-    bel.parameters['PATTERN'] = "48'h{:012X}".format(
-        site.decode_multi_bit_feature('PATTERN'))
+    bel.parameters['MASK'] = binary_value_from_multi_bit_feature(features, make_target_feature('MASK'), 48)
+    bel.parameters['PATTERN'] = binary_value_from_multi_bit_feature(features, make_target_feature('PATTERN'), 48)
+    
+    bel.parameters['IS_ALUMODE_INVERTED'] = binary_value_from_multi_bit_feature(features, make_target_feature('ZIS_ALUMODE_INVERTED'), 4, invert=True)
+    bel.parameters['IS_OPMODE_INVERTED'] = binary_value_from_multi_bit_feature(features, make_target_feature('ZIS_OPMODE_INVERTED'), 7, invert=True)
+    bel.parameters['IS_INMODE_INVERTED'] = binary_value_from_multi_bit_feature(features, make_target_feature('ZIS_INMODE_INVERTED'), 5, invert=True)
 
     bel.add_unconnected_port('ACIN', 30, direction="input")
     for idx in range(30):
@@ -288,17 +317,15 @@ def process_dsp48e1_site(top, features, set_features):
         bel.map_bel_pin_to_cell_pin(bel.bel, 'PCOUT{}'.format(idx),
                                     'PCOUT[{}]'.format(idx))
 
-    site.add_bel(bel)
+    site.add_bel(bel, name='DSP48E1')
     top.add_site(site)
-
-    breakpoint()
 
     return site
 
 
 def process_dsp(conn, top, tile, features):
     """
-    Processes a DSP_[LR] tile with DSP48E1 site.
+    Processes a DSP_[LR] tile with DSP48E1 sites.
     
     
     DSP48 config:
