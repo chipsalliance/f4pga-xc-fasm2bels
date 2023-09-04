@@ -23,6 +23,74 @@ from .verilog_modeling import Bel, Site, make_inverter_path
 
 # =============================================================================
 
+def cleanup_dsp(top, site):
+    """ Performs post-routing cleanup of DSP48E1.
+    
+    - Check if any of the output pins (including the cascaded outputs) are in use. If not, remove the DSP48E1 site.
+    """
+    
+    dsp48e1= site.maybe_get_bel('DSP48E1')
+    if dsp48e1 is not None:
+        
+        dsp_in_use=False
+        
+        for output in ("OVERFLOW", "PATTERNBDETECT", "PATTERNDETECT",
+                        "UNDERFLOW"):
+            if top.wire_assigns.find_sinks_from_source(output) is not None:
+                dsp_in_use=True
+                break
+        
+        outputs = [
+            ("P", 48),
+            ("CARRYOUT", 4),
+        ]
+        
+        for output, width in outputs:
+            for idx in range(width):
+                if top.wire_assigns.find_sinks_from_source('{}[{}]'.format(output, idx)) is not None:
+                    dsp_in_use=True
+                    break
+            
+            if dsp_in_use:
+                break
+        
+        if dsp48e1.parameters['A_INPUT'] == '"CASCADE"':
+            dsp_in_use=True
+        
+        if dsp48e1.parameters['B_INPUT'] == '"CASCADE"':
+            dsp_in_use=True
+        
+        if top.wire_assigns.find_sources_from_sink('CARRYIN') is not None:
+            dsp_in_use=True
+        
+        inputs = [
+            ("A", 30),
+            ("B", 18),
+            ("C", 48),
+            ("CARRYINSEL", 3),
+            ("OPMODE", 7),
+            ("ALUMODE", 4),
+            ("INMODE", 5)
+        ]
+        
+        for input, width in inputs:
+            for idx in range(width):
+                if top.wire_assigns.find_sources_from_sink('{}[{}]'.format(input, idx)) is not None:
+                    dsp_in_use=True
+                    break
+            
+            if dsp_in_use:
+                break
+        
+        if dsp48e1.parameters['USE_DPORT'] == '"TRUE"':
+            for idx in range(25):
+                if top.wire_assigns.find_sources_from_sink('{}[{}]'.format("D", idx)) is not None:
+                    dsp_in_use=True
+                    break
+        
+        if not dsp_in_use:
+            top.remove_site(site)
+
 def binary_value_from_multi_bit_feature(features, target_feature, width, invert=False):
     value = 0
     for f in features:
@@ -318,10 +386,8 @@ def process_dsp48e1_site(top, features, set_features):
                                     'PCOUT[{}]'.format(idx))
 
     site.add_bel(bel, name='DSP48E1')
+    site.set_post_route_cleanup_function(cleanup_dsp(top, site))
     top.add_site(site)
-
-    return site
-
 
 def process_dsp(conn, top, tile, features):
     """
