@@ -23,75 +23,122 @@ from .verilog_modeling import Bel, Site, make_inverter_path
 
 # =============================================================================
 
+
 def cleanup_dsp(top, site):
     """ Performs post-routing cleanup of DSP48E1.
     
     - Check if any of the output pins (including the cascaded outputs) are in use. If not, remove the DSP48E1 site.
     """
-    
-    dsp48e1= site.maybe_get_bel('DSP48E1')
+
+    def check_cascaded_inputs_usage(dsp_in_use):
+
+        if dsp_bel.parameters['A_INPUT'] == '"CASCADE"':
+            dsp_in_use = True
+
+        if dsp_bel.parameters['B_INPUT'] == '"CASCADE"':
+            dsp_in_use = True
+
+        # Refer table 2-9 in ug479_7Series_DSP48E1 manual
+
+        zmux_pcin_opmode = [1, 0, 0]
+
+        dsp_in_use = all(
+            top.find_source_from_sink(site, f'OPMODE[{i+4}]') ^ int(
+                dsp_bel.parameters['IS_OPMODE_INVERTED'][-3 + i]) ==
+            zmux_pcin_opmode[i] for i in range(3))
+
+        shift_pcin_opmode = [1, 0, 1]
+
+        dsp_in_use = all(
+            top.find_source_from_sink(site, f'OPMODE[{i+4}]') ^ int(
+                dsp_bel.parameters['IS_OPMODE_INVERTED'][-3 + i]) ==
+            shift_pcin_opmode[i] for i in range(3))
+
+        # Refer table 2-11 in ug479_7Series_DSP48E1 manual
+        carryinsel_round_pcin_inf = [1, 0, 0]
+
+        dsp_in_use = all(
+            top.find_source_from_sink(site, f'CARRYINSEL[{i}]') ==
+            carryinsel_round_pcin_inf[i] for i in range(3))
+
+        carryinsel_round_pcin_zero = [1, 1, 0]
+
+        dsp_in_use = all(
+            top.find_source_from_sink(site, f'CARRYINSEL[{i}]') ==
+            carryinsel_round_pcin_zero[i] for i in range(3))
+
+        carryinsel_parallel_op = [0, 1, 0]
+
+        dsp_in_use = all(
+            top.find_source_from_sink(site, f'CARRYINSEL[{i}]') ==
+            carryinsel_parallel_op[i] for i in range(3))
+
+        # Refer table 2-9 in ug479_7Series_DSP48E1 manual
+
+        macc_opmode = [0, 0, 0, 1, 0, 0, 1]
+
+        dsp_in_use = all(
+            top.find_source_from_sink(site, f'OPMODE[{i}]') ^ int(
+                dsp_bel.parameters['IS_OPMODE_INVERTED'][-7 + i]) ==
+            macc_opmode[i] for i in range(7))
+
+    dsp48e1 = site.maybe_get_bel('DSP48E1')
     if dsp48e1 is not None:
-        
-        dsp_in_use=False
-        
+
+        dsp_in_use = False
+
         for output in ("OVERFLOW", "PATTERNBDETECT", "PATTERNDETECT",
-                        "UNDERFLOW"):
+                       "UNDERFLOW"):
             if top.wire_assigns.find_sinks_from_source(output) is not None:
-                dsp_in_use=True
+                dsp_in_use = True
                 break
-        
+
         outputs = [
             ("P", 48),
             ("CARRYOUT", 4),
         ]
-        
+
         for output, width in outputs:
             for idx in range(width):
-                if top.wire_assigns.find_sinks_from_source('{}[{}]'.format(output, idx)) is not None:
-                    dsp_in_use=True
+                if top.wire_assigns.find_sinks_from_source('{}[{}]'.format(
+                        output, idx)) is not None:
+                    dsp_in_use = True
                     break
-            
+
             if dsp_in_use:
                 break
-        
-        if dsp48e1.parameters['A_INPUT'] == '"CASCADE"':
-            dsp_in_use=True
-        
-        if dsp48e1.parameters['B_INPUT'] == '"CASCADE"':
-            dsp_in_use=True
-        
-        if top.wire_assigns.find_sources_from_sink('CARRYIN') is not None:
-            dsp_in_use=True
-        
-        inputs = [
-            ("A", 30),
-            ("B", 18),
-            ("C", 48),
-            ("CARRYINSEL", 3),
-            ("OPMODE", 7),
-            ("ALUMODE", 4),
-            ("INMODE", 5)
-        ]
-        
-        for input, width in inputs:
-            for idx in range(width):
-                if top.wire_assigns.find_sources_from_sink('{}[{}]'.format(input, idx)) is not None:
-                    dsp_in_use=True
+
+        # Check if cascaded outputs are used by checking if adjacent sites are using the cascaded inputs.
+        # If this site's Y-coordinate is even, check the adjacent site in the same tile. If not, check the adjacent site in the neighbouring tile.
+        if site.site.y % 2 == 0:
+            for site_obj in top.sites:
+                if site_obj.tile == site.tile and site_obj.site.y == site.site.y + 1:
+                    dsp_bel = site_obj.maybe_get_bel('DSP48E1')
+                    if dsp_bel is not None:
+                        check_cascaded_inputs_usage(dsp_in_use)
+
                     break
-            
-            if dsp_in_use:
-                break
-        
-        if dsp48e1.parameters['USE_DPORT'] == '"TRUE"':
-            for idx in range(25):
-                if top.wire_assigns.find_sources_from_sink('{}[{}]'.format("D", idx)) is not None:
-                    dsp_in_use=True
+        else:
+            for site_obj in top.sites:
+                next_tile = site.tile
+                cur_Y = int(site.tile[-2:-1])
+                next_Y = str(cur_Y + 5)
+                next_tile = next_tile[:next_tile.find('Y') + 1] + next_Y
+                if site_obj.tile == next_tile and site_obj.site.y == site.site.y + 1:
+                    dsp_bel = site_obj.maybe_get_bel('DSP48E1')
+                    if dsp_bel is not None:
+                        check_cascaded_inputs_usage(dsp_in_use)
+
                     break
-        
+
         if not dsp_in_use:
             top.remove_site(site)
 
-def binary_value_from_multi_bit_feature(features, target_feature, width, invert=False):
+
+def binary_value_from_multi_bit_feature(features,
+                                        target_feature,
+                                        width,
+                                        invert=False):
     value = 0
     for f in features:
         if f.feature.startswith(target_feature):
@@ -108,13 +155,14 @@ def binary_value_from_multi_bit_feature(features, target_feature, width, invert=
 
     return "{width}'b{value}".format(width=width, value=value[-width:])
 
+
 def get_dsp_site(db, grid, tile, site):
     """ Return the prjxray.tile.Site object for the given dsp site. """
     gridinfo = grid.gridinfo_at_tilename(tile)
     tile_type = db.get_tile_type(gridinfo.tile_type)
 
     sites = list(tile_type.get_instance_sites(gridinfo))
-    
+
     if site == 'DSP_0':
         return sites[0]
     elif site == 'DSP_1':
@@ -164,16 +212,9 @@ def process_dsp48e1_site(top, features, set_features):
             bel_pin=output_wire,
             source_site_type_pin=output_wire)
 
-    input_wires = [
-        ("A", 30),
-        ("B", 18),
-        ("C", 48),
-        ("CARRYINSEL", 3),
-        ("D", 25),
-        ("OPMODE", 7),
-        ("ALUMODE", 4),
-        ("INMODE", 5)
-    ]
+    input_wires = [("A", 30), ("B", 18), ("C", 48), ("CARRYINSEL", 3), ("D",
+                                                                        25),
+                   ("OPMODE", 7), ("ALUMODE", 4), ("INMODE", 5)]
 
     for input_wire, width in input_wires:
         for idx in range(width):
@@ -203,8 +244,8 @@ def process_dsp48e1_site(top, features, set_features):
                 source_site_type_pin=site_wire)
 
     for wire in ["CARRYIN", "CLK"]:
-        bel.parameters['IS_{}_INVERTED'.format(wire)] = "1'b{}".format(int(
-            not 'ZIS_{}_INVERTED'.format(wire) in set_features))
+        bel.parameters['IS_{}_INVERTED'.format(wire)] = "1'b{}".format(
+            int(not 'ZIS_{}_INVERTED'.format(wire) in set_features))
 
         site_pips = make_inverter_path(
             wire, bel.parameters['IS_{}_INVERTED'.format(wire)])
@@ -338,12 +379,21 @@ def process_dsp48e1_site(top, features, set_features):
     else:
         bel.parameters['USE_SIMD'] = '"ONE48"'
 
-    bel.parameters['MASK'] = binary_value_from_multi_bit_feature(features, make_target_feature('MASK'), 48)
-    bel.parameters['PATTERN'] = binary_value_from_multi_bit_feature(features, make_target_feature('PATTERN'), 48)
-    
-    bel.parameters['IS_ALUMODE_INVERTED'] = binary_value_from_multi_bit_feature(features, make_target_feature('ZIS_ALUMODE_INVERTED'), 4, invert=True)
-    bel.parameters['IS_OPMODE_INVERTED'] = binary_value_from_multi_bit_feature(features, make_target_feature('ZIS_OPMODE_INVERTED'), 7, invert=True)
-    bel.parameters['IS_INMODE_INVERTED'] = binary_value_from_multi_bit_feature(features, make_target_feature('ZIS_INMODE_INVERTED'), 5, invert=True)
+    bel.parameters['MASK'] = binary_value_from_multi_bit_feature(
+        features, make_target_feature('MASK'), 48)
+    bel.parameters['PATTERN'] = binary_value_from_multi_bit_feature(
+        features, make_target_feature('PATTERN'), 48)
+
+    bel.parameters[
+        'IS_ALUMODE_INVERTED'] = binary_value_from_multi_bit_feature(
+            features,
+            make_target_feature('ZIS_ALUMODE_INVERTED'),
+            4,
+            invert=True)
+    bel.parameters['IS_OPMODE_INVERTED'] = binary_value_from_multi_bit_feature(
+        features, make_target_feature('ZIS_OPMODE_INVERTED'), 7, invert=True)
+    bel.parameters['IS_INMODE_INVERTED'] = binary_value_from_multi_bit_feature(
+        features, make_target_feature('ZIS_INMODE_INVERTED'), 5, invert=True)
 
     bel.add_unconnected_port('ACIN', 30, direction="input")
     for idx in range(30):
@@ -389,6 +439,7 @@ def process_dsp48e1_site(top, features, set_features):
     site.set_post_route_cleanup_function(cleanup_dsp(top, site))
     top.add_site(site)
 
+
 def process_dsp(conn, top, tile, features):
     """
     Processes a DSP_[LR] tile with DSP48E1 sites.
@@ -396,39 +447,39 @@ def process_dsp(conn, top, tile, features):
     
     DSP48 config:
     
-    DSP48.DSP_[01].A_INPUT[0] 27_244
-    DSP48.DSP_[01].AREG_0 26_273 26_297 27_271
-    DSP48.DSP_[01].AREG_2 27_296
-    DSP48.DSP_[01].AUTORESET_PATDET_RESET 26_239
-    DSP48.DSP_[01].AUTORESET_PATDET_RESET_NOT_MATCH 26_238
-    DSP48.DSP_[01].B_INPUT[0] 26_171
-    DSP48.DSP_[01].BREG_0 26_200 26_208 27_198
-    DSP48.DSP_[01].BREG_2 27_207
+    DSP48.DSP_[01].A_INPUT[0]
+    DSP48.DSP_[01].AREG_0
+    DSP48.DSP_[01].AREG_2
+    DSP48.DSP_[01].AUTORESET_PATDET_RESET
+    DSP48.DSP_[01].AUTORESET_PATDET_RESET_NOT_MATCH
+    DSP48.DSP_[01].B_INPUT[0]
+    DSP48.DSP_[01].BREG_0
+    DSP48.DSP_[01].BREG_2
     DSP48.DSP_[01].MASK[47:0]
     DSP48.DSP_[01].PATTERN[47:0]
-    DSP48.DSP_[01].SEL_MASK_C 26_243
-    DSP48.DSP_[01].SEL_MASK_ROUNDING_MODE1 27_242
-    DSP48.DSP_[01].SEL_MASK_ROUNDING_MODE2 27_241 27_242
-    DSP48.DSP_[01].USE_DPORT[0] 26_255
-    DSP48.DSP_[01].USE_SIMD_FOUR12 26_303 27_212
-    DSP48.DSP_[01].USE_SIMD_FOUR12_TWO24 26_244
-    DSP48.DSP_[01].ZADREG[0] 27_255
-    DSP48.DSP_[01].ZALUMODEREG[0] 26_214
-    DSP48.DSP_[01].ZAREG_2_ACASCREG_1 26_299
-    DSP48.DSP_[01].ZBREG_2_BCASCREG_1 27_209
-    DSP48.DSP_[01].ZCARRYINREG[0] 26_162
-    DSP48.DSP_[01].ZCARRYINSELREG[0] 27_170
-    DSP48.DSP_[01].ZCREG[0] 26_236
-    DSP48.DSP_[01].ZDREG[0] 27_253
-    DSP48.DSP_[01].ZINMODEREG[0] 26_247
+    DSP48.DSP_[01].SEL_MASK_C
+    DSP48.DSP_[01].SEL_MASK_ROUNDING_MODE1
+    DSP48.DSP_[01].SEL_MASK_ROUNDING_MODE2
+    DSP48.DSP_[01].USE_DPORT[0]
+    DSP48.DSP_[01].USE_SIMD_FOUR12
+    DSP48.DSP_[01].USE_SIMD_FOUR12_TWO24
+    DSP48.DSP_[01].ZADREG[0]
+    DSP48.DSP_[01].ZALUMODEREG[0]
+    DSP48.DSP_[01].ZAREG_2_ACASCREG_1
+    DSP48.DSP_[01].ZBREG_2_BCASCREG_1
+    DSP48.DSP_[01].ZCARRYINREG[0]
+    DSP48.DSP_[01].ZCARRYINSELREG[0]
+    DSP48.DSP_[01].ZCREG[0]
+    DSP48.DSP_[01].ZDREG[0]
+    DSP48.DSP_[01].ZINMODEREG[0]
     DSP48.DSP_[01].ZIS_ALUMODE_INVERTED[3:0]
-    DSP48.DSP_[01].ZIS_CARRYIN_INVERTED 27_169
-    DSP48.DSP_[01].ZIS_CLK_INVERTED 27_237
+    DSP48.DSP_[01].ZIS_CARRYIN_INVERTED
+    DSP48.DSP_[01].ZIS_CLK_INVERTED
     DSP48.DSP_[01].ZIS_INMODE_INVERTED[4:0]
     DSP48.DSP_[01].ZIS_OPMODE_INVERTED[6:0]
-    DSP48.DSP_[01].ZMREG[0] 26_198
-    DSP48.DSP_[01].ZOPMODEREG[0] 26_185
-    DSP48.DSP_[01].ZPREG[0] 27_235
+    DSP48.DSP_[01].ZMREG[0]
+    DSP48.DSP_[01].ZOPMODEREG[0]
+    DSP48.DSP_[01].ZPREG[0]
     """
 
     dsps = {'DSP_0': [], 'DSP_1': []}
