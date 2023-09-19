@@ -48,6 +48,7 @@ from .models.pss_models import get_ps7_site, insert_ps7
 from .models.gtp_common_models import process_gtp_common
 from .models.gtp_channel_models import process_gtp_channel
 from .models.pcie_models import process_pcie
+from .models.dsp_models import process_dsp
 
 from .database.create_channels import create_channels
 from .database.connection_db_utils import get_tile_type
@@ -81,6 +82,8 @@ def null_process(conn, top, tile, tiles):
 
 
 PROCESS_TILE = {
+    'DSP_L': process_dsp,
+    'DSP_R': process_dsp,
     'CLBLL_L': process_clb,
     'CLBLL_R': process_clb,
     'CLBLM_L': process_clb,
@@ -136,6 +139,10 @@ PROCESS_TILE = {
     'GTP_INT_INTERFACE': null_process,
     'GTP_INT_INTERFACE_L': null_process,
     'GTP_INT_INTERFACE_R': null_process,
+    'INT_INTERFACE_L': null_process,
+    'INT_INTERFACE_R': null_process,
+    'IO_INT_INTERFACE_L': null_process,
+    'IO_INT_INTERFACE_R': null_process,
     'PCIE_BOT': process_pcie,
 }
 

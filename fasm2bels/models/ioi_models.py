@@ -430,13 +430,16 @@ def process_ilogic_idelay(top, features):
     idelay_features = features['IDELAY']
 
     ilogic_aparts = ilogic_features[0].feature.split('.')
-    idelay_aparts = idelay_features[0].feature.split('.')
+
+    if len(idelay_features):
+        idelay_aparts = idelay_features[0].feature.split('.')
 
     # tile_name = aparts[0]
     ioi_ilogic_site = get_ioi_site(top.db, top.grid, ilogic_aparts[0],
                                    ilogic_aparts[1])
-    ioi_idelay_site = get_ioi_site(top.db, top.grid, idelay_aparts[0],
-                                   idelay_aparts[1])
+    if len(idelay_features):
+        ioi_idelay_site = get_ioi_site(top.db, top.grid, idelay_aparts[0],
+                                       idelay_aparts[1])
 
     site = Site(ilogic_features, ioi_ilogic_site)
 
